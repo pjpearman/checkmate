@@ -76,7 +76,8 @@ Work Flow
 1. Create and edit a checklist baseline to match your environment. For testing, edit the release and or versions.
 2. Import a completed checklist
 3. Select a old checklist and new checklist version to update.
-***checklist storage is in /cklb_proc/...
+
+NOTE: checklist storage is currently in /cklb_proc/...
 
 ---
 
