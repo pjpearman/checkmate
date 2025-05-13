@@ -17,8 +17,12 @@
 
 Supports:
 - STIG Benchmarks (SCAP/XCCDF)
-- STIG Checklists (ZIP/PDF)
+- STIG Checklists (ZIP/PDF). Currently only Operating Systems. 
 - `.cklb` JSON format (compatible with DISA STIG Viewer 3)
+
+Planned:
+- Application checklist support coming soon.
+- Containerization being examined.
 
 ---
 
