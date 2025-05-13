@@ -1,0 +1,30 @@
+1. scraper.py
+    Functions:
+        scrape_stigs(mode: str, headful: bool) -> List[Dict]
+    Responsibilities:
+        Open browser
+        Load correct URLs
+        Scrape rows
+        Parse into clean dicts
+        Return the list of parsed STIGs
+
+2. comparator.py
+    Functions:
+        compare_to_baseline(scraped_items: List[Dict], baseline_path: str)
+    Responsibilities:
+        Load YAML baseline
+        Compare against parsed STIGs
+        Log differences (NEW, CHANGE, MISSING)
+
+3. runner.py
+    Responsibilities:
+        Parse CLI arguments (--mode, --yaml, --headful, --log)
+        Setup logging
+        Call scrape_stigs()
+        Call compare_to_baseline() if YAML is given
+        Clean exit
+
+4. utils/logger.py
+    Responsibilities:
+        Single function to setup_logger(mode: str) (terminal/file)
+        Used by runner.py so you don’t repeat logging code.

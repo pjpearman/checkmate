@@ -1,0 +1,5 @@
+#ubuntu prereqs
+playwright>=1.43
+pyyaml>=6.0
+requests>=2.26
+jsonschema>=4.0

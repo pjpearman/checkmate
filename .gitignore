@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pyo
+stigvenv/
+baselines/*
+tmp/
+cklb_proc/xccdf_lib/*
+cklb_proc/cklblib/*
+cklb_proc/cklb_lib/*
