@@ -59,6 +59,21 @@ See the full license text here: [CC BY-NC 4.0](https://creativecommons.org/licen
 
 ---
 
+## GUI Mode
+
+To launch the GUI:
+
+```bash
+python gui.py
+```
+
+Features:
+- Drop-downs for mode and files
+- Merge and import support
+- Background thread processing with status updates
+
+---
+
 ## Usage (CLI)
 
 ### Compare to Baseline
@@ -99,21 +114,6 @@ python runner.py --mode checklist --merge usr_cklb_lib/old1.cklb usr_cklb_lib/ol
 | `--print-urls` | Dump scraped URLs and exit |
 | `--headful` | Run Playwright in non-headless mode |
 | `--log [terminal|file]` | Logging destination |
-
----
-
-## GUI Mode
-
-To launch the GUI:
-
-```bash
-python gui_launcher.py
-```
-
-Features:
-- Drop-downs for mode and files
-- Merge and import support
-- Background thread processing with status updates
 
 ---
 
