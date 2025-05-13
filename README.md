@@ -22,6 +22,15 @@ Supports:
 
 ---
 
+## License
+
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License**.
+
+You are free to use, share, and adapt this work for **non-commercial purposes**.  
+Commercial use, resale, or sublicensing of this project or its derivatives is **not permitted** without prior written consent.
+
+See the full license text here: [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+
 ## Install Instructions
 
 **Tested on Ubuntu. Should work anywhere Python and Playwright run.**
