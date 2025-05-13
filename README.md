@@ -13,7 +13,7 @@
 - ✅ **Merge Support:** Merges older `.cklb` checklists with newer versions, preserving history.
 - ✅ **GUI Support:** Tkinter-based interface with status feedback and logging.
 
-> ⚠️ This is not an assessment tool. It complements tools like SCAP, OpenSCAP, and Evaluate-STIG.
+> ⚠️ This is not an assessment tool. It complements tools like SCAP, OpenSCAP, and Evaluate-STIG to easily upgrade existing checklists to newer version. 
 
 Supports:
 - STIG Benchmarks (SCAP/XCCDF)
