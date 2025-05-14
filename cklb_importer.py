@@ -5,7 +5,7 @@ import shutil
 from tkinter import filedialog, Tk
 import logging
 
-def import_cklb_files(target_dir="cklb_proc/usr_cklb_lib"):
+def import_cklb_files(target_dir="cklb_proc/usr_cklb_lib", on_import_complete=None):
     os.makedirs(target_dir, exist_ok=True)
 
     # Suppress main tkinter window
@@ -32,3 +32,6 @@ def import_cklb_files(target_dir="cklb_proc/usr_cklb_lib"):
             logging.info(f"Imported: {dest}")
         except Exception as e:
             logging.error(f"Failed to copy {path}: {e}")
+    
+    if on_import_complete:
+        on_import_complete()
