@@ -15,3 +15,8 @@
 ### Notes
 - This is the first stable release
 
+## [v1.0.1] - 2025-05-14
+### Added
+
+### Fixed 
+- Refresh pane after ckl imported added to gui.py and importer.py
