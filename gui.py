@@ -53,6 +53,13 @@ def refresh_cklb_combobox():
     new_cklb_files = sorted(os.listdir(cklb_dir)) if os.path.isdir(cklb_dir) else []
     cklb_combobox['values'] = new_cklb_files
 
+# === Refresh User CKLB Library ===
+def refresh_usr_listbox():
+    usr_files = sorted(os.listdir(usr_dir)) if os.path.isdir(usr_dir) else []
+    file_listbox.delete(0, tk.END)
+    for f in usr_files:
+        file_listbox.insert(tk.END, f)
+
 # === Top Controls Group ===
 top_controls = ttk.LabelFrame(frame, text="Scrape and Baseline Options", padding=10)
 top_controls.grid(row=0, column=0, columnspan=3, sticky="ew", pady=5)
@@ -88,7 +95,7 @@ ttk.Button(top_controls, text="Generate New Baseline", command=lambda: run_gener
     clear_log=lambda: log_output.delete(1.0, tk.END)
 )).grid(row=4, column=1, pady=10)
 
-ttk.Button(top_controls, text="Import CKLB Library", command=import_cklb_files).grid(row=4, column=2, pady=10)
+ttk.Button(top_controls, text="Import CKLB Library", command=lambda: import_cklb_files(on_import_complete=refresh_usr_listbox)).grid(row=4, column=2, pady=10)
 
 # === Merge Area ===
 ttk.Label(frame, text="Select new cklb version").grid(row=6, column=2, sticky='w', padx=5)
