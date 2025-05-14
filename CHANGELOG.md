@@ -26,3 +26,9 @@
 - Added Support for "Application" STIG Mode
 - Included baseline output as baseline_applications.yaml
 - Supports download, XCCDF extraction, and .cklb generation workflows
+
+## [v1.2.1] - 2025-05-14
+### Added 
+- Added Support for "Network-Perimeter" STIG Mode
+- Included baseline output as baseline_applications.yaml
+- Supports download, XCCDF extraction, and .cklb generation workflows
