@@ -65,7 +65,7 @@ top_controls = ttk.LabelFrame(frame, text="Scrape and Baseline Options", padding
 top_controls.grid(row=0, column=0, columnspan=3, sticky="ew", pady=5)
 
 ttk.Label(top_controls, text="Scrape Mode:").grid(row=0, column=0, sticky=tk.W)
-ttk.Combobox(top_controls, textvariable=mode_var, values=["benchmark", "checklist", "application", "all"], state="readonly", width=15).grid(row=0, column=1, sticky=tk.W)
+ttk.Combobox(top_controls, textvariable=mode_var, values=["benchmark", "checklist", "application", "network", "all"], state="readonly", width=15).grid(row=0, column=1, sticky=tk.W)
 ttk.Checkbutton(top_controls, text="Headful Browser", variable=headful_var).grid(row=0, column=2, sticky=tk.W)
 
 ttk.Label(top_controls, text="Baseline YAML:").grid(row=1, column=0, sticky=tk.W, pady=(5,0))
