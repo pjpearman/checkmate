@@ -16,7 +16,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # === Setup argument parser ===
 parser = argparse.ArgumentParser(description="DISA STIG Scraper and Baseline Manager")
-parser.add_argument('--mode', choices=['benchmark', 'checklist', 'all'], required=True, help='Which type of STIGs to scrape')
+parser.add_argument('--mode', choices=['benchmark', 'checklist', 'application', 'all'], required=True, help='Which type of STIGs to scrape')
 parser.add_argument('--yaml', required=False, help='Baseline YAML file to compare against (optional)')
 parser.add_argument('--headful', action='store_true', help='Run browser in headful mode (default headless)')
 parser.add_argument('--log', choices=['terminal', 'file'], default='terminal', help='Log to terminal or file')
@@ -72,6 +72,8 @@ def main():
             output_path = os.path.join(baseline_folder, "baseline_benchmarks.yaml")
         elif args.mode == 'checklist':
             output_path = os.path.join(baseline_folder, "baseline_checklists.yaml")
+        elif args.mode == 'application':
+            output_path = os.path.join(baseline_folder, "baseline_applications.yaml")
         else:
             output_path = os.path.join(baseline_folder, "baseline_all.yaml")
 
