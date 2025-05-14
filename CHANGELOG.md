@@ -20,3 +20,9 @@
 
 ### Fixed 
 - Refresh pane after ckl imported added to gui.py and importer.py
+
+## [v1.1.1] - 2025-05-14
+### Added 
+- Added Support for "Application" STIG Mode
+- Included baseline output as baseline_applications.yaml
+- Supports download, XCCDF extraction, and .cklb generation workflows

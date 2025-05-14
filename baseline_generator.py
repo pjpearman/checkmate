@@ -64,6 +64,7 @@ if __name__ == "__main__":
     output_filename = {
         'benchmark': 'baseline_benchmarks.yaml',
         'checklist': 'baseline_checklists.yaml',
+        'application': 'baseline_applications.yaml',
         'all': 'baseline_all.yaml'
     }[args.mode]
 

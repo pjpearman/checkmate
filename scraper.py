@@ -4,6 +4,7 @@ from playwright.sync_api import sync_playwright
 # === Constants ===
 SCAP_URL = "https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=scap"
 OS_URL = "https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=operating-systems"
+APP_URL = "https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=app-security"
 
 def scrape_stigs(mode: str, headful: bool = False) -> list:
     all_filtered_rows = []
@@ -17,6 +18,9 @@ def scrape_stigs(mode: str, headful: bool = False) -> list:
 
         if mode in ['checklist', 'all']:
             all_filtered_rows += scrape_page(page, OS_URL, mode_filter='checklist' if mode != 'all' else None)
+
+        if mode in ['application', 'all']:
+            all_filtered_rows += scrape_page(page, APP_URL, mode_filter='application' if mode != 'all' else None)
 
         browser.close()
 
