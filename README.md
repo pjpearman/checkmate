@@ -1,4 +1,4 @@
-# StigFlow: DISA STIG Collection Manager
+# CheckMate: DISA STIG Collection Manager
 
 ## Overview
 
