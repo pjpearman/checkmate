@@ -2,7 +2,7 @@
 
 ## Overview
 
-**StigFlow** automates version tracking, checklist generation, and upgrade merging for DISA STIGs.
+**CheckMate** automates version tracking, checklist generation, and upgrade merging for DISA STIGs.
 
 View a demo on YouTube https://youtu.be/CAfOAVO_EX4 
 
