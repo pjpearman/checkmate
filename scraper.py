@@ -41,7 +41,7 @@ def scrape_page(page, target_url, mode_filter=None) -> list:
     page.evaluate("""
         document.querySelectorAll('.mfp-bg, .mfp-wrap, .mfp-content').forEach(el => el.remove());
     """)
-    logging.info("Popup forcibly removed.")
+    logging.info("Popup Handled.")
 
     page.evaluate("""
         document.body.style.overflow = 'auto';
