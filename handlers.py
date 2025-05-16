@@ -13,6 +13,7 @@ from comparator import compare_to_baseline
 from downloader import download_updates
 from xccdf_extractor import extract_xccdf_from_zip
 from cklb_generator import generate_cklb_json
+from selected_merger import find_new_rules, load_cklb, save_cklb
 
 def run_generate_baseline_task(mode, headful, on_status_update, clear_log):
     clear_log()
@@ -91,22 +92,22 @@ def run_compare_task(mode, headful, baseline_path, download_updates_checked, ext
             on_status_update("Error. Check log output.")
     threading.Thread(target=task).start()
 
-
 def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_update):
     if not selected_old_files or not new_name:
         on_status_update("Select at least one old and one new CKLB file.")
-        return
+        return []
+
+    merged_results = []
 
     for old_name in selected_old_files:
         old_path = os.path.join(usr_dir, old_name)
         new_path = os.path.join(cklb_dir, new_name)
         out_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_updated')
         os.makedirs(out_dir, exist_ok=True)
-        # Load host_name from the old CKLB JSON
-        with open(old_path, "r", encoding="utf-8") as f:
-          old_json = json.load(f)
-        host_prefix = old_json.get("target_data", {}).get("host_name", "HOSTNAME_MISSING")
 
+        with open(old_path, "r", encoding="utf-8") as f:
+            old_json = json.load(f)
+        host_prefix = old_json.get("target_data", {}).get("host_name", "HOSTNAME_MISSING")
         merged_name = f"{host_prefix}_{new_name}"
         out_path = os.path.join(out_dir, merged_name)
 
@@ -116,5 +117,14 @@ def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_up
             logging.info(result.stdout.strip())
         except subprocess.CalledProcessError as e:
             logging.error(e.stderr.strip())
+            continue
+
+        # -- Detect new rules using your find_new_rules logic
+        from selected_merger import find_new_rules
+        old_cklb = load_cklb(old_path)
+        merged_cklb = load_cklb(out_path)
+        new_rules = find_new_rules(old_cklb, merged_cklb)
+        merged_results.append({"merged_path": out_path, "merged_name": merged_name, "new_rules": new_rules})
 
     on_status_update("Merge complete.")
+    return merged_results
