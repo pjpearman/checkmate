@@ -24,44 +24,69 @@ class MultiRuleInputDialog(tk.Toplevel):
         super().__init__(parent)
         self.title("Input for New Rules")
         self.result = None
+        self.configure(bg="#f5f5f5")
 
-        ttk.Label(self, text="Apply to selected checklists:").pack(anchor="w")
+        # Top checklist selection
+        checklist_frame = ttk.Frame(self)
+        checklist_frame.pack(fill="x", pady=(12, 8), padx=12)
+        ttk.Label(checklist_frame, text="Apply to selected checklists:").pack(side="left")
         self.cklb_vars = []
         for f in checklist_files:
             var = tk.BooleanVar(value=True)
-            ttk.Checkbutton(self, text=f, variable=var).pack(anchor="w")
+            ttk.Checkbutton(checklist_frame, text=f, variable=var).pack(side="left", padx=6)
             self.cklb_vars.append((f, var))
 
-        # Scrollable frame for new rules
-        canvas = tk.Canvas(self, height=300)
-        scroll = ttk.Scrollbar(self, orient="vertical", command=canvas.yview)
-        frame = ttk.Frame(canvas)
-        frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-        )
-        canvas.create_window((0, 0), window=frame, anchor="nw")
+        # Bulk fill controls above grid
+        bulk_frame = ttk.Frame(self)
+        bulk_frame.pack(fill="x", padx=12, pady=(0, 10))
+        ttk.Label(bulk_frame, text="Bulk Fill Status:").pack(side="left")
+        self.status_bulk = tk.StringVar(value="not_reviewed")
+        status_bulk_cb = ttk.Combobox(bulk_frame, textvariable=self.status_bulk,
+            values=["not_reviewed", "not_applicable", "open", "not_a_finding"], state="readonly", width=18)
+        status_bulk_cb.pack(side="left", padx=5)
+        ttk.Label(bulk_frame, text="Comment:").pack(side="left")
+        self.comment_bulk = tk.StringVar()
+        comment_bulk_entry = ttk.Entry(bulk_frame, textvariable=self.comment_bulk, width=40)
+        comment_bulk_entry.pack(side="left", padx=5)
+        ttk.Button(bulk_frame, text="Apply to all", command=self.bulk_fill).pack(side="left", padx=10)
+
+        # Scrollable table area
+        canvas_frame = ttk.Frame(self)
+        canvas_frame.pack(fill="both", expand=True, padx=12)
+        canvas = tk.Canvas(canvas_frame, height=300, bg="#f5f5f5", highlightthickness=0)
+        scroll = ttk.Scrollbar(canvas_frame, orient="vertical", command=canvas.yview)
+        self.table_frame = ttk.Frame(canvas)
+        self.table_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.create_window((0, 0), window=self.table_frame, anchor="nw")
         canvas.config(yscrollcommand=scroll.set)
         canvas.pack(side="left", fill="both", expand=True)
         scroll.pack(side="right", fill="y")
 
-        header = ["Rule Title", "Status", "Comment", "Ignore"]
-        for c, col in enumerate(header):
-            ttk.Label(frame, text=col, font=('TkDefaultFont', 9, 'bold')).grid(row=0, column=c, sticky="w", padx=2)
+        # Table headers
+        headers = ["Rule Title", "Status", "Comment", "Ignore"]
+        for c, col in enumerate(headers):
+            ttk.Label(self.table_frame, text=col, font=('TkDefaultFont', 10, 'bold')).grid(row=0, column=c, padx=5, pady=3, sticky="nsew")
+            self.table_frame.columnconfigure(c, weight=1 if c == 0 else 0)
 
+        # Table rows
         self.entries = []
         for i, rule in enumerate(new_rules, 1):
-            ttk.Label(frame, text=rule["rule_title"] or rule["group_id_src"]).grid(row=i, column=0, sticky="w")
+            bg = "#f0f4fc" if i % 2 == 0 else "#ffffff"
+            label = ttk.Label(self.table_frame, text=rule["rule_title"] or rule["group_id_src"], background=bg, anchor="w")
+            label.grid(row=i, column=0, sticky="nsew", padx=5, pady=2)
             status_var = tk.StringVar(value="not_reviewed")
-            status_cb = ttk.Combobox(frame, textvariable=status_var,
-                values=["not_reviewed", "not_applicable", "open", "not_a_finding"], state="readonly", width=15)
-            status_cb.grid(row=i, column=1, padx=2)
+            status_cb = ttk.Combobox(self.table_frame, textvariable=status_var,
+                values=["not_reviewed", "not_applicable", "open", "not_a_finding"], state="readonly", width=18)
+            status_cb.grid(row=i, column=1, padx=5, pady=2)
+            status_cb.configure(background=bg)
             comment_var = tk.StringVar()
-            comment_entry = ttk.Entry(frame, textvariable=comment_var, width=30)
-            comment_entry.grid(row=i, column=2, padx=2)
+            comment_entry = ttk.Entry(self.table_frame, textvariable=comment_var, width=40)
+            comment_entry.grid(row=i, column=2, padx=5, pady=2)
+            comment_entry.configure(background=bg)
             ignore_var = tk.BooleanVar(value=False)
-            ignore_cb = ttk.Checkbutton(frame, variable=ignore_var)
-            ignore_cb.grid(row=i, column=3, padx=2)
+            ignore_cb = ttk.Checkbutton(self.table_frame, variable=ignore_var)
+            ignore_cb.grid(row=i, column=3, padx=5, pady=2)
+            ignore_cb.configure(style="Toolbutton")
             self.entries.append({
                 "group_id_src": rule["group_id_src"],
                 "status_var": status_var,
@@ -69,32 +94,19 @@ class MultiRuleInputDialog(tk.Toplevel):
                 "ignore_var": ignore_var
             })
 
-        # Bulk fill (optional UX)
-        def bulk_fill():
-            value = self.status_bulk.get()
-            comment = self.comment_bulk.get()
-            for e in self.entries:
-                if not e["ignore_var"].get():
-                    e["status_var"].set(value)
-                    e["comment_var"].set(comment)
-
-        bulk_frame = ttk.Frame(self)
-        bulk_frame.pack(fill="x")
-        ttk.Label(bulk_frame, text="Bulk Fill Status:").pack(side="left")
-        self.status_bulk = tk.StringVar(value="not_reviewed")
-        status_bulk_cb = ttk.Combobox(bulk_frame, textvariable=self.status_bulk,
-            values=["not_reviewed", "not_applicable", "open", "not_a_finding"], state="readonly", width=15)
-        status_bulk_cb.pack(side="left", padx=2)
-        ttk.Label(bulk_frame, text="Comment:").pack(side="left")
-        self.comment_bulk = tk.StringVar()
-        comment_bulk_entry = ttk.Entry(bulk_frame, textvariable=self.comment_bulk, width=30)
-        comment_bulk_entry.pack(side="left", padx=2)
-        ttk.Button(bulk_frame, text="Apply to all", command=bulk_fill).pack(side="left", padx=4)
-
+        # Action buttons at the bottom, centered
         btns = ttk.Frame(self)
-        btns.pack(fill="x", pady=4)
-        ttk.Button(btns, text="OK", command=self.on_apply).pack(side="left")
-        ttk.Button(btns, text="Cancel", command=self.on_cancel).pack(side="left")
+        btns.pack(pady=(12, 8))
+        ttk.Button(btns, text="OK", command=self.on_apply, width=10).pack(side="left", padx=12)
+        ttk.Button(btns, text="Cancel", command=self.on_cancel, width=10).pack(side="left", padx=12)
+
+    def bulk_fill(self):
+        value = self.status_bulk.get()
+        comment = self.comment_bulk.get()
+        for e in self.entries:
+            if not e["ignore_var"].get():
+                e["status_var"].set(value)
+                e["comment_var"].set(comment)
 
     def on_apply(self):
         selected_cklbs = [fname for fname, var in self.cklb_vars if var.get()]
