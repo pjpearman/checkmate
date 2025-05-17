@@ -19,6 +19,7 @@ class GuiLogger(logging.Handler):
         self.text_widget.see(tk.END)
 
 # === New Rule Input Dialog ===
+# === New Rule Input Dialog ===
 class MultiRuleInputDialog(tk.Toplevel):
     def __init__(self, parent, new_rules, checklist_files):
         super().__init__(parent)
@@ -26,7 +27,7 @@ class MultiRuleInputDialog(tk.Toplevel):
         self.result = None
         self.configure(bg="#f5f5f5")
 
-        # Top checklist selection
+        # Checklist Selection
         checklist_frame = ttk.Frame(self)
         checklist_frame.pack(fill="x", pady=(12, 8), padx=12)
         ttk.Label(checklist_frame, text="Apply to selected checklists:").pack(side="left")
@@ -36,7 +37,7 @@ class MultiRuleInputDialog(tk.Toplevel):
             ttk.Checkbutton(checklist_frame, text=f, variable=var).pack(side="left", padx=6)
             self.cklb_vars.append((f, var))
 
-        # Bulk fill controls above grid
+        # Bulk Fill
         bulk_frame = ttk.Frame(self)
         bulk_frame.pack(fill="x", padx=12, pady=(0, 10))
         ttk.Label(bulk_frame, text="Bulk Fill Status:").pack(side="left")
@@ -50,7 +51,7 @@ class MultiRuleInputDialog(tk.Toplevel):
         comment_bulk_entry.pack(side="left", padx=5)
         ttk.Button(bulk_frame, text="Apply to all", command=self.bulk_fill).pack(side="left", padx=10)
 
-        # Scrollable table area
+        # Scrollable Table
         canvas_frame = ttk.Frame(self)
         canvas_frame.pack(fill="both", expand=True, padx=12)
         canvas = tk.Canvas(canvas_frame, height=300, bg="#f5f5f5", highlightthickness=0)
@@ -62,39 +63,53 @@ class MultiRuleInputDialog(tk.Toplevel):
         canvas.pack(side="left", fill="both", expand=True)
         scroll.pack(side="right", fill="y")
 
-        # Table headers
-        headers = ["Rule Title", "Status", "Comment", "Ignore"]
+        # Table Headers
+        headers = ["ID", "Rule Title", "Status", "Comment", "Ignore"]
+        col_weights = [0, 1, 0, 2, 0]
         for c, col in enumerate(headers):
             ttk.Label(self.table_frame, text=col, font=('TkDefaultFont', 10, 'bold')).grid(row=0, column=c, padx=5, pady=3, sticky="nsew")
-            self.table_frame.columnconfigure(c, weight=1 if c == 0 else 0)
+            self.table_frame.columnconfigure(c, weight=col_weights[c])
 
-        # Table rows
+        # Rows
         self.entries = []
         for i, rule in enumerate(new_rules, 1):
             bg = "#f0f4fc" if i % 2 == 0 else "#ffffff"
-            label = ttk.Label(self.table_frame, text=rule["rule_title"] or rule["group_id_src"], background=bg, anchor="w")
-            label.grid(row=i, column=0, sticky="nsew", padx=5, pady=2)
+            row_id = rule["group_id_src"]
+            rule_title = rule["rule_title"] or row_id
+
+            # ID
+            ttk.Label(self.table_frame, text=row_id, background=bg, anchor="w").grid(row=i, column=0, sticky="nsew", padx=5, pady=2)
+
+            # Rule Title (wrapped)
+            title_lbl = ttk.Label(self.table_frame, text=rule_title, background=bg, anchor="w", wraplength=300, justify="left")
+            title_lbl.grid(row=i, column=1, sticky="nsew", padx=5, pady=2)
+
+            # Status
             status_var = tk.StringVar(value="not_reviewed")
             status_cb = ttk.Combobox(self.table_frame, textvariable=status_var,
                 values=["not_reviewed", "not_applicable", "open", "not_a_finding"], state="readonly", width=18)
-            status_cb.grid(row=i, column=1, padx=5, pady=2)
+            status_cb.grid(row=i, column=2, padx=5, pady=2)
             status_cb.configure(background=bg)
+
+            # Comment (wrapped to 3 lines)
             comment_var = tk.StringVar()
-            comment_entry = ttk.Entry(self.table_frame, textvariable=comment_var, width=40)
-            comment_entry.grid(row=i, column=2, padx=5, pady=2)
-            comment_entry.configure(background=bg)
+            comment_entry = tk.Text(self.table_frame, height=3, width=40, wrap="word", background=bg)
+            comment_entry.grid(row=i, column=3, sticky="nsew", padx=5, pady=2)
+
+            # Ignore
             ignore_var = tk.BooleanVar(value=False)
             ignore_cb = ttk.Checkbutton(self.table_frame, variable=ignore_var)
-            ignore_cb.grid(row=i, column=3, padx=5, pady=2)
+            ignore_cb.grid(row=i, column=4, padx=5, pady=2)
             ignore_cb.configure(style="Toolbutton")
+
             self.entries.append({
-                "group_id_src": rule["group_id_src"],
+                "group_id_src": row_id,
                 "status_var": status_var,
-                "comment_var": comment_var,
+                "comment_widget": comment_entry,
                 "ignore_var": ignore_var
             })
 
-        # Action buttons at the bottom, centered
+        # Buttons
         btns = ttk.Frame(self)
         btns.pack(pady=(12, 8))
         ttk.Button(btns, text="OK", command=self.on_apply, width=10).pack(side="left", padx=12)
@@ -106,7 +121,8 @@ class MultiRuleInputDialog(tk.Toplevel):
         for e in self.entries:
             if not e["ignore_var"].get():
                 e["status_var"].set(value)
-                e["comment_var"].set(comment)
+                e["comment_widget"].delete("1.0", "end")
+                e["comment_widget"].insert("1.0", comment)
 
     def on_apply(self):
         selected_cklbs = [fname for fname, var in self.cklb_vars if var.get()]
@@ -117,7 +133,7 @@ class MultiRuleInputDialog(tk.Toplevel):
             results.append({
                 "group_id_src": entry["group_id_src"],
                 "status": entry["status_var"].get(),
-                "comments": entry["comment_var"].get()
+                "comments": entry["comment_widget"].get("1.0", "end").strip()
             })
         self.result = {
             "apply_cklbs": selected_cklbs,
