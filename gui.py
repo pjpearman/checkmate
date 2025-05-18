@@ -232,33 +232,30 @@ frame.pack(fill=tk.BOTH, expand=True)
 top_controls = ttk.Labelframe(frame, text="Scrape and Baseline Options", padding=18, style="TLabelframe")
 top_controls.grid(row=0, column=0, columnspan=3, sticky="ew", pady=(0, 18), padx=0)
 
-# Scrape Mode Row
-scrape_row = ttk.Frame(top_controls, style="TLabelframe")
-scrape_row.grid(row=0, column=0, columnspan=3, sticky="ew", pady=(0, 8))
-ttk.Label(scrape_row, text="Scrape Mode:", font=LABEL_FONT).grid(row=0, column=0, padx=(0, 10), sticky="w")
-ttk.Combobox(scrape_row, textvariable=mode_var, values=["benchmark", "checklist", "application", "network", "all"], state="readonly", width=15).grid(row=0, column=1, padx=(0, 10), sticky="w")
-ttk.Checkbutton(scrape_row, text="Headful Browser", variable=headful_var).grid(row=0, column=2, padx=(0, 10), sticky="w")
+# Use a single grid for all controls in top_controls for perfect alignment
+scrape_label = ttk.Label(top_controls, text="Scrape Mode:", font=LABEL_FONT)
+scrape_label.grid(row=0, column=0, padx=(0, 10), pady=4, sticky="w")
+scrape_combo = ttk.Combobox(top_controls, textvariable=mode_var, values=["benchmark", "checklist", "application", "network", "all"], state="readonly", width=15)
+scrape_combo.grid(row=0, column=1, padx=(0, 10), pady=4, sticky="ew")
+headful_cb = ttk.Checkbutton(top_controls, text="Headful Browser", variable=headful_var)
+headful_cb.grid(row=0, column=2, padx=(0, 10), pady=4, sticky="w")
 
-# Baseline YAML Row
-yaml_row = ttk.Frame(top_controls, style="TLabelframe")
-yaml_row.grid(row=1, column=0, columnspan=3, sticky="ew", pady=(0, 8))
-ttk.Label(yaml_row, text="Baseline YAML:", font=LABEL_FONT).grid(row=0, column=0, padx=(0, 10), sticky="w")
-ttk.Entry(yaml_row, textvariable=yaml_path_var, width=50).grid(row=0, column=1, padx=(0, 10), sticky="ew")
-ttk.Button(yaml_row, text="Browse", command=lambda: yaml_path_var.set(
+yaml_label = ttk.Label(top_controls, text="Baseline YAML:", font=LABEL_FONT)
+yaml_label.grid(row=1, column=0, padx=(0, 10), pady=4, sticky="w")
+yaml_entry = ttk.Entry(top_controls, textvariable=yaml_path_var, width=50)
+yaml_entry.grid(row=1, column=1, padx=(0, 10), pady=4, sticky="ew")
+yaml_browse = ttk.Button(top_controls, text="Browse", command=lambda: yaml_path_var.set(
     filedialog.askopenfilename(filetypes=[("YAML files", "*.yaml")])
-)).grid(row=0, column=2, sticky="w")
-yaml_row.columnconfigure(1, weight=1)
+))
+yaml_browse.grid(row=1, column=2, padx=(0, 10), pady=4, sticky="w")
 
-# Download/Extract Row
-opt_row = ttk.Frame(top_controls, style="TLabelframe")
-opt_row.grid(row=2, column=0, columnspan=3, sticky="ew", pady=(0, 8))
-ttk.Checkbutton(opt_row, text="Download ZIPs for updated items", variable=download_var).grid(row=0, column=0, padx=(0, 20), sticky="w")
-ttk.Checkbutton(opt_row, text="Extract .xccdf and generate checklist", variable=extract_var).grid(row=0, column=1, sticky="w")
-opt_row.columnconfigure(2, weight=1)
+download_cb = ttk.Checkbutton(top_controls, text="Download ZIPs for updated items", variable=download_var)
+download_cb.grid(row=2, column=0, padx=(0, 10), pady=4, sticky="w")
+extract_cb = ttk.Checkbutton(top_controls, text="Extract .xccdf and generate checklist", variable=extract_var)
+extract_cb.grid(row=2, column=1, padx=(0, 10), pady=4, sticky="w")
 
-# Task Buttons Column (stacked, top left)
 btn_col = ttk.Frame(top_controls, style="TLabelframe")
-btn_col.grid(row=0, column=3, rowspan=3, sticky="nsw", padx=(30,0))
+btn_col.grid(row=0, column=3, rowspan=3, padx=(30,0), pady=4, sticky="nsew")
 ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=lambda: run_generate_baseline_task(
     mode=mode_var.get(),
     headful=headful_var.get(),
@@ -277,9 +274,9 @@ ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=lambda: ru
     on_cklb_refresh=refresh_cklb_combobox
 )).pack(fill="x")
 
-# Expand top_controls to fill horizontally
-for i in range(4):
+for i in range(3):
     top_controls.columnconfigure(i, weight=1)
+top_controls.columnconfigure(3, weight=0)
 
 # === Separator ===
 sep1 = ttk.Separator(frame, orient="horizontal")
@@ -290,33 +287,29 @@ merge_area = ttk.Labelframe(frame, text="Checklist Merge & Upgrade", padding=18,
 merge_area.grid(row=2, column=0, columnspan=3, sticky="nsew", pady=(0, 18))
 frame.rowconfigure(2, weight=2)
 
-# Left: User CKLBs
 left_panel = ttk.Frame(merge_area, style="TLabelframe")
-left_panel.grid(row=0, column=0, sticky='nsew', padx=(0, 18))
+left_panel.grid(row=0, column=0, sticky='nsew', padx=(0, 18), pady=4)
 merge_area.columnconfigure(0, weight=2)
 merge_area.rowconfigure(0, weight=1)
-ttk.Label(left_panel, text="Select one or more CKLBs to upgrade", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT).pack(anchor="w", pady=(0, 8))
+ttk.Label(left_panel, text="Select one or more CKLBs to upgrade", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT, anchor="w").pack(fill="x", pady=(0, 8))
 left_scrollbar = ttk.Scrollbar(left_panel, orient=tk.VERTICAL)
 file_listbox = tk.Listbox(left_panel, selectmode=tk.MULTIPLE, exportselection=False, yscrollcommand=left_scrollbar.set, font=LABEL_FONT, bg="#f0f4fc", relief="flat", borderwidth=1, highlightthickness=0)
 left_scrollbar.config(command=file_listbox.yview)
 file_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 left_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-# Center: Update Button
 center_panel = ttk.Frame(merge_area, style="TLabelframe")
-center_panel.grid(row=0, column=1, sticky='nsew', padx=(0, 18))
+center_panel.grid(row=0, column=1, sticky='nsew', padx=(0, 18), pady=4)
 merge_area.columnconfigure(1, weight=1)
 ttk.Button(center_panel, text="Update Now", style="Accent.TButton", command=update_now_handler).pack(pady=40, fill="x")
 
-# Right: New CKLB Version
 right_panel = ttk.Frame(merge_area, style="TLabelframe")
-right_panel.grid(row=0, column=2, sticky='nsew')
+right_panel.grid(row=0, column=2, sticky='nsew', pady=4)
 merge_area.columnconfigure(2, weight=2)
-ttk.Label(right_panel, text="Select new cklb version", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT).pack(anchor="w", pady=(0, 8))
+ttk.Label(right_panel, text="Select new cklb version", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT, anchor="w").pack(fill="x", pady=(0, 8))
 cklb_combobox = ttk.Combobox(right_panel, textvariable=cklb_sel_var, values=cklb_files, state='readonly', font=LABEL_FONT)
 cklb_combobox.pack(fill="x", padx=(0, 10))
 
-# Populate the listbox with files
 file_listbox.delete(0, tk.END)
 for f in usr_files:
     file_listbox.insert(tk.END, f)
