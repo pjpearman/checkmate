@@ -287,29 +287,39 @@ merge_area = ttk.Labelframe(frame, text="Checklist Merge & Upgrade", padding=18,
 merge_area.grid(row=2, column=0, columnspan=3, sticky="nsew", pady=(0, 18))
 frame.rowconfigure(2, weight=2)
 
-left_panel = ttk.Frame(merge_area, style="TLabelframe")
-left_panel.grid(row=0, column=0, sticky='nsew', padx=(0, 18), pady=4)
-merge_area.columnconfigure(0, weight=2)
-merge_area.rowconfigure(0, weight=1)
-ttk.Label(left_panel, text="Select one or more CKLBs to upgrade", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT, anchor="w").pack(fill="x", pady=(0, 8))
-left_scrollbar = ttk.Scrollbar(left_panel, orient=tk.VERTICAL)
-file_listbox = tk.Listbox(left_panel, selectmode=tk.MULTIPLE, exportselection=False, yscrollcommand=left_scrollbar.set, font=LABEL_FONT, bg="#f0f4fc", relief="flat", borderwidth=1, highlightthickness=0)
+# Use a single grid for all controls in merge_area for perfect alignment
+# Clear any previous widgets
+for widget in merge_area.winfo_children():
+    widget.destroy()
+
+# Left: User CKLBs
+left_label = ttk.Label(merge_area, text="Select one or more CKLBs to upgrade", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT, anchor="w")
+left_label.grid(row=0, column=0, padx=(0, 10), pady=(0, 6), sticky="w")
+left_scrollbar = ttk.Scrollbar(merge_area, orient=tk.VERTICAL)
+file_listbox = tk.Listbox(merge_area, selectmode=tk.MULTIPLE, exportselection=False, yscrollcommand=left_scrollbar.set, font=LABEL_FONT, bg="#f0f4fc", relief="flat", borderwidth=1, highlightthickness=0)
 left_scrollbar.config(command=file_listbox.yview)
-file_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-left_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+file_listbox.grid(row=1, column=0, sticky="nsew", padx=(0, 10), pady=(0, 8))
+left_scrollbar.grid(row=1, column=1, sticky="ns", pady=(0, 8))
+merge_area.rowconfigure(1, weight=1)
+merge_area.columnconfigure(0, weight=2)
 
-center_panel = ttk.Frame(merge_area, style="TLabelframe")
-center_panel.grid(row=0, column=1, sticky='nsew', padx=(0, 18), pady=4)
-merge_area.columnconfigure(1, weight=1)
-ttk.Button(center_panel, text="Update Now", style="Accent.TButton", command=update_now_handler).pack(pady=40, fill="x")
+# Center: Update Button (now visible and vertically centered)
+center_label = ttk.Label(merge_area, text="", font=HEADER_FONT, background=SECTION_BG)
+center_label.grid(row=0, column=2, padx=(0, 10), pady=(0, 6), sticky="w")  # Empty label for alignment
+update_btn = ttk.Button(merge_area, text="Update Now", style="Accent.TButton", command=update_now_handler)
+update_btn.grid(row=1, column=2, sticky="n", padx=(0, 18), pady=(20, 8))
+merge_area.columnconfigure(2, weight=1)
 
+# Right: New CKLB Version
+right_label = ttk.Label(merge_area, text="Select new cklb version", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT, anchor="w")
+right_label.grid(row=0, column=3, padx=(0, 10), pady=(0, 6), sticky="w")
 right_panel = ttk.Frame(merge_area, style="TLabelframe")
-right_panel.grid(row=0, column=2, sticky='nsew', pady=4)
-merge_area.columnconfigure(2, weight=2)
-ttk.Label(right_panel, text="Select new cklb version", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT, anchor="w").pack(fill="x", pady=(0, 8))
+right_panel.grid(row=1, column=3, sticky='nsew', pady=(0, 8))
+merge_area.columnconfigure(3, weight=2)
 cklb_combobox = ttk.Combobox(right_panel, textvariable=cklb_sel_var, values=cklb_files, state='readonly', font=LABEL_FONT)
 cklb_combobox.pack(fill="x", padx=(0, 10))
 
+# Populate the listbox with files
 file_listbox.delete(0, tk.END)
 for f in usr_files:
     file_listbox.insert(tk.END, f)
