@@ -15,8 +15,10 @@ class GuiLogger(logging.Handler):
 
     def emit(self, record):
         msg = self.format(record)
+        self.text_widget.configure(state="normal")
         self.text_widget.insert(tk.END, msg + '\n')
         self.text_widget.see(tk.END)
+        self.text_widget.configure(state="disabled")
 
 # === New Rule Input Dialog ===
 class MultiRuleInputDialog(tk.Toplevel):
@@ -333,7 +335,7 @@ log_area = ttk.Labelframe(frame, text="Logs & Status", padding=12, style="TLabel
 log_area.grid(row=4, column=0, columnspan=3, sticky="nsew")
 frame.rowconfigure(4, weight=1)
 
-log_output = scrolledtext.ScrolledText(log_area, height=8, wrap=tk.WORD, font=("Consolas", 10), bg="#f0f4fc", relief="flat", borderwidth=1)
+log_output = scrolledtext.ScrolledText(log_area, height=8, wrap=tk.WORD, font=("Consolas", 10), bg="#f0f4fc", relief="flat", borderwidth=1, state="disabled")
 log_output.pack(fill="both", expand=True, pady=(0, 8))
 
 ttk.Label(log_area, textvariable=status_text, foreground=ACCENT, font=LABEL_FONT, background=SECTION_BG).pack(anchor="w", pady=(0, 2))
