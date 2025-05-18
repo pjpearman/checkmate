@@ -31,4 +31,12 @@
 ### Added 
 - Added Support for "Network-Perimeter" STIG Mode
 - Included baseline output as baseline_applications.yaml
+
+## CheckMate v2.0.0-rc1
+- Added: Multi-rule editing pop-up with new rule handling logic
+- Improved: UI layout and button styling for consistency
+- Adjusted: Table formatting for wrapped Rule Title and Comments
+- Added: Tooltips and layout refinements for modern UX
+- Ready for early adopter feedback and real-world checklist testing
+
 - Supports download, XCCDF extraction, and .cklb generation workflows
