@@ -182,6 +182,7 @@ def refresh_usr_listbox():
 
 # === Handler must come after widgets ===
 def update_now_handler():
+    log_job_status("[INFO] Job started: Merging/updating checklists...")
     selected_old_files = [file_listbox.get(i) for i in file_listbox.curselection()]
     new_name = cklb_sel_var.get()
     merged_results = run_merge_task(
@@ -206,6 +207,7 @@ def update_now_handler():
                                 rule["comments"] = rule_entry["comments"]
                 save_cklb(result["merged_path"], merged_cklb)
                 status_text.set(f"Updated {len(user_input['rules'])} new rules in {result['merged_name']}")
+    log_job_status("[INFO] Job complete: Merge/update finished.")
 
 style = ttk.Style()
 style.theme_use("clam")
@@ -229,6 +231,53 @@ style.configure("TLabelframe.Label", font=HEADER_FONT, background=SECTION_BG, fo
 
 frame = ttk.Frame(root, padding=18, style="TLabelframe", relief="flat")
 frame.pack(fill=tk.BOTH, expand=True)
+
+# === Job Status Feedback Helper ===
+def log_job_status(message):
+    log_output.configure(state="normal")
+    log_output.insert(tk.END, message + '\n')
+    log_output.see(tk.END)
+    log_output.configure(state="disabled")
+
+# === Modified Button Commands with Feedback ===
+def run_generate_baseline_with_feedback():
+    log_job_status("[INFO] Job started: Generating new baseline...")
+    def on_status_update(status):
+        status_text.set(status)
+        if status == "Done":
+            log_job_status("[INFO] Job complete: Baseline generation finished.")
+        elif status.startswith("Error"):
+            log_job_status(f"[ERROR] {status}")
+    run_generate_baseline_task(
+        mode=mode_var.get(),
+        headful=headful_var.get(),
+        on_status_update=on_status_update,
+        clear_log=lambda: log_output.delete(1.0, tk.END)
+    )
+
+def import_cklb_with_feedback():
+    log_job_status("[INFO] Job started: Importing CKLB library...")
+    import_cklb_files(on_import_complete=refresh_usr_listbox)
+    log_job_status("[INFO] Job complete: CKLB import finished.")
+
+def run_compare_with_feedback():
+    log_job_status("[INFO] Job started: Running tasks...")
+    def on_status_update(status):
+        status_text.set(status)
+        if status == "Done":
+            log_job_status("[INFO] Job complete: Tasks finished.")
+        elif status.startswith("Error"):
+            log_job_status(f"[ERROR] {status}")
+    run_compare_task(
+        mode=mode_var.get(),
+        headful=headful_var.get(),
+        baseline_path=yaml_path_var.get(),
+        download_updates_checked=download_var.get(),
+        extract_checked=extract_var.get(),
+        on_status_update=on_status_update,
+        clear_log=lambda: log_output.delete(1.0, tk.END),
+        on_cklb_refresh=refresh_cklb_combobox
+    )
 
 # === Top Controls Group ===
 top_controls = ttk.Labelframe(frame, text="Scrape and Baseline Options", padding=18, style="TLabelframe")
@@ -258,23 +307,9 @@ extract_cb.grid(row=2, column=1, padx=(0, 10), pady=4, sticky="w")
 
 btn_col = ttk.Frame(top_controls, style="TLabelframe")
 btn_col.grid(row=0, column=3, rowspan=3, padx=(30,0), pady=4, sticky="nsew")
-ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=lambda: run_generate_baseline_task(
-    mode=mode_var.get(),
-    headful=headful_var.get(),
-    on_status_update=status_text.set,
-    clear_log=lambda: log_output.delete(1.0, tk.END)
-)).pack(fill="x", pady=(0, 10))
-ttk.Button(btn_col, text="Import CKLB Library", style="Accent.TButton", command=lambda: import_cklb_files(on_import_complete=refresh_usr_listbox)).pack(fill="x", pady=(0, 10))
-ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=lambda: run_compare_task(
-    mode=mode_var.get(),
-    headful=headful_var.get(),
-    baseline_path=yaml_path_var.get(),
-    download_updates_checked=download_var.get(),
-    extract_checked=extract_var.get(),
-    on_status_update=status_text.set,
-    clear_log=lambda: log_output.delete(1.0, tk.END),
-    on_cklb_refresh=refresh_cklb_combobox
-)).pack(fill="x")
+ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=run_generate_baseline_with_feedback).pack(fill="x", pady=(0, 10))
+ttk.Button(btn_col, text="Import CKLB Library", style="Accent.TButton", command=import_cklb_with_feedback).pack(fill="x", pady=(0, 10))
+ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=run_compare_with_feedback).pack(fill="x")
 
 for i in range(3):
     top_controls.columnconfigure(i, weight=1)
