@@ -74,6 +74,7 @@ See the full license text here: [CC BY-NC 4.0](https://creativecommons.org/licen
     ```
     - On Windows, activate with:
       ```cmd
+      python -m venv stigvenv
       stigvenv\Scripts\activate
       ```
 
