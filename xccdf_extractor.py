@@ -19,18 +19,17 @@ def extract_xccdf_from_zip(zip_path: str, output_dir: str = "cklb_proc/xccdf_lib
                 logging.warning(f"No '-xccdf.xml' file found in {zip_path}")
                 return None
 
-            xccdf_file = matching[0]
-            logging.info(f"Extracting {xccdf_file} from {os.path.basename(zip_path)}")
-
-            # Flatten the path
-            with zf.open(xccdf_file) as source, open(os.path.join(output_dir, os.path.basename(xccdf_file)), 'wb') as target:
-                target.write(source.read())
-
-            extracted_path = os.path.join(output_dir, os.path.basename(xccdf_file))
+            extracted_paths = []
+            for xccdf_file in matching:
+                logging.info(f"Extracting {xccdf_file} from {os.path.basename(zip_path)}")
+                out_path = os.path.join(output_dir, os.path.basename(xccdf_file))
+                with zf.open(xccdf_file) as source, open(out_path, 'wb') as target:
+                    target.write(source.read())
+                extracted_paths.append(out_path)
 
         os.remove(zip_path)
         logging.info(f"Deleted original ZIP: {os.path.basename(zip_path)}")
-        return extracted_path
+        return extracted_paths
     except Exception as e:
         logging.error(f"Failed to extract XCCDF from {zip_path}: {e}")
         return None

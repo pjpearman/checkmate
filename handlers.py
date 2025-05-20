@@ -69,20 +69,23 @@ def run_compare_task(mode, headful, baseline_path, download_updates_checked, ext
                     for item in changed_items:
                         zip_name = os.path.basename(item.get("URL", ""))
                         zip_path = os.path.join(zip_dir, zip_name)
-                        xccdf_path = extract_xccdf_from_zip(zip_path, zip_dir)
+                        xccdf_paths = extract_xccdf_from_zip(zip_path, zip_dir)
 
-                        if xccdf_path:
-                            try:
-                                cklb_json = generate_cklb_json(xccdf_path)
-                                basename = os.path.basename(xccdf_path).replace("-xccdf.xml", "").replace("Manual", "").strip("_- ")
-                                date_str = datetime.today().strftime("%Y%m%d")
-                                outfile_name = f"{basename}_{date_str}.cklb"
-                                outfile = os.path.join(out_dir, outfile_name)
-                                with open(outfile, 'w') as f:
-                                    json.dump(cklb_json, f, indent=2)
-                                logging.info(f"Generated checklist: {outfile}")
-                            except Exception as e:
-                                logging.error(f"Failed to generate checklist from {xccdf_path}: {e}")
+                        if xccdf_paths:
+                            if not isinstance(xccdf_paths, list):
+                                xccdf_paths = [xccdf_paths]
+                            for xccdf_path in xccdf_paths:
+                                try:
+                                    cklb_json = generate_cklb_json(xccdf_path)
+                                    basename = os.path.basename(xccdf_path).replace("-xccdf.xml", "").replace("Manual", "").strip("_- ")
+                                    date_str = datetime.today().strftime("%Y%m%d")
+                                    outfile_name = f"{basename}_{date_str}.cklb"
+                                    outfile = os.path.join(out_dir, outfile_name)
+                                    with open(outfile, 'w') as f:
+                                        json.dump(cklb_json, f, indent=2)
+                                    logging.info(f"Generated checklist: {outfile}")
+                                except Exception as e:
+                                    logging.error(f"Failed to generate checklist from {xccdf_path}: {e}")
 
             on_status_update("Done")
             if on_cklb_refresh:
