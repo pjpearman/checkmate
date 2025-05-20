@@ -3,6 +3,22 @@ import json
 import argparse
 from copy import deepcopy
 
+def find_new_rules(old_data, new_data):
+    """Return a list of new rule dicts (group_id_src, rule_title, stig uuid, stig display_name)."""
+    old_gids = {rule.get("group_id_src") for stig in old_data.get("stigs", []) for rule in stig.get("rules", [])}
+    new_rules = []
+    for stig in new_data.get("stigs", []):
+        for rule in stig.get("rules", []):
+            gid = rule.get("group_id_src")
+            if gid not in old_gids:
+                new_rules.append({
+                    "group_id_src": gid,
+                    "rule_title": rule.get("rule_title", ""),
+                    "stig_uuid": stig.get("uuid"),
+                    "stig_display": stig.get("display_name"),
+                })
+    return new_rules
+
 def load_cklb(path):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)

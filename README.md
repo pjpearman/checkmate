@@ -19,12 +19,12 @@ View a demo on YouTube https://youtu.be/ZzG2VTA47JI
 
 Supports:
 - STIG Benchmarks (SCAP/XCCDF)
-- STIG Checklists (ZIP/PDF). Currently only Operating Systems. 
+- STIG Checklists (ZIP/PDF). Support OS, Applications, and Network Checklists 
 - `.cklb` JSON format (compatible with DISA STIG Viewer 3)
 
 Planned:
-- Application checklist support coming soon.
-- Containerization being examined.
+- v2.0.0 - New rule handling. Prompts user for state and comments when new rules are discovered during version upgrade.
+- Containerization is being examined.
 
 ---
 
@@ -80,8 +80,8 @@ Features:
 
 Work Flow
 1. Create and edit a checklist baseline to match your environment. For testing, edit the release and or versions.
-2. Import a completed checklist
-3. Select a old checklist and new checklist version to update.
+2. Import completed checklists.
+3. Bulk updates. Select older completed checklists and transfer the data into the latest version.
 
 NOTE: checklist storage is currently in /cklb_proc/...
 
