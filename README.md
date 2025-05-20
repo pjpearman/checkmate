@@ -6,24 +6,35 @@
 
 View a demo on YouTube https://youtu.be/ZzG2VTA47JI 
 
+## What's New in v2.0.0
+
+- 🚀 **Major GUI Redesign:** Modern, aligned, and user-friendly layout for checklist merging and downloads.
+- 📥 **Download New CKLB:** Export updated checklists with a dedicated button and popup.
+- ⚡ **Instant Feedback:** Immediate log/status feedback in the GUI for all long-running jobs.
+- 📝 **Multi-rule Editing:** Pop-up for new rules during checklist upgrades, with batch-edit support.
+- 🛠️ **Improved Batch Upgrade:** Enhanced workflow for merging and upgrading checklists.
+- 🧰 **Better Error/Status Reporting:** More robust file selection, directory prompts, and error handling.
+- 🎨 **Consistent Modern Styling:** All controls and buttons now match a modern style and are consistently sized.
+
+---
+
 ### Core Features:
 
 - ✅ **Comparison Mode:** Compares downloaded STIG metadata to a YAML baseline.
 - ✅ **Baseline Generation:** Creates new baseline files for future comparisons.
 - ✅ **ZIP Downloading:** Fetches updated STIG ZIP files when changes are detected.
 - ✅ **Checklist Generator:** Extracts `-xccdf.xml` files and creates `.cklb` checklist files.
-- ✅ **Merge Support:** Merges older `.cklb` checklists with newer versions, preserving history.
-- ✅ **GUI Support:** Tkinter-based interface with status feedback and logging.
+- ✅ **Merge & Upgrade:** Merges older `.cklb` checklists with newer versions, preserving history and handling new rules.
+- ✅ **GUI Support:** Tkinter-based interface with instant status feedback, logging, and export/download features.
 
-> ⚠️ This is not an assessment tool. It complements tools like SCAP, OpenSCAP, and Evaluate-STIG to easily upgrade existing checklists to newer version. 
+> ⚠️ This is not an assessment tool. It complements tools like SCAP, OpenSCAP, and Evaluate-STIG to easily upgrade existing checklists to newer versions.
 
-Supports:
+**Supports:**
 - STIG Benchmarks (SCAP/XCCDF)
-- STIG Checklists (ZIP/PDF). Support OS, Applications, and Network Checklists 
+- STIG Checklists (ZIP/PDF) for OS, Applications, and Network
 - `.cklb` JSON format (compatible with DISA STIG Viewer 3)
 
 Planned:
-- v2.0.0 - New rule handling. Prompts user for state and comments when new rules are discovered during version upgrade.
 - Containerization is being examined.
 
 ---
@@ -39,19 +50,32 @@ See the full license text here: [CC BY-NC 4.0](https://creativecommons.org/licen
 
 ## Install Instructions
 
-**Tested on Ubuntu. Should work anywhere Python and Playwright run.**
+**Tested on Ubuntu, Windows with WSL, and Windows.**
+
+### Windows Users: Install Python First
+
+1. Download Python from [python.org/downloads](https://www.python.org/downloads/).
+2. Run the installer. **IMPORTANT:** On the first screen, check the box that says **"Add Python to PATH"** before clicking Install.
+3. Complete the installation, then open a new Command Prompt to continue with the steps below.
+
+---
 
 1. **Clone the repo**
     ```bash
     git clone https://github.com/pjpearman/stigflow.git
     cd stigflow
     ```
+    - No git? Download Checkmate's {current_release}.zip
 
 2. **Create a Python venv**
     ```bash
     python3 -m venv stigvenv
     source stigvenv/bin/activate
     ```
+    - On Windows, activate with:
+      ```cmd
+      stigvenv\Scripts\activate
+      ```
 
 3. **Install Python packages**
     ```bash
@@ -74,20 +98,24 @@ python gui.py
 ```
 
 Features:
+- Modern, aligned layout for merging, upgrading, and exporting checklists
 - Drop-downs for mode and files
-- Merge and import support
-- Background thread processing with status updates
+- Multi-rule editing pop-up for new rules
+- Download/export updated checklists
+- Background thread processing with instant status/log updates
+- Robust error/status reporting
 
-Work Flow
-1. Create and edit a checklist baseline to match your environment. For testing, edit the release and or versions.
+**Workflow:**
+1. Create and edit a checklist baseline to match your environment.
 2. Import completed checklists.
-3. Bulk updates. Select older completed checklists and transfer the data into the latest version.
+3. Bulk upgrade: select older completed checklists and transfer the data into the latest version.
+4. Download/export updated checklists as needed.
 
-NOTE: checklist storage is currently in /cklb_proc/...
+NOTE: checklist storage is currently in `/cklb_proc/`...
 
 ---
 
-## Usage (CLI)
+## Usage (CLI) (WARNING. The CLI us currently behind in features and may not be stable.)
 
 ### Compare to Baseline
 ```bash
@@ -156,10 +184,11 @@ stigflow/
 
 ## Version
 
-**v1.0.0**
+**v2.0.0**
+- Major GUI redesign, instant feedback, multi-rule editing, and robust export/download support
 - Full GUI + CLI support
 - ZIP, XCCDF, CKLB generation
-- Merging support
+- Merging and batch upgrade support
 - Cleaner modular layout
 
 ---

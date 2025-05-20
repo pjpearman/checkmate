@@ -1,57 +1,66 @@
-# 🚀 CheckMate v2.0.0-rc1 – Release Candidate 1
+# 🚀 CheckMate v2.0.0 – Major Release
 
-**Tag:** `v2.0.0-rc1`  
-**Date:** 2025-05-18  
-**Status:** ✅ Release Candidate  
-**Audience:** Early adopters and contributors
+**Tag:** `v2.0.0`  
+**Date:** 2025-05-20  
+**Status:** ✅ Stable Release  
+**Audience:** All users
 
 ---
 
 ## 🔍 Overview
 
-This release marks a major step toward CheckMate v2.0, delivering a redesigned rule editing workflow and an overhauled UI. It is feature-complete for testing but **not final**. Please report feedback to help shape the final release.
+CheckMate v2.0.0 delivers a fully redesigned, modern GUI for checklist merging, batch upgrades, and exporting, with a focus on usability, workflow, and visual polish. This release is stable and ready for production use.
 
 ---
 
 ## ✨ Highlights
 
-### 🔧 New Rule Handling
-- Full support for multi-rule input dialogs.
-- Batch-edit status/comments across selected rules.
-- Better parsing logic for merging multiple `.cklb` files.
-- More reliable V-Number and STIG ID mapping during import.
+### 🖥️ Major GUI Redesign
+- Modern, aligned, and user-friendly layout for checklist merging and downloads
+- All controls and buttons now match a modern style and are consistently sized
+- Improved alignment and spacing for all controls in the merge area
+- Enhanced accessibility and visual clarity
 
-### 🎨 UI/UX Improvements
-- Task buttons stacked in top-right corner with unified style.
-- Button borders and hover feedback refined for modern flat look.
-- Table layout optimized:
-  - `Rule Title` now wraps to 3 lines.
-  - `Comment` column supports up to 5 lines.
-  - `ID` column shows `V-######` format.
-- Tooltips added across key actions and inputs.
+### 📥 Download & Export
+- "Download New CKLB" button and popup for exporting updated checklists
+- Robust file selection and directory prompts
+
+### ⚡ Instant Feedback & Workflow
+- Immediate log/status feedback in the GUI for all long-running jobs
+- Enhanced error/status reporting throughout the GUI
+- Status and log pane feedback is now instant and accurate
+
+### 📝 Multi-Rule Editing
+- Multi-rule editing pop-up for new rules during checklist upgrades
+- Batch-edit status/comments across selected rules
+
+### 🛠️ Improved Batch Upgrade
+- Improved batch checklist upgrade workflow
+- More reliable V-Number and STIG ID mapping during import
+
+### 🧰 Other Improvements
+- Table formatting for wrapped Rule Title and Comments
+- Tooltips and layout refinements for modern UX
+- Merge and download actions are now more discoverable and user-friendly
+
+### 🐞 Fixes
+- Button alignment and stacking issues in the merge area
+- Spacing between panes and controls for a cleaner look
+- All known issues from previous release candidates
 
 ---
 
-## 🧪 Known Issues
+## 🧭 How to Use
 
-- Rule filtering/sorting still under development.
-- Tooltip copy may contain placeholders.
-- Minor layout inconsistencies on very small displays.
-
----
-
-## 🧭 How to Help
-
-- Run CheckMate using your existing `.cklb` and `.zip` files.
-- Report bugs, issues, or design feedback at:
-  [GitHub Issues](https://github.com/YOUR_REPO/issues)
-- Consider submitting screenshots or logs with UI feedback.
+- Use the GUI for batch upgrades, merging, and exporting checklists.
+- Use the CLI for advanced automation and scripting.
+- See the README for full instructions and workflow tips.
 
 ---
 
 ## 🙌 Gratitude
 
-Thanks to the early adopters and testers shaping CheckMate into a more powerful and intuitive tool. Your feedback is helping define v2.0’s final form.
+Thanks to all testers and contributors for shaping CheckMate into a more powerful and intuitive tool. Your feedback has defined v2.0’s final form.
 
 ---
 
