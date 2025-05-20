@@ -279,6 +279,44 @@ def run_compare_with_feedback():
         on_cklb_refresh=refresh_cklb_combobox
     )
 
+def download_cklb_popup():
+    popup = tk.Toplevel(root)
+    popup.title("Download New CKLB Files")
+    popup.geometry("500x400")
+    popup.grab_set()
+    popup.configure(bg="#f5f5f5")
+
+    ttk.Label(popup, text="Select CKLB(s) to download:", font=HEADER_FONT).pack(pady=(18, 8))
+    updated_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_updated')
+    cklb_files = sorted(os.listdir(updated_dir)) if os.path.isdir(updated_dir) else []
+
+    listbox = tk.Listbox(popup, selectmode=tk.MULTIPLE, font=LABEL_FONT, bg="#f0f4fc", width=60, height=12)
+    for f in cklb_files:
+        listbox.insert(tk.END, f)
+    listbox.pack(padx=18, pady=(0, 18), fill="both", expand=True)
+
+    def do_download():
+        selected = [listbox.get(i) for i in listbox.curselection()]
+        if not selected:
+            tk.messagebox.showwarning("No Selection", "Please select at least one CKLB file.")
+            return
+        dest_dir = filedialog.askdirectory(title="Select Destination Directory")
+        if not dest_dir:
+            return
+        for fname in selected:
+            src = os.path.join(updated_dir, fname)
+            dst = os.path.join(dest_dir, fname)
+            try:
+                with open(src, "rb") as fsrc, open(dst, "wb") as fdst:
+                    fdst.write(fsrc.read())
+            except Exception as e:
+                tk.messagebox.showerror("Copy Error", f"Failed to copy {fname}: {e}")
+        tk.messagebox.showinfo("Download Complete", f"Copied {len(selected)} file(s) to {dest_dir}")
+        popup.destroy()
+
+    ttk.Button(popup, text="Download Selected", style="Accent.TButton", command=do_download).pack(pady=(0, 18))
+    ttk.Button(popup, text="Cancel", command=popup.destroy).pack()
+
 # === Top Controls Group ===
 top_controls = ttk.Labelframe(frame, text="Scrape and Baseline Options", padding=18, style="TLabelframe")
 top_controls.grid(row=0, column=0, columnspan=3, sticky="ew", pady=(0, 18), padx=0)
@@ -340,21 +378,24 @@ left_scrollbar.grid(row=1, column=1, sticky="ns", pady=(0, 8))
 merge_area.rowconfigure(1, weight=1)
 merge_area.columnconfigure(0, weight=2)
 
-# Center: Update Button (now visible and vertically centered)
-center_label = ttk.Label(merge_area, text="", font=HEADER_FONT, background=SECTION_BG)
-center_label.grid(row=0, column=2, padx=(0, 10), pady=(0, 6), sticky="w")  # Empty label for alignment
-update_btn = ttk.Button(merge_area, text="Update Now", style="Accent.TButton", command=update_now_handler)
-update_btn.grid(row=1, column=2, sticky="n", padx=(0, 18), pady=(20, 8))
-merge_area.columnconfigure(2, weight=1)
-
-# Right: New CKLB Version
+# Right: New CKLB Version (move to immediate right of left panel)
 right_label = ttk.Label(merge_area, text="Select new cklb version", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT, anchor="w")
-right_label.grid(row=0, column=3, padx=(0, 10), pady=(0, 6), sticky="w")
+right_label.grid(row=0, column=2, padx=(30, 10), pady=(0, 6), sticky="w")  # Increased left padding
 right_panel = ttk.Frame(merge_area, style="TLabelframe")
-right_panel.grid(row=1, column=3, sticky='nsew', pady=(0, 8))
-merge_area.columnconfigure(3, weight=2)
+right_panel.grid(row=1, column=2, sticky='nsew', pady=(0, 8), padx=(30, 0))  # Increased left padding
+merge_area.columnconfigure(2, weight=2)
 cklb_combobox = ttk.Combobox(right_panel, textvariable=cklb_sel_var, values=cklb_files, state='readonly', font=LABEL_FONT)
 cklb_combobox.pack(fill="x", padx=(0, 10))
+
+# Center: Buttons (move to right margin, align and size like Scrape/Baseline buttons)
+button_col = ttk.Frame(merge_area, style="TLabelframe")
+button_col.grid(row=1, column=3, sticky="nsew", padx=(0, 18), pady=(0, 8))
+merge_area.columnconfigure(3, weight=1)
+
+update_btn = ttk.Button(button_col, text="Update Now", style="Accent.TButton", command=update_now_handler)
+update_btn.pack(fill="x", pady=(0, 10))
+cklb_download_btn = ttk.Button(button_col, text="Download New CKLB", style="Accent.TButton", command=download_cklb_popup)
+cklb_download_btn.pack(fill="x")
 
 # Populate the listbox with files
 file_listbox.delete(0, tk.END)
