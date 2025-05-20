@@ -1,5 +1,32 @@
 # Changelog
 
+## [v2.0.0] - 2025-05-20
+### Added
+- Major GUI redesign: modern, aligned, and user-friendly layout for checklist merging and downloads
+- "Download New CKLB" button and popup for exporting updated checklists
+- Immediate log/status feedback in the GUI for all long-running jobs
+- Multi-rule editing pop-up for new rules during checklist upgrades
+- Improved batch checklist upgrade workflow
+- Enhanced error/status reporting in the GUI
+- More robust file selection and directory prompts
+- Improved alignment and spacing for all controls in the merge area
+- All buttons now match modern style and are consistently sized
+
+### Improved
+- UI layout and button styling for consistency and accessibility
+- Table formatting for wrapped Rule Title and Comments
+- Tooltips and layout refinements for modern UX
+- Status and log pane feedback is now instant and accurate
+- Merge and download actions are now more discoverable and user-friendly
+
+### Fixed
+- Button alignment and stacking issues in the merge area
+- Spacing between panes and controls for a cleaner look
+- All known issues from previous release candidates
+
+### Notes
+- This is a major release focused on usability, workflow, and visual polish for real-world checklist management.
+
 ## [v1.0.0] - 2025-05-13
 ### Added
 - CLI for converting XCCDF to CKLB format
