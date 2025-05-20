@@ -4,7 +4,7 @@
 
 **CheckMate** automates version tracking, checklist generation, and upgrade merging for DISA STIGs.
 
-View a demo on YouTube https://youtu.be/ZzG2VTA47JI 
+View a demo on YouTube https://youtu.be/OVNBn5JiOXQ
 
 ## What's New in v2.0.0
 
