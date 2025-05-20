@@ -277,9 +277,16 @@ def refresh_usr_listbox():
 
 # === Handler must come after widgets ===
 def update_now_handler():
-    log_job_status("[INFO] Job started: Merging/updating checklists...")
+    # Check for selection errors
     selected_old_files = [file_listbox.get(i) for i in file_listbox.curselection()]
     new_name = cklb_sel_var.get()
+    if not selected_old_files:
+        tk.messagebox.showerror("Selection Error", "Please select at least one CKLB to upgrade.")
+        return
+    if not new_name:
+        tk.messagebox.showerror("Selection Error", "Please select a new CKLB version to upgrade to.")
+        return
+    log_job_status("[INFO] Job started: Merging/updating checklists...")
     merged_results = run_merge_task(
         selected_old_files=selected_old_files,
         new_name=new_name,
