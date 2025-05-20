@@ -20,6 +20,91 @@ class GuiLogger(logging.Handler):
         self.text_widget.see(tk.END)
         self.text_widget.configure(state="disabled")
 
+# === Job Status Feedback Helper ===
+def log_job_status(message):
+    log_output.configure(state="normal")
+    log_output.insert(tk.END, message + '\n')
+    log_output.see(tk.END)
+    log_output.configure(state="disabled")
+
+# === Modified Button Commands with Feedback ===
+def run_generate_baseline_with_feedback():
+    log_job_status("[INFO] Job started: Generating new baseline...")
+    def on_status_update(status):
+        status_text.set(status)
+        if status == "Done":
+            log_job_status("[INFO] Job complete: Baseline generation finished.")
+        elif status.startswith("Error"):
+            log_job_status(f"[ERROR] {status}")
+    run_generate_baseline_task(
+        mode=mode_var.get(),
+        headful=headful_var.get(),
+        on_status_update=on_status_update,
+        clear_log=lambda: log_output.delete(1.0, tk.END)
+    )
+
+def import_cklb_with_feedback():
+    log_job_status("[INFO] Job started: Importing CKLB library...")
+    import_cklb_files(on_import_complete=refresh_usr_listbox)
+    log_job_status("[INFO] Job complete: CKLB import finished.")
+
+def run_compare_with_feedback():
+    log_job_status("[INFO] Job started: Running tasks...")
+    def on_status_update(status):
+        status_text.set(status)
+        if status == "Done":
+            log_job_status("[INFO] Job complete: Tasks finished.")
+        elif status.startswith("Error"):
+            log_job_status(f"[ERROR] {status}")
+    run_compare_task(
+        mode=mode_var.get(),
+        headful=headful_var.get(),
+        baseline_path=yaml_path_var.get(),
+        download_updates_checked=download_var.get(),
+        extract_checked=extract_var.get(),
+        on_status_update=on_status_update,
+        clear_log=lambda: log_output.delete(1.0, tk.END),
+        on_cklb_refresh=refresh_cklb_combobox
+    )
+
+def download_cklb_popup():
+    popup = tk.Toplevel(root)
+    popup.title("Download New CKLB Files")
+    popup.geometry("500x400")
+    popup.grab_set()
+    popup.configure(bg="#f5f5f5")
+
+    ttk.Label(popup, text="Select CKLB(s) to download:", font=HEADER_FONT).pack(pady=(18, 8))
+    updated_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_updated')
+    cklb_files = sorted(os.listdir(updated_dir)) if os.path.isdir(updated_dir) else []
+
+    listbox = tk.Listbox(popup, selectmode=tk.MULTIPLE, font=LABEL_FONT, bg="#f0f4fc", width=60, height=12)
+    for f in cklb_files:
+        listbox.insert(tk.END, f)
+    listbox.pack(padx=18, pady=(0, 18), fill="both", expand=True)
+
+    def do_download():
+        selected = [listbox.get(i) for i in listbox.curselection()]
+        if not selected:
+            tk.messagebox.showwarning("No Selection", "Please select at least one CKLB file.")
+            return
+        dest_dir = filedialog.askdirectory(title="Select Destination Directory")
+        if not dest_dir:
+            return
+        for fname in selected:
+            src = os.path.join(updated_dir, fname)
+            dst = os.path.join(dest_dir, fname)
+            try:
+                with open(src, "rb") as fsrc, open(dst, "wb") as fdst:
+                    fdst.write(fsrc.read())
+            except Exception as e:
+                tk.messagebox.showerror("Copy Error", f"Failed to copy {fname}: {e}")
+        tk.messagebox.showinfo("Download Complete", f"Copied {len(selected)} file(s) to {dest_dir}")
+        popup.destroy()
+
+    ttk.Button(popup, text="Download Selected", style="Accent.TButton", command=do_download).pack(pady=(0, 18))
+    ttk.Button(popup, text="Cancel", command=popup.destroy).pack()
+
 # === New Rule Input Dialog ===
 class MultiRuleInputDialog(tk.Toplevel):
     def __init__(self, parent, new_rules, checklist_files):
@@ -148,9 +233,19 @@ class MultiRuleInputDialog(tk.Toplevel):
 
 # === GUI Setup ===
 root = tk.Tk()
-root.title("StigFlow")
-root.geometry("1100x800")
+root.title("CheckMate")
+root.resizable(True, True)  # Allow resizing
 root.configure(bg="#f7fafd")
+
+# Force maximize at launch (Linux/Windows)
+root.update_idletasks()
+try:
+    root.attributes('-zoomed', True)  # Linux/Windows (should maximize at launch)
+except Exception:
+    try:
+        root.attributes('-fullscreen', True)  # macOS fallback
+    except Exception:
+        pass
 
 # === Variables (must be defined before layout) ===
 mode_var = tk.StringVar(value="benchmark")
@@ -232,94 +327,19 @@ style.configure("TLabelframe.Label", font=HEADER_FONT, background=SECTION_BG, fo
 frame = ttk.Frame(root, padding=18, style="TLabelframe", relief="flat")
 frame.pack(fill=tk.BOTH, expand=True)
 
-# === Job Status Feedback Helper ===
-def log_job_status(message):
-    log_output.configure(state="normal")
-    log_output.insert(tk.END, message + '\n')
-    log_output.see(tk.END)
-    log_output.configure(state="disabled")
+# === Getting Started Panel ===
+getting_started = ttk.Labelframe(frame, text="Getting Started", padding=18, style="TLabelframe")
+getting_started.grid(row=0, column=0, sticky="nsew", pady=(0, 18), padx=(0, 18))
+getting_started.columnconfigure(0, weight=1)
+getting_started.rowconfigure(0, weight=1)
 
-# === Modified Button Commands with Feedback ===
-def run_generate_baseline_with_feedback():
-    log_job_status("[INFO] Job started: Generating new baseline...")
-    def on_status_update(status):
-        status_text.set(status)
-        if status == "Done":
-            log_job_status("[INFO] Job complete: Baseline generation finished.")
-        elif status.startswith("Error"):
-            log_job_status(f"[ERROR] {status}")
-    run_generate_baseline_task(
-        mode=mode_var.get(),
-        headful=headful_var.get(),
-        on_status_update=on_status_update,
-        clear_log=lambda: log_output.delete(1.0, tk.END)
-    )
-
-def import_cklb_with_feedback():
-    log_job_status("[INFO] Job started: Importing CKLB library...")
-    import_cklb_files(on_import_complete=refresh_usr_listbox)
-    log_job_status("[INFO] Job complete: CKLB import finished.")
-
-def run_compare_with_feedback():
-    log_job_status("[INFO] Job started: Running tasks...")
-    def on_status_update(status):
-        status_text.set(status)
-        if status == "Done":
-            log_job_status("[INFO] Job complete: Tasks finished.")
-        elif status.startswith("Error"):
-            log_job_status(f"[ERROR] {status}")
-    run_compare_task(
-        mode=mode_var.get(),
-        headful=headful_var.get(),
-        baseline_path=yaml_path_var.get(),
-        download_updates_checked=download_var.get(),
-        extract_checked=extract_var.get(),
-        on_status_update=on_status_update,
-        clear_log=lambda: log_output.delete(1.0, tk.END),
-        on_cklb_refresh=refresh_cklb_combobox
-    )
-
-def download_cklb_popup():
-    popup = tk.Toplevel(root)
-    popup.title("Download New CKLB Files")
-    popup.geometry("500x400")
-    popup.grab_set()
-    popup.configure(bg="#f5f5f5")
-
-    ttk.Label(popup, text="Select CKLB(s) to download:", font=HEADER_FONT).pack(pady=(18, 8))
-    updated_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_updated')
-    cklb_files = sorted(os.listdir(updated_dir)) if os.path.isdir(updated_dir) else []
-
-    listbox = tk.Listbox(popup, selectmode=tk.MULTIPLE, font=LABEL_FONT, bg="#f0f4fc", width=60, height=12)
-    for f in cklb_files:
-        listbox.insert(tk.END, f)
-    listbox.pack(padx=18, pady=(0, 18), fill="both", expand=True)
-
-    def do_download():
-        selected = [listbox.get(i) for i in listbox.curselection()]
-        if not selected:
-            tk.messagebox.showwarning("No Selection", "Please select at least one CKLB file.")
-            return
-        dest_dir = filedialog.askdirectory(title="Select Destination Directory")
-        if not dest_dir:
-            return
-        for fname in selected:
-            src = os.path.join(updated_dir, fname)
-            dst = os.path.join(dest_dir, fname)
-            try:
-                with open(src, "rb") as fsrc, open(dst, "wb") as fdst:
-                    fdst.write(fsrc.read())
-            except Exception as e:
-                tk.messagebox.showerror("Copy Error", f"Failed to copy {fname}: {e}")
-        tk.messagebox.showinfo("Download Complete", f"Copied {len(selected)} file(s) to {dest_dir}")
-        popup.destroy()
-
-    ttk.Button(popup, text="Download Selected", style="Accent.TButton", command=do_download).pack(pady=(0, 18))
-    ttk.Button(popup, text="Cancel", command=popup.destroy).pack()
+# Example content for Getting Started (customize as needed)
+ttks = ttk.Label(getting_started, text="1. Create & Customize Baseline.\n2. Set Custom Baseline. (Used to compare your version against published versions)\n3. Import completed cklb.\n4. Select task options and Run Tasks. \n \nWhen creating your first baseline, CheckMate uses the current release and version info \nfrom the DISA website. This may not align with your current cklbs. Edit the baseline \nto match that of your ver rel.", font=LABEL_FONT, background=SECTION_BG, justify="left", anchor="nw")
+ttks.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
 
 # === Top Controls Group ===
 top_controls = ttk.Labelframe(frame, text="Scrape and Baseline Options", padding=18, style="TLabelframe")
-top_controls.grid(row=0, column=0, columnspan=3, sticky="ew", pady=(0, 18), padx=0)
+top_controls.grid(row=0, column=1, columnspan=2, sticky="nsew", pady=(0, 18), padx=0)
 
 # Use a single grid for all controls in top_controls for perfect alignment
 scrape_label = ttk.Label(top_controls, text="Scrape Mode:", font=LABEL_FONT)
@@ -352,6 +372,11 @@ ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=run_compar
 for i in range(3):
     top_controls.columnconfigure(i, weight=1)
 top_controls.columnconfigure(3, weight=0)
+
+# Adjust frame column weights for new layout
+frame.columnconfigure(0, weight=1)  # Getting Started (left 1/4)
+frame.columnconfigure(1, weight=3)  # Top Controls (right 3/4, spans 2 columns)
+frame.columnconfigure(2, weight=3)
 
 # === Separator ===
 sep1 = ttk.Separator(frame, orient="horizontal")
