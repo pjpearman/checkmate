@@ -1,5 +1,6 @@
 import logging
 from playwright.sync_api import sync_playwright
+import re
 
 # === Constants ===
 SCAP_URL = "https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=scap"
@@ -99,16 +100,33 @@ def parse_rows(rows: list) -> list:
             url, title, updated_date = row
 
             clean_title = title.replace('–', '-')
+            version = "Unknown"
+            release = "Unknown"
+
+            # Try standard " - Ver X, Rel Y"
             if ' - Ver ' in clean_title:
                 product_part, version_part = clean_title.split(' - Ver ')
-                version_number, release_part = version_part.split(', Rel ')
+                if ', Rel ' in version_part:
+                    version_number, release_part = version_part.split(', Rel ')
+                    version = version_number.strip()
+                    release = release_part.strip()
+                else:
+                    version = version_part.strip()
                 product_name = product_part.strip()
-                version = version_number.strip()
-                release = release_part.strip()
             else:
                 product_name = clean_title.strip()
-                version = "Unknown"
-                release = "Unknown"
+                # Try VxRy pattern in title or URL
+                m = re.search(r'V(\d+)[Rr](\d+)', clean_title)
+                if not m:
+                    m = re.search(r'V(\d+)[Rr](\d+)', url)
+                if m:
+                    version, release = m.group(1), m.group(2)
+                # Try YxxMxx (year/month) pattern
+                m2 = re.search(r'Y(\d{2}M\d{2})', clean_title)
+                if not m2:
+                    m2 = re.search(r'Y(\d{2}M\d{2})', url)
+                if m2:
+                    version = f"Y{m2.group(1)}"
 
             parsed_items.append({
                 'Product': product_name,
@@ -120,5 +138,4 @@ def parse_rows(rows: list) -> list:
         except Exception as e:
             logging.error(f"Failed to parse row: {row} ({str(e)})")
             continue
-
     return parsed_items
