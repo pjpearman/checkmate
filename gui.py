@@ -3,6 +3,8 @@ from tkinter import ttk, filedialog, scrolledtext
 import logging
 import os
 import yaml
+import sys
+import threading
 
 from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
@@ -48,16 +50,16 @@ def run_generate_baseline_with_feedback():
             log_job_status("[INFO] Job complete: Baseline generation finished.")
         elif status.startswith("Error"):
             log_job_status(f"[ERROR] {status}")
-    run_generate_baseline_task(
+    threading.Thread(target=lambda: run_generate_baseline_task(
         mode=get_internal_mode(mode_var.get()),
         headful=headful_var.get(),
         on_status_update=on_status_update,
         clear_log=lambda: log_output.delete(1.0, tk.END)
-    )
+    )).start()
 
 def import_cklb_with_feedback():
     log_job_status("[INFO] Job started: Importing CKLB library...")
-    import_cklb_files(on_import_complete=refresh_usr_listbox)
+    threading.Thread(target=lambda: import_cklb_files(on_import_complete=refresh_usr_listbox)).start()
     log_job_status("[INFO] Job complete: CKLB import finished.")
 
 def run_compare_with_feedback():
@@ -68,7 +70,7 @@ def run_compare_with_feedback():
             log_job_status("[INFO] Job complete: Tasks finished.")
         elif status.startswith("Error"):
             log_job_status(f"[ERROR] {status}")
-    run_compare_task(
+    threading.Thread(target=lambda: run_compare_task(
         mode=get_internal_mode(mode_var.get()),
         headful=headful_var.get(),
         baseline_path=yaml_path_var.get(),
@@ -77,7 +79,7 @@ def run_compare_with_feedback():
         on_status_update=on_status_update,
         clear_log=lambda: log_output.delete(1.0, tk.END),
         on_cklb_refresh=refresh_cklb_combobox
-    )
+    )).start()
 
 def download_cklb_popup():
     popup = tk.Toplevel(root)
@@ -112,10 +114,11 @@ def download_cklb_popup():
             except Exception as e:
                 tk.messagebox.showerror("Copy Error", f"Failed to copy {fname}: {e}")
         tk.messagebox.showinfo("Download Complete", f"Copied {len(selected)} file(s) to {dest_dir}")
+        popup.grab_release()
         popup.destroy()
 
     ttk.Button(popup, text="Download Selected", style="Accent.TButton", command=do_download).pack(pady=(0, 18))
-    ttk.Button(popup, text="Cancel", command=popup.destroy).pack()
+    ttk.Button(popup, text="Cancel", command=lambda: [popup.grab_release(), popup.destroy()]).pack()
 
 def run_reset_baseline_with_feedback():
     baseline_path = yaml_path_var.get()
@@ -193,22 +196,28 @@ def run_reset_baseline_with_feedback():
         btn_frame = ttk.Frame(confirm_win)
         btn_frame.pack(fill="x", side="bottom", pady=(0, 12))
         def on_yes():
+            confirm_win.grab_release()
             confirm_win.destroy()
             ok = reset_baseline_fields(baseline_path, selected)
             if ok:
                 tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for {len(selected)} product(s).")
+                sel_win.grab_release()
                 sel_win.destroy()
             else:
                 tk.messagebox.showerror("Reset Failed", f"Failed to reset one or more products. See log for details.")
         def on_no():
+            confirm_win.grab_release()
             confirm_win.destroy()
         ttk.Button(btn_frame, text="Yes", style="Accent.TButton", command=on_yes).pack(side="left", padx=16)
         ttk.Button(btn_frame, text="No", command=on_no).pack(side="left", padx=16)
     # Buttons at the bottom of the popup
     btn_frame = ttk.Frame(sel_win)
     btn_frame.pack(pady=(0, 10))
+    def on_cancel():
+        sel_win.grab_release()
+        sel_win.destroy()
     ttk.Button(btn_frame, text="Reset Baseline", style="Accent.TButton", command=do_reset).pack(side="left", padx=12)
-    ttk.Button(btn_frame, text="Cancel", command=sel_win.destroy).pack(side="left", padx=12)
+    ttk.Button(btn_frame, text="Cancel", command=on_cancel).pack(side="left", padx=12)
 
 # === New Rule Input Dialog ===
 class MultiRuleInputDialog(tk.Toplevel):
@@ -337,10 +346,18 @@ class MultiRuleInputDialog(tk.Toplevel):
         self.destroy()
 
 # === GUI Setup ===
+def on_closing():
+    try:
+        root.destroy()
+    except Exception:
+        pass
+    sys.exit(0)
+
 root = tk.Tk()
 root.title("CheckMate")
 root.resizable(True, True)  # Allow resizing
 root.configure(bg="#f7fafd")
+root.protocol("WM_DELETE_WINDOW", on_closing)
 
 # Force maximize at launch (Linux/Windows)
 #root.update_idletasks()
