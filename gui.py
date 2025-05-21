@@ -351,7 +351,7 @@ getting_started.columnconfigure(0, weight=1)
 getting_started.rowconfigure(0, weight=1)
 
 # Example content for Getting Started (customize as needed)
-ttks = ttk.Label(getting_started, text="1. Create & Customize Baseline.\n2. Set Custom Baseline. (Used to compare your version against published versions.)\n3. Import completed cklb.\n4. Select task options and Run Tasks. (Ensure correct mode selected for selected baseline.) \n \nWhen creating your first baseline, CheckMate uses the current release and version info \nfrom the DISA website. This may not align with your current cklbs. Edit the baseline \nto match that of your version release, ex:RHEL8_v1r2.", font=LABEL_FONT, background=SECTION_BG, justify="left", anchor="nw")
+ttks = ttk.Label(getting_started, text="1. Create & Customize Baseline.\n2. Set Custom Baseline. (Used to compare your version against published versions.)\n3. Import completed cklb.\n4. Select task options and Run Tasks. (Ensure correct mode selected for selected baseline.) \n \nWhen creating your first baseline, CheckMate uses the current release and version info \nfrom the DISA website. This may not align with your current cklbs. Edit the baseline \nto match that of your current cklbs, ex:RHEL8_v1r2.", font=LABEL_FONT, background=SECTION_BG, justify="left", anchor="nw")
 ttks.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
 
 # === Top Controls Group ===
