@@ -28,6 +28,16 @@ def log_job_status(message):
     log_output.configure(state="disabled")
 
 # === Modified Button Commands with Feedback ===
+def get_internal_mode(mode_label):
+    mapping = {
+        "SCAP Benchmarks": "benchmark",
+        "Operating Systems": "checklist",
+        "Applications": "application",
+        "Network": "network",
+        "ALL": "all"
+    }
+    return mapping.get(mode_label, "benchmark")
+
 def run_generate_baseline_with_feedback():
     log_job_status("[INFO] Job started: Generating new baseline...")
     def on_status_update(status):
@@ -37,7 +47,7 @@ def run_generate_baseline_with_feedback():
         elif status.startswith("Error"):
             log_job_status(f"[ERROR] {status}")
     run_generate_baseline_task(
-        mode=mode_var.get(),
+        mode=get_internal_mode(mode_var.get()),
         headful=headful_var.get(),
         on_status_update=on_status_update,
         clear_log=lambda: log_output.delete(1.0, tk.END)
@@ -57,7 +67,7 @@ def run_compare_with_feedback():
         elif status.startswith("Error"):
             log_job_status(f"[ERROR] {status}")
     run_compare_task(
-        mode=mode_var.get(),
+        mode=get_internal_mode(mode_var.get()),
         headful=headful_var.get(),
         baseline_path=yaml_path_var.get(),
         download_updates_checked=download_var.get(),
@@ -248,7 +258,7 @@ root.configure(bg="#f7fafd")
 #        pass
 
 # === Variables (must be defined before layout) ===
-mode_var = tk.StringVar(value="benchmark")
+mode_var = tk.StringVar(value="Operating Systems")
 headful_var = tk.BooleanVar()
 yaml_path_var = tk.StringVar()
 status_text = tk.StringVar(value="Ready")
@@ -351,7 +361,7 @@ top_controls.grid(row=0, column=1, columnspan=2, sticky="nsew", pady=(0, 18), pa
 # Use a single grid for all controls in top_controls for perfect alignment
 scrape_label = ttk.Label(top_controls, text="Scrape Mode:", font=LABEL_FONT)
 scrape_label.grid(row=0, column=0, padx=(0, 10), pady=4, sticky="w")
-scrape_combo = ttk.Combobox(top_controls, textvariable=mode_var, values=["benchmark", "checklist", "application", "network", "all"], state="readonly", width=15)
+scrape_combo = ttk.Combobox(top_controls, textvariable=mode_var, values=["SCAP Benchmarks", "Operating Systems", "Applications", "Network", "ALL"], state="readonly", width=15)
 scrape_combo.grid(row=0, column=1, padx=(0, 10), pady=4, sticky="ew")
 headful_cb = ttk.Checkbutton(top_controls, text="Headful Browser", variable=headful_var)
 headful_cb.grid(row=0, column=2, padx=(0, 10), pady=4, sticky="w")
