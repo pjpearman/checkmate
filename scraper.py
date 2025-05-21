@@ -2,6 +2,7 @@ import logging
 from playwright.sync_api import sync_playwright
 import re
 
+
 # === Constants ===
 SCAP_URL = "https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=scap"
 OS_URL = "https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=operating-systems"
