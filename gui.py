@@ -2,10 +2,12 @@ import tkinter as tk
 from tkinter import ttk, filedialog, scrolledtext
 import logging
 import os
+import yaml
 
 from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
 from selected_merger import load_cklb, save_cklb
+from reset_baseline import reset_baseline_fields
 
 # === Logger ===
 class GuiLogger(logging.Handler):
@@ -114,6 +116,49 @@ def download_cklb_popup():
 
     ttk.Button(popup, text="Download Selected", style="Accent.TButton", command=do_download).pack(pady=(0, 18))
     ttk.Button(popup, text="Cancel", command=popup.destroy).pack()
+
+def run_reset_baseline_with_feedback():
+    baseline_path = yaml_path_var.get()
+    if not baseline_path or not os.path.exists(baseline_path):
+        tk.messagebox.showerror("File Error", "Please select a valid Baseline YAML file.")
+        return
+    # Load YAML and get product list
+    try:
+        with open(baseline_path, 'r') as f:
+            data = yaml.safe_load(f)
+        products = list(data.keys())
+    except Exception as e:
+        tk.messagebox.showerror("YAML Error", f"Failed to load baseline: {e}")
+        return
+    # Ask user to select product
+    sel_win = tk.Toplevel(root)
+    sel_win.title("Select Baseline Product to Reset")
+    sel_win.geometry("400x300")
+    sel_win.grab_set()
+    ttk.Label(sel_win, text="Select a baseline product to reset:", font=HEADER_FONT).pack(pady=(18, 8))
+    prod_var = tk.StringVar()
+    prod_list = tk.Listbox(sel_win, listvariable=tk.StringVar(value=products), height=12)
+    prod_list.pack(fill="both", expand=True, padx=18, pady=(0, 18))
+    def do_reset():
+        sel = prod_list.curselection()
+        if not sel:
+            tk.messagebox.showwarning("No Selection", "Please select a product.")
+            return
+        product = products[sel[0]]
+        confirm = tk.messagebox.askyesno(
+            "Confirm Reset",
+            f"This will set 'Release' and 'Version' to '0' for:\n\n{product}\n\nAre you sure?"
+        )
+        if not confirm:
+            return
+        ok = reset_baseline_fields(baseline_path, product)
+        if ok:
+            tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for '{product}'.")
+            sel_win.destroy()
+        else:
+            tk.messagebox.showerror("Reset Failed", f"Failed to reset '{product}'. See log for details.")
+    ttk.Button(sel_win, text="Reset Baseline", style="Accent.TButton", command=do_reset).pack(pady=(0, 10))
+    ttk.Button(sel_win, text="Cancel", command=sel_win.destroy).pack()
 
 # === New Rule Input Dialog ===
 class MultiRuleInputDialog(tk.Toplevel):
@@ -383,6 +428,7 @@ extract_cb.grid(row=2, column=1, padx=(0, 10), pady=4, sticky="w")
 btn_col = ttk.Frame(top_controls, style="TLabelframe")
 btn_col.grid(row=0, column=3, rowspan=3, padx=(30,0), pady=4, sticky="nsew")
 ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=run_generate_baseline_with_feedback).pack(fill="x", pady=(0, 10))
+ttk.Button(btn_col, text="Reset Baseline", style="Accent.TButton", command=run_reset_baseline_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Import CKLB Library", style="Accent.TButton", command=import_cklb_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=run_compare_with_feedback).pack(fill="x")
 
