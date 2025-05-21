@@ -164,18 +164,46 @@ def run_reset_baseline_with_feedback():
         if not selected:
             tk.messagebox.showwarning("No Selection", "Please select at least one product.")
             return
-        confirm = tk.messagebox.askyesno(
-            "Confirm Reset",
-            f"This will set 'Release' and 'Version' to '0' for:\n\n" + "\n".join(selected) + "\n\nAre you sure?"
-        )
-        if not confirm:
-            return
-        ok = reset_baseline_fields(baseline_path, selected)
-        if ok:
-            tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for {len(selected)} product(s).")
-            sel_win.destroy()
-        else:
-            tk.messagebox.showerror("Reset Failed", f"Failed to reset one or more products. See log for details.")
+        # Custom scrollable confirmation dialog
+        confirm_win = tk.Toplevel(sel_win)
+        confirm_win.title("Confirm Reset")
+        confirm_win.geometry("500x400")
+        confirm_win.minsize(400, 300)
+        confirm_win.grab_set()
+        confirm_win.transient(sel_win)
+        # Frame for message
+        msg_frame = ttk.Frame(confirm_win)
+        msg_frame.pack(fill="both", expand=True, padx=16, pady=16)
+        # Scrollable text for product list
+        msg = "This will set 'Release' and 'Version' to '0' for:\n\n" + "\n".join(selected) + "\n\nAre you sure?"
+        text_canvas = tk.Canvas(msg_frame, borderwidth=0, background=confirm_win.cget('background'))
+        text_frame = ttk.Frame(text_canvas)
+        vsb = ttk.Scrollbar(msg_frame, orient="vertical", command=text_canvas.yview)
+        text_canvas.configure(yscrollcommand=vsb.set)
+        vsb.pack(side="right", fill="y")
+        text_canvas.pack(side="left", fill="both", expand=True)
+        text_canvas.create_window((0,0), window=text_frame, anchor="nw")
+        def on_text_frame_configure(event):
+            text_canvas.configure(scrollregion=text_canvas.bbox("all"))
+        text_frame.bind("<Configure>", on_text_frame_configure)
+        # Message label (wrap text)
+        msg_label = ttk.Label(text_frame, text=msg, wraplength=440, justify="left", font=LABEL_FONT)
+        msg_label.pack(anchor="nw", fill="x", expand=True)
+        # Button frame always at bottom
+        btn_frame = ttk.Frame(confirm_win)
+        btn_frame.pack(fill="x", side="bottom", pady=(0, 12))
+        def on_yes():
+            confirm_win.destroy()
+            ok = reset_baseline_fields(baseline_path, selected)
+            if ok:
+                tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for {len(selected)} product(s).")
+                sel_win.destroy()
+            else:
+                tk.messagebox.showerror("Reset Failed", f"Failed to reset one or more products. See log for details.")
+        def on_no():
+            confirm_win.destroy()
+        ttk.Button(btn_frame, text="Yes", style="Accent.TButton", command=on_yes).pack(side="left", padx=16)
+        ttk.Button(btn_frame, text="No", command=on_no).pack(side="left", padx=16)
     # Buttons at the bottom of the popup
     btn_frame = ttk.Frame(sel_win)
     btn_frame.pack(pady=(0, 10))
