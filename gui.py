@@ -130,35 +130,57 @@ def run_reset_baseline_with_feedback():
     except Exception as e:
         tk.messagebox.showerror("YAML Error", f"Failed to load baseline: {e}")
         return
-    # Ask user to select product
+    # Ask user to select products (checkboxes)
     sel_win = tk.Toplevel(root)
-    sel_win.title("Select Baseline Product to Reset")
-    sel_win.geometry("400x300")
+    sel_win.title("Select Baseline Products to Reset")
+    sel_win.geometry("500x500")
     sel_win.grab_set()
-    ttk.Label(sel_win, text="Select a baseline product to reset:", font=HEADER_FONT).pack(pady=(18, 8))
-    prod_var = tk.StringVar()
-    prod_list = tk.Listbox(sel_win, listvariable=tk.StringVar(value=products), height=12)
-    prod_list.pack(fill="both", expand=True, padx=18, pady=(0, 18))
+    ttk.Label(sel_win, text="Select baseline products to reset:", font=HEADER_FONT).pack(pady=(18, 8))
+    select_all_var = tk.BooleanVar()
+    def on_select_all():
+        for _, var in prod_vars:
+            var.set(select_all_var.get())
+    select_all_cb = ttk.Checkbutton(sel_win, text="Select All", variable=select_all_var, command=on_select_all)
+    select_all_cb.pack(anchor="w", padx=18)
+    # Scrollable frame for checkboxes
+    scroll_canvas = tk.Canvas(sel_win, borderwidth=0, background=sel_win.cget('background'))
+    check_frame = ttk.Frame(scroll_canvas)
+    vsb = ttk.Scrollbar(sel_win, orient="vertical", command=scroll_canvas.yview)
+    scroll_canvas.configure(yscrollcommand=vsb.set)
+    vsb.pack(side="right", fill="y")
+    scroll_canvas.pack(side="left", fill="both", expand=True)
+    scroll_canvas.create_window((0,0), window=check_frame, anchor="nw")
+    def on_frame_configure(event):
+        scroll_canvas.configure(scrollregion=scroll_canvas.bbox("all"))
+    check_frame.bind("<Configure>", on_frame_configure)
+    prod_vars = []
+    for prod in products:
+        var = tk.BooleanVar()
+        cb = ttk.Checkbutton(check_frame, text=prod, variable=var)
+        cb.pack(anchor="w")
+        prod_vars.append((prod, var))
     def do_reset():
-        sel = prod_list.curselection()
-        if not sel:
-            tk.messagebox.showwarning("No Selection", "Please select a product.")
+        selected = [prod for prod, var in prod_vars if var.get()]
+        if not selected:
+            tk.messagebox.showwarning("No Selection", "Please select at least one product.")
             return
-        product = products[sel[0]]
         confirm = tk.messagebox.askyesno(
             "Confirm Reset",
-            f"This will set 'Release' and 'Version' to '0' for:\n\n{product}\n\nAre you sure?"
+            f"This will set 'Release' and 'Version' to '0' for:\n\n" + "\n".join(selected) + "\n\nAre you sure?"
         )
         if not confirm:
             return
-        ok = reset_baseline_fields(baseline_path, product)
+        ok = reset_baseline_fields(baseline_path, selected)
         if ok:
-            tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for '{product}'.")
+            tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for {len(selected)} product(s).")
             sel_win.destroy()
         else:
-            tk.messagebox.showerror("Reset Failed", f"Failed to reset '{product}'. See log for details.")
-    ttk.Button(sel_win, text="Reset Baseline", style="Accent.TButton", command=do_reset).pack(pady=(0, 10))
-    ttk.Button(sel_win, text="Cancel", command=sel_win.destroy).pack()
+            tk.messagebox.showerror("Reset Failed", f"Failed to reset one or more products. See log for details.")
+    # Buttons at the bottom of the popup
+    btn_frame = ttk.Frame(sel_win)
+    btn_frame.pack(pady=(0, 10))
+    ttk.Button(btn_frame, text="Reset Baseline", style="Accent.TButton", command=do_reset).pack(side="left", padx=12)
+    ttk.Button(btn_frame, text="Cancel", command=sel_win.destroy).pack(side="left", padx=12)
 
 # === New Rule Input Dialog ===
 class MultiRuleInputDialog(tk.Toplevel):
