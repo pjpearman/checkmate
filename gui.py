@@ -2,10 +2,12 @@ import tkinter as tk
 from tkinter import ttk, filedialog, scrolledtext
 import logging
 import os
+import yaml
 
 from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
 from selected_merger import load_cklb, save_cklb
+from reset_baseline import reset_baseline_fields
 
 # === Logger ===
 class GuiLogger(logging.Handler):
@@ -114,6 +116,99 @@ def download_cklb_popup():
 
     ttk.Button(popup, text="Download Selected", style="Accent.TButton", command=do_download).pack(pady=(0, 18))
     ttk.Button(popup, text="Cancel", command=popup.destroy).pack()
+
+def run_reset_baseline_with_feedback():
+    baseline_path = yaml_path_var.get()
+    if not baseline_path or not os.path.exists(baseline_path):
+        tk.messagebox.showerror("File Error", "Please select a valid Baseline YAML file.")
+        return
+    # Load YAML and get product list
+    try:
+        with open(baseline_path, 'r') as f:
+            data = yaml.safe_load(f)
+        products = list(data.keys())
+    except Exception as e:
+        tk.messagebox.showerror("YAML Error", f"Failed to load baseline: {e}")
+        return
+    # Ask user to select products (checkboxes)
+    sel_win = tk.Toplevel(root)
+    sel_win.title("Select Baseline Products to Reset")
+    sel_win.geometry("500x500")
+    sel_win.grab_set()
+    ttk.Label(sel_win, text="Select baseline products to reset:", font=HEADER_FONT).pack(pady=(18, 8))
+    select_all_var = tk.BooleanVar()
+    def on_select_all():
+        for _, var in prod_vars:
+            var.set(select_all_var.get())
+    select_all_cb = ttk.Checkbutton(sel_win, text="Select All", variable=select_all_var, command=on_select_all)
+    select_all_cb.pack(anchor="w", padx=18)
+    # Scrollable frame for checkboxes
+    scroll_canvas = tk.Canvas(sel_win, borderwidth=0, background=sel_win.cget('background'))
+    check_frame = ttk.Frame(scroll_canvas)
+    vsb = ttk.Scrollbar(sel_win, orient="vertical", command=scroll_canvas.yview)
+    scroll_canvas.configure(yscrollcommand=vsb.set)
+    vsb.pack(side="right", fill="y")
+    scroll_canvas.pack(side="left", fill="both", expand=True)
+    scroll_canvas.create_window((0,0), window=check_frame, anchor="nw")
+    def on_frame_configure(event):
+        scroll_canvas.configure(scrollregion=scroll_canvas.bbox("all"))
+    check_frame.bind("<Configure>", on_frame_configure)
+    prod_vars = []
+    for prod in products:
+        var = tk.BooleanVar()
+        cb = ttk.Checkbutton(check_frame, text=prod, variable=var)
+        cb.pack(anchor="w")
+        prod_vars.append((prod, var))
+    def do_reset():
+        selected = [prod for prod, var in prod_vars if var.get()]
+        if not selected:
+            tk.messagebox.showwarning("No Selection", "Please select at least one product.")
+            return
+        # Custom scrollable confirmation dialog
+        confirm_win = tk.Toplevel(sel_win)
+        confirm_win.title("Confirm Reset")
+        confirm_win.geometry("500x400")
+        confirm_win.minsize(400, 300)
+        confirm_win.grab_set()
+        confirm_win.transient(sel_win)
+        # Frame for message
+        msg_frame = ttk.Frame(confirm_win)
+        msg_frame.pack(fill="both", expand=True, padx=16, pady=16)
+        # Scrollable text for product list
+        msg = "This will set 'Release' and 'Version' to '0' for:\n\n" + "\n".join(selected) + "\n\nAre you sure?"
+        text_canvas = tk.Canvas(msg_frame, borderwidth=0, background=confirm_win.cget('background'))
+        text_frame = ttk.Frame(text_canvas)
+        vsb = ttk.Scrollbar(msg_frame, orient="vertical", command=text_canvas.yview)
+        text_canvas.configure(yscrollcommand=vsb.set)
+        vsb.pack(side="right", fill="y")
+        text_canvas.pack(side="left", fill="both", expand=True)
+        text_canvas.create_window((0,0), window=text_frame, anchor="nw")
+        def on_text_frame_configure(event):
+            text_canvas.configure(scrollregion=text_canvas.bbox("all"))
+        text_frame.bind("<Configure>", on_text_frame_configure)
+        # Message label (wrap text)
+        msg_label = ttk.Label(text_frame, text=msg, wraplength=440, justify="left", font=LABEL_FONT)
+        msg_label.pack(anchor="nw", fill="x", expand=True)
+        # Button frame always at bottom
+        btn_frame = ttk.Frame(confirm_win)
+        btn_frame.pack(fill="x", side="bottom", pady=(0, 12))
+        def on_yes():
+            confirm_win.destroy()
+            ok = reset_baseline_fields(baseline_path, selected)
+            if ok:
+                tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for {len(selected)} product(s).")
+                sel_win.destroy()
+            else:
+                tk.messagebox.showerror("Reset Failed", f"Failed to reset one or more products. See log for details.")
+        def on_no():
+            confirm_win.destroy()
+        ttk.Button(btn_frame, text="Yes", style="Accent.TButton", command=on_yes).pack(side="left", padx=16)
+        ttk.Button(btn_frame, text="No", command=on_no).pack(side="left", padx=16)
+    # Buttons at the bottom of the popup
+    btn_frame = ttk.Frame(sel_win)
+    btn_frame.pack(pady=(0, 10))
+    ttk.Button(btn_frame, text="Reset Baseline", style="Accent.TButton", command=do_reset).pack(side="left", padx=12)
+    ttk.Button(btn_frame, text="Cancel", command=sel_win.destroy).pack(side="left", padx=12)
 
 # === New Rule Input Dialog ===
 class MultiRuleInputDialog(tk.Toplevel):
@@ -383,6 +478,7 @@ extract_cb.grid(row=2, column=1, padx=(0, 10), pady=4, sticky="w")
 btn_col = ttk.Frame(top_controls, style="TLabelframe")
 btn_col.grid(row=0, column=3, rowspan=3, padx=(30,0), pady=4, sticky="nsew")
 ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=run_generate_baseline_with_feedback).pack(fill="x", pady=(0, 10))
+ttk.Button(btn_col, text="Reset Baseline", style="Accent.TButton", command=run_reset_baseline_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Import CKLB Library", style="Accent.TButton", command=import_cklb_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=run_compare_with_feedback).pack(fill="x")
 

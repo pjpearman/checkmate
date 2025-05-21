@@ -1,4 +1,5 @@
 import logging
+# This playwright import problem is due to the fact that the playwright package is not installed in the environment, but the local system. 
 from playwright.sync_api import sync_playwright
 import re
 
