@@ -2,10 +2,15 @@ import tkinter as tk
 from tkinter import ttk, filedialog, scrolledtext
 import logging
 import os
+import yaml
+import sys
+import threading
+import json
 
 from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
-from selected_merger import load_cklb, save_cklb
+from selected_merger import load_cklb, save_cklb, check_stig_id_match
+from reset_baseline import reset_baseline_fields
 
 # === Logger ===
 class GuiLogger(logging.Handler):
@@ -46,16 +51,16 @@ def run_generate_baseline_with_feedback():
             log_job_status("[INFO] Job complete: Baseline generation finished.")
         elif status.startswith("Error"):
             log_job_status(f"[ERROR] {status}")
-    run_generate_baseline_task(
+    threading.Thread(target=lambda: run_generate_baseline_task(
         mode=get_internal_mode(mode_var.get()),
         headful=headful_var.get(),
         on_status_update=on_status_update,
         clear_log=lambda: log_output.delete(1.0, tk.END)
-    )
+    )).start()
 
 def import_cklb_with_feedback():
     log_job_status("[INFO] Job started: Importing CKLB library...")
-    import_cklb_files(on_import_complete=refresh_usr_listbox)
+    threading.Thread(target=lambda: import_cklb_files(on_import_complete=refresh_usr_listbox)).start()
     log_job_status("[INFO] Job complete: CKLB import finished.")
 
 def run_compare_with_feedback():
@@ -66,7 +71,7 @@ def run_compare_with_feedback():
             log_job_status("[INFO] Job complete: Tasks finished.")
         elif status.startswith("Error"):
             log_job_status(f"[ERROR] {status}")
-    run_compare_task(
+    threading.Thread(target=lambda: run_compare_task(
         mode=get_internal_mode(mode_var.get()),
         headful=headful_var.get(),
         baseline_path=yaml_path_var.get(),
@@ -75,7 +80,7 @@ def run_compare_with_feedback():
         on_status_update=on_status_update,
         clear_log=lambda: log_output.delete(1.0, tk.END),
         on_cklb_refresh=refresh_cklb_combobox
-    )
+    )).start()
 
 def download_cklb_popup():
     popup = tk.Toplevel(root)
@@ -110,10 +115,110 @@ def download_cklb_popup():
             except Exception as e:
                 tk.messagebox.showerror("Copy Error", f"Failed to copy {fname}: {e}")
         tk.messagebox.showinfo("Download Complete", f"Copied {len(selected)} file(s) to {dest_dir}")
+        popup.grab_release()
         popup.destroy()
 
     ttk.Button(popup, text="Download Selected", style="Accent.TButton", command=do_download).pack(pady=(0, 18))
-    ttk.Button(popup, text="Cancel", command=popup.destroy).pack()
+    ttk.Button(popup, text="Cancel", command=lambda: [popup.grab_release(), popup.destroy()]).pack()
+
+def run_reset_baseline_with_feedback():
+    baseline_path = yaml_path_var.get()
+    if not baseline_path or not os.path.exists(baseline_path):
+        tk.messagebox.showerror("File Error", "Please select a valid Baseline YAML file.")
+        return
+    # Load YAML and get product list
+    try:
+        with open(baseline_path, 'r') as f:
+            data = yaml.safe_load(f)
+        products = list(data.keys())
+    except Exception as e:
+        tk.messagebox.showerror("YAML Error", f"Failed to load baseline: {e}")
+        return
+    # Ask user to select products (checkboxes)
+    sel_win = tk.Toplevel(root)
+    sel_win.title("Select Baseline Products to Reset")
+    sel_win.geometry("500x500")
+    sel_win.grab_set()
+    ttk.Label(sel_win, text="Select baseline products to reset:", font=HEADER_FONT).pack(pady=(18, 8))
+    select_all_var = tk.BooleanVar()
+    def on_select_all():
+        for _, var in prod_vars:
+            var.set(select_all_var.get())
+    select_all_cb = ttk.Checkbutton(sel_win, text="Select All", variable=select_all_var, command=on_select_all)
+    select_all_cb.pack(anchor="w", padx=18)
+    # Scrollable frame for checkboxes
+    scroll_canvas = tk.Canvas(sel_win, borderwidth=0, background=sel_win.cget('background'))
+    check_frame = ttk.Frame(scroll_canvas)
+    vsb = ttk.Scrollbar(sel_win, orient="vertical", command=scroll_canvas.yview)
+    scroll_canvas.configure(yscrollcommand=vsb.set)
+    vsb.pack(side="right", fill="y")
+    scroll_canvas.pack(side="left", fill="both", expand=True)
+    scroll_canvas.create_window((0,0), window=check_frame, anchor="nw")
+    def on_frame_configure(event):
+        scroll_canvas.configure(scrollregion=scroll_canvas.bbox("all"))
+    check_frame.bind("<Configure>", on_frame_configure)
+    prod_vars = []
+    for prod in products:
+        var = tk.BooleanVar()
+        cb = ttk.Checkbutton(check_frame, text=prod, variable=var)
+        cb.pack(anchor="w")
+        prod_vars.append((prod, var))
+    def do_reset():
+        selected = [prod for prod, var in prod_vars if var.get()]
+        if not selected:
+            tk.messagebox.showwarning("No Selection", "Please select at least one product.")
+            return
+        # Custom scrollable confirmation dialog
+        confirm_win = tk.Toplevel(sel_win)
+        confirm_win.title("Confirm Reset")
+        confirm_win.geometry("500x400")
+        confirm_win.minsize(400, 300)
+        confirm_win.grab_set()
+        confirm_win.transient(sel_win)
+        # Frame for message
+        msg_frame = ttk.Frame(confirm_win)
+        msg_frame.pack(fill="both", expand=True, padx=16, pady=16)
+        # Scrollable text for product list
+        msg = "This will set 'Release' and 'Version' to '0' for:\n\n" + "\n".join(selected) + "\n\nAre you sure?"
+        text_canvas = tk.Canvas(msg_frame, borderwidth=0, background=confirm_win.cget('background'))
+        text_frame = ttk.Frame(text_canvas)
+        vsb = ttk.Scrollbar(msg_frame, orient="vertical", command=text_canvas.yview)
+        text_canvas.configure(yscrollcommand=vsb.set)
+        vsb.pack(side="right", fill="y")
+        text_canvas.pack(side="left", fill="both", expand=True)
+        text_canvas.create_window((0,0), window=text_frame, anchor="nw")
+        def on_text_frame_configure(event):
+            text_canvas.configure(scrollregion=text_canvas.bbox("all"))
+        text_frame.bind("<Configure>", on_text_frame_configure)
+        # Message label (wrap text)
+        msg_label = ttk.Label(text_frame, text=msg, wraplength=440, justify="left", font=LABEL_FONT)
+        msg_label.pack(anchor="nw", fill="x", expand=True)
+        # Button frame always at bottom
+        btn_frame = ttk.Frame(confirm_win)
+        btn_frame.pack(fill="x", side="bottom", pady=(0, 12))
+        def on_yes():
+            confirm_win.grab_release()
+            confirm_win.destroy()
+            ok = reset_baseline_fields(baseline_path, selected)
+            if ok:
+                tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for {len(selected)} product(s).")
+                sel_win.grab_release()
+                sel_win.destroy()
+            else:
+                tk.messagebox.showerror("Reset Failed", f"Failed to reset one or more products. See log for details.")
+        def on_no():
+            confirm_win.grab_release()
+            confirm_win.destroy()
+        ttk.Button(btn_frame, text="Yes", style="Accent.TButton", command=on_yes).pack(side="left", padx=16)
+        ttk.Button(btn_frame, text="No", command=on_no).pack(side="left", padx=16)
+    # Buttons at the bottom of the popup
+    btn_frame = ttk.Frame(sel_win)
+    btn_frame.pack(pady=(0, 10))
+    def on_cancel():
+        sel_win.grab_release()
+        sel_win.destroy()
+    ttk.Button(btn_frame, text="Reset Baseline", style="Accent.TButton", command=do_reset).pack(side="left", padx=12)
+    ttk.Button(btn_frame, text="Cancel", command=on_cancel).pack(side="left", padx=12)
 
 # === New Rule Input Dialog ===
 class MultiRuleInputDialog(tk.Toplevel):
@@ -242,10 +347,18 @@ class MultiRuleInputDialog(tk.Toplevel):
         self.destroy()
 
 # === GUI Setup ===
+def on_closing():
+    try:
+        root.destroy()
+    except Exception:
+        pass
+    sys.exit(0)
+
 root = tk.Tk()
 root.title("CheckMate")
 root.resizable(True, True)  # Allow resizing
 root.configure(bg="#f7fafd")
+root.protocol("WM_DELETE_WINDOW", on_closing)
 
 # Force maximize at launch (Linux/Windows)
 #root.update_idletasks()
@@ -296,13 +409,68 @@ def update_now_handler():
     if not new_name:
         tk.messagebox.showerror("Selection Error", "Please select a new CKLB version to upgrade to.")
         return
+
+    # --- STIG ID mismatch check before merge ---
+    old_path = os.path.join(usr_dir, selected_old_files[0])
+    new_path = os.path.join(cklb_dir, new_name)
+    try:
+        old_data = load_cklb(old_path)
+        new_data = load_cklb(new_path)
+        is_match, old_stig_id, new_stig_id, new_rules = check_stig_id_match(old_data, new_data)
+        if not is_match:
+            msg = (f"The STIG ID of the old checklist does not match the new checklist.\n"
+                   f"Old STIG ID: {old_stig_id}\nNew STIG ID: {new_stig_id}\n"
+                   f"Number of new rules in the new checklist: {len(new_rules)}\n\n"
+                   "Proceed with merge?")
+            if not tk.messagebox.askyesno("STIG ID Mismatch", msg, icon='warning'):
+                log_job_status("[ERROR] Merge cancelled by user due to STIG ID mismatch.")
+                return
+            force_merge = True
+        else:
+            force_merge = False
+    except Exception as e:
+        tk.messagebox.showerror("Error", f"Failed to check STIG IDs: {e}")
+        return
+
+    # Check if any selected old files lack host_name
+    needs_prefix = False
+    for old_name in selected_old_files:
+        old_path = os.path.join(usr_dir, old_name)
+        try:
+            with open(old_path, "r", encoding="utf-8") as f:
+                old_json = json.load(f)
+            if not old_json.get("target_data", {}).get("host_name"):
+                needs_prefix = True
+                break
+        except Exception:
+            needs_prefix = True
+            break
+    prefix = None
+    if needs_prefix:
+        def set_prefix():
+            nonlocal prefix
+            while True:
+                prefix = tk.simpledialog.askstring("Prefix Override", "Enter host-name prefix (required):")
+                if prefix is None:
+                    # User cancelled
+                    return False
+                if prefix.strip() == "":
+                    tk.messagebox.showerror("Prefix Required", "Prefix cannot be blank. Please enter a valid prefix.")
+                else:
+                    break
+            return True
+        if not set_prefix():
+            return
+
     log_job_status("[INFO] Job started: Merging/updating checklists...")
     merged_results = run_merge_task(
         selected_old_files=selected_old_files,
         new_name=new_name,
         usr_dir=usr_dir,
         cklb_dir=cklb_dir,
-        on_status_update=status_text.set
+        on_status_update=status_text.set,
+        force=force_merge,
+        prefix=prefix
     )
     for result in merged_results:
         if result["new_rules"]:
@@ -351,7 +519,7 @@ getting_started.columnconfigure(0, weight=1)
 getting_started.rowconfigure(0, weight=1)
 
 # Example content for Getting Started (customize as needed)
-ttks = ttk.Label(getting_started, text="1. Create & Customize Baseline.\n2. Set Custom Baseline. (Used to compare your version against published versions.)\n3. Import completed cklb.\n4. Select task options and Run Tasks. (Ensure correct mode selected for selected baseline.) \n \nWhen creating your first baseline, CheckMate uses the current release and version info \nfrom the DISA website. This may not align with your current cklbs. Edit the baseline \nto match that of your version release, ex:RHEL8_v1r2.", font=LABEL_FONT, background=SECTION_BG, justify="left", anchor="nw")
+ttks = ttk.Label(getting_started, text="1. Create & Customize Baseline.\n2. Set Custom Baseline. (Used to compare your version against published versions.)\n3. Import completed cklb.\n4. Select task options and Run Tasks. (Ensure correct mode selected for selected baseline.) \n\nIMPORTANT:\nWhen creating your first baseline, CheckMate uses the current release and version info \nfrom the DISA website. This may not align with your current cklbs. Edit the baseline \nto match that of your version release, ex:RHEL8_v1r2.\nBaselines and Scrape Mode misuse are the most common cause of download failures.", font=LABEL_FONT, background=SECTION_BG, justify="left", anchor="nw")
 ttks.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
 
 # === Top Controls Group ===
@@ -383,6 +551,7 @@ extract_cb.grid(row=2, column=1, padx=(0, 10), pady=4, sticky="w")
 btn_col = ttk.Frame(top_controls, style="TLabelframe")
 btn_col.grid(row=0, column=3, rowspan=3, padx=(30,0), pady=4, sticky="nsew")
 ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=run_generate_baseline_with_feedback).pack(fill="x", pady=(0, 10))
+ttk.Button(btn_col, text="Reset Baseline", style="Accent.TButton", command=run_reset_baseline_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Import CKLB Library", style="Accent.TButton", command=import_cklb_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=run_compare_with_feedback).pack(fill="x")
 

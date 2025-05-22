@@ -95,7 +95,7 @@ def run_compare_task(mode, headful, baseline_path, download_updates_checked, ext
             on_status_update("Error. Check log output.")
     threading.Thread(target=task).start()
 
-def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_update):
+def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_update, force=False, prefix=None):
     if not selected_old_files or not new_name:
         on_status_update("Select at least one old and one new CKLB file.")
         return []
@@ -110,11 +110,30 @@ def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_up
 
         with open(old_path, "r", encoding="utf-8") as f:
             old_json = json.load(f)
-        host_prefix = old_json.get("target_data", {}).get("host_name", "HOSTNAME_MISSING")
-        merged_name = f"{host_prefix}_{new_name}"
+        # Determine host_prefix: only use prefix if this file lacks host_name
+        host_name = old_json.get("target_data", {}).get("host_name")
+        if not host_name:
+            if prefix is None or not prefix.strip():
+                on_status_update(f"[ERROR] Prefix required for checklist '{old_name}' (missing host_name). Aborting batch.")
+                return []
+            host_prefix = prefix
+        else:
+            host_prefix = host_name
+        # Guarantee uniqueness
+        base = f"{host_prefix}_{new_name}"
+        out_name = base
+        counter = 1
+        while os.path.exists(os.path.join(out_dir, out_name)):
+            out_name = f"{base}_{counter}"
+            counter += 1
+        merged_name = out_name
         out_path = os.path.join(out_dir, merged_name)
 
         cmd = [sys.executable, os.path.join(os.getcwd(), 'selected_merger.py'), old_path, new_path, '-o', out_path]
+        if not host_name and prefix:
+            cmd.extend(['--prefix', prefix])
+        if force:
+            cmd.append('--force')
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             logging.info(result.stdout.strip())
@@ -122,7 +141,6 @@ def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_up
             logging.error(e.stderr.strip())
             continue
 
-        # -- Detect new rules using your find_new_rules logic
         from selected_merger import find_new_rules
         old_cklb = load_cklb(old_path)
         merged_cklb = load_cklb(out_path)
