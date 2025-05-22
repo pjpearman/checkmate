@@ -12,6 +12,7 @@ from handlers import run_generate_baseline_task, run_compare_task, run_merge_tas
 from selected_merger import load_cklb, save_cklb, check_stig_id_match
 from reset_baseline import reset_baseline_fields
 from baseline_editor import launch_baseline_editor
+from menu_bar import build_menu
 
 # === Logger ===
 class GuiLogger(logging.Handler):
@@ -361,16 +362,6 @@ root.resizable(True, True)  # Allow resizing
 root.configure(bg="#f7fafd")
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
-# Force maximize at launch (Linux/Windows)
-#root.update_idletasks()
-#try:
-#    root.attributes('-zoomed', True)  # Linux/Windows (should maximize at launch)
-#except Exception:
-#    try:
-#        root.attributes('-fullscreen', True)  # macOS fallback
-#    except Exception:
-#        pass
-
 # === Variables (must be defined before layout) ===
 mode_var = tk.StringVar(value="Operating Systems")
 headful_var = tk.BooleanVar()
@@ -378,6 +369,8 @@ yaml_path_var = tk.StringVar()
 status_text = tk.StringVar(value="Ready")
 download_var = tk.BooleanVar()
 extract_var = tk.BooleanVar()
+
+build_menu(root, yaml_path_var, on_closing)
 
 usr_dir  = os.path.join(os.getcwd(), 'cklb_proc', 'usr_cklb_lib')
 cklb_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_lib')
