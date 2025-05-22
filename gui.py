@@ -5,6 +5,7 @@ import os
 import yaml
 import sys
 import threading
+import json
 
 from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
@@ -431,6 +432,36 @@ def update_now_handler():
         tk.messagebox.showerror("Error", f"Failed to check STIG IDs: {e}")
         return
 
+    # Check if any selected old files lack host_name
+    needs_prefix = False
+    for old_name in selected_old_files:
+        old_path = os.path.join(usr_dir, old_name)
+        try:
+            with open(old_path, "r", encoding="utf-8") as f:
+                old_json = json.load(f)
+            if not old_json.get("target_data", {}).get("host_name"):
+                needs_prefix = True
+                break
+        except Exception:
+            needs_prefix = True
+            break
+    prefix = None
+    if needs_prefix:
+        def set_prefix():
+            nonlocal prefix
+            while True:
+                prefix = tk.simpledialog.askstring("Prefix Override", "Enter host-name prefix (required):")
+                if prefix is None:
+                    # User cancelled
+                    return False
+                if prefix.strip() == "":
+                    tk.messagebox.showerror("Prefix Required", "Prefix cannot be blank. Please enter a valid prefix.")
+                else:
+                    break
+            return True
+        if not set_prefix():
+            return
+
     log_job_status("[INFO] Job started: Merging/updating checklists...")
     merged_results = run_merge_task(
         selected_old_files=selected_old_files,
@@ -438,7 +469,8 @@ def update_now_handler():
         usr_dir=usr_dir,
         cklb_dir=cklb_dir,
         on_status_update=status_text.set,
-        force=force_merge
+        force=force_merge,
+        prefix=prefix
     )
     for result in merged_results:
         if result["new_rules"]:

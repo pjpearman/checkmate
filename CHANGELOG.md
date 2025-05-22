@@ -5,6 +5,7 @@
 - Error handling for STIG ID mismatches during checklist upgrade: user is now warned if the old and new STIG IDs do not match, with a detailed message and the option to proceed or cancel.
 - GUI now displays a confirmation dialog for STIG ID mismatches instead of freezing or failing silently.
 - CLI supports a `--force` flag to override STIG ID mismatches without prompting.
+- Prefix override in batch checklist upgrades now only renames checklists that are missing host_name data. All other checklists retain their original host_name as the prefix. This prevents unintended renaming of all files in a batch when only some lack host metadata.
 
 ### Fixed
 - Prevented GUI freeze when merging checklists with mismatched STIG IDs.
