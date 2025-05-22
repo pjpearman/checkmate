@@ -48,8 +48,8 @@ def open_directory_frame(parent, dir_path, editor_cmd):
         fname = listbox.get(sel[0])
         file_path = os.path.join(dir_path, fname)
         try:
-            # Launch baseline_editor.py with the file path as argument
-            subprocess.Popen(["python3", "baseline_editor.py", file_path])
+            # Launch file_editor.py with the file path as argument
+            subprocess.Popen(["python3", "file_editor.py", file_path])
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open editor: {e}")
         win.destroy()

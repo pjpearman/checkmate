@@ -3,7 +3,7 @@ from tkinter import ttk, scrolledtext, messagebox
 import yaml
 import os
 
-def launch_baseline_editor(baseline_path, parent):
+def launch_file_editor(baseline_path, parent):
     if not baseline_path or not os.path.exists(baseline_path):
         messagebox.showerror("File Error", "Please select a valid Baseline YAML file.", parent=parent)
         return
