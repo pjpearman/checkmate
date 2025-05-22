@@ -431,6 +431,15 @@ def update_now_handler():
         tk.messagebox.showerror("Error", f"Failed to check STIG IDs: {e}")
         return
 
+    # Prompt for optional prefix override
+    prefix = None
+    def set_prefix():
+        nonlocal prefix
+        prefix = tk.simpledialog.askstring("Prefix Override", "Enter host-name prefix (leave blank for auto):")
+        if prefix == '':
+            prefix = None
+    set_prefix()
+
     log_job_status("[INFO] Job started: Merging/updating checklists...")
     merged_results = run_merge_task(
         selected_old_files=selected_old_files,
@@ -438,7 +447,8 @@ def update_now_handler():
         usr_dir=usr_dir,
         cklb_dir=cklb_dir,
         on_status_update=status_text.set,
-        force=force_merge
+        force=force_merge,
+        prefix=prefix
     )
     for result in merged_results:
         if result["new_rules"]:

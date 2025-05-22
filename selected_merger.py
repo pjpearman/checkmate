@@ -2,6 +2,7 @@ import json
 import argparse
 import sys
 from copy import deepcopy
+import os
 
 def find_new_rules(old_data, new_data):
     """Return a list of new rule dicts (group_id_src, rule_title, stig uuid, stig display_name)."""
@@ -40,6 +41,7 @@ def main():
     parser.add_argument("new_cklb", help="Path to new CKLB (JSON)")
     parser.add_argument("-o", "--output", default="merged.cklb", help="Output path for merged CKLB")
     parser.add_argument("--force", action="store_true", help="Proceed even if STIG IDs do not match")
+    parser.add_argument("--prefix", help="Manual host‐name prefix (overrides target_data.host_name)")
     args = parser.parse_args()
 
     old_data = load_cklb(args.old_cklb)
@@ -86,9 +88,26 @@ def main():
     # Remove invalid top-level fields
     merged.pop("evaluate-stig", None)
 
-    save_cklb(args.output, merged)
+    # Determine host_prefix for output naming
+    host_prefix = args.prefix or old_data.get("target_data", {}).get("host_name")
+    if not host_prefix:
+        host_prefix = os.path.splitext(os.path.basename(args.old_cklb))[0]
+        print(f"WARNING: No host_name found – defaulting to '{host_prefix}'")
+    # Guarantee uniqueness in output directory
+    out_dir = os.path.dirname(os.path.abspath(args.output))
+    new_name = os.path.basename(args.new_cklb)
+    base = f"{host_prefix}_{new_name}"
+    out_name = base
+    counter = 1
+    while os.path.exists(os.path.join(out_dir, out_name)):
+        out_name = f"{base}_{counter}"
+        counter += 1
+    merged_output_path = os.path.join(out_dir, out_name)
+
+    save_cklb(merged_output_path, merged)
 
     print(f"Merged {updated} rules from old checklist.")
+    print(f"Output: {merged_output_path}")
     if added:
         print("New rules in the updated checklist:")
         for gid, title in added:
