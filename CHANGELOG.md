@@ -1,11 +1,17 @@
 # Changelog
 
+## [v2.0.2] - 2025-05-22
+### Changed
+- The baseline/file editor is now a general-purpose raw text editor. Users can open and edit any file type (YAML, XML, CKLB, etc.) from the GUI, not just YAML. All schema validation and YAML-specific logic have been removed for broader compatibility.
+- Improved error handling and user feedback for launching the file editor from the GUI.
+
 ## [v2.0.1] - 2025-05-22
 ### Added
 - Error handling for STIG ID mismatches during checklist upgrade: user is now warned if the old and new STIG IDs do not match, with a detailed message and the option to proceed or cancel.
 - GUI now displays a confirmation dialog for STIG ID mismatches instead of freezing or failing silently.
 - CLI supports a `--force` flag to override STIG ID mismatches without prompting.
 - Prefix override in batch checklist upgrades now only renames checklists that are missing host_name data. All other checklists retain their original host_name as the prefix. This prevents unintended renaming of all files in a batch when only some lack host metadata.
+- Baseline editor: Users can now open and edit the selected baseline YAML file directly from the GUI, with schema validation before saving. An "Edit Baseline" button is available in the main interface.
 
 ### Fixed
 - Prevented GUI freeze when merging checklists with mismatched STIG IDs.

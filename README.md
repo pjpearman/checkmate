@@ -4,7 +4,11 @@
 
 **CheckMate** automates version tracking, checklist generation, and upgrade merging for DISA STIGs.
 
+Runs on Windows or Linux!
+
 View a demo on YouTube https://youtu.be/OVNBn5JiOXQ
+
+Can be used in air-gapped environments (without downloading features)
 
 ## What's New in v2.0.0
 
@@ -83,7 +87,7 @@ See the full license text here: [CC BY-NC 4.0](https://creativecommons.org/licen
     pip install -r requirements.txt
     ```
 
-4. **Install Playwright browsers**
+4. **Install Playwright browsers (Not required when air-gapped)**
     ```bash
     playwright install
     ```
@@ -112,7 +116,7 @@ Features:
 3. Bulk upgrade: select older completed checklists and transfer the data into the latest version.
 4. Download/export updated checklists as needed.
 
-NOTE: checklist storage is currently in `/cklb_proc/`...
+NOTE: checklist storage is currently in `workdir/cklb_proc/`...
 
 ---
 

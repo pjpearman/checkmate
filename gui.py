@@ -11,6 +11,8 @@ from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
 from selected_merger import load_cklb, save_cklb, check_stig_id_match
 from reset_baseline import reset_baseline_fields
+from file_editor import launch_file_editor
+from menu_bar import build_menu
 
 # === Logger ===
 class GuiLogger(logging.Handler):
@@ -360,16 +362,6 @@ root.resizable(True, True)  # Allow resizing
 root.configure(bg="#f7fafd")
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
-# Force maximize at launch (Linux/Windows)
-#root.update_idletasks()
-#try:
-#    root.attributes('-zoomed', True)  # Linux/Windows (should maximize at launch)
-#except Exception:
-#    try:
-#        root.attributes('-fullscreen', True)  # macOS fallback
-#    except Exception:
-#        pass
-
 # === Variables (must be defined before layout) ===
 mode_var = tk.StringVar(value="Operating Systems")
 headful_var = tk.BooleanVar()
@@ -377,6 +369,8 @@ yaml_path_var = tk.StringVar()
 status_text = tk.StringVar(value="Ready")
 download_var = tk.BooleanVar()
 extract_var = tk.BooleanVar()
+
+build_menu(root, yaml_path_var, on_closing)
 
 usr_dir  = os.path.join(os.getcwd(), 'cklb_proc', 'usr_cklb_lib')
 cklb_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_lib')
@@ -552,6 +546,7 @@ btn_col = ttk.Frame(top_controls, style="TLabelframe")
 btn_col.grid(row=0, column=3, rowspan=3, padx=(30,0), pady=4, sticky="nsew")
 ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=run_generate_baseline_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Reset Baseline", style="Accent.TButton", command=run_reset_baseline_with_feedback).pack(fill="x", pady=(0, 10))
+ttk.Button(btn_col, text="Edit Baseline", style="Accent.TButton", command=lambda: launch_file_editor(yaml_path_var.get(), root)).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Import CKLB Library", style="Accent.TButton", command=import_cklb_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=run_compare_with_feedback).pack(fill="x")
 
