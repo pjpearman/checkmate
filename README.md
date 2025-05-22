@@ -3,8 +3,11 @@
 ## Overview
 
 **CheckMate** automates version tracking, checklist generation, and upgrade merging for DISA STIGs.
-Runs on Windows or Linux! 
+
+Runs on Windows or Linux!
+
 View a demo on YouTube https://youtu.be/OVNBn5JiOXQ
+
 Can be used in air-gapped environments (without downloading features)
 
 ## What's New in v2.0.0
