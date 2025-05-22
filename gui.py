@@ -8,7 +8,7 @@ import threading
 
 from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
-from selected_merger import load_cklb, save_cklb
+from selected_merger import load_cklb, save_cklb, check_stig_id_match
 from reset_baseline import reset_baseline_fields
 
 # === Logger ===
@@ -408,13 +408,37 @@ def update_now_handler():
     if not new_name:
         tk.messagebox.showerror("Selection Error", "Please select a new CKLB version to upgrade to.")
         return
+
+    # --- STIG ID mismatch check before merge ---
+    old_path = os.path.join(usr_dir, selected_old_files[0])
+    new_path = os.path.join(cklb_dir, new_name)
+    try:
+        old_data = load_cklb(old_path)
+        new_data = load_cklb(new_path)
+        is_match, old_stig_id, new_stig_id, new_rules = check_stig_id_match(old_data, new_data)
+        if not is_match:
+            msg = (f"The STIG ID of the old checklist does not match the new checklist.\n"
+                   f"Old STIG ID: {old_stig_id}\nNew STIG ID: {new_stig_id}\n"
+                   f"Number of new rules in the new checklist: {len(new_rules)}\n\n"
+                   "Proceed with merge?")
+            if not tk.messagebox.askyesno("STIG ID Mismatch", msg, icon='warning'):
+                log_job_status("[ERROR] Merge cancelled by user due to STIG ID mismatch.")
+                return
+            force_merge = True
+        else:
+            force_merge = False
+    except Exception as e:
+        tk.messagebox.showerror("Error", f"Failed to check STIG IDs: {e}")
+        return
+
     log_job_status("[INFO] Job started: Merging/updating checklists...")
     merged_results = run_merge_task(
         selected_old_files=selected_old_files,
         new_name=new_name,
         usr_dir=usr_dir,
         cklb_dir=cklb_dir,
-        on_status_update=status_text.set
+        on_status_update=status_text.set,
+        force=force_merge
     )
     for result in merged_results:
         if result["new_rules"]:

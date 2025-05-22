@@ -95,7 +95,7 @@ def run_compare_task(mode, headful, baseline_path, download_updates_checked, ext
             on_status_update("Error. Check log output.")
     threading.Thread(target=task).start()
 
-def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_update):
+def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_update, force=False):
     if not selected_old_files or not new_name:
         on_status_update("Select at least one old and one new CKLB file.")
         return []
@@ -115,6 +115,8 @@ def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_up
         out_path = os.path.join(out_dir, merged_name)
 
         cmd = [sys.executable, os.path.join(os.getcwd(), 'selected_merger.py'), old_path, new_path, '-o', out_path]
+        if force:
+            cmd.append('--force')
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             logging.info(result.stdout.strip())
@@ -122,7 +124,6 @@ def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_up
             logging.error(e.stderr.strip())
             continue
 
-        # -- Detect new rules using your find_new_rules logic
         from selected_merger import find_new_rules
         old_cklb = load_cklb(old_path)
         merged_cklb = load_cklb(out_path)

@@ -1,6 +1,6 @@
-#test bug fix for selected merger eval-stig prop
 import json
 import argparse
+import sys
 from copy import deepcopy
 
 def find_new_rules(old_data, new_data):
@@ -19,6 +19,13 @@ def find_new_rules(old_data, new_data):
                 })
     return new_rules
 
+def check_stig_id_match(old_data, new_data):
+    """Return (is_match, old_stig_id, new_stig_id, new_rules)"""
+    old_stig_id = old_data.get("stigs", [{}])[0].get("stig_id", "UNKNOWN") if old_data.get("stigs") else "UNKNOWN"
+    new_stig_id = new_data.get("stigs", [{}])[0].get("stig_id", "UNKNOWN") if new_data.get("stigs") else "UNKNOWN"
+    new_rules = find_new_rules(old_data, new_data)
+    return old_stig_id == new_stig_id, old_stig_id, new_stig_id, new_rules
+
 def load_cklb(path):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
@@ -32,10 +39,18 @@ def main():
     parser.add_argument("old_cklb", help="Path to old CKLB (JSON)")
     parser.add_argument("new_cklb", help="Path to new CKLB (JSON)")
     parser.add_argument("-o", "--output", default="merged.cklb", help="Output path for merged CKLB")
+    parser.add_argument("--force", action="store_true", help="Proceed even if STIG IDs do not match")
     args = parser.parse_args()
 
     old_data = load_cklb(args.old_cklb)
     new_data = load_cklb(args.new_cklb)
+
+    is_match, old_stig_id, new_stig_id, new_rules = check_stig_id_match(old_data, new_data)
+    if not is_match and not args.force:
+        msg = ("STIG ID mismatch. Old: {} New: {}. New rules: {}. "
+               "Use --force to override.").format(old_stig_id, new_stig_id, len(new_rules))
+        print(f"ERROR: {msg}")
+        sys.exit(2)
 
     old_lookup = {}
     for stig in old_data.get("stigs", []):
