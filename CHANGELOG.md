@@ -6,6 +6,7 @@
 - GUI now displays a confirmation dialog for STIG ID mismatches instead of freezing or failing silently.
 - CLI supports a `--force` flag to override STIG ID mismatches without prompting.
 - Prefix override in batch checklist upgrades now only renames checklists that are missing host_name data. All other checklists retain their original host_name as the prefix. This prevents unintended renaming of all files in a batch when only some lack host metadata.
+- Baseline editor: Users can now open and edit the selected baseline YAML file directly from the GUI, with schema validation before saving. An "Edit Baseline" button is available in the main interface.
 
 ### Fixed
 - Prevented GUI freeze when merging checklists with mismatched STIG IDs.
