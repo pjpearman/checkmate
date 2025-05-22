@@ -47,11 +47,16 @@ def open_directory_frame(parent, dir_path, editor_cmd):
         # Only allow editing one file at a time
         fname = listbox.get(sel[0])
         file_path = os.path.join(dir_path, fname)
+        cmd = ["python3", editor_cmd, file_path]
+        cwd = os.path.dirname(os.path.abspath(__file__))
         try:
-            # Launch file_editor.py with the file path as argument
-            subprocess.Popen(["python3", "file_editor.py", file_path])
+            proc = subprocess.Popen(cmd, cwd=cwd)
+            import time
+            time.sleep(0.5)
+            if proc.poll() is not None:
+                messagebox.showerror("Error", f"Editor process exited immediately.\nCommand: {cmd}\nCheck if file_editor.py runs standalone.")
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to open editor: {e}")
+            messagebox.showerror("Error", f"Failed to open editor: {e}\nCommand: {cmd}")
         win.destroy()
 
     def cancel():
@@ -69,10 +74,10 @@ def build_menu(root, yaml_path_var, on_closing):
 
     # File Menu
     file_menu = tk.Menu(menu_bar, tearoff=0)
-    file_menu.add_command(label="Open Baseline Directory", command=lambda: open_directory_frame(root, "baselines", "baseline_editor.py"))
-    file_menu.add_command(label="Open My Checklist Library", command=lambda: open_directory_frame(root, "cklb_proc/usr_cklb_lib", "baseline_editor.py"))
-    file_menu.add_command(label="Open New CKLB Version Directory", command=lambda: open_directory_frame(root, "cklb_proc/cklb_lib", "baseline_editor.py"))
-    file_menu.add_command(label="Open XCCDF Library", command=lambda: open_directory_frame(root, "cklb_proc/xccdf_lib", "baseline_editor.py"))
+    file_menu.add_command(label="Open Baseline Directory", command=lambda: open_directory_frame(root, "baselines", "file_editor.py"))
+    file_menu.add_command(label="Open My Checklist Library", command=lambda: open_directory_frame(root, "cklb_proc/usr_cklb_lib", "file_editor.py"))
+    file_menu.add_command(label="Open New CKLB Version Directory", command=lambda: open_directory_frame(root, "cklb_proc/cklb_lib", "file_editor.py"))
+    file_menu.add_command(label="Open XCCDF Library", command=lambda: open_directory_frame(root, "cklb_proc/xccdf_lib", "file_editor.py"))
     file_menu.add_separator()
     file_menu.add_command(label="Exit", command=on_closing)
     menu_bar.add_cascade(label="File", menu=file_menu)
