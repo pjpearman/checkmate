@@ -110,11 +110,15 @@ def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_up
 
         with open(old_path, "r", encoding="utf-8") as f:
             old_json = json.load(f)
-        # Determine host_prefix with override and fallback
-        host_prefix = prefix or old_json.get("target_data", {}).get("host_name")
-        if not host_prefix:
-            host_prefix = os.path.splitext(os.path.basename(old_name))[0]
-            logging.warning(f"No host_name in {old_name} – using '{host_prefix}' as prefix")
+        # Determine host_prefix: only use prefix if this file lacks host_name
+        host_name = old_json.get("target_data", {}).get("host_name")
+        if not host_name:
+            if prefix is None or not prefix.strip():
+                on_status_update(f"[ERROR] Prefix required for checklist '{old_name}' (missing host_name). Aborting batch.")
+                return []
+            host_prefix = prefix
+        else:
+            host_prefix = host_name
         # Guarantee uniqueness
         base = f"{host_prefix}_{new_name}"
         out_name = base
@@ -126,7 +130,7 @@ def run_merge_task(selected_old_files, new_name, usr_dir, cklb_dir, on_status_up
         out_path = os.path.join(out_dir, merged_name)
 
         cmd = [sys.executable, os.path.join(os.getcwd(), 'selected_merger.py'), old_path, new_path, '-o', out_path]
-        if prefix:
+        if not host_name and prefix:
             cmd.extend(['--prefix', prefix])
         if force:
             cmd.append('--force')

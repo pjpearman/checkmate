@@ -5,6 +5,7 @@ import os
 import yaml
 import sys
 import threading
+import json
 
 from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
@@ -431,14 +432,35 @@ def update_now_handler():
         tk.messagebox.showerror("Error", f"Failed to check STIG IDs: {e}")
         return
 
-    # Prompt for optional prefix override
+    # Check if any selected old files lack host_name
+    needs_prefix = False
+    for old_name in selected_old_files:
+        old_path = os.path.join(usr_dir, old_name)
+        try:
+            with open(old_path, "r", encoding="utf-8") as f:
+                old_json = json.load(f)
+            if not old_json.get("target_data", {}).get("host_name"):
+                needs_prefix = True
+                break
+        except Exception:
+            needs_prefix = True
+            break
     prefix = None
-    def set_prefix():
-        nonlocal prefix
-        prefix = tk.simpledialog.askstring("Prefix Override", "Enter host-name prefix (leave blank for auto):")
-        if prefix == '':
-            prefix = None
-    set_prefix()
+    if needs_prefix:
+        def set_prefix():
+            nonlocal prefix
+            while True:
+                prefix = tk.simpledialog.askstring("Prefix Override", "Enter host-name prefix (required):")
+                if prefix is None:
+                    # User cancelled
+                    return False
+                if prefix.strip() == "":
+                    tk.messagebox.showerror("Prefix Required", "Prefix cannot be blank. Please enter a valid prefix.")
+                else:
+                    break
+            return True
+        if not set_prefix():
+            return
 
     log_job_status("[INFO] Job started: Merging/updating checklists...")
     merged_results = run_merge_task(
