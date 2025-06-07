@@ -22,6 +22,7 @@ from web import fetch_page, parse_table_for_links, download_file, URL, HEADERS
 FUNCTIONS = {
     "Create Inventory File": "create_inventory_file_tui",
     "Download Files": "download_files",
+    "Download Selected Inventory": "download_selected_inventory_tui",
     # Example: "Set Download Directory": "set_download_dir",
     # Example: "Toggle File Types": "toggle_file_types",
 }
@@ -229,6 +230,126 @@ def create_inventory_file_tui(stdscr):
         elif key in [ord('r'), ord('R')]:
             break  # Refresh file list
 
+def download_selected_inventory_tui(stdscr):
+    """
+    TUI option to download the newest available file for each selected technology from an inventory file.
+    """
+    import json
+    import re
+    import curses
+    import curses.textpad
+    user_docs_dir = "user_docs"
+    # List inventory files
+    inventory_files = [f for f in os.listdir(user_docs_dir) if f.endswith(".json") and os.path.isfile(os.path.join(user_docs_dir, f))]
+    if not inventory_files:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "No inventory files found in user_docs. Press any key to return.")
+        stdscr.refresh()
+        stdscr.getch()
+        return
+    selected_idx = 0
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Select an inventory file:")
+        for idx, fname in enumerate(inventory_files):
+            if idx == selected_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(idx + 1, 0, f"> {fname}")
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(idx + 1, 0, f"  {fname}")
+        stdscr.addstr(len(inventory_files) + 2, 0, "UP/DOWN to select, ENTER to confirm, b/q to cancel")
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            selected_idx = (selected_idx - 1) % len(inventory_files)
+        elif key == curses.KEY_DOWN:
+            selected_idx = (selected_idx + 1) % len(inventory_files)
+        elif key in [10, 13]:  # ENTER
+            break
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return
+    inventory_path = os.path.join(user_docs_dir, inventory_files[selected_idx])
+    with open(inventory_path, "r") as f:
+        inventory = json.load(f)
+    # Extract technologies
+    tech_map = {}
+    tech_list = []
+    for file_name, file_url in inventory:
+        m = re.match(r"U_([^_]+(?:_[^_]+)*)_V", file_name)
+        if m:
+            tech = m.group(1)
+            if tech not in tech_map:
+                tech_map[tech] = []
+                tech_list.append(tech)
+            tech_map[tech].append((file_name, file_url))
+    if not tech_list:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "No technologies found in inventory. Press any key to return.")
+        stdscr.refresh()
+        stdscr.getch()
+        return
+    # Select technologies
+    selected = set()
+    current_idx = 0
+    scroll_offset = 0
+    status = "SPACE: select, ENTER: download, b/q: back"
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, f"Select technologies to download from {inventory_files[selected_idx]}:")
+        max_lines = curses.LINES - 3
+        if current_idx < scroll_offset:
+            scroll_offset = current_idx
+        elif current_idx >= scroll_offset + max_lines:
+            scroll_offset = current_idx - max_lines + 1
+        visible_techs = tech_list[scroll_offset:scroll_offset + max_lines]
+        for vis_idx, tech in enumerate(visible_techs):
+            idx = scroll_offset + vis_idx
+            sel = "[x]" if idx in selected else "[ ]"
+            line = f"{sel} {tech}"
+            line = line[:curses.COLS - 4]
+            if idx == current_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(vis_idx + 1, 0, f"> {line}")
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(vis_idx + 1, 0, f"  {line}")
+        stdscr.addstr(curses.LINES-2, 0, status[:curses.COLS-1])
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            current_idx = (current_idx - 1) % len(tech_list)
+        elif key == curses.KEY_DOWN:
+            current_idx = (current_idx + 1) % len(tech_list)
+        elif key == ord(' '):
+            if current_idx in selected:
+                selected.remove(current_idx)
+            else:
+                selected.add(current_idx)
+        elif key in [10, 13]:  # ENTER
+            to_download = selected if selected else {current_idx}
+            # For each selected technology, download the newest file (highest version string)
+            from web import download_file
+            for idx in to_download:
+                tech = tech_list[idx]
+                # Sort by version (descending) using the file_name
+                files = sorted(tech_map[tech], key=lambda x: x[0], reverse=True)
+                file_name, file_url = files[0]
+                stdscr.clear()
+                stdscr.addstr(0, 0, f"Downloading: {file_name}...")
+                stdscr.refresh()
+                try:
+                    download_file(file_url, file_name)
+                    stdscr.addstr(2, 0, f"Downloaded: {file_name}")
+                except Exception as e:
+                    stdscr.addstr(2, 0, f"Download error: {e}")
+                stdscr.refresh()
+            stdscr.addstr(4, 0, "Press any key to continue.")
+            stdscr.getch()
+            return
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return
+
 def main(stdscr):
     """
     Main loop for the TUI.
@@ -252,6 +373,8 @@ def main(stdscr):
                 download_files(stdscr)
             elif selected_func == "create_inventory_file_tui":
                 create_inventory_file_tui(stdscr)
+            elif selected_func == "download_selected_inventory_tui":
+                download_selected_inventory_tui(stdscr)
             # elif selected_func == "set_download_dir":
             #     set_download_dir(stdscr)
             # elif selected_func == "toggle_file_types":
