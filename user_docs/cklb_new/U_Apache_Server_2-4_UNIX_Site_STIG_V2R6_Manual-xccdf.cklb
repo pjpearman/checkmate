@@ -3,11 +3,11 @@
     "version": "1.0"
   },
   "title": "Apache Server 2.4 UNIX Site Security Technical Implementation Guide",
-  "id": "07386a3a-227e-4d57-ba90-a2fa79edb711",
+  "id": "fe114a9e-81ad-43b7-893b-c82bef5838de",
   "stigs": [
     {
       "evaluate-stig": {
-        "time": "2025-06-07T20:02:14.007714Z",
+        "time": "2025-06-07T20:09:21.586785Z",
         "module": {
           "name": "cklb_generator",
           "version": "1.1"
@@ -18,14 +18,14 @@
       "stig_id": "Apache_Server_2-4_UNIX_Site_STIG",
       "release_info": "Release: 6 Benchmark Date: 02 Apr 2025",
       "version": "2",
-      "uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+      "uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
       "size": 27,
       "reference_identifier": "CCI-000054",
       "rules": [
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -69,8 +69,8 @@
             "CCI-000054"
           ],
           "reference_identifier": "CCI-000054",
-          "uuid": "5344b3c2-e516-49da-bb2b-a19a14399e5c",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "bc00d27a-79ce-4902-9bec-2719268491eb",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -79,7 +79,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -132,8 +132,8 @@
             "CCI-002506"
           ],
           "reference_identifier": "CCI-000068",
-          "uuid": "c649f0e7-0ae6-4b2c-945e-cfb0f2818971",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "f60475fb-0b01-45ec-a81f-a63bf47134a3",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -142,7 +142,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -186,8 +186,8 @@
             "CCI-000130"
           ],
           "reference_identifier": "CCI-000130",
-          "uuid": "0987ffa8-f7ad-4a41-a148-b6e5a83a5c90",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "0a2b83ef-4f2f-4e0d-8b29-e0f238d424e4",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -196,7 +196,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -240,8 +240,8 @@
             "CCI-000381"
           ],
           "reference_identifier": "CCI-000381",
-          "uuid": "2ee9598d-0fb6-49a3-9f24-50f381b3ad04",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "d58272a1-8d20-4afe-b163-4a17a31a5ebe",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -250,7 +250,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -294,8 +294,8 @@
             "CCI-000381"
           ],
           "reference_identifier": "CCI-000381",
-          "uuid": "9a9906b6-36cd-46e7-a8b6-f2e093a96b3d",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "a65da0d4-b530-41c6-ac01-c67fe7af6c96",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -304,7 +304,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -348,8 +348,8 @@
             "CCI-000381"
           ],
           "reference_identifier": "CCI-000381",
-          "uuid": "e96cecad-408a-4721-bdb1-80bf7cd400ff",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "1ffc8ba3-b95e-4e9b-a1bf-f471eed4a9a0",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -358,7 +358,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -402,8 +402,8 @@
             "CCI-000381"
           ],
           "reference_identifier": "CCI-000381",
-          "uuid": "869e1e1d-3e70-41af-9b6d-80aa4c6c206a",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "221cdf0d-9fa2-4ba0-bfe6-e0aedc919893",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -412,7 +412,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -456,8 +456,8 @@
             "CCI-000381"
           ],
           "reference_identifier": "CCI-000381",
-          "uuid": "3ef82214-058b-45d6-bfd3-66f19a7f8d22",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "3a9f619f-03cf-49aa-93e3-69fb2f5cf714",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -466,7 +466,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -510,8 +510,8 @@
             "CCI-000382"
           ],
           "reference_identifier": "CCI-000382",
-          "uuid": "6066f762-702a-4083-b430-97f971e74e27",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "fbe5521e-6fb6-4dce-83fa-aaf8cbcf5b87",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -520,7 +520,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -564,8 +564,8 @@
             "CCI-000185"
           ],
           "reference_identifier": "CCI-000185",
-          "uuid": "9e402e35-9fe9-4706-a795-643edebcd9ed",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "8104dc27-9e66-467d-8c79-01f3805b568e",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -574,7 +574,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -618,8 +618,8 @@
             "CCI-000186"
           ],
           "reference_identifier": "CCI-000186",
-          "uuid": "5071eb17-378e-45b9-b2a4-e6df3fef66c8",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "ebd91664-f244-423d-a690-1f7a5ea95889",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -628,7 +628,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -672,8 +672,8 @@
             "CCI-001664"
           ],
           "reference_identifier": "CCI-001664",
-          "uuid": "980f8904-6402-4f49-a9af-44424ef048dd",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "a0bb55b7-a89b-4782-82ed-0b64dc4a81a6",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -682,7 +682,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -726,8 +726,8 @@
             "CCI-001190"
           ],
           "reference_identifier": "CCI-001190",
-          "uuid": "8f022aa4-1d78-4b99-8699-34387802d12f",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "f0a26fe6-c9ed-438c-b5eb-84ce008e3d51",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -736,7 +736,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -780,8 +780,8 @@
             "CCI-001084"
           ],
           "reference_identifier": "CCI-001084",
-          "uuid": "54586268-e57d-4c8c-a09d-bae6d77607c4",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "0cc58315-790d-4dc1-b559-abf615d6f29a",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -790,7 +790,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -835,8 +835,8 @@
             "CCI-002415"
           ],
           "reference_identifier": "CCI-001094",
-          "uuid": "5d80564b-1445-4651-aef8-c0adb5916e7f",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "c7dbee27-4224-4668-a789-5afb769aec31",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -845,7 +845,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -889,8 +889,8 @@
             "CCI-001312"
           ],
           "reference_identifier": "CCI-001312",
-          "uuid": "31a377b8-a584-4680-8d3c-690b6d48cde2",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "a65c3049-185a-46ff-83af-795f08f5d8aa",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -899,7 +899,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -943,8 +943,8 @@
             "CCI-001312"
           ],
           "reference_identifier": "CCI-001312",
-          "uuid": "989d0afb-e393-4c3c-8558-1294cf8e819c",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "1eea33b5-b679-470d-b935-254451e4d5b9",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -953,7 +953,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -997,8 +997,8 @@
             "CCI-001312"
           ],
           "reference_identifier": "CCI-001312",
-          "uuid": "a89fd1ae-2b5c-4d66-99ab-ab976b17bb65",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "9450059d-3687-46db-b6db-a6b8720aafc7",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1007,7 +1007,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1051,8 +1051,8 @@
             "CCI-002391"
           ],
           "reference_identifier": "CCI-002391",
-          "uuid": "033df41b-05de-4606-af38-fe085369cab8",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "e6afe038-c7f4-43cd-954f-1270d8fb4aea",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1061,7 +1061,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1105,8 +1105,8 @@
             "CCI-002391"
           ],
           "reference_identifier": "CCI-002391",
-          "uuid": "562ffa4d-b2b5-473f-bbc4-40eeeb621be2",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "cdc35697-e43e-4761-baca-a025aaae49ab",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1115,7 +1115,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1159,8 +1159,8 @@
             "CCI-002344"
           ],
           "reference_identifier": "CCI-002344",
-          "uuid": "62e7b932-580c-4b8b-8769-66ae17845b45",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "dc7eb54d-6987-4538-a3dc-f5ccdb6c597b",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1169,7 +1169,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1213,8 +1213,8 @@
             "CCI-002265"
           ],
           "reference_identifier": "CCI-002265",
-          "uuid": "77c22e62-9fc2-47f7-8056-a9f8c5044bb4",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "c44dbd06-5153-42ae-980c-18ac66f7b950",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1223,7 +1223,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1267,8 +1267,8 @@
             "CCI-001813"
           ],
           "reference_identifier": "CCI-001813",
-          "uuid": "54b7c70b-6050-44e4-9f2f-9fa74ecfaf58",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "e018e1c3-42d6-4923-895b-1c5d02fbedeb",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1277,7 +1277,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1321,8 +1321,8 @@
             "CCI-002470"
           ],
           "reference_identifier": "CCI-002470",
-          "uuid": "b6f3554c-b24e-402d-9846-017b5ba4f724",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "cb7823e7-d628-4067-ab3f-5ecf33e8c2cc",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1331,7 +1331,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1375,8 +1375,8 @@
             "CCI-002448"
           ],
           "reference_identifier": "CCI-002448",
-          "uuid": "8ecec853-cd78-4383-afd3-ed001eb28081",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "ddb064a3-faf2-4728-b440-4c69e9b442fa",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1385,7 +1385,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1429,8 +1429,8 @@
             "CCI-002448"
           ],
           "reference_identifier": "CCI-002448",
-          "uuid": "3a8f838b-6682-480b-af3e-600e48daf094",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "9579f541-123b-472d-a794-c672039d0345",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -1439,7 +1439,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "last_write": "2025-06-07T20:09:21.479231+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -1483,8 +1483,8 @@
             "CCI-000366"
           ],
           "reference_identifier": "CCI-000366",
-          "uuid": "409996e6-0b4a-429c-beb1-72a1be708b54",
-          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "uuid": "9c73bb28-ac3b-4eef-acd1-e718c90bac96",
+          "stig_uuid": "4b327444-b203-4e1c-826c-b5fb0ef4248e",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",

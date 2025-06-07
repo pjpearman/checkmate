@@ -161,35 +161,65 @@ def generate_cklb_json(input_file):
 
 def convert_xccdf_zip_to_cklb(zip_path, cklb_dir):
     """
-    Extracts the XCCDF XML from a zip file and converts it to CKLB, saving to cklb_dir.
-    Returns (cklb_path, error_message) or (None, error_message) if failed.
+    Extracts all XCCDF XMLs from a zip file and converts each to CKLB, saving to cklb_dir.
+    Returns a list of (cklb_path, error_message) for each file processed.
+    Cleans up the zip and any extracted files from tmp after processing.
     """
-    import zipfile, glob, tempfile, subprocess, sys, os
+    import zipfile, glob, tempfile, subprocess, sys, os, shutil
     file_name = os.path.basename(zip_path)
+    results = []
     try:
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             with tempfile.TemporaryDirectory() as extract_dir:
                 zip_ref.extractall(extract_dir)
-                # Find XCCDF XML file recursively
+                # Find all XCCDF XML files recursively
                 xml_candidates = glob.glob(os.path.join(extract_dir, '**', '*xccdf*.xml'), recursive=True)
                 if not xml_candidates:
                     xml_candidates = glob.glob(os.path.join(extract_dir, '**', '*.xml'), recursive=True)
                 if not xml_candidates:
-                    return None, f"[CKLB ERROR] No XCCDF XML found in zip: {file_name}"
-                xccdf_xml = xml_candidates[0]
-                cklb_name = os.path.splitext(file_name)[0] + ".cklb"
-                cklb_path = os.path.join(cklb_dir, cklb_name)
-                # Use subprocess to call this script for conversion
-                result = subprocess.run([
-                    sys.executable, os.path.abspath(__file__),
-                    xccdf_xml, cklb_path
-                ], capture_output=True, text=True)
-                if result.returncode == 0:
-                    return cklb_path, None
-                else:
-                    return None, f"CKLB error: {result.stderr.strip()}"
+                    # Clean up zip file from tmp
+                    if os.path.exists(zip_path):
+                        try:
+                            os.remove(zip_path)
+                        except Exception:
+                            pass
+                    return [(None, f"[CKLB ERROR] No XCCDF XML found in zip: {file_name}")]
+                for xccdf_xml in xml_candidates:
+                    cklb_name = os.path.splitext(os.path.basename(xccdf_xml))[0] + ".cklb"
+                    cklb_path = os.path.join(cklb_dir, cklb_name)
+                    result = subprocess.run([
+                        sys.executable, os.path.abspath(__file__),
+                        xccdf_xml, cklb_path
+                    ], capture_output=True, text=True)
+                    if result.returncode == 0:
+                        results.append((cklb_path, None))
+                    else:
+                        results.append((None, f"CKLB error: {result.stderr.strip()} for {os.path.basename(xccdf_xml)}"))
+        # Clean up zip file from tmp after processing
+        if os.path.exists(zip_path):
+            try:
+                os.remove(zip_path)
+            except Exception:
+                pass
+        # Also clean up any extracted files in tmp (if any were copied there)
+        tmp_dir = os.path.dirname(zip_path)
+        if os.path.basename(tmp_dir) == "tmp":
+            for f in os.listdir(tmp_dir):
+                fpath = os.path.join(tmp_dir, f)
+                if os.path.isfile(fpath) and (fpath.endswith('.xml') or fpath.endswith('.xccdf.xml')):
+                    try:
+                        os.remove(fpath)
+                    except Exception:
+                        pass
+        return results
     except Exception as e:
-        return None, f"Download/CKLB error: {e}"
+        # Clean up zip file from tmp on error
+        if os.path.exists(zip_path):
+            try:
+                os.remove(zip_path)
+            except Exception:
+                pass
+        return [(None, f"Download/CKLB error: {e}")]
 
 def main():
     parser = argparse.ArgumentParser(description="Generate a CKLB JSON file from an XCCDF STIG XML")

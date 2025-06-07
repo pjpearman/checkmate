@@ -4967,3 +4967,5 @@
 2025-06-07 22:02:12,743 [INFO] Downloaded: U_Adobe_Acrobat_Reader_DC_Continuous_V2R3_STIG_SCAP_1-3_Benchmark.zip
 2025-06-07 22:02:13,894 [INFO] Downloaded: U_Apache_Server_2-4_Unix_Y25M04_STIG.zip
 2025-06-07 22:02:15,073 [INFO] Downloaded: U_Apache_Server_2-4_Windows_Y25M04_STIG.zip
+2025-06-07 22:09:21,342 [INFO] File already exists: U_Active_Directory_Forest_V3R1_STIG.zip
+2025-06-07 22:09:21,472 [INFO] File already exists: U_Apache_Server_2-4_Unix_Y25M04_STIG.zip

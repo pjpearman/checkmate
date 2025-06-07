@@ -475,12 +475,12 @@ def download_selected_inventory_tui(stdscr):
                     try:
                         download_file(file_url, file_name)
                         tmp_path = os.path.join("tmp", file_name)
-                        cklb_path, error = convert_xccdf_zip_to_cklb(tmp_path, cklb_dir)
-                        if cklb_path:
-                            results.append(f"CKLB created: {os.path.basename(cklb_path)}")
-                        else:
-                            results.append(error or f"Unknown CKLB error for {file_name}")
-                            print(error or "Unknown CKLB error")
+                        cklb_results = convert_xccdf_zip_to_cklb(tmp_path, cklb_dir)
+                        for cklb_path, error in cklb_results:
+                            if cklb_path:
+                                results.append(f"CKLB created: {os.path.basename(cklb_path)}")
+                            else:
+                                results.append(error or f"Unknown CKLB error for {file_name}")
                     except Exception as e:
                         results.append(f"Download/CKLB error for {file_name}: {e}")
                         print(f"[CKLB ERROR] {e}")

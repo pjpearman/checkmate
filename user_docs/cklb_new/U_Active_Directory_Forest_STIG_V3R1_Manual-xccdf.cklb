@@ -3,11 +3,11 @@
     "version": "1.0"
   },
   "title": "Active Directory Forest Security Technical Implementation Guide",
-  "id": "07dec2a2-c02a-458e-a39a-613c2d3618ca",
+  "id": "00b9ef9a-83d2-48c0-a149-5f99023328b0",
   "stigs": [
     {
       "evaluate-stig": {
-        "time": "2025-06-07T20:02:10.907667Z",
+        "time": "2025-06-07T20:09:21.452632Z",
         "module": {
           "name": "cklb_generator",
           "version": "1.1"
@@ -18,14 +18,14 @@
       "stig_id": "Active_Directory_Forest",
       "release_info": "Release: 1 Benchmark Date: 13 Sep 2024",
       "version": "3",
-      "uuid": "e46f0097-e2f4-4110-8ca1-1e5d79394ce9",
+      "uuid": "b4193675-aa50-4149-8966-6a73ff51a27c",
       "size": 7,
       "reference_identifier": "CCI-000366",
       "rules": [
         {
           "evaluate-stig": {
             "answer_file": "U_Active_Directory_Forest_STIG_V3R1_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:10.799907+00:00Z",
+            "last_write": "2025-06-07T20:09:21.343233+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -69,8 +69,8 @@
             "CCI-000366"
           ],
           "reference_identifier": "CCI-000366",
-          "uuid": "ac3281cd-9ff8-4553-a25d-8fa6f2c3cb49",
-          "stig_uuid": "e46f0097-e2f4-4110-8ca1-1e5d79394ce9",
+          "uuid": "6c81bc79-64d7-41c5-b013-ad45a1b33641",
+          "stig_uuid": "b4193675-aa50-4149-8966-6a73ff51a27c",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -79,7 +79,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Active_Directory_Forest_STIG_V3R1_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:10.799907+00:00Z",
+            "last_write": "2025-06-07T20:09:21.343233+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -123,8 +123,8 @@
             "CCI-000366"
           ],
           "reference_identifier": "CCI-000366",
-          "uuid": "8e653538-6451-4bc4-9a34-f28344cc85fd",
-          "stig_uuid": "e46f0097-e2f4-4110-8ca1-1e5d79394ce9",
+          "uuid": "ca77f034-4755-4e53-a3c9-f255a116f132",
+          "stig_uuid": "b4193675-aa50-4149-8966-6a73ff51a27c",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -133,7 +133,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Active_Directory_Forest_STIG_V3R1_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:10.799907+00:00Z",
+            "last_write": "2025-06-07T20:09:21.343233+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -178,8 +178,8 @@
             "CCI-004923"
           ],
           "reference_identifier": "CCI-001891",
-          "uuid": "242a7ce3-cd61-4ffb-9aa5-3a633f324e4b",
-          "stig_uuid": "e46f0097-e2f4-4110-8ca1-1e5d79394ce9",
+          "uuid": "26cc072f-e57c-4306-a6a6-58d0b56de506",
+          "stig_uuid": "b4193675-aa50-4149-8966-6a73ff51a27c",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -188,7 +188,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Active_Directory_Forest_STIG_V3R1_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:10.799907+00:00Z",
+            "last_write": "2025-06-07T20:09:21.343233+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -232,8 +232,8 @@
             "CCI-000366"
           ],
           "reference_identifier": "CCI-000366",
-          "uuid": "3e1a4b02-b01c-4118-9d4a-a3717a540fc5",
-          "stig_uuid": "e46f0097-e2f4-4110-8ca1-1e5d79394ce9",
+          "uuid": "aaf578cd-8429-48a6-bc7d-d81fbbfde4ac",
+          "stig_uuid": "b4193675-aa50-4149-8966-6a73ff51a27c",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -242,7 +242,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Active_Directory_Forest_STIG_V3R1_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:10.799907+00:00Z",
+            "last_write": "2025-06-07T20:09:21.343233+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -286,8 +286,8 @@
             "CCI-002235"
           ],
           "reference_identifier": "CCI-002235",
-          "uuid": "d00abcc8-0f4d-4d9b-a54f-3a5a7fa57059",
-          "stig_uuid": "e46f0097-e2f4-4110-8ca1-1e5d79394ce9",
+          "uuid": "10f63548-dee7-4ca6-80d0-d1468e3e116c",
+          "stig_uuid": "b4193675-aa50-4149-8966-6a73ff51a27c",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -296,7 +296,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Active_Directory_Forest_STIG_V3R1_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:10.799907+00:00Z",
+            "last_write": "2025-06-07T20:09:21.343233+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -340,8 +340,8 @@
             "CCI-000366"
           ],
           "reference_identifier": "CCI-000366",
-          "uuid": "92241856-88ac-43a0-a987-f8ad472a934e",
-          "stig_uuid": "e46f0097-e2f4-4110-8ca1-1e5d79394ce9",
+          "uuid": "658c0849-8b0c-46d8-8d76-ac0f275776ed",
+          "stig_uuid": "b4193675-aa50-4149-8966-6a73ff51a27c",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
@@ -350,7 +350,7 @@
         {
           "evaluate-stig": {
             "answer_file": "U_Active_Directory_Forest_STIG_V3R1_Manual-xccdf.xml",
-            "last_write": "2025-06-07T20:02:10.799907+00:00Z",
+            "last_write": "2025-06-07T20:09:21.343233+00:00Z",
             "afmod": false,
             "old_status": "",
             "new_status": ""
@@ -394,8 +394,8 @@
             "CCI-000366"
           ],
           "reference_identifier": "CCI-000366",
-          "uuid": "51d93444-9ea7-4a3c-baac-a73ce48dcdb4",
-          "stig_uuid": "e46f0097-e2f4-4110-8ca1-1e5d79394ce9",
+          "uuid": "e198dd6e-6efe-4348-9fef-513d42b045ac",
+          "stig_uuid": "b4193675-aa50-4149-8966-6a73ff51a27c",
           "status": "not_reviewed",
           "overrides": {},
           "comments": "",
