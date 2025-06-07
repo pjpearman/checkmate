@@ -18,7 +18,7 @@ import logging
 # URL of the page containing the table
 URL = "https://public.cyber.mil/stigs/downloads/"  # Change this to your target URL
 # Directory to save downloaded files
-DOWNLOAD_DIR = "/home/ppear/beautifulsoup/tmp"
+DOWNLOAD_DIR = "tmp"
 
 # User-Agent header to mimic a browser request (some servers block default python-requests User-Agent)
 HEADERS = {

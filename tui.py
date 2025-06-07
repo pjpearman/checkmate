@@ -46,57 +46,51 @@ def draw_menu(stdscr, selected_idx):
 def download_files(stdscr):
     """
     Downloads files by fetching the page and displaying the list.
-    Enhanced: supports multi-select, file size display, refresh, and status bar.
+    Enhanced: supports multi-select, refresh, and status bar.
     """
-    def get_file_size(url):
-        try:
-            resp = requests.head(url, headers=HEADERS, timeout=10, allow_redirects=True)
-            size = int(resp.headers.get('Content-Length', 0))
-            return size if size > 0 else None
-        except Exception:
-            return None
-
-    def human_size(size):
-        for unit in ['B','KB','MB','GB']:
-            if size < 1024:
-                return f"{size:.1f}{unit}"
-            size /= 1024
-        return f"{size:.1f}TB"
-
     while True:
+        print("[TUI] Fetching webpage and parsing file links...")
         stdscr.clear()
         stdscr.addstr(0, 0, "Fetching webpage and parsing file links...")
         stdscr.refresh()
         try:
             html_content = fetch_page(URL)
+            print("[TUI] Page fetched. Parsing links...")
             file_links = parse_table_for_links(html_content)
+            print(f"[TUI] Found {len(file_links)} file links.")
         except Exception as e:
             stdscr.addstr(2, 0, f"Error: {e}. Press any key to return.")
+            stdscr.refresh()
+            print(f"[TUI] Error: {e}")
             stdscr.getch()
             return
         if not file_links:
             stdscr.addstr(2, 0, "No downloadable files found. Press any key to return.")
+            stdscr.refresh()
+            print("[TUI] No downloadable files found.")
             stdscr.getch()
             return
-        # Get file sizes (head requests, but only for visible files)
-        sizes = [get_file_size(url) for _, url in file_links]
         selected = set()
         current_idx = 0
         status = "SPACE: select, ENTER: download, r: refresh, b: back, q: quit"
         while True:
             stdscr.clear()
             stdscr.addstr(0, 0, "Select files to download:")
+            max_lines = curses.LINES - 3  # Reserve space for status and prompt
             for idx, (file_name, _) in enumerate(file_links):
+                if idx >= max_lines:
+                    break  # Don't write past the bottom of the screen
                 sel = "[x]" if idx in selected else "[ ]"
-                size_str = f" ({human_size(sizes[idx])})" if sizes[idx] else ""
-                line = f"{sel} {file_name}{size_str}"
+                line = f"{sel} {file_name}"
+                # Truncate line to fit terminal width
+                line = line[:curses.COLS - 4]
                 if idx == current_idx:
                     stdscr.attron(curses.color_pair(1))
                     stdscr.addstr(idx + 1, 0, f"> {line}")
                     stdscr.attroff(curses.color_pair(1))
                 else:
                     stdscr.addstr(idx + 1, 0, f"  {line}")
-            stdscr.addstr(curses.LINES-2, 0, status)
+            stdscr.addstr(curses.LINES-2, 0, status[:curses.COLS-1])
             stdscr.refresh()
             key = stdscr.getch()
             if key == curses.KEY_UP:
@@ -115,11 +109,14 @@ def download_files(stdscr):
                     stdscr.clear()
                     stdscr.addstr(0, 0, f"Downloading: {file_name}...")
                     stdscr.refresh()
+                    print(f"[TUI] Downloading: {file_name} from {file_url}")
                     try:
                         download_file(file_url, file_name)
                         stdscr.addstr(2, 0, f"Downloaded: {file_name}")
+                        print(f"[TUI] Downloaded: {file_name}")
                     except Exception as e:
                         stdscr.addstr(2, 0, f"Download error: {e}")
+                        print(f"[TUI] Download error: {e}")
                     stdscr.refresh()
                 stdscr.addstr(4, 0, "Press any key to continue.")
                 stdscr.getch()
