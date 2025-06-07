@@ -12,6 +12,10 @@ import curses
 import os
 import sys
 import requests
+import zipfile
+import glob
+import tempfile
+import subprocess
 
 # Import existing functions
 from web import fetch_page, parse_table_for_links, download_file, URL, HEADERS
@@ -20,6 +24,7 @@ from web import fetch_page, parse_table_for_links, download_file, URL, HEADERS
 FUNCTIONS = {
     "Create Inventory File": "create_inventory_file_tui",
     "Download Files": "download_files",
+    "Download Selected Inventory": "download_selected_inventory_tui",
     # Example: "Set Download Directory": "set_download_dir",
     # Example: "Toggle File Types": "toggle_file_types",
 }
@@ -47,6 +52,10 @@ def download_files(stdscr):
     Downloads files by fetching the page and displaying the list.
     Enhanced: supports multi-select, refresh, and status bar.
     """
+    download_mode = prompt_download_mode_tui(stdscr)
+    if not download_mode:
+        return  # Cancelled
+
     while True:
         print("[TUI] Fetching webpage and parsing file links...")
         stdscr.clear()
@@ -130,6 +139,40 @@ def download_files(stdscr):
                 return
             elif key in [ord('r'), ord('R')]:
                 break  # Refresh file list
+
+def prompt_download_mode_tui(stdscr):
+    """
+    Prompt user for download mode: Create CKLB or Download Zip Only.
+    Returns 'cklb' or 'zip' or None if cancelled.
+    """
+    options = ["Create CKLB", "Download Zip Only", "Cancel"]
+    selected_idx = 0
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Choose download mode:")
+        for idx, opt in enumerate(options):
+            if idx == selected_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(idx + 1, 0, f"> {opt}")
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(idx + 1, 0, f"  {opt}")
+        stdscr.addstr(len(options) + 2, 0, "UP/DOWN to select, ENTER to confirm, b/q to cancel")
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            selected_idx = (selected_idx - 1) % len(options)
+        elif key == curses.KEY_DOWN:
+            selected_idx = (selected_idx + 1) % len(options)
+        elif key in [10, 13]:
+            if selected_idx == 0:
+                return 'cklb'
+            elif selected_idx == 1:
+                return 'zip'
+            else:
+                return None
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return None
 
 def create_inventory_file_tui(stdscr):
     """
@@ -234,6 +277,189 @@ def create_inventory_file_tui(stdscr):
         elif key in [ord('r'), ord('R')]:
             break  # Refresh file list
 
+def download_selected_inventory_tui(stdscr):
+    """
+    TUI option to download the newest available file for each selected technology from an inventory file.
+    Prompts for CKLB or Zip download mode.
+    """
+    import json
+    import re
+    import curses
+    import curses.textpad
+    import shutil
+    user_docs_dir = os.path.join("user_docs", "inventory")
+    zip_dir = os.path.join("user_docs", "zip_files")
+    cklb_dir = os.path.join("user_docs", "cklb_new")
+    # List inventory files
+    inventory_files = [f for f in os.listdir(user_docs_dir) if f.endswith(".json") and os.path.isfile(os.path.join(user_docs_dir, f))]
+    if not inventory_files:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "No inventory files found in user_docs/inventory. Press any key to return.")
+        stdscr.refresh()
+        stdscr.getch()
+        return
+    selected_idx = 0
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Select an inventory file:")
+        for idx, fname in enumerate(inventory_files):
+            if idx == selected_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(idx + 1, 0, f"> {fname}")
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(idx + 1, 0, f"  {fname}")
+        stdscr.addstr(len(inventory_files) + 2, 0, "UP/DOWN to select, ENTER to confirm, b/q to cancel")
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            selected_idx = (selected_idx - 1) % len(inventory_files)
+        elif key == curses.KEY_DOWN:
+            selected_idx = (selected_idx + 1) % len(inventory_files)
+        elif key in [10, 13]:  # ENTER
+            break
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return
+    inventory_path = os.path.join(user_docs_dir, inventory_files[selected_idx])
+    with open(inventory_path, "r") as f:
+        inventory = json.load(f)
+    # Extract technologies
+    tech_map = {}
+    tech_list = []
+    for file_name, file_url in inventory:
+        m = re.match(r"U_([^_]+(?:_[^_]+)*)_V", file_name)
+        if m:
+            tech = m.group(1)
+            if tech not in tech_map:
+                tech_map[tech] = []
+                tech_list.append(tech)
+            tech_map[tech].append((file_name, file_url))
+    if not tech_list:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "No technologies found in inventory. Press any key to return.")
+        stdscr.refresh()
+        stdscr.getch()
+        return
+    # Select technologies
+    selected = set()
+    current_idx = 0
+    scroll_offset = 0
+    status = "SPACE: select, ENTER: download, b/q: back"
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, f"Select technologies to download from {inventory_files[selected_idx]}:")
+        max_lines = curses.LINES - 3
+        if current_idx < scroll_offset:
+            scroll_offset = current_idx
+        elif current_idx >= scroll_offset + max_lines:
+            scroll_offset = current_idx - max_lines + 1
+        visible_techs = tech_list[scroll_offset:scroll_offset + max_lines]
+        for vis_idx, tech in enumerate(visible_techs):
+            idx = scroll_offset + vis_idx
+            sel = "[x]" if idx in selected else "[ ]"
+            line = f"{sel} {tech}"
+            line = line[:curses.COLS - 4]
+            if idx == current_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(vis_idx + 1, 0, f"> {line}")
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(vis_idx + 1, 0, f"  {line}")
+        stdscr.addstr(curses.LINES-2, 0, status[:curses.COLS-1])
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            current_idx = (current_idx - 1) % len(tech_list)
+        elif key == curses.KEY_DOWN:
+            current_idx = (current_idx + 1) % len(tech_list)
+        elif key == ord(' '):
+            if current_idx in selected:
+                selected.remove(current_idx)
+            else:
+                selected.add(current_idx)
+        elif key in [10, 13]:  # ENTER
+            to_download = selected if selected else {current_idx}
+            # Prompt for download mode
+            mode = prompt_download_mode_tui(stdscr)
+            if mode is None:
+                return
+            from web import download_file
+            if mode == 'zip':
+                if not os.path.exists(zip_dir):
+                    os.makedirs(zip_dir, mode=0o700)
+                for idx in to_download:
+                    tech = tech_list[idx]
+                    files = sorted(tech_map[tech], key=lambda x: x[0], reverse=True)
+                    file_name, file_url = files[0]
+                    stdscr.clear()
+                    stdscr.addstr(0, 0, f"Downloading: {file_name} to zip_files...")
+                    stdscr.refresh()
+                    # Download to zip_files dir
+                    dest_path = os.path.join(zip_dir, file_name)
+                    if os.path.exists(dest_path):
+                        stdscr.addstr(2, 0, f"File already exists: {file_name}")
+                        stdscr.refresh()
+                        continue
+                    try:
+                        # Download to tmp, then move
+                        download_file(file_url, file_name)
+                        shutil.move(os.path.join("tmp", file_name), dest_path)
+                        stdscr.addstr(2, 0, f"Downloaded: {file_name}")
+                    except Exception as e:
+                        stdscr.addstr(2, 0, f"Download error: {e}")
+                    stdscr.refresh()
+                stdscr.addstr(4, 0, "Press any key to continue.")
+                stdscr.getch()
+                return
+            elif mode == 'cklb':
+                if not os.path.exists(cklb_dir):
+                    os.makedirs(cklb_dir, mode=0o700)
+                import tempfile
+                import subprocess
+                for idx in to_download:
+                    tech = tech_list[idx]
+                    files = sorted(tech_map[tech], key=lambda x: x[0], reverse=True)
+                    file_name, file_url = files[0]
+                    stdscr.clear()
+                    stdscr.addstr(0, 0, f"Downloading: {file_name} for CKLB conversion...")
+                    stdscr.refresh()
+                    try:
+                        download_file(file_url, file_name)
+                        tmp_path = os.path.join("tmp", file_name)
+                        # Extract XML from zip
+                        with zipfile.ZipFile(tmp_path, 'r') as zip_ref:
+                            with tempfile.TemporaryDirectory() as extract_dir:
+                                zip_ref.extractall(extract_dir)
+                                # Find XCCDF XML file recursively
+                                xml_candidates = glob.glob(os.path.join(extract_dir, '**', '*xccdf*.xml'), recursive=True)
+                                if not xml_candidates:
+                                    xml_candidates = glob.glob(os.path.join(extract_dir, '**', '*.xml'), recursive=True)
+                                if not xml_candidates:
+                                    print(f"[CKLB ERROR] No XCCDF XML found in zip: {file_name}")
+                                    continue  # Log error to terminal, skip to next file
+                                xccdf_xml = xml_candidates[0]
+                                cklb_name = os.path.splitext(file_name)[0] + ".cklb"
+                                cklb_path = os.path.join(cklb_dir, cklb_name)
+                                # Use subprocess to call create_cklb.py
+                                result = subprocess.run([
+                                    sys.executable, os.path.join(os.path.dirname(__file__), "create_cklb.py"),
+                                    xccdf_xml, cklb_path
+                                ], capture_output=True, text=True)
+                                if result.returncode == 0:
+                                    stdscr.addstr(2, 0, f"CKLB created: {cklb_name}")
+                                else:
+                                    stdscr.addstr(2, 0, f"CKLB error: {result.stderr.strip()}")
+                    except Exception as e:
+                        stdscr.addstr(2, 0, f"Download/CKLB error: {e}")
+                    stdscr.refresh()
+                stdscr.addstr(4, 0, "Press any key to continue.")
+                stdscr.getch()
+                return
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return
+        elif key in [ord('r'), ord('R')]:
+            break  # Refresh file list
+
 def main(stdscr):
     """
     Main loop for the TUI.
@@ -257,6 +483,8 @@ def main(stdscr):
                 download_files(stdscr)
             elif selected_func == "create_inventory_file_tui":
                 create_inventory_file_tui(stdscr)
+            elif selected_func == "download_selected_inventory_tui":
+                download_selected_inventory_tui(stdscr)
             # elif selected_func == "set_download_dir":
             #     set_download_dir(stdscr)
             # elif selected_func == "toggle_file_types":
