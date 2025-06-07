@@ -370,8 +370,13 @@ def download_selected_inventory_tui(stdscr):
     # Extract technologies
     tech_map = {}
     tech_list = []
-    for file_name, file_url in inventory:
-        m = re.match(r"U_([^_]+(?:_[^_]+)*)_V", file_name)
+    for entry in inventory:
+        file_name = entry.get('file_name')
+        file_url = entry.get('url')
+        if not file_name or not file_url:
+            continue
+        # Match both _V#R# and _Y##M## patterns
+        m = re.search(r"U_([^_]+(?:_[^_]+)*?)_(?:V\d+[Rr]\d+|Y\d{2}M\d{2})", file_name)
         if m:
             tech = m.group(1)
             if tech not in tech_map:
@@ -459,6 +464,7 @@ def download_selected_inventory_tui(stdscr):
                 if not os.path.exists(cklb_dir):
                     os.makedirs(cklb_dir, mode=0o700)
                 from create_cklb import convert_xccdf_zip_to_cklb
+                results = []
                 for idx in to_download:
                     tech = tech_list[idx]
                     files = sorted(tech_map[tech], key=lambda x: x[0], reverse=True)
@@ -471,15 +477,19 @@ def download_selected_inventory_tui(stdscr):
                         tmp_path = os.path.join("tmp", file_name)
                         cklb_path, error = convert_xccdf_zip_to_cklb(tmp_path, cklb_dir)
                         if cklb_path:
-                            stdscr.addstr(2, 0, f"CKLB created: {os.path.basename(cklb_path)}")
+                            results.append(f"CKLB created: {os.path.basename(cklb_path)}")
                         else:
-                            stdscr.addstr(2, 0, error or "Unknown CKLB error")
+                            results.append(error or f"Unknown CKLB error for {file_name}")
                             print(error or "Unknown CKLB error")
                     except Exception as e:
-                        stdscr.addstr(2, 0, f"Download/CKLB error: {e}")
+                        results.append(f"Download/CKLB error for {file_name}: {e}")
                         print(f"[CKLB ERROR] {e}")
-                    stdscr.refresh()
-                stdscr.addstr(4, 0, "Press any key to continue.")
+                stdscr.clear()
+                stdscr.addstr(0, 0, "CKLB creation results:")
+                for i, msg in enumerate(results):
+                    stdscr.addstr(i+1, 0, msg[:curses.COLS-1])
+                stdscr.addstr(len(results)+2, 0, "Press any key to continue.")
+                stdscr.refresh()
                 stdscr.getch()
                 return
         elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:

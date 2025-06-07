@@ -1,0 +1,1513 @@
+{
+  "evaluate-stig": {
+    "version": "1.0"
+  },
+  "title": "Apache Server 2.4 UNIX Site Security Technical Implementation Guide",
+  "id": "07386a3a-227e-4d57-ba90-a2fa79edb711",
+  "stigs": [
+    {
+      "evaluate-stig": {
+        "time": "2025-06-07T20:02:14.007714Z",
+        "module": {
+          "name": "cklb_generator",
+          "version": "1.1"
+        }
+      },
+      "stig_name": "Apache Server 2.4 UNIX Site Security Technical Implementation Guide",
+      "display_name": "Apache Server 2.4 UNIX Site STIG",
+      "stig_id": "Apache_Server_2-4_UNIX_Site_STIG",
+      "release_info": "Release: 6 Benchmark Date: 02 Apr 2025",
+      "version": "2",
+      "uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+      "size": 27,
+      "reference_identifier": "CCI-000054",
+      "rules": [
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214277",
+          "group_tree": [
+            {
+              "id": "V-214277",
+              "title": "SRG-APP-000001-WSR-000002",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214277",
+          "group_title": "SRG-APP-000001-WSR-000002",
+          "severity": "medium",
+          "rule_id_src": "SV-214277r960735_rule",
+          "rule_id": "SV-214277r960735",
+          "rule_version": "AS24-U2-000020",
+          "rule_title": "The Apache web server must perform server-side session management.",
+          "fix_text": "If the modules are not installed, install any missing packages. \n \nAdd the following lines to the \"httpd.conf\" file: \n \nLoadModule usertrack_module modules/mod_usertrack.so \n \nLoadModule session_module modules/mod_session.so \n \nAdditional documentation can be found at: \n \nhttps://httpd.apache.org/docs/2.4/mod/mod_usertrack.html \n \nhttps://httpd.apache.org/docs/2.4/mod/mod_session.html \n \nRestart Apache: apachectl restart",
+          "weight": "10.0",
+          "check_content": "In a command line, run \"httpd -M | grep -i session_module\" and \"httpd -M | grep -i usertrack_module\". \n \nIf \"session_module\" module and \"usertrack_module\" are not enabled or do not exist, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000054"
+          ],
+          "reference_identifier": "CCI-000054",
+          "uuid": "5344b3c2-e516-49da-bb2b-a19a14399e5c",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214278",
+          "group_tree": [
+            {
+              "id": "V-214278",
+              "title": "SRG-APP-000014-WSR-000006",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214278",
+          "group_title": "SRG-APP-000014-WSR-000006",
+          "severity": "medium",
+          "rule_id_src": "SV-214278r960759_rule",
+          "rule_id": "SV-214278r960759",
+          "rule_version": "AS24-U2-000030",
+          "rule_title": "The Apache web server must use encryption strength in accordance with the categorization of data hosted by the Apache web server when remote connections are provided.",
+          "fix_text": "Determine the location of the ssl.conf file:\n# find / -name ssl.conf\nOutput: /etc/httpd/conf.d/ssl.conf\n \nEnsure the \"SSLProtocol\" is added to ssl.conf and looks like the following: \n \nSSLProtocol -ALL +TLSv1.2 \n \nRestart Apache: apachectl restart",
+          "weight": "10.0",
+          "check_content": "Verify the \"ssl module\" module is loaded\n# httpd -M | grep -i ssl_module\nOutput:  ssl_module (shared)\n \nIf the \"ssl_module\" is not enabled, this is a finding. \n \nDetermine the location of the ssl.conf file:\n# find / -name ssl.conf\nOutput: /etc/httpd/conf.d/ssl.conf\n\nSearch the ssl.conf file for the SSLProtocol\n# cat /<path_to_file>/ssl.conf | grep -i \"SSLProtocol\" \nOutput: SSLProtocol -ALL +TLSv1.2\n \nIf the \"SSLProtocol\" directive is missing or does not look like the following, this is a finding: \n \nSSLProtocol -ALL +TLSv1.2 \n \nIf the TLS version is not TLS 1.2 or higher, according to NIST SP 800-52 Rev 2, or if non-FIPS-approved algorithms are enabled, this is a finding. \n \nNote: In some cases, web servers are configured in an environment to support load balancing. This configuration most likely uses a content switch to control traffic to the various web servers. In this situation, the TLS certificate for the websites may be installed on the content switch versus the individual websites. This solution is acceptable as long as the web servers are isolated from the general population LAN. Users should not have the ability to bypass the content switch to access the websites.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000068",
+            "CCI-000197",
+            "CCI-000213",
+            "CCI-000803",
+            "CCI-001166",
+            "CCI-001453",
+            "CCI-002448",
+            "CCI-002450",
+            "CCI-002452",
+            "CCI-002506"
+          ],
+          "reference_identifier": "CCI-000068",
+          "uuid": "c649f0e7-0ae6-4b2c-945e-cfb0f2818971",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214279",
+          "group_tree": [
+            {
+              "id": "V-214279",
+              "title": "SRG-APP-000095-WSR-000056",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214279",
+          "group_title": "SRG-APP-000095-WSR-000056",
+          "severity": "medium",
+          "rule_id_src": "SV-214279r962395_rule",
+          "rule_id": "SV-214279r962395",
+          "rule_version": "AS24-U2-000090",
+          "rule_title": "The Apache web server must produce log records containing sufficient information to establish what type of events occurred.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nUncomment the \"log_config_module\" module line. \n \nConfigure the \"LogFormat\" in the \"httpd.conf\" file to look like the following: \n \nLogFormat \"%a %A %h %H %l %m %s %t %u %U \\\"%{Referer}i\\\" \" common \n \nRestart Apache: apachectl restart\n\nNote: The log format may be using different variables based on the environment; however, it should be verified to ensure it is producing the same end result of logged elements.",
+          "weight": "10.0",
+          "check_content": "In a command line, run \"httpd -M | grep -i log_config_module\".  \n \nIf the \"log_config_module\" is not enabled, this is a finding. \n \nDetermine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nSearch for the directive \"LogFormat\" in the httpd.conf file: \n \n# cat /<path_to_file>/httpd.conf | grep -i \"LogFormat\" \n \nIf the \"LogFormat\" directive is missing or does not look like the following, this is a finding: \n \nLogFormat \"%a %A %h %H %l %m %s %t %u %U \\\"%{Referer}i\\\" \" common",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000130"
+          ],
+          "reference_identifier": "CCI-000130",
+          "uuid": "0987ffa8-f7ad-4a41-a148-b6e5a83a5c90",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214280",
+          "group_tree": [
+            {
+              "id": "V-214280",
+              "title": "SRG-APP-000141-WSR-000015",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214280",
+          "group_title": "SRG-APP-000141-WSR-000015",
+          "severity": "medium",
+          "rule_id_src": "SV-214280r960963_rule",
+          "rule_id": "SV-214280r960963",
+          "rule_version": "AS24-U2-000240",
+          "rule_title": "The Apache web server must not perform user management for hosted applications.",
+          "fix_text": "Reconfigure any hosted applications on the Apache web server to perform user management outside the web server. \n \nDocument how the hosted application user management is accomplished.",
+          "weight": "10.0",
+          "check_content": "Interview the System Administrator (SA) about the role of the Apache web server. \n \nIf the web server is hosting an application, have the SA provide supporting documentation on how the application's user management is accomplished outside of the web server. \n \nIf the web server is not hosting an application, this is Not Applicable. \n \nIf the web server is performing user management for hosted applications, this is a finding. \n \nIf the web server is hosting an application and the SA cannot provide supporting documentation on how the application's user management is accomplished outside of the Apache web server, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000381"
+          ],
+          "reference_identifier": "CCI-000381",
+          "uuid": "2ee9598d-0fb6-49a3-9f24-50f381b3ad04",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214281",
+          "group_tree": [
+            {
+              "id": "V-214281",
+              "title": "SRG-APP-000141-WSR-000081",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214281",
+          "group_title": "SRG-APP-000141-WSR-000081",
+          "severity": "medium",
+          "rule_id_src": "SV-214281r960963_rule",
+          "rule_id": "SV-214281r960963",
+          "rule_version": "AS24-U2-000300",
+          "rule_title": "The Apache web server must have Multipurpose Internet Mail Extensions (MIME) that invoke operating system shell programs disabled.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nDisable MIME types for .exe, .dll, .com, .bat, and .csh programs. \n \nIf \"Action\" or \"AddHandler\" exist and they configure any of the following (.exe, .dll, .com, .bat, or .csh), remove those references. \n \nRestart Apache: apachectl restart \n \nEnsure this process is documented and approved by the ISSO.",
+          "weight": "10.0",
+          "check_content": "In a command line, run \"httpd -M | grep -i ssl_module\". \n \nIf the \"ssl_module\" is not enabled, this is a finding. \n \nDetermine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nIf \"Action\" or \"AddHandler\" exist and they configure .exe, .dll, .com, .bat, or .csh, or any other shell as a viewer for documents, this is a finding. \n \nIf this is not documented and approved by the Information System Security Officer (ISSO), this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000381"
+          ],
+          "reference_identifier": "CCI-000381",
+          "uuid": "9a9906b6-36cd-46e7-a8b6-f2e093a96b3d",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214282",
+          "group_tree": [
+            {
+              "id": "V-214282",
+              "title": "SRG-APP-000141-WSR-000082",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214282",
+          "group_title": "SRG-APP-000141-WSR-000082",
+          "severity": "medium",
+          "rule_id_src": "SV-214282r960963_rule",
+          "rule_id": "SV-214282r960963",
+          "rule_version": "AS24-U2-000310",
+          "rule_title": "The Apache web server must allow mappings to unused and vulnerable scripts to be removed.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nRemove any scripts in \"cgi-bin\" directory if they are not needed for application operation. \n \nEnsure this process is documented and approved by the ISSO.",
+          "weight": "10.0",
+          "check_content": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used.  \nReview \"Script\", \"ScriptAlias\" or \"ScriptAliasMatch\", or \"ScriptInterpreterSource\" directives. \n \nGo into each directory and locate \"cgi-bin\" files. \n \nIf any scripts are present that are not needed for application operation, this is a finding. \n \nIf this is not documented and approved by the Information System Security Officer (ISSO), this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000381"
+          ],
+          "reference_identifier": "CCI-000381",
+          "uuid": "e96cecad-408a-4721-bdb1-80bf7cd400ff",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214283",
+          "group_tree": [
+            {
+              "id": "V-214283",
+              "title": "SRG-APP-000141-WSR-000083",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214283",
+          "group_title": "SRG-APP-000141-WSR-000083",
+          "severity": "medium",
+          "rule_id_src": "SV-214283r960963_rule",
+          "rule_id": "SV-214283r960963",
+          "rule_version": "AS24-U2-000320",
+          "rule_title": "The Apache web server must have resource mappings set to disable the serving of certain file types.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nDisable MIME types for .exe, .dll, .com, .bat, and .csh programs. \n \nIf \"Action\" or \"AddHandler\" exist and they configure .exe, .dll, .com, .bat, or .csh, remove those references. \n \nRestart Apache: apachectl restart \n \nEnsure this process is documented and approved by the ISSO.",
+          "weight": "10.0",
+          "check_content": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nIf \"Action\" or \"AddHandler\" exist and they configure .exe, .dll, .com, .bat, or .csh, or any other shell as a viewer for documents, this is a finding. \n \nIf this is not documented and approved by the Information System Security Officer (ISSO), this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000381"
+          ],
+          "reference_identifier": "CCI-000381",
+          "uuid": "869e1e1d-3e70-41af-9b6d-80aa4c6c206a",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214284",
+          "group_tree": [
+            {
+              "id": "V-214284",
+              "title": "SRG-APP-000141-WSR-000087",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214284",
+          "group_title": "SRG-APP-000141-WSR-000087",
+          "severity": "medium",
+          "rule_id_src": "SV-214284r960963_rule",
+          "rule_id": "SV-214284r960963",
+          "rule_version": "AS24-U2-000350",
+          "rule_title": "Users and scripts running on behalf of users must be contained to the document root or home directory tree of the Apache web server.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nSet the root directory directive as follows: \n \n<Directory> \n... \nRequire all denied \n... \n</Directory> \n \nRemove any \"Deny\" and \"Allow\" directives from the root <Directory> element. \n \nRestart Apache: apachectl restart",
+          "weight": "10.0",
+          "check_content": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nVerify there is a single \"Require\" directive with the value of \"all denied\". \n \nVerify there are no \"Allow\" or \"Deny\" directives in the root <Directory> element. \n \nThe following may be useful in extracting root directory elements from the Apache configuration for auditing: \n \n# perl -ne 'print if /^ *<Directory *\\//i .. /<\\/Directory/i' $APACHE_PREFIX/conf/httpd.conf  \n \nIf there are \"Allow\" or \"Deny\" directives in the root <Directory> element, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000381"
+          ],
+          "reference_identifier": "CCI-000381",
+          "uuid": "3ef82214-058b-45d6-bfd3-66f19a7f8d22",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214285",
+          "group_tree": [
+            {
+              "id": "V-214285",
+              "title": "SRG-APP-000142-WSR-000089",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214285",
+          "group_title": "SRG-APP-000142-WSR-000089",
+          "severity": "medium",
+          "rule_id_src": "SV-214285r1043177_rule",
+          "rule_id": "SV-214285r1043177",
+          "rule_version": "AS24-U2-000360",
+          "rule_title": "The Apache web server must be configured to use a specified IP address and port.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nSet each \"VirtualHost\" directive to listen to on a specific IP address and port.",
+          "weight": "10.0",
+          "check_content": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nVerify that for each \"VirtualHost\" directive, there is an IP address and port. \n \nIf there is not, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000382"
+          ],
+          "reference_identifier": "CCI-000382",
+          "uuid": "6066f762-702a-4083-b430-97f971e74e27",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214286",
+          "group_tree": [
+            {
+              "id": "V-214286",
+              "title": "SRG-APP-000175-WSR-000095",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214286",
+          "group_title": "SRG-APP-000175-WSR-000095",
+          "severity": "medium",
+          "rule_id_src": "SV-214286r1051289_rule",
+          "rule_id": "SV-214286r1051289",
+          "rule_version": "AS24-U2-000380",
+          "rule_title": "The Apache web server must perform RFC 5280-compliant certification path validation.",
+          "fix_text": "Configure the Apache server to validate certificates in accordance with RFC 5280.",
+          "weight": "10.0",
+          "check_content": "Review the Apache server documentation and deployed configuration to determine whether the application server provides PKI functionality that validates certification paths in accordance with RFC 5280.\n\nIf PKI is not being used, this is NA.\n\nIf the Apache server is using PKI, but it does not perform this requirement, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000185"
+          ],
+          "reference_identifier": "CCI-000185",
+          "uuid": "9e402e35-9fe9-4706-a795-643edebcd9ed",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214287",
+          "group_tree": [
+            {
+              "id": "V-214287",
+              "title": "SRG-APP-000176-WSR-000096",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214287",
+          "group_title": "SRG-APP-000176-WSR-000096",
+          "severity": "medium",
+          "rule_id_src": "SV-214287r961041_rule",
+          "rule_id": "SV-214287r961041",
+          "rule_version": "AS24-U2-000390",
+          "rule_title": "Only authenticated system administrators or the designated PKI Sponsor for the Apache web server must have access to the Apache web servers private key.",
+          "fix_text": "Determine the location of the ssl.conf file:\n# find / -name ssl.conf\nOutput: /etc/httpd/conf.d/ssl.conf\n\nSearch the ssl.conf file for the SSLCertificateKeyFile location.\n# cat <path to file>/ssl.conf | grep -i SSLCertificateKeyFile\nOutput: SSLCertificateKeyFile /etc/pki/tls/private/localhost.key\n\nBased on the \" SSLCertificateKeyFile\" directive path, configure the Apache web server to ensure only authenticated and authorized users can access the web server's private key.  \n\nPermissions must be 600 or more restrictive.",
+          "weight": "10.0",
+          "check_content": "Verify the \"ssl module\" module is loaded\n# httpd -M | grep -i ssl_module\nOutput:  ssl_module (shared) \n\nIf the \"ssl_module\" is not enabled, this is a finding. \n\nDetermine the location of the ssl.conf file:\n# find / -name ssl.conf\nOutput: /etc/httpd/conf.d/ssl.conf\n\nSearch the ssl.conf file for the SSLCertificateKeyFile location.\n# cat <path to file>/ssl.conf | grep -i SSLCertificateKeyFile\nOutput: SSLCertificateKeyFile /etc/pki/tls/private/localhost.key\n\nIdentify the correct permission set and owner/group of the certificate key file.\n# ls -laH /etc/pki/tls/private/localhost.key\nOutput: -rw-------. 1 root root 1675 Sep 10  2020 /etc/pki/tls/private/localhost.key\n\nThe permission set must be 600 or more restrictive and the owner/group of the key file must be accessible to only authenticated system administrator and the designated PKI Sponsor.\n\nIf the correct permissions are not set or if the private key is accessible by unauthenticated or unauthorized users, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000186"
+          ],
+          "reference_identifier": "CCI-000186",
+          "uuid": "5071eb17-378e-45b9-b2a4-e6df3fef66c8",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214288",
+          "group_tree": [
+            {
+              "id": "V-214288",
+              "title": "SRG-APP-000223-WSR-000011",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214288",
+          "group_title": "SRG-APP-000223-WSR-000011",
+          "severity": "medium",
+          "rule_id_src": "SV-214288r1043180_rule",
+          "rule_id": "SV-214288r1043180",
+          "rule_version": "AS24-U2-000470",
+          "rule_title": "Cookies exchanged between the Apache web server and client, such as session cookies, must have security settings that disallow cookie access outside the originating Apache web server and hosted application.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nAdd or configure the following line: \n \n\"Header always edit Set-Cookie ^(.*)$ $1;HttpOnly;secure\" \n \nAdd the \"secure\" attribute to the JavaScript set cookie in any application code: \n \nfunction setCookie() { document.cookie = \"ALEPH_SESSION_ID = $SESS; path = /; secure\"; }  \n\nHttpOnly cannot be used since by definition this is a cookie set by JavaScript. \n \nRestart www_server and Apache.",
+          "weight": "10.0",
+          "check_content": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n\nSearch for the \"Header\" directive:\n\n# cat /<path_to_file>/httpd.conf | grep -i \"Header\"\n \nIf \"HttpOnly\" \"secure\" is not configured, this is a finding. \n \n\"Header always edit Set-Cookie ^(.*)$ $1;HttpOnly;secure\" \n \nReview the code. If, when creating cookies, the following is not occurring, this is a finding: \n \nfunction setCookie() { document.cookie = \"ALEPH_SESSION_ID = $SESS; path = /; secure\"; }",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-001664"
+          ],
+          "reference_identifier": "CCI-001664",
+          "uuid": "980f8904-6402-4f49-a9af-44424ef048dd",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214289",
+          "group_tree": [
+            {
+              "id": "V-214289",
+              "title": "SRG-APP-000225-WSR-000074",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214289",
+          "group_title": "SRG-APP-000225-WSR-000074",
+          "severity": "medium",
+          "rule_id_src": "SV-214289r961122_rule",
+          "rule_id": "SV-214289r961122",
+          "rule_version": "AS24-U2-000540",
+          "rule_title": "The Apache web server must augment re-creation to a stable and known baseline.",
+          "fix_text": "Prepare documentation for disaster recovery methods for the Apache web server in the event of the necessity for rollback. \n \nDocument and test the disaster recovery methods designed.",
+          "weight": "10.0",
+          "check_content": "Interview the System Administrator for the Apache web server. \n \nAsk for documentation on the disaster recovery methods tested and planned for the Apache web server in the event of the necessity for rollback. \n \nIf documentation for a disaster recovery has not been established, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-001190"
+          ],
+          "reference_identifier": "CCI-001190",
+          "uuid": "8f022aa4-1d78-4b99-8699-34387802d12f",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214290",
+          "group_tree": [
+            {
+              "id": "V-214290",
+              "title": "SRG-APP-000233-WSR-000146",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214290",
+          "group_title": "SRG-APP-000233-WSR-000146",
+          "severity": "medium",
+          "rule_id_src": "SV-214290r961131_rule",
+          "rule_id": "SV-214290r961131",
+          "rule_version": "AS24-U2-000580",
+          "rule_title": "The Apache web server document directory must be in a separate partition from the Apache web servers system files.",
+          "fix_text": "Move the web document (normally \"htdocs\") directory to a separate partition other than the operating system root partition and the web server\u2019s system files.",
+          "weight": "10.0",
+          "check_content": "Run the following command: \n \ngrep \"DocumentRoot\"<'INSTALL PATH'>/conf/httpd.conf \n \nNote each location following the \"DocumentRoot\" string. This is the configured path to the document root directory(s). \n \nUse the command df -k to view each document root's partition setup. \n \nCompare that against the results for the operating system file systems and against the partition for the web server system files, which is the result of the command: \n \ndf -k <'INSTALL PATH'>/bin \n \nIf the document root path is on the same partition as the web server system files or the operating system file systems, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-001084"
+          ],
+          "reference_identifier": "CCI-001084",
+          "uuid": "54586268-e57d-4c8c-a09d-bae6d77607c4",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214291",
+          "group_tree": [
+            {
+              "id": "V-214291",
+              "title": "SRG-APP-000246-WSR-000149",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214291",
+          "group_title": "SRG-APP-000246-WSR-000149",
+          "severity": "medium",
+          "rule_id_src": "SV-214291r1067787_rule",
+          "rule_id": "SV-214291r1067787",
+          "rule_version": "AS24-U2-000590",
+          "rule_title": "The Apache web server must be tuned to handle the operational requirements of the hosted application.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nAdd or modify the \"Timeout\" directive in the Apache configuration to have a value of \"60\" seconds or less. \n \n\"Timeout 60\"",
+          "weight": "10.0",
+          "check_content": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file:\n\n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions, \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n\nVerify the \"Timeout\" directive is specified to have a value of \"60\" seconds or less.\n\n# cat /<path_to_file>/httpd.conf | grep -i \"Timeout\"\n\nIf the \"Timeout\" directive is not configured or is set for more than \"60\" seconds, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-001094",
+            "CCI-002415"
+          ],
+          "reference_identifier": "CCI-001094",
+          "uuid": "5d80564b-1445-4651-aef8-c0adb5916e7f",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214292",
+          "group_tree": [
+            {
+              "id": "V-214292",
+              "title": "SRG-APP-000266-WSR-000142",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214292",
+          "group_title": "SRG-APP-000266-WSR-000142",
+          "severity": "medium",
+          "rule_id_src": "SV-214292r961167_rule",
+          "rule_id": "SV-214292r961167",
+          "rule_version": "AS24-U2-000620",
+          "rule_title": "The Apache web server must display a default hosted application web page, not a directory listing, when a requested web page cannot be found.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nAdd a default document to the applicable directories.",
+          "weight": "10.0",
+          "check_content": "View the \"DocumentRoot\" value by entering the following command: \n \nawk '{print $1,$2,$3}' <'INSTALL PATH'>/conf/httpd.conf|grep -i DocumentRoot|grep -v '^#' \n \nNote each location following the \"DocumentRoot\" string. This is the configured path(s) to the document root directory(s). \n \nTo view a list of the directories and subdirectories and the file \"index.html\", from each stated \"DocumentRoot\" location enter the following commands: \n \nfind . -type d \nfind . -type f -name index.html \n \nReview the results for each document root directory and its subdirectories. \n \nIf a directory does not contain an \"index.html\" or equivalent default document, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-001312"
+          ],
+          "reference_identifier": "CCI-001312",
+          "uuid": "31a377b8-a584-4680-8d3c-690b6d48cde2",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214293",
+          "group_tree": [
+            {
+              "id": "V-214293",
+              "title": "SRG-APP-000266-WSR-000159",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214293",
+          "group_title": "SRG-APP-000266-WSR-000159",
+          "severity": "medium",
+          "rule_id_src": "SV-214293r961167_rule",
+          "rule_id": "SV-214293r961167",
+          "rule_version": "AS24-U2-000630",
+          "rule_title": "Warning and error messages displayed to clients must be modified to minimize the identity of the Apache web server, patches, loaded modules, and directory paths.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nUse the \"ErrorDocument\" directive to enable custom error pages. \n \nErrorDocument 500 \"Sorry, our script crashed. Oh dear\" \nErrorDocument 500 /cgi-bin/crash-recover \nErrorDocument 500 http://error.example.com/server_error.html \nErrorDocument 404 /errors/not_found.html \nErrorDocument 401 /subscription/how_to_subscribe.html \n \nThe syntax of the ErrorDocument directive is: \n \nErrorDocument <3-digit-code> <action> \n \nAdditional Information: \n\nhttps://httpd.apache.org/docs/2.4/custom-error.html",
+          "weight": "10.0",
+          "check_content": "In a command line, run \"httpd -M | grep -i ssl_module\". \n \nIf the \"ssl_module\" is not enabled, this is a finding. \n \nDetermine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nIf the \"ErrorDocument\" directive is not being used, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-001312"
+          ],
+          "reference_identifier": "CCI-001312",
+          "uuid": "989d0afb-e393-4c3c-8558-1294cf8e819c",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214294",
+          "group_tree": [
+            {
+              "id": "V-214294",
+              "title": "SRG-APP-000266-WSR-000160",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214294",
+          "group_title": "SRG-APP-000266-WSR-000160",
+          "severity": "medium",
+          "rule_id_src": "SV-214294r961167_rule",
+          "rule_id": "SV-214294r961167",
+          "rule_version": "AS24-U2-000640",
+          "rule_title": "Debugging and trace information used to diagnose the Apache web server must be disabled.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nAdd or set the value of \"TraceEnable\" to \"Off\".",
+          "weight": "10.0",
+          "check_content": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nFor any enabled \"TraceEnable\" directives, verify they are part of the server-level configuration (i.e., not nested in a \"Directory\" or \"Location\" directive). \n \nAlso verify that the \"TraceEnable\" directive is set to \"Off\". \n \nIf the \"TraceEnable\" directive is not part of the server-level configuration and/or is not set to \"Off\", this is a finding. \n \nIf the directive does not exist in the \"conf\" file, this is a finding because the default value is \"On\".",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-001312"
+          ],
+          "reference_identifier": "CCI-001312",
+          "uuid": "a89fd1ae-2b5c-4d66-99ab-ab976b17bb65",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214295",
+          "group_tree": [
+            {
+              "id": "V-214295",
+              "title": "SRG-APP-000295-WSR-000012",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214295",
+          "group_title": "SRG-APP-000295-WSR-000012",
+          "severity": "medium",
+          "rule_id_src": "SV-214295r1043182_rule",
+          "rule_id": "SV-214295r1043182",
+          "rule_version": "AS24-U2-000650",
+          "rule_title": "The Apache web server must set an absolute timeout for sessions.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nAdd or set the \"SessionMaxAge\" directive to \"600\".",
+          "weight": "10.0",
+          "check_content": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nVerify the \"SessionMaxAge\" directive exists and is set to \"600\". \n \nIf the \"SessionMaxAge\" directive does not exist or is commented out, this is a finding. \n \nIf the \"SessionMaxAge\" directive exists but is not set to \"600\", this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-002391"
+          ],
+          "reference_identifier": "CCI-002391",
+          "uuid": "033df41b-05de-4606-af38-fe085369cab8",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214296",
+          "group_tree": [
+            {
+              "id": "V-214296",
+              "title": "SRG-APP-000295-WSR-000134",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214296",
+          "group_title": "SRG-APP-000295-WSR-000134",
+          "severity": "medium",
+          "rule_id_src": "SV-214296r1043182_rule",
+          "rule_id": "SV-214296r1043182",
+          "rule_version": "AS24-U2-000660",
+          "rule_title": "The Apache web server must set an inactive timeout for sessions.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nLoad the \"Reqtimeout_module\". \n \nSet the \"RequestReadTimeout\" directive.",
+          "weight": "10.0",
+          "check_content": "In a command line, run \"httpd -M | grep -i Reqtimeout_module\". \n \nIf the \"Reqtimeout_module\" is not enabled, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-002391"
+          ],
+          "reference_identifier": "CCI-002391",
+          "uuid": "562ffa4d-b2b5-473f-bbc4-40eeeb621be2",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214297",
+          "group_tree": [
+            {
+              "id": "V-214297",
+              "title": "SRG-APP-000315-WSR-000004",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214297",
+          "group_title": "SRG-APP-000315-WSR-000004",
+          "severity": "medium",
+          "rule_id_src": "SV-214297r961278_rule",
+          "rule_id": "SV-214297r961278",
+          "rule_version": "AS24-U2-000680",
+          "rule_title": "The Apache web server must restrict inbound connections from nonsecure zones.",
+          "fix_text": "Configure the \"http.conf\" file to include restrictions.\n\nExample:\n\n<RequireAll>\nRequire not ip 192.168.205\nRequire not host phishers.example.com\n</RequireAll>",
+          "weight": "10.0",
+          "check_content": "If external controls such as host-based firewalls are used to restrict this access, this check is Not Applicable.\n\nDetermine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file:\n\n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n\nSearch for the \"RequireAll\" directive:\n\n# cat /<path_to_file>/httpd.conf | grep -i \"RequireAll\"\n\nIf \"RequireAll\" is not configured or IP ranges configured to allow are not restrictive enough to prevent connections from nonsecure zones, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-002344"
+          ],
+          "reference_identifier": "CCI-002344",
+          "uuid": "62e7b932-580c-4b8b-8769-66ae17845b45",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214298",
+          "group_tree": [
+            {
+              "id": "V-214298",
+              "title": "SRG-APP-000340-WSR-000029",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214298",
+          "group_title": "SRG-APP-000340-WSR-000029",
+          "severity": "medium",
+          "rule_id_src": "SV-214298r961353_rule",
+          "rule_id": "SV-214298r961353",
+          "rule_version": "AS24-U2-000700",
+          "rule_title": "Non-privileged accounts on the hosting system must only access Apache web server security-relevant information and functions through a distinct administrative account.",
+          "fix_text": "Restrict access to the web administration tool to only the System Administrator, Web Manager, or the Web Manager designees.",
+          "weight": "10.0",
+          "check_content": "Determine which tool or control file is used to control the configuration of the web server. \n \nIf the control of the web server is done via control files, verify who has update access to them. If tools are being used to configure the web server, determine who has access to execute the tools. \n \nIf accounts other than the System Administrator, Web Manager, or the Web Manager designees have access to the web administration tool or control files, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-002265"
+          ],
+          "reference_identifier": "CCI-002265",
+          "uuid": "77c22e62-9fc2-47f7-8056-a9f8c5044bb4",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214299",
+          "group_tree": [
+            {
+              "id": "V-214299",
+              "title": "SRG-APP-000380-WSR-000072",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214299",
+          "group_title": "SRG-APP-000380-WSR-000072",
+          "severity": "medium",
+          "rule_id_src": "SV-214299r1051292_rule",
+          "rule_id": "SV-214299r1051292",
+          "rule_version": "AS24-U2-000780",
+          "rule_title": "The Apache web server application, libraries, and configuration files must only be accessible to privileged users.",
+          "fix_text": "Ensure nonadministrators are not allowed access to the directory tree, the shell, or other operating system functions and utilities.",
+          "weight": "10.0",
+          "check_content": "Obtain a list of the user accounts for the system, noting the privileges for each account. \n \nVerify with the system administrator (SA) or the information system security officer (ISSO) that all privileged accounts are mission essential and documented. \n \nVerify with the SA or the ISSO that all nonadministrator access to shell scripts and operating system functions are mission essential and documented. \n \nIf undocumented privileged accounts are found, this is a finding. \n \nIf undocumented access to shell scripts or operating system functions is present, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-001813"
+          ],
+          "reference_identifier": "CCI-001813",
+          "uuid": "54b7c70b-6050-44e4-9f2f-9fa74ecfaf58",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214300",
+          "group_tree": [
+            {
+              "id": "V-214300",
+              "title": "SRG-APP-000427-WSR-000186",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214300",
+          "group_title": "SRG-APP-000427-WSR-000186",
+          "severity": "medium",
+          "rule_id_src": "SV-214300r1051295_rule",
+          "rule_id": "SV-214300r1051295",
+          "rule_version": "AS24-U2-000810",
+          "rule_title": "The Apache web server must only accept client certificates issued by DOD PKI or DoD-approved PKI Certification Authorities (CAs).",
+          "fix_text": "Configure the web server's trust store to trust only DOD-approved PKIs (e.g., DOD PKI, DOD ECA, and DOD-approved external partners).",
+          "weight": "10.0",
+          "check_content": "Verify the \u201cssl module\u201d module is loaded:\n# httpd -M | grep -i ssl_module\nOutput:  ssl_module (shared) \n\nIf the \"ssl_module\" is not found, this is a finding. \n\nDetermine the location of the ssl.conf file:\n# find / -name ssl.conf\nOutput: /etc/httpd/conf.d/ssl.conf\n\nSearch the ssl.conf file for the following:\n# cat /etc/httpd/conf.d/ssl.conf | grep -i \"SSLCACertificateFile\"\nOutput should be similar to: SSLCACertificateFile /etc/pki/tls/certs/ca-bundle.crt\n\nReview the path of the \"SSLCACertificateFile\" directive.\n\nReview the contents of <'path of SSLCACertificateFile'>\\ca-bundle.crt.\n\nExamine the contents of this file to determine if the trusted CAs are DOD approved.\n\nIf the trusted CA that is used to authenticate users to the website does not lead to an approved DOD CA, this is a finding.\n\nNOTE: There are non-DOD roots that must be on the server for it to function. Some applications, such as antivirus programs, require root CAs to function. DOD-approved certificate can include the External Certificate Authorities (ECA) if approved by the AO. The PKE InstallRoot 3.06 System Administrator Guide (SAG), dated 08 Jul 2008, contains a complete list of DOD, ECA, and IECA CAs.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-002470"
+          ],
+          "reference_identifier": "CCI-002470",
+          "uuid": "b6f3554c-b24e-402d-9846-017b5ba4f724",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214301",
+          "group_tree": [
+            {
+              "id": "V-214301",
+              "title": "SRG-APP-000439-WSR-000153",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214301",
+          "group_title": "SRG-APP-000439-WSR-000153",
+          "severity": "medium",
+          "rule_id_src": "SV-214301r961632_rule",
+          "rule_id": "SV-214301r961632",
+          "rule_version": "AS24-U2-000870",
+          "rule_title": "The Apache web server cookies, such as session cookies, sent to the client using SSL/TLS must not be compressed.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nEnsure the \"SSLCompression\" is added and looks like the following: \n \nSSLCompression off \n \nRestart Apache: apachectl restart",
+          "weight": "10.0",
+          "check_content": "In a command line, run \"httpd -M | grep -i ssl_module\". \n \nIf \"ssl_module\" is not listed, this is a finding. \n \nDetermine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n \nIf the \"SSLCompression\" directive does not exist or is set to \"on\", this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-002448"
+          ],
+          "reference_identifier": "CCI-002448",
+          "uuid": "8ecec853-cd78-4383-afd3-ed001eb28081",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214303",
+          "group_tree": [
+            {
+              "id": "V-214303",
+              "title": "SRG-APP-000439-WSR-000155",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214303",
+          "group_title": "SRG-APP-000439-WSR-000155",
+          "severity": "medium",
+          "rule_id_src": "SV-214303r961632_rule",
+          "rule_id": "SV-214303r961632",
+          "rule_version": "AS24-U2-000890",
+          "rule_title": "Cookies exchanged between the Apache web server and the client, such as session cookies, must have cookie properties set to force the encryption of cookies.",
+          "fix_text": "Determine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file: \n \n# apachectl -V | egrep -i 'httpd_root|server_config_file' \n-D HTTPD_ROOT=\"/etc/httpd\" \n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\" \n \nSet \"Session\" to \"on\". \n \nEnsure the \"SessionCookieName\" directive includes \"httpOnly\" and \"secure\".",
+          "weight": "10.0",
+          "check_content": "In a command line, run \"httpd -M | grep -i session_cookie_module\". \n \nIf \"session_cookie_module\" is not listed, this is a finding. \n \nDetermine the location of the \"HTTPD_ROOT\" directory and the \"httpd.conf\" file:\n\n# apachectl -V | egrep -i 'httpd_root|server_config_file'\n-D HTTPD_ROOT=\"/etc/httpd\"\n-D SERVER_CONFIG_FILE=\"conf/httpd.conf\"\n\nNote: The apachectl front end is the preferred method for locating the Apache httpd file. For some Linux distributions \"apache2ctl -V\" or  \"httpd -V\" can also be used. \n\nSearch for the \"Session\" and \"SessionCookieName\" directives:\n\n# cat /<path_to_file>/httpd.conf | grep -i \"Session\"\n# cat /<path_to_file>/httpd.conf | grep -i \"SessionCookieName\"\n\nIf \"Session\" is not \"on\" and \"SessionCookieName\" does not contain \"httpOnly\" and \"secure\", this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-002448"
+          ],
+          "reference_identifier": "CCI-002448",
+          "uuid": "3a8f838b-6682-480b-af3e-600e48daf094",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        },
+        {
+          "evaluate-stig": {
+            "answer_file": "U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml",
+            "last_write": "2025-06-07T20:02:13.900852+00:00Z",
+            "afmod": false,
+            "old_status": "",
+            "new_status": ""
+          },
+          "group_id_src": "V-214304",
+          "group_tree": [
+            {
+              "id": "V-214304",
+              "title": "SRG-APP-000516-WSR-000174",
+              "description": "<GroupDescription></GroupDescription>"
+            }
+          ],
+          "group_id": "V-214304",
+          "group_title": "SRG-APP-000516-WSR-000174",
+          "severity": "low",
+          "rule_id_src": "SV-214304r961863_rule",
+          "rule_id": "SV-214304r961863",
+          "rule_version": "AS24-U2-000960",
+          "rule_title": "The Apache web server must be configured in accordance with the security configuration settings based on DoD security configuration or implementation guidance, including STIGs, NSA configuration guides, CTOs, and DTMs.",
+          "fix_text": "Ensure the website enforces the use of IANA well-known ports for HTTP and HTTPS.",
+          "weight": "10.0",
+          "check_content": "Review the website to determine if HTTP and HTTPs are used in accordance with well-known ports (e.g., 80 and 443) or those ports and services as registered and approved for use by the DoD PPSM. \n \nVerify that any variation in PPS is documented, registered, and approved by the PPSM. \n \nIf well-known ports and services are not approved for used by PPSM, this is a finding.",
+          "check_content_ref": {
+            "href": "Apache_Server_2.4_UNIX_Site_STIG.xml",
+            "name": "M"
+          },
+          "classification": "UNCLASSIFIED",
+          "discussion": "",
+          "false_positives": "",
+          "false_negatives": "",
+          "documentable": "",
+          "security_override_guidance": "",
+          "potential_impacts": "",
+          "third_party_tools": "",
+          "mitigations": "",
+          "mitigation_control": "",
+          "responsibility": "",
+          "ia_controls": "",
+          "legacy_ids": [],
+          "ccis": [
+            "CCI-000366"
+          ],
+          "reference_identifier": "CCI-000366",
+          "uuid": "409996e6-0b4a-429c-beb1-72a1be708b54",
+          "stig_uuid": "7a58262b-6a0b-49fb-876f-373ad46260c5",
+          "status": "not_reviewed",
+          "overrides": {},
+          "comments": "",
+          "finding_details": ""
+        }
+      ]
+    }
+  ],
+  "active": true,
+  "mode": 2,
+  "has_path": false,
+  "target_data": {
+    "target_type": "host",
+    "host_name": "",
+    "ip_address": "",
+    "mac_address": "",
+    "fqdn": "",
+    "comments": "",
+    "role": "",
+    "is_web_database": false,
+    "technology_area": "",
+    "web_db_site": "",
+    "web_db_instance": ""
+  },
+  "cklb_version": "1.0"
+}
