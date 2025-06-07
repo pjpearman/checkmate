@@ -72,24 +72,30 @@ def download_files(stdscr):
             return
         selected = set()
         current_idx = 0
+        scroll_offset = 0
         status = "SPACE: select, ENTER: download, r: refresh, b: back, q: quit"
         while True:
             stdscr.clear()
             stdscr.addstr(0, 0, "Select files to download:")
             max_lines = curses.LINES - 3  # Reserve space for status and prompt
-            for idx, (file_name, _) in enumerate(file_links):
-                if idx >= max_lines:
-                    break  # Don't write past the bottom of the screen
+            # Adjust scroll_offset to keep current_idx visible
+            if current_idx < scroll_offset:
+                scroll_offset = current_idx
+            elif current_idx >= scroll_offset + max_lines:
+                scroll_offset = current_idx - max_lines + 1
+            visible_links = file_links[scroll_offset:scroll_offset + max_lines]
+            for vis_idx, (file_name, _) in enumerate(visible_links):
+                idx = scroll_offset + vis_idx
                 sel = "[x]" if idx in selected else "[ ]"
                 line = f"{sel} {file_name}"
                 # Truncate line to fit terminal width
                 line = line[:curses.COLS - 4]
                 if idx == current_idx:
                     stdscr.attron(curses.color_pair(1))
-                    stdscr.addstr(idx + 1, 0, f"> {line}")
+                    stdscr.addstr(vis_idx + 1, 0, f"> {line}")
                     stdscr.attroff(curses.color_pair(1))
                 else:
-                    stdscr.addstr(idx + 1, 0, f"  {line}")
+                    stdscr.addstr(vis_idx + 1, 0, f"  {line}")
             stdscr.addstr(curses.LINES-2, 0, status[:curses.COLS-1])
             stdscr.refresh()
             key = stdscr.getch()
