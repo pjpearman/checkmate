@@ -14,6 +14,8 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import os
 import logging
+import json
+from datetime import datetime
 
 # URL of the page containing the table
 URL = "https://public.cyber.mil/stigs/downloads/"  # Change this to your target URL
@@ -94,6 +96,17 @@ def download_file(file_url, file_name):
         msg = f"Failed to download {file_name} from {file_url}: {e}"
         print(msg)
         logging.error(msg)
+
+def create_inventory_file(selected_files, output_dir="user_docs", filename_prefix="inventory"): 
+    """Create a JSON file listing the selected files in the user_docs directory."""
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir, mode=0o700)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_path = os.path.join(output_dir, f"{filename_prefix}_{timestamp}.json")
+    with open(out_path, "w") as f:
+        json.dump(selected_files, f, indent=2)
+    logging.info(f"Inventory file created: {out_path}")
+    return out_path
 
 def main():
     logging.info("Downloader script started.")

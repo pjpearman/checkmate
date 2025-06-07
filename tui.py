@@ -20,6 +20,7 @@ from web import fetch_page, parse_table_for_links, download_file, URL, HEADERS
 
 # Setup a list of future functions for easy extension
 FUNCTIONS = {
+    "Create Inventory File": "create_inventory_file_tui",
     "Download Files": "download_files",
     # Example: "Set Download Directory": "set_download_dir",
     # Example: "Toggle File Types": "toggle_file_types",
@@ -132,6 +133,102 @@ def download_files(stdscr):
             elif key in [ord('r'), ord('R')]:
                 break  # Refresh file list
 
+def create_inventory_file_tui(stdscr):
+    """
+    TUI option to create an inventory file from selected files (no download).
+    Prompts the user for the output inventory filename (must end with .json) after selection.
+    """
+    import curses
+    import curses.textpad
+    stdscr.clear()
+    stdscr.addstr(0, 0, "Fetching webpage and parsing file links...")
+    stdscr.refresh()
+    try:
+        html_content = fetch_page(URL)
+        file_links = parse_table_for_links(html_content)
+    except Exception as e:
+        stdscr.addstr(2, 0, f"Error: {e}. Press any key to return.")
+        stdscr.refresh()
+        stdscr.getch()
+        return
+    if not file_links:
+        stdscr.addstr(2, 0, "No downloadable files found. Press any key to return.")
+        stdscr.refresh()
+        stdscr.getch()
+        return
+    selected = set()
+    current_idx = 0
+    scroll_offset = 0
+    status = "SPACE: select, ENTER: save inventory, r: refresh, b: back, q: quit"
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Select files for inventory:")
+        max_lines = curses.LINES - 3
+        if current_idx < scroll_offset:
+            scroll_offset = current_idx
+        elif current_idx >= scroll_offset + max_lines:
+            scroll_offset = current_idx - max_lines + 1
+        visible_links = file_links[scroll_offset:scroll_offset + max_lines]
+        for vis_idx, (file_name, _) in enumerate(visible_links):
+            idx = scroll_offset + vis_idx
+            sel = "[x]" if idx in selected else "[ ]"
+            line = f"{sel} {file_name}"
+            line = line[:curses.COLS - 4]
+            if idx == current_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(vis_idx + 1, 0, f"> {line}")
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(vis_idx + 1, 0, f"  {line}")
+        stdscr.addstr(curses.LINES-2, 0, status[:curses.COLS-1])
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            current_idx = (current_idx - 1) % len(file_links)
+        elif key == curses.KEY_DOWN:
+            current_idx = (current_idx + 1) % len(file_links)
+        elif key == ord(' '):
+            if current_idx in selected:
+                selected.remove(current_idx)
+            else:
+                selected.add(current_idx)
+        elif key in [10, 13]:  # ENTER
+            to_inventory = selected if selected else {current_idx}
+            selected_files = [file_links[idx] for idx in to_inventory]
+            # Prompt for filename after selection
+            stdscr.clear()
+            stdscr.addstr(0, 0, "Enter inventory filename (must end with .json): ")
+            curses.echo()
+            filename = stdscr.getstr(1, 0, 100).decode("utf-8").strip()
+            curses.noecho()
+            output_dir = "user_docs"
+            out_path = os.path.join(output_dir, filename)
+            if not filename.endswith(".json"):
+                stdscr.addstr(2, 0, "Error: Filename must end with .json. Press any key to return.")
+                stdscr.refresh()
+                stdscr.getch()
+                return
+            if os.path.exists(out_path):
+                stdscr.addstr(2, 0, f"Error: {filename} already exists. Press any key to return.")
+                stdscr.refresh()
+                stdscr.getch()
+                return
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir, mode=0o700)
+            import json
+            with open(out_path, "w") as f:
+                json.dump(selected_files, f, indent=2)
+            stdscr.clear()
+            stdscr.addstr(0, 0, f"Inventory file created: {out_path}")
+            stdscr.addstr(2, 0, "Press any key to continue.")
+            stdscr.refresh()
+            stdscr.getch()
+            return
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return
+        elif key in [ord('r'), ord('R')]:
+            break  # Refresh file list
+
 def main(stdscr):
     """
     Main loop for the TUI.
@@ -153,6 +250,8 @@ def main(stdscr):
             selected_func = list(FUNCTIONS.values())[selected_idx]
             if selected_func == "download_files":
                 download_files(stdscr)
+            elif selected_func == "create_inventory_file_tui":
+                create_inventory_file_tui(stdscr)
             # elif selected_func == "set_download_dir":
             #     set_download_dir(stdscr)
             # elif selected_func == "toggle_file_types":

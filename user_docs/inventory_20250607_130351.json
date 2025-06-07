@@ -1,0 +1,22 @@
+[
+  [
+    "U_Active_Directory_Forest_V3R1_STIG.zip",
+    "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Forest_V3R1_STIG.zip"
+  ],
+  [
+    "U_Apache_Server_2-4_Unix_Y25M04_STIG.zip",
+    "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apache_Server_2-4_Unix_Y25M04_STIG.zip"
+  ],
+  [
+    "U_Apache_Server_2-4_Windows_Y25M04_STIG.zip",
+    "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apache_Server_2-4_Windows_Y25M04_STIG.zip"
+  ],
+  [
+    "U_MS_Windows_10_V3R4_STIG.zip",
+    "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_10_V3R4_STIG.zip"
+  ],
+  [
+    "U_MS_Windows_Server_2022_V2R4_STIG.zip",
+    "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2022_V2R4_STIG.zip"
+  ]
+]
