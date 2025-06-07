@@ -51,14 +51,14 @@ def fetch_page(url):
         raise
 
 def parse_table_for_links(html_content):
-    """Parse the page and extract file links (e.g., .zip, .exe, .pdf, etc.)."""
+    """Parse the page and extract file links (only .zip files)."""
     soup = BeautifulSoup(html_content, "html.parser")
     file_links = []
     # Look for all <a> tags with hrefs that look like downloadable files
     for link in soup.find_all("a", href=True):
         href = link["href"]
-        # Only consider links to files with common extensions
-        if any(href.lower().endswith(ext) for ext in [".zip", ".exe", ".pdf", ".tar.gz", ".msi", ".docx", ".xlsx", ".csv"]):
+        # Only consider links to .zip files
+        if href.lower().endswith(".zip"):
             file_url = urljoin(URL, href)
             file_name = os.path.basename(href)
             file_links.append((file_name, file_url))
@@ -96,17 +96,6 @@ def download_file(file_url, file_name):
         msg = f"Failed to download {file_name} from {file_url}: {e}"
         print(msg)
         logging.error(msg)
-
-def create_inventory_file(selected_files, output_dir="user_docs", filename_prefix="inventory"): 
-    """Create a JSON file listing the selected files in the user_docs directory."""
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir, mode=0o700)
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    out_path = os.path.join(output_dir, f"{filename_prefix}_{timestamp}.json")
-    with open(out_path, "w") as f:
-        json.dump(selected_files, f, indent=2)
-    logging.info(f"Inventory file created: {out_path}")
-    return out_path
 
 def main():
     logging.info("Downloader script started.")

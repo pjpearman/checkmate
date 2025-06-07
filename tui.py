@@ -23,8 +23,7 @@ from web import fetch_page, parse_table_for_links, download_file, URL, HEADERS
 # Setup a list of future functions for easy extension
 FUNCTIONS = {
     "Create Inventory File": "create_inventory_file_tui",
-    "Download Files": "download_files",
-    "Download Selected Inventory": "download_selected_inventory_tui",
+    "Download Options": "download_options_tui",
     # Example: "Set Download Directory": "set_download_dir",
     # Example: "Toggle File Types": "toggle_file_types",
 }
@@ -34,7 +33,7 @@ def draw_menu(stdscr, selected_idx):
     Display the main menu. Highlights the currently selected menu item.
     """
     stdscr.clear()
-    stdscr.addstr(0, 0, "== BeautifulSoup Scraper TUI ==")
+    stdscr.addstr(0, 0, "== CheckMate Lite TUI ==")
     stdscr.addstr(1, 0, "Use UP/DOWN to navigate, ENTER to select, 'q' to quit.")
 
     for idx, option in enumerate(FUNCTIONS.keys()):
@@ -181,6 +180,7 @@ def create_inventory_file_tui(stdscr):
     """
     import curses
     import curses.textpad
+    from create_inventory import generate_inventory
     stdscr.clear()
     stdscr.addstr(0, 0, "Fetching webpage and parsing file links...")
     stdscr.refresh()
@@ -236,6 +236,8 @@ def create_inventory_file_tui(stdscr):
         elif key in [10, 13]:  # ENTER
             to_inventory = selected if selected else {current_idx}
             selected_files = [file_links[idx] for idx in to_inventory]
+            # Convert tuples to dicts for generate_inventory
+            selected_dicts = [{'FileName': fn, 'URL': url} for fn, url in selected_files]
             # Prompt for filename after selection
             while True:
                 stdscr.clear()
@@ -261,11 +263,8 @@ def create_inventory_file_tui(stdscr):
                     if key2 in [ord('q'), ord('Q')]:
                         return
                     continue
-                if not os.path.exists(output_dir):
-                    os.makedirs(output_dir, mode=0o700)
-                import json
-                with open(out_path, "w") as f:
-                    json.dump(selected_files, f, indent=2)
+                # Use generate_inventory to write the file
+                generate_inventory(selected_dicts, out_path)
                 stdscr.clear()
                 stdscr.addstr(0, 0, f"Inventory file created: {out_path}")
                 stdscr.addstr(2, 0, "Press any key to continue.")
@@ -276,6 +275,51 @@ def create_inventory_file_tui(stdscr):
             return
         elif key in [ord('r'), ord('R')]:
             break  # Refresh file list
+
+def download_options_tui(stdscr):
+    """
+    Presents download options: Download All Files or Download from Inventory.
+    """
+    options = ["Download All Files", "Download Using an Inventory File", "Back"]
+    selected_idx = 0
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Choose download option:")
+        for idx, opt in enumerate(options):
+            if idx == selected_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(idx + 1, 0, f"> {opt}")
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(idx + 1, 0, f"  {opt}")
+        stdscr.addstr(len(options) + 2, 0, "UP/DOWN to select, ENTER to confirm, b/q to cancel")
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            selected_idx = (selected_idx - 1) % len(options)
+        elif key == curses.KEY_DOWN:
+            selected_idx = (selected_idx + 1) % len(options)
+        elif key in [10, 13]:
+            if selected_idx == 0:
+                # Warn the user before downloading all files
+                stdscr.clear()
+                stdscr.addstr(0, 0, "WARNING: This will download ALL available files, which may be a large amount of data and include unnecessary files.")
+                stdscr.addstr(2, 0, "Are you sure you want to continue? (y/n)")
+                stdscr.refresh()
+                while True:
+                    confirm_key = stdscr.getch()
+                    if confirm_key in [ord('y'), ord('Y')]:
+                        download_files(stdscr)
+                        return
+                    elif confirm_key in [ord('n'), ord('N'), ord('b'), ord('B'), ord('q'), ord('Q')]:
+                        return
+            elif selected_idx == 1:
+                download_selected_inventory_tui(stdscr)
+                return
+            else:
+                return
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return
 
 def download_selected_inventory_tui(stdscr):
     """
@@ -462,12 +506,10 @@ def main(stdscr):
             selected_idx = (selected_idx + 1) % len(FUNCTIONS)
         elif key in [10, 13]:  # ENTER key
             selected_func = list(FUNCTIONS.values())[selected_idx]
-            if selected_func == "download_files":
-                download_files(stdscr)
+            if selected_func == "download_options_tui":
+                download_options_tui(stdscr)
             elif selected_func == "create_inventory_file_tui":
                 create_inventory_file_tui(stdscr)
-            elif selected_func == "download_selected_inventory_tui":
-                download_selected_inventory_tui(stdscr)
             # elif selected_func == "set_download_dir":
             #     set_download_dir(stdscr)
             # elif selected_func == "toggle_file_types":
