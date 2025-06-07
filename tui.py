@@ -414,8 +414,7 @@ def download_selected_inventory_tui(stdscr):
             elif mode == 'cklb':
                 if not os.path.exists(cklb_dir):
                     os.makedirs(cklb_dir, mode=0o700)
-                import tempfile
-                import subprocess
+                from create_cklb import convert_xccdf_zip_to_cklb
                 for idx in to_download:
                     tech = tech_list[idx]
                     files = sorted(tech_map[tech], key=lambda x: x[0], reverse=True)
@@ -426,31 +425,15 @@ def download_selected_inventory_tui(stdscr):
                     try:
                         download_file(file_url, file_name)
                         tmp_path = os.path.join("tmp", file_name)
-                        # Extract XML from zip
-                        with zipfile.ZipFile(tmp_path, 'r') as zip_ref:
-                            with tempfile.TemporaryDirectory() as extract_dir:
-                                zip_ref.extractall(extract_dir)
-                                # Find XCCDF XML file recursively
-                                xml_candidates = glob.glob(os.path.join(extract_dir, '**', '*xccdf*.xml'), recursive=True)
-                                if not xml_candidates:
-                                    xml_candidates = glob.glob(os.path.join(extract_dir, '**', '*.xml'), recursive=True)
-                                if not xml_candidates:
-                                    print(f"[CKLB ERROR] No XCCDF XML found in zip: {file_name}")
-                                    continue  # Log error to terminal, skip to next file
-                                xccdf_xml = xml_candidates[0]
-                                cklb_name = os.path.splitext(file_name)[0] + ".cklb"
-                                cklb_path = os.path.join(cklb_dir, cklb_name)
-                                # Use subprocess to call create_cklb.py
-                                result = subprocess.run([
-                                    sys.executable, os.path.join(os.path.dirname(__file__), "create_cklb.py"),
-                                    xccdf_xml, cklb_path
-                                ], capture_output=True, text=True)
-                                if result.returncode == 0:
-                                    stdscr.addstr(2, 0, f"CKLB created: {cklb_name}")
-                                else:
-                                    stdscr.addstr(2, 0, f"CKLB error: {result.stderr.strip()}")
+                        cklb_path, error = convert_xccdf_zip_to_cklb(tmp_path, cklb_dir)
+                        if cklb_path:
+                            stdscr.addstr(2, 0, f"CKLB created: {os.path.basename(cklb_path)}")
+                        else:
+                            stdscr.addstr(2, 0, error or "Unknown CKLB error")
+                            print(error or "Unknown CKLB error")
                     except Exception as e:
                         stdscr.addstr(2, 0, f"Download/CKLB error: {e}")
+                        print(f"[CKLB ERROR] {e}")
                     stdscr.refresh()
                 stdscr.addstr(4, 0, "Press any key to continue.")
                 stdscr.getch()
