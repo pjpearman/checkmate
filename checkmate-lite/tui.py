@@ -511,12 +511,12 @@ def download_selected_inventory_tui(stdscr):
         elif key in [ord('r'), ord('R')]:
             break  # Refresh file list
 
-def browse_and_select_cklb_files(stdscr, start_dir=None):
+def browse_and_select_cklb_files(stdscr, start_dir=None, file_label='.cklb'):
     """
-    Terminal-based directory browser for selecting one or more .cklb files to import.
+    Terminal-based directory browser for selecting one or more files with a given extension.
     Returns a list of selected file paths or None if cancelled.
     Hidden files and directories (starting with '.') are not shown.
-    ENTER: open directory, SPACE: select file, i: import all selected files.
+    ENTER: open directory, SPACE: select file, i: import/compare all selected files.
     """
     import os
     if start_dir is None:
@@ -532,11 +532,11 @@ def browse_and_select_cklb_files(stdscr, start_dir=None):
             full_path = os.path.join(current_dir, entry)
             if os.path.isdir(full_path):
                 files_and_dirs.append((entry + "/", full_path, True))
-            elif entry.endswith(".cklb"):
+            elif entry.endswith(file_label):
                 files_and_dirs.append((entry, full_path, False))
         stdscr.clear()
         stdscr.addstr(0, 0, f"Browsing: {current_dir}")
-        stdscr.addstr(1, 0, "UP/DOWN: move  ENTER: open dir  SPACE: select file  b/q: back/cancel  i: import selected")
+        stdscr.addstr(1, 0, f"UP/DOWN: move  ENTER: open dir  SPACE: select file  b/q: back/cancel  i: select {file_label} file(s)")
         max_lines = curses.LINES - 3
         if current_idx < scroll_offset:
             scroll_offset = current_idx
@@ -629,13 +629,13 @@ def manage_checklists_tui(stdscr):
                 stdscr.clear()
                 stdscr.addstr(0, 0, "Select one or more CKLB files for comparison (A):")
                 stdscr.refresh()
-                files_a = browse_and_select_cklb_files(stdscr, start_dir=os.path.join("user_docs", "cklb_artifacts"), multi=True, file_label='.cklb')
+                files_a = browse_and_select_cklb_files(stdscr, start_dir=os.path.join("user_docs", "cklb_artifacts"), file_label='.cklb')
                 if not files_a:
                     continue
                 stdscr.clear()
                 stdscr.addstr(0, 0, "Select a CKLB file to compare against (B):")
                 stdscr.refresh()
-                files_b = browse_and_select_cklb_files(stdscr, start_dir=os.path.join("user_docs", "cklb_new"), multi=False, file_label='.cklb')
+                files_b = browse_and_select_cklb_files(stdscr, start_dir=os.path.join("user_docs", "cklb_new"), file_label='.cklb')
                 if not files_b or len(files_b) != 1:
                     continue
                 from cklb_handler import compare_cklb_versions
