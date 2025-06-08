@@ -23,7 +23,7 @@ user_docs/
 ```
 Create Inventory File                 # Generate a list of technologies.
   | 
-Download Option                       # Top-level menu item
+Download Options                      # Top-level menu item
   |- Download All FIles               # Download All .zips available.
   |- Download Using Inventory File    # Download .zips listed in inv file.
     |- Create CKLB                    # Creates CKLB. Discards .zip

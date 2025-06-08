@@ -498,12 +498,83 @@ def download_selected_inventory_tui(stdscr):
         elif key in [ord('r'), ord('R')]:
             break  # Refresh file list
 
+def browse_and_select_cklb_files(stdscr, start_dir=None):
+    """
+    Terminal-based directory browser for selecting one or more .cklb files to import.
+    Returns a list of selected file paths or None if cancelled.
+    Hidden files and directories (starting with '.') are not shown.
+    ENTER: open directory, SPACE: select file, i: import all selected files.
+    """
+    import os
+    if start_dir is None:
+        start_dir = os.path.expanduser("~")
+    current_dir = os.path.abspath(start_dir)
+    selected = set()
+    current_idx = 0
+    scroll_offset = 0
+    while True:
+        entries = [e for e in [".."] + sorted(os.listdir(current_dir)) if not e.startswith('.') or e == ".."]
+        files_and_dirs = []
+        for entry in entries:
+            full_path = os.path.join(current_dir, entry)
+            if os.path.isdir(full_path):
+                files_and_dirs.append((entry + "/", full_path, True))
+            elif entry.endswith(".cklb"):
+                files_and_dirs.append((entry, full_path, False))
+        stdscr.clear()
+        stdscr.addstr(0, 0, f"Browsing: {current_dir}")
+        stdscr.addstr(1, 0, "UP/DOWN: move  ENTER: open dir  SPACE: select file  b/q: back/cancel  i: import selected")
+        max_lines = curses.LINES - 3
+        if current_idx < scroll_offset:
+            scroll_offset = current_idx
+        elif current_idx >= scroll_offset + max_lines:
+            scroll_offset = current_idx - max_lines + 1
+        visible = files_and_dirs[scroll_offset:scroll_offset + max_lines]
+        for vis_idx, (entry, full_path, is_dir) in enumerate(visible):
+            idx = scroll_offset + vis_idx
+            sel = "[x]" if (not is_dir and full_path in selected) else "[ ]"
+            prefix = "> " if idx == current_idx else "  "
+            display = f"{prefix}{sel if not is_dir else '   '} {entry}"
+            display = display[:curses.COLS-1]
+            if idx == current_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(vis_idx + 2, 0, display)
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(vis_idx + 2, 0, display)
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            current_idx = (current_idx - 1) % len(files_and_dirs)
+        elif key == curses.KEY_DOWN:
+            current_idx = (current_idx + 1) % len(files_and_dirs)
+        elif key in [10, 13]:  # ENTER
+            entry, full_path, is_dir = files_and_dirs[current_idx]
+            if is_dir:
+                current_dir = os.path.abspath(full_path)
+                current_idx = 0
+                scroll_offset = 0
+        elif key == ord(' '):
+            entry, full_path, is_dir = files_and_dirs[current_idx]
+            if not is_dir:
+                if full_path in selected:
+                    selected.remove(full_path)
+                else:
+                    selected.add(full_path)
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return None
+        elif key in [ord('i'), ord('I')]:
+            if selected:
+                return list(selected)
+    return None
+
 def manage_checklists_tui(stdscr):
     """
-    Manage Checklists submenu with future features.
+    Manage Checklists submenu with import functionality and directory browsing.
     """
+    from cklb_handler import import_cklbs
     options = [
-        "Import CKLB(s) (future feature)",
+        "Import CKLB(s)",
         "Compare CKLB Versions (future feature)",
         "Upgrade CKLB(s) (future feature)",
         "Back"
@@ -527,7 +598,20 @@ def manage_checklists_tui(stdscr):
         elif key == curses.KEY_DOWN:
             selected_idx = (selected_idx + 1) % len(options)
         elif key in [10, 13]:
-            if selected_idx == len(options) - 1:
+            if selected_idx == 0:
+                # Import CKLB(s) with directory browser
+                selected_files = browse_and_select_cklb_files(stdscr)
+                if not selected_files:
+                    continue
+                results = import_cklbs(selected_files)
+                stdscr.clear()
+                stdscr.addstr(0, 0, "Import results:")
+                for i, (fname, status) in enumerate(results):
+                    stdscr.addstr(i+1, 0, f"{os.path.basename(fname)}: {status}"[:curses.COLS-1])
+                stdscr.addstr(len(results)+2, 0, "Press any key to continue.")
+                stdscr.refresh()
+                stdscr.getch()
+            elif selected_idx == len(options) - 1:
                 return  # Back
             else:
                 stdscr.clear()
