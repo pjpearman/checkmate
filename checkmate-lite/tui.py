@@ -24,6 +24,7 @@ from web import fetch_page, parse_table_for_links, download_file, URL, HEADERS
 FUNCTIONS = {
     "Create Inventory File": "create_inventory_file_tui",
     "Download Options": "download_options_tui",
+    "Manage Checklists": "manage_checklists_tui",
     # Example: "Set Download Directory": "set_download_dir",
     # Example: "Toggle File Types": "toggle_file_types",
 }
@@ -497,6 +498,46 @@ def download_selected_inventory_tui(stdscr):
         elif key in [ord('r'), ord('R')]:
             break  # Refresh file list
 
+def manage_checklists_tui(stdscr):
+    """
+    Manage Checklists submenu with future features.
+    """
+    options = [
+        "Import CKLB(s) (future feature)",
+        "Compare CKLB Versions (future feature)",
+        "Upgrade CKLB(s) (future feature)",
+        "Back"
+    ]
+    selected_idx = 0
+    while True:
+        stdscr.clear()
+        stdscr.addstr(0, 0, "Manage Checklists")
+        for idx, opt in enumerate(options):
+            if idx == selected_idx:
+                stdscr.attron(curses.color_pair(1))
+                stdscr.addstr(idx + 1, 0, f"> {opt}")
+                stdscr.attroff(curses.color_pair(1))
+            else:
+                stdscr.addstr(idx + 1, 0, f"  {opt}")
+        stdscr.addstr(len(options) + 2, 0, "UP/DOWN to select, ENTER to confirm, b/q to go back")
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key == curses.KEY_UP:
+            selected_idx = (selected_idx - 1) % len(options)
+        elif key == curses.KEY_DOWN:
+            selected_idx = (selected_idx + 1) % len(options)
+        elif key in [10, 13]:
+            if selected_idx == len(options) - 1:
+                return  # Back
+            else:
+                stdscr.clear()
+                stdscr.addstr(0, 0, f"{options[selected_idx]}\n\nThis feature will be available in a future release.")
+                stdscr.addstr(3, 0, "Press any key to return.")
+                stdscr.refresh()
+                stdscr.getch()
+        elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
+            return
+
 def main(stdscr):
     """
     Main loop for the TUI.
@@ -509,7 +550,6 @@ def main(stdscr):
     while True:
         draw_menu(stdscr, selected_idx)
         key = stdscr.getch()
-
         if key == curses.KEY_UP:
             selected_idx = (selected_idx - 1) % len(FUNCTIONS)
         elif key == curses.KEY_DOWN:
@@ -520,6 +560,8 @@ def main(stdscr):
                 download_options_tui(stdscr)
             elif selected_func == "create_inventory_file_tui":
                 create_inventory_file_tui(stdscr)
+            elif selected_func == "manage_checklists_tui":
+                manage_checklists_tui(stdscr)
             # elif selected_func == "set_download_dir":
             #     set_download_dir(stdscr)
             # elif selected_func == "toggle_file_types":
