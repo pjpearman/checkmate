@@ -51,31 +51,32 @@ def download_files(stdscr):
     """
     Downloads files by fetching the page and displaying the list.
     Enhanced: supports multi-select, refresh, and status bar.
+    If 'Create CKLB' is selected, convert downloaded zips to CKLBs.
     """
     download_mode = prompt_download_mode_tui(stdscr)
     if not download_mode:
         return  # Cancelled
-
+    import shutil
+    from web import download_file
+    from create_cklb import convert_xccdf_zip_to_cklb
+    zip_dir = os.path.join("user_docs", "zip_files")
+    cklb_dir = os.path.join("user_docs", "cklb_new")
+    tmp_dir = "tmp"
     while True:
-        print("[TUI] Fetching webpage and parsing file links...")
         stdscr.clear()
         stdscr.addstr(0, 0, "Fetching webpage and parsing file links...")
         stdscr.refresh()
         try:
             html_content = fetch_page(URL)
-            print("[TUI] Page fetched. Parsing links...")
             file_links = parse_table_for_links(html_content)
-            print(f"[TUI] Found {len(file_links)} file links.")
         except Exception as e:
             stdscr.addstr(2, 0, f"Error: {e}. Press any key to return.")
             stdscr.refresh()
-            print(f"[TUI] Error: {e}")
             stdscr.getch()
             return
         if not file_links:
             stdscr.addstr(2, 0, "No downloadable files found. Press any key to return.")
             stdscr.refresh()
-            print("[TUI] No downloadable files found.")
             stdscr.getch()
             return
         selected = set()
@@ -123,16 +124,28 @@ def download_files(stdscr):
                     stdscr.clear()
                     stdscr.addstr(0, 0, f"Downloading: {file_name}...")
                     stdscr.refresh()
-                    print(f"[TUI] Downloading: {file_name} from {file_url}")
                     try:
                         download_file(file_url, file_name)
                         stdscr.addstr(2, 0, f"Downloaded: {file_name}")
-                        print(f"[TUI] Downloaded: {file_name}")
+                        # If CKLB mode, convert zip to CKLB
+                        if download_mode == 'cklb' and file_name.endswith('.zip'):
+                            zip_path = os.path.join(tmp_dir, file_name)
+                            if not os.path.exists(cklb_dir):
+                                os.makedirs(cklb_dir, mode=0o700)
+                            cklb_results = convert_xccdf_zip_to_cklb(zip_path, cklb_dir)
+                            for cklb_path, error in cklb_results:
+                                if cklb_path:
+                                    stdscr.addstr(3, 0, f"CKLB created: {os.path.basename(cklb_path)}")
+                                else:
+                                    stdscr.addstr(3, 0, error or f"Unknown CKLB error for {file_name}")
+                        elif download_mode == 'zip':
+                            if not os.path.exists(zip_dir):
+                                os.makedirs(zip_dir, mode=0o700)
+                            shutil.move(os.path.join(tmp_dir, file_name), os.path.join(zip_dir, file_name))
                     except Exception as e:
                         stdscr.addstr(2, 0, f"Download error: {e}")
-                        print(f"[TUI] Download error: {e}")
                     stdscr.refresh()
-                stdscr.addstr(4, 0, "Press any key to continue.")
+                stdscr.addstr(5, 0, "Press any key to continue.")
                 stdscr.getch()
                 selected.clear()
             elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
@@ -281,7 +294,7 @@ def download_options_tui(stdscr):
     """
     Presents download options: Download All Files or Download from Inventory.
     """
-    options = ["Download All Files", "Download Using an Inventory File", "Back"]
+    options = ["Select From All Files", "Download Using an Inventory File", "Back"]
     selected_idx = 0
     while True:
         stdscr.clear()
@@ -304,7 +317,7 @@ def download_options_tui(stdscr):
             if selected_idx == 0:
                 # Warn the user before downloading all files
                 stdscr.clear()
-                stdscr.addstr(0, 0, "WARNING: This will download ALL available files, which may be a large amount of data and include unnecessary files.")
+                stdscr.addstr(0, 0, "This will download ALL selected files from the website.")
                 stdscr.addstr(2, 0, "Are you sure you want to continue? (y/n)")
                 stdscr.refresh()
                 while True:
@@ -570,12 +583,12 @@ def browse_and_select_cklb_files(stdscr, start_dir=None):
 
 def manage_checklists_tui(stdscr):
     """
-    Manage Checklists submenu with import functionality and directory browsing.
+    Manage Checklists submenu with import and compare functionality and directory browsing.
     """
-    from cklb_handler import import_cklbs
+    from cklb_handler import import_cklbs, compare_cklb_versions
     options = [
         "Import CKLB(s)",
-        "Compare CKLB Versions (future feature)",
+        "Compare CKLB Versions",
         "Upgrade CKLB(s) (future feature)",
         "Back"
     ]
@@ -609,6 +622,32 @@ def manage_checklists_tui(stdscr):
                 for i, (fname, status) in enumerate(results):
                     stdscr.addstr(i+1, 0, f"{os.path.basename(fname)}: {status}"[:curses.COLS-1])
                 stdscr.addstr(len(results)+2, 0, "Press any key to continue.")
+                stdscr.refresh()
+                stdscr.getch()
+            elif selected_idx == 1:
+                # Compare CKLB Versions
+                stdscr.clear()
+                stdscr.addstr(0, 0, "Select one or more CKLB files for comparison (A):")
+                stdscr.refresh()
+                files_a = browse_and_select_cklb_files(stdscr, start_dir=os.path.join("user_docs", "cklb_artifacts"), multi=True, file_label='.cklb')
+                if not files_a:
+                    continue
+                stdscr.clear()
+                stdscr.addstr(0, 0, "Select a CKLB file to compare against (B):")
+                stdscr.refresh()
+                files_b = browse_and_select_cklb_files(stdscr, start_dir=os.path.join("user_docs", "cklb_new"), multi=False, file_label='.cklb')
+                if not files_b or len(files_b) != 1:
+                    continue
+                from cklb_handler import compare_cklb_versions
+                diff_output = compare_cklb_versions(files_a, files_b[0])
+                stdscr.clear()
+                lines = diff_output.split('\n')
+                max_lines = curses.LINES - 2
+                for i, line in enumerate(lines[:max_lines]):
+                    stdscr.addstr(i, 0, line[:curses.COLS-1])
+                if len(lines) > max_lines:
+                    stdscr.addstr(max_lines, 0, "...output truncated...")
+                stdscr.addstr(curses.LINES-1, 0, "Press any key to continue.")
                 stdscr.refresh()
                 stdscr.getch()
             elif selected_idx == len(options) - 1:

@@ -24,7 +24,7 @@ user_docs/
 Create Inventory File                 # Generate a list of technologies.
   | 
 Download Options                      # Top-level menu item
-  |- Download All FIles               # Download All .zips available.
+  |- Select From All Files            # Download All .zips available.
   |- Download Using Inventory File    # Download .zips listed in inv file.
     |- Create CKLB                    # Creates CKLB. Discards .zip
     |- Download Zip Only              # Downloads zip to user_docs/zip_files
