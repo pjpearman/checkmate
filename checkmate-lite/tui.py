@@ -17,6 +17,17 @@ import glob
 import tempfile
 import subprocess
 
+# Ensure user_docs and subdirectories exist at startup
+USER_DOCS_DIR = "user_docs"
+SUBDIRS = [
+    "zip_files",
+    "cklb_new",
+    "cklb_artifacts",
+    "inventory"
+]
+for sub in SUBDIRS:
+    os.makedirs(os.path.join(USER_DOCS_DIR, sub), exist_ok=True)
+
 # Import existing functions
 from web import fetch_page, parse_table_for_links, download_file, URL, HEADERS
 
