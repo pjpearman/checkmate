@@ -30,8 +30,9 @@ Download Options                      # Top-level menu item
     |- Download Zip Only              # Downloads zip to user_docs/zip_files
 Manage Checklists                     # Top-level menu item
   |- Import CKLB(s)                   # Import user's completed cklbs
-  |- Compare CKLB Versions            # Compares diff between version A & B
+  |- Compare CKLB Versions            # Compares rules diff between version A & B
   |- Upgrade CKLB(s)                  # Select cklb(s) for version upgrade
+  |- Compare Findings                 # Compare finding status between to cklb using V-ID
 ```
 ## Usage
 
