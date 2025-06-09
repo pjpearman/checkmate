@@ -85,23 +85,45 @@ def compare_cklb_versions(file_a_list, file_b):
         all_rule_ids = set(rules_a.keys()) | set(rules_b.keys())
         # Find rules in B but not in A
         new_in_b = [rid for rid in rules_b.keys() if rid not in rules_a]
+        TITLE_WIDTH = 70
+        def wrap_text(text, width):
+            import textwrap
+            return textwrap.wrap(text, width)
         if new_in_b:
             output.append(f"New rules in {os.path.basename(file_b)} (not in {os.path.basename(file_a)}):")
             output.append(f"{'id':<16} {'rule title'}")
-            output.append(f"{'-'*16} {'-'*40}")
+            output.append(f"{'-'*16} {'-'*TITLE_WIDTH}")
             for rid in new_in_b:
                 rule = rules_b[rid]
                 title = rule.get('rule_title') or rule.get('title') or ''
-                output.append(f"{rid:<16} {title}")
+                wrapped = wrap_text(title, TITLE_WIDTH)
+                if wrapped:
+                    output.append(f"{rid:<16} {wrapped[0]}")
+                    for line in wrapped[1:]:
+                        output.append(f"{'':<16} {line}")
+                else:
+                    output.append(f"{rid:<16} ")
             output.append("")
-        # Only show rules unique to A or B, not status diffs
-        for rid in sorted(all_rule_ids):
-            ra = rules_a.get(rid)
-            rb = rules_b.get(rid)
-            if ra and not rb:
-                output.append(f"[ONLY IN A] Rule {rid}")
-            elif rb and not ra:
-                # Already handled above as new_in_b
-                continue
+        # Find rules in A but not in B, and display in same column format
+        only_in_a = [rid for rid in rules_a.keys() if rid not in rules_b]
+        if only_in_a:
+            output.append(f"Rules only in {os.path.basename(file_a)} (not in {os.path.basename(file_b)}):")
+            output.append(f"{'id':<16} {'rule title'}")
+            output.append(f"{'-'*16} {'-'*TITLE_WIDTH}")
+            for rid in only_in_a:
+                rule = rules_a[rid]
+                title = rule.get('rule_title') or rule.get('title') or ''
+                wrapped = wrap_text(title, TITLE_WIDTH)
+                if wrapped:
+                    output.append(f"{rid:<16} {wrapped[0]}")
+                    for line in wrapped[1:]:
+                        output.append(f"{'':<16} {line}")
+                else:
+                    output.append(f"{rid:<16} ")
+            output.append("")
         output.append("")
+
+    # If output is too long, page/scroll it in the TUI (if called from tui.py)
+    # This is a backend function, so actual scrolling should be handled by the TUI frontend.
+    # Return the full string for the TUI to handle paging/scrolling.
     return '\n'.join(output)

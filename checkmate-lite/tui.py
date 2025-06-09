@@ -642,11 +642,7 @@ def manage_checklists_tui(stdscr):
                 diff_output = compare_cklb_versions(files_a, files_b[0])
                 stdscr.clear()
                 lines = diff_output.split('\n')
-                max_lines = curses.LINES - 2
-                for i, line in enumerate(lines[:max_lines]):
-                    stdscr.addstr(i, 0, line[:curses.COLS-1])
-                if len(lines) > max_lines:
-                    stdscr.addstr(max_lines, 0, "...output truncated...")
+                show_paged_output(stdscr, lines)
                 stdscr.addstr(curses.LINES-1, 0, "Press any key to continue.")
                 stdscr.refresh()
                 stdscr.getch()
@@ -660,6 +656,34 @@ def manage_checklists_tui(stdscr):
                 stdscr.getch()
         elif key in [ord('b'), ord('B'), ord('q'), ord('Q')]:
             return
+
+def show_paged_output(stdscr, lines):
+    import curses
+    max_y, max_x = stdscr.getmaxyx()
+    page_size = max_y - 2  # Leave room for prompt
+    pos = 0
+    while pos < len(lines):
+        stdscr.clear()
+        for i in range(page_size):
+            if pos + i >= len(lines):
+                break
+            stdscr.addstr(i, 0, lines[pos + i][:max_x-1])
+        prompt = "--More-- (SPACE: next, q: quit, ↑/↓: scroll)"
+        stdscr.addstr(page_size, 0, prompt[:max_x-1])
+        stdscr.refresh()
+        key = stdscr.getch()
+        if key in (ord('q'), ord('Q')):
+            break
+        elif key == ord(' '):
+            pos += page_size
+        elif key == curses.KEY_DOWN:
+            pos += 1
+        elif key == curses.KEY_UP:
+            pos = max(0, pos - 1)
+        else:
+            pos += 1
+    stdscr.clear()
+    stdscr.refresh()
 
 def main(stdscr):
     """
