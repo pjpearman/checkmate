@@ -15,13 +15,13 @@ from xccdf_extractor import extract_xccdf_from_zip
 from cklb_generator import generate_cklb_json
 from selected_merger import find_new_rules, load_cklb, save_cklb
 
-def run_generate_baseline_task(mode, headful, on_status_update, clear_log):
+def run_generate_baseline_task(mode, on_status_update, clear_log):
     clear_log()
     on_status_update("Working... please wait")
 
     def task():
         try:
-            scraped = scrape_stigs(mode, headful)
+            scraped = scrape_stigs(mode)
             out_path = os.path.join("baselines", f"baseline_{mode}s.yaml")
             generate_baseline(scraped, out_path)
             on_status_update("Done")
@@ -31,7 +31,7 @@ def run_generate_baseline_task(mode, headful, on_status_update, clear_log):
     threading.Thread(target=task).start()
 
 
-def run_compare_task(mode, headful, baseline_path, download_updates_checked, extract_checked, on_status_update, clear_log, on_cklb_refresh=None):
+def run_compare_task(mode, baseline_path, download_updates_checked, extract_checked, on_status_update, clear_log, on_cklb_refresh=None):
     clear_log()
     on_status_update("Working... please wait")
 
@@ -42,7 +42,7 @@ def run_compare_task(mode, headful, baseline_path, download_updates_checked, ext
 
     def task():
         try:
-            scraped = scrape_stigs(mode, headful)
+            scraped = scrape_stigs(mode)
             with open(baseline_path, "r") as f:
                 old_data = yaml.safe_load(f)
 
