@@ -355,6 +355,8 @@ def on_closing():
     sys.exit(0)
 
 root = tk.Tk()
+root.lift()
+root.attributes('-topmost', True)
 root.title("CheckMate")
 root.resizable(True, True)  # Allow resizing
 root.configure(bg="#f7fafd")
