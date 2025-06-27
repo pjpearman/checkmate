@@ -184,6 +184,10 @@ stigflow/
 
 ## Version
 
+**v2.1.0**
+- Removed the playwright dependency. 
+
+
 **v2.0.0**
 - Major GUI redesign, instant feedback, multi-rule editing, and robust export/download support
 - Full GUI + CLI support
