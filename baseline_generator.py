@@ -47,7 +47,6 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--mode', choices=['benchmark', 'checklist', 'all'], required=True, help='Scrape mode for baseline generation')
-    parser.add_argument('--headful', action='store_true', help='Run browser headful (optional)')
     args = parser.parse_args()
 
     # Setup basic logging
@@ -58,7 +57,7 @@ if __name__ == "__main__":
     )
 
     # Scrape the data
-    scraped_items = scrape_stigs(mode=args.mode, headful=args.headful)
+    scraped_items = scrape_stigs(mode=args.mode)
 
     # Pick output filename
     output_filename = {

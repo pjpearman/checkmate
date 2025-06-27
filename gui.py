@@ -55,7 +55,6 @@ def run_generate_baseline_with_feedback():
             log_job_status(f"[ERROR] {status}")
     threading.Thread(target=lambda: run_generate_baseline_task(
         mode=get_internal_mode(mode_var.get()),
-        headful=headful_var.get(),
         on_status_update=on_status_update,
         clear_log=lambda: log_output.delete(1.0, tk.END)
     )).start()
@@ -75,7 +74,6 @@ def run_compare_with_feedback():
             log_job_status(f"[ERROR] {status}")
     threading.Thread(target=lambda: run_compare_task(
         mode=get_internal_mode(mode_var.get()),
-        headful=headful_var.get(),
         baseline_path=yaml_path_var.get(),
         download_updates_checked=download_var.get(),
         extract_checked=extract_var.get(),
@@ -86,7 +84,7 @@ def run_compare_with_feedback():
 
 def download_cklb_popup():
     popup = tk.Toplevel(root)
-    popup.title("Download New CKLB Files")
+    popup.title("Open New CKLB Directory")
     popup.geometry("500x400")
     popup.grab_set()
     popup.configure(bg="#f5f5f5")
@@ -364,7 +362,6 @@ root.protocol("WM_DELETE_WINDOW", on_closing)
 
 # === Variables (must be defined before layout) ===
 mode_var = tk.StringVar(value="Operating Systems")
-headful_var = tk.BooleanVar()
 yaml_path_var = tk.StringVar()
 status_text = tk.StringVar(value="Ready")
 download_var = tk.BooleanVar()
@@ -525,8 +522,6 @@ scrape_label = ttk.Label(top_controls, text="Scrape Mode:", font=LABEL_FONT)
 scrape_label.grid(row=0, column=0, padx=(0, 10), pady=4, sticky="w")
 scrape_combo = ttk.Combobox(top_controls, textvariable=mode_var, values=["SCAP Benchmarks", "Operating Systems", "Applications", "Network", "ALL"], state="readonly", width=15)
 scrape_combo.grid(row=0, column=1, padx=(0, 10), pady=4, sticky="ew")
-headful_cb = ttk.Checkbutton(top_controls, text="Headful Browser", variable=headful_var)
-headful_cb.grid(row=0, column=2, padx=(0, 10), pady=4, sticky="w")
 
 yaml_label = ttk.Label(top_controls, text="Baseline YAML:", font=LABEL_FONT)
 yaml_label.grid(row=1, column=0, padx=(0, 10), pady=4, sticky="w")
@@ -600,7 +595,7 @@ merge_area.columnconfigure(3, weight=1)
 
 update_btn = ttk.Button(button_col, text="Update Now", style="Accent.TButton", command=update_now_handler)
 update_btn.pack(fill="x", pady=(0, 10))
-cklb_download_btn = ttk.Button(button_col, text="Download New CKLB", style="Accent.TButton", command=download_cklb_popup)
+cklb_download_btn = ttk.Button(button_col, text="Open New CKLB Directory", style="Accent.TButton", command=download_cklb_popup)
 cklb_download_btn.pack(fill="x")
 
 # Populate the listbox with files
