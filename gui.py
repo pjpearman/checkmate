@@ -23,6 +23,12 @@ root.resizable(True, True)  # Allow resizing
 root.configure(bg="#f7fafd")
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
+# Make the window fill the screen (maximize if possible)
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+root.geometry(f"{screen_width}x{screen_height}+0+0")
+root.minsize(900, 600)
+
 mode_var = tk.StringVar(value="Operating Systems")
 yaml_path_var = tk.StringVar()
 status_text = tk.StringVar(value="Ready")
