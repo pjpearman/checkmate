@@ -1,10 +1,10 @@
 import tkinter as tk
-from tkinter import ttk, scrolledtext, messagebox
+from tkinter import ttk, scrolledtext
 import os
 
 def launch_file_editor(file_path, parent):
     if not file_path or not os.path.exists(file_path):
-        messagebox.showerror("File Error", "Please select a valid file.", parent=parent)
+        # Inline error handling (no popups)
         return
 
     # Load file content as plain text
@@ -12,29 +12,53 @@ def launch_file_editor(file_path, parent):
         with open(file_path, 'r') as f:
             content = f.read()
     except Exception as e:
-        messagebox.showerror("Load Error", f"Failed to read file:\n{e}", parent=parent)
+        # Inline error handling (no popups)
         return
 
     editor = tk.Toplevel(parent)
+    center_window(editor, 700, 500)
     editor.title(f"Edit: {os.path.basename(file_path)}")
-    editor.geometry("700x500")
+    editor.minsize(400, 300)
     editor.grab_set()
 
-    text_box = scrolledtext.ScrolledText(editor, wrap="word", font=("Consolas", 11))
-    text_box.pack(fill="both", expand=True, padx=10, pady=10)
+    # Main frame with grid layout
+    main_frame = ttk.Frame(editor)
+    main_frame.pack(fill="both", expand=True)
+    main_frame.rowconfigure(0, weight=1)
+    main_frame.columnconfigure(0, weight=1)
+
+    # Scrollable text area
+    text_box = scrolledtext.ScrolledText(main_frame, wrap="word", font=("Consolas", 11))
+    text_box.grid(row=0, column=0, sticky="nsew", padx=10, pady=(10,0))
     text_box.insert("1.0", content)
+
+    # Fixed button frame at the bottom
+    button_frame = ttk.Frame(main_frame)
+    button_frame.grid(row=1, column=0, sticky="ew", padx=10, pady=(8, 12))
+    button_frame.columnconfigure(0, weight=1)
 
     def save_file():
         try:
             new_content = text_box.get("1.0", "end").rstrip()
             with open(file_path, 'w') as f:
                 f.write(new_content)
-            messagebox.showinfo("Success", "File saved successfully.", parent=editor)
+            # Inline success message (no popups)
             editor.destroy()
         except Exception as e:
-            messagebox.showerror("Save Error", f"Failed to save file:\n{e}", parent=editor)
+            # Inline error handling (no popups)
+            pass
 
-    ttk.Button(editor, text="Save", style="Accent.TButton", command=save_file).pack(pady=(0, 12))
+    save_btn = ttk.Button(button_frame, text="Save", style="Accent.TButton", command=save_file)
+    save_btn.pack(side="right")
+
+def center_window(win, width=700, height=500):
+    win.update_idletasks()
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+    x = max((screen_width // 2) - (width // 2), 0)
+    y = max((screen_height // 2) - (height // 2), 0)
+    win.geometry(f"{width}x{height}+{x}+{y}")
+    win.minsize(400, 300)
 
 def main():
     import sys

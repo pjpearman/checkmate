@@ -112,10 +112,19 @@ def run_compare_with_feedback():
         on_cklb_refresh=refresh_cklb_combobox
     )).start()
 
+def center_window(win, width=700, height=500):
+    win.update_idletasks()
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+    x = max((screen_width // 2) - (width // 2), 0)
+    y = max((screen_height // 2) - (height // 2), 0)
+    win.geometry(f"{width}x{height}+{x}+{y}")
+    win.minsize(400, 300)
+
 def download_cklb_popup():
     popup = tk.Toplevel(root)
+    center_window(popup, 500, 400)
     popup.title("Open New CKLB Directory")
-    popup.geometry("500x400")
     popup.grab_set()
     popup.configure(bg="#f5f5f5")
 

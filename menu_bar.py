@@ -7,7 +7,9 @@ import subprocess
 def open_directory_frame(parent, dir_path, editor_cmd):
     # Create a new window
     win = Toplevel(parent)
+    center_window(win, 700, 500)
     win.title(f"Files in {os.path.basename(dir_path)}")
+    win.minsize(400, 300)
     frame = Frame(win)
     frame.pack(fill='both', expand=True)
 
@@ -88,3 +90,12 @@ def build_menu(root, yaml_path_var, on_closing):
     menu_bar.add_cascade(label="Help", menu=help_menu)
 
     root.config(menu=menu_bar)
+
+def center_window(win, width=700, height=500):
+    win.update_idletasks()
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+    x = max((screen_width // 2) - (width // 2), 0)
+    y = max((screen_height // 2) - (height // 2), 0)
+    win.geometry(f"{width}x{height}+{x}+{y}")
+    win.minsize(400, 300)
