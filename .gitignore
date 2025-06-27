@@ -7,4 +7,6 @@ tmp/
 cklb_proc/xccdf_lib/*
 cklb_proc/cklblib/*
 cklb_proc/cklb_lib/*
+cklb_proc/
 venv/
+lite/

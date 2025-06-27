@@ -87,11 +87,6 @@ See the full license text here: [CC BY-NC 4.0](https://creativecommons.org/licen
     pip install -r requirements.txt
     ```
 
-4. **Install Playwright browsers (Not required when air-gapped)**
-    ```bash
-    playwright install
-    ```
-
 ---
 
 ## GUI Mode

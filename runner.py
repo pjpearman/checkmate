@@ -18,7 +18,6 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 parser = argparse.ArgumentParser(description="DISA STIG Scraper and Baseline Manager")
 parser.add_argument('--mode', choices=['benchmark', 'checklist', 'application', 'network', 'all'], required=True, help='Which type of STIGs to scrape')
 parser.add_argument('--yaml', required=False, help='Baseline YAML file to compare against (optional)')
-parser.add_argument('--headful', action='store_true', help='Run browser in headful mode (default headless)')
 parser.add_argument('--log', choices=['terminal', 'file'], default='terminal', help='Log to terminal or file')
 parser.add_argument('--generate-baseline', action='store_true', help='Generate a new baseline YAML instead of comparing')
 parser.add_argument('--print-urls', action='store_true', help='Print download URLs and exit')
@@ -51,7 +50,7 @@ else:
 
 # === Main Logic ===
 def main():
-    scraped_items = scrape_stigs(mode=args.mode, headful=args.headful)
+    scraped_items = scrape_stigs(mode=args.mode)
 
     if args.import_cklb:
         from cklb_importer import import_cklb_files
