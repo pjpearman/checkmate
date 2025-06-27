@@ -7,6 +7,36 @@ import sys
 import threading
 import json
 
+# === GUI Setup and Variables (must be at the top) ===
+def on_closing():
+    try:
+        root.destroy()
+    except Exception:
+        pass
+    sys.exit(0)
+
+root = tk.Tk()
+root.lift()
+root.attributes('-topmost', True)
+root.title("CheckMate")
+root.resizable(True, True)  # Allow resizing
+root.configure(bg="#f7fafd")
+root.protocol("WM_DELETE_WINDOW", on_closing)
+
+mode_var = tk.StringVar(value="Operating Systems")
+yaml_path_var = tk.StringVar()
+status_text = tk.StringVar(value="Ready")
+download_var = tk.BooleanVar()
+extract_var = tk.BooleanVar()
+
+usr_dir  = os.path.join(os.getcwd(), 'cklb_proc', 'usr_cklb_lib')
+cklb_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_lib')
+usr_files  = sorted(os.listdir(usr_dir))  if os.path.isdir(usr_dir)  else []
+cklb_files = sorted(os.listdir(cklb_dir)) if os.path.isdir(cklb_dir) else []
+
+usr_sel_var  = tk.StringVar()
+cklb_sel_var = tk.StringVar()
+
 from cklb_importer import import_cklb_files
 from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
 from selected_merger import load_cklb, save_cklb, check_stig_id_match
@@ -101,11 +131,17 @@ def download_cklb_popup():
     def do_download():
         selected = [listbox.get(i) for i in listbox.curselection()]
         if not selected:
-            tk.messagebox.showwarning("No Selection", "Please select at least one CKLB file.")
+            log_job_status("[ERROR] Please select at least one CKLB file.")
             return
-        dest_dir = filedialog.askdirectory(title="Select Destination Directory")
+        try:
+            dest_dir = filedialog.askdirectory(title="Select Destination Directory")
+        except Exception as e:
+            log_job_status(f"[ERROR] File dialog failed: {e}")
+            return
         if not dest_dir:
+            log_job_status("[INFO] Download cancelled (no directory selected).")
             return
+        errors = []
         for fname in selected:
             src = os.path.join(updated_dir, fname)
             dst = os.path.join(dest_dir, fname)
@@ -113,8 +149,11 @@ def download_cklb_popup():
                 with open(src, "rb") as fsrc, open(dst, "wb") as fdst:
                     fdst.write(fsrc.read())
             except Exception as e:
-                tk.messagebox.showerror("Copy Error", f"Failed to copy {fname}: {e}")
-        tk.messagebox.showinfo("Download Complete", f"Copied {len(selected)} file(s) to {dest_dir}")
+                errors.append(f"Failed to copy {fname}: {e}")
+        if errors:
+            for err in errors:
+                log_job_status(f"[ERROR] {err}")
+        log_job_status(f"[INFO] Copied {len(selected) - len(errors)} file(s) to {dest_dir}")
         popup.grab_release()
         popup.destroy()
 
@@ -124,7 +163,7 @@ def download_cklb_popup():
 def run_reset_baseline_with_feedback():
     baseline_path = yaml_path_var.get()
     if not baseline_path or not os.path.exists(baseline_path):
-        tk.messagebox.showerror("File Error", "Please select a valid Baseline YAML file.")
+        log_job_status("[ERROR] Please select a valid Baseline YAML file.")
         return
     # Load YAML and get product list
     try:
@@ -132,203 +171,150 @@ def run_reset_baseline_with_feedback():
             data = yaml.safe_load(f)
         products = list(data.keys())
     except Exception as e:
-        tk.messagebox.showerror("YAML Error", f"Failed to load baseline: {e}")
+        log_job_status(f"[ERROR] Failed to load baseline: {e}")
         return
-    # Ask user to select products (checkboxes)
-    sel_win = tk.Toplevel(root)
-    sel_win.title("Select Baseline Products to Reset")
-    sel_win.geometry("500x500")
-    sel_win.grab_set()
-    ttk.Label(sel_win, text="Select baseline products to reset:", font=HEADER_FONT).pack(pady=(18, 8))
+    # Inline product selection UI
+    if hasattr(run_reset_baseline_with_feedback, 'sel_frame') and run_reset_baseline_with_feedback.sel_frame:
+        run_reset_baseline_with_feedback.sel_frame.destroy()
+    sel_frame = ttk.Frame(frame)
+    sel_frame.grid(row=5, column=0, columnspan=3, sticky="ew", pady=10)
+    run_reset_baseline_with_feedback.sel_frame = sel_frame
+    ttk.Label(sel_frame, text="Select baseline products to reset:", font=HEADER_FONT).pack(anchor="w", padx=18, pady=(8, 8))
     select_all_var = tk.BooleanVar()
+    prod_vars = []
     def on_select_all():
         for _, var in prod_vars:
             var.set(select_all_var.get())
-    select_all_cb = ttk.Checkbutton(sel_win, text="Select All", variable=select_all_var, command=on_select_all)
+    select_all_cb = ttk.Checkbutton(sel_frame, text="Select All", variable=select_all_var, command=on_select_all)
     select_all_cb.pack(anchor="w", padx=18)
-    # Scrollable frame for checkboxes
-    scroll_canvas = tk.Canvas(sel_win, borderwidth=0, background=sel_win.cget('background'))
-    check_frame = ttk.Frame(scroll_canvas)
-    vsb = ttk.Scrollbar(sel_win, orient="vertical", command=scroll_canvas.yview)
-    scroll_canvas.configure(yscrollcommand=vsb.set)
-    vsb.pack(side="right", fill="y")
-    scroll_canvas.pack(side="left", fill="both", expand=True)
-    scroll_canvas.create_window((0,0), window=check_frame, anchor="nw")
-    def on_frame_configure(event):
-        scroll_canvas.configure(scrollregion=scroll_canvas.bbox("all"))
-    check_frame.bind("<Configure>", on_frame_configure)
-    prod_vars = []
+    # Product checkboxes
     for prod in products:
         var = tk.BooleanVar()
-        cb = ttk.Checkbutton(check_frame, text=prod, variable=var)
-        cb.pack(anchor="w")
+        cb = ttk.Checkbutton(sel_frame, text=prod, variable=var)
+        cb.pack(anchor="w", padx=36)
         prod_vars.append((prod, var))
+    # Reset and Cancel buttons
+    btn_frame = ttk.Frame(sel_frame)
+    btn_frame.pack(pady=(8, 10))
     def do_reset():
         selected = [prod for prod, var in prod_vars if var.get()]
         if not selected:
-            tk.messagebox.showwarning("No Selection", "Please select at least one product.")
+            log_job_status("[ERROR] Please select at least one product.")
             return
-        # Custom scrollable confirmation dialog
-        confirm_win = tk.Toplevel(sel_win)
-        confirm_win.title("Confirm Reset")
-        confirm_win.geometry("500x400")
-        confirm_win.minsize(400, 300)
-        confirm_win.grab_set()
-        confirm_win.transient(sel_win)
-        # Frame for message
-        msg_frame = ttk.Frame(confirm_win)
-        msg_frame.pack(fill="both", expand=True, padx=16, pady=16)
-        # Scrollable text for product list
-        msg = "This will set 'Release' and 'Version' to '0' for:\n\n" + "\n".join(selected) + "\n\nAre you sure?"
-        text_canvas = tk.Canvas(msg_frame, borderwidth=0, background=confirm_win.cget('background'))
-        text_frame = ttk.Frame(text_canvas)
-        vsb = ttk.Scrollbar(msg_frame, orient="vertical", command=text_canvas.yview)
-        text_canvas.configure(yscrollcommand=vsb.set)
-        vsb.pack(side="right", fill="y")
-        text_canvas.pack(side="left", fill="both", expand=True)
-        text_canvas.create_window((0,0), window=text_frame, anchor="nw")
-        def on_text_frame_configure(event):
-            text_canvas.configure(scrollregion=text_canvas.bbox("all"))
-        text_frame.bind("<Configure>", on_text_frame_configure)
-        # Message label (wrap text)
-        msg_label = ttk.Label(text_frame, text=msg, wraplength=440, justify="left", font=LABEL_FONT)
-        msg_label.pack(anchor="nw", fill="x", expand=True)
-        # Button frame always at bottom
-        btn_frame = ttk.Frame(confirm_win)
-        btn_frame.pack(fill="x", side="bottom", pady=(0, 12))
-        def on_yes():
-            confirm_win.grab_release()
-            confirm_win.destroy()
+        msg = "This will set 'Release' and 'Version' to '0' for: " + ", ".join(selected) + ". Proceed?"
+        def do_confirm():
             ok = reset_baseline_fields(baseline_path, selected)
             if ok:
-                tk.messagebox.showinfo("Reset Complete", f"Reset Release and Version for {len(selected)} product(s).")
-                sel_win.grab_release()
-                sel_win.destroy()
+                log_job_status(f"[INFO] Reset Release and Version for {len(selected)} product(s).")
+                sel_frame.destroy()
+                run_reset_baseline_with_feedback.sel_frame = None
             else:
-                tk.messagebox.showerror("Reset Failed", f"Failed to reset one or more products. See log for details.")
-        def on_no():
-            confirm_win.grab_release()
-            confirm_win.destroy()
-        ttk.Button(btn_frame, text="Yes", style="Accent.TButton", command=on_yes).pack(side="left", padx=16)
-        ttk.Button(btn_frame, text="No", command=on_no).pack(side="left", padx=16)
-    # Buttons at the bottom of the popup
-    btn_frame = ttk.Frame(sel_win)
-    btn_frame.pack(pady=(0, 10))
-    def on_cancel():
-        sel_win.grab_release()
-        sel_win.destroy()
+                log_job_status("[ERROR] Failed to reset one or more products. See log for details.")
+        def do_cancel():
+            log_job_status("[INFO] Reset cancelled.")
+            sel_frame.destroy()
+            run_reset_baseline_with_feedback.sel_frame = None
+        confirm_frame = ttk.Frame(sel_frame)
+        confirm_frame.pack(pady=(8, 0))
+        ttk.Label(confirm_frame, text=msg, foreground="red").pack(side="left", padx=10)
+        ttk.Button(confirm_frame, text="Yes", style="Accent.TButton", command=do_confirm).pack(side="left", padx=10)
+        ttk.Button(confirm_frame, text="No", command=do_cancel).pack(side="left", padx=10)
     ttk.Button(btn_frame, text="Reset Baseline", style="Accent.TButton", command=do_reset).pack(side="left", padx=12)
+    def on_cancel():
+        sel_frame.destroy()
+        run_reset_baseline_with_feedback.sel_frame = None
+        log_job_status("[INFO] Reset cancelled.")
     ttk.Button(btn_frame, text="Cancel", command=on_cancel).pack(side="left", padx=12)
 
 # === New Rule Input Dialog ===
-class MultiRuleInputDialog(tk.Toplevel):
-    def __init__(self, parent, new_rules, checklist_files):
-        super().__init__(parent)
-        self.title("Input for New Rules")
-        self.result = None
-        self.configure(bg="#f5f5f5")
+# Replaces MultiRuleInputDialog pop-up with inline widget
 
-        # Checklist Selection
-        checklist_frame = ttk.Frame(self)
-        checklist_frame.pack(fill="x", pady=(12, 8), padx=12)
-        ttk.Label(checklist_frame, text="Apply to selected checklists:").pack(side="left")
-        self.cklb_vars = []
-        for f in checklist_files:
-            var = tk.BooleanVar(value=True)
-            ttk.Checkbutton(checklist_frame, text=f, variable=var).pack(side="left", padx=6)
-            self.cklb_vars.append((f, var))
-
-        # Bulk Fill
-        bulk_frame = ttk.Frame(self)
-        bulk_frame.pack(fill="x", padx=12, pady=(0, 10))
-        ttk.Label(bulk_frame, text="Bulk Fill Status:").pack(side="left")
-        self.status_bulk = tk.StringVar(value="not_reviewed")
-        status_bulk_cb = ttk.Combobox(bulk_frame, textvariable=self.status_bulk,
+def show_multi_rule_input(new_rules, checklist_files, on_submit, on_cancel):
+    if hasattr(show_multi_rule_input, 'frame') and show_multi_rule_input.frame:
+        show_multi_rule_input.frame.destroy()
+    frame_mr = ttk.Frame(frame)
+    frame_mr.grid(row=7, column=0, columnspan=3, sticky="ew", pady=10)
+    show_multi_rule_input.frame = frame_mr
+    ttk.Label(frame_mr, text="Input for New Rules", font=HEADER_FONT).pack(anchor="w", padx=12, pady=(8, 8))
+    # Checklist selection
+    checklist_frame = ttk.Frame(frame_mr)
+    checklist_frame.pack(fill="x", padx=12, pady=(0, 8))
+    ttk.Label(checklist_frame, text="Apply to selected checklists:").pack(side="left")
+    cklb_vars = []
+    for f in checklist_files:
+        var = tk.BooleanVar(value=True)
+        ttk.Checkbutton(checklist_frame, text=f, variable=var).pack(side="left", padx=6)
+        cklb_vars.append((f, var))
+    # Bulk fill
+    bulk_frame = ttk.Frame(frame_mr)
+    bulk_frame.pack(fill="x", padx=12, pady=(0, 10))
+    ttk.Label(bulk_frame, text="Bulk Fill Status:").pack(side="left")
+    status_bulk = tk.StringVar(value="not_reviewed")
+    status_bulk_cb = ttk.Combobox(bulk_frame, textvariable=status_bulk,
+        values=["not_reviewed", "not_applicable", "open", "not_a_finding"], state="readonly", width=18)
+    status_bulk_cb.pack(side="left", padx=5)
+    ttk.Label(bulk_frame, text="Comment:").pack(side="left")
+    comment_bulk = tk.StringVar()
+    comment_bulk_entry = ttk.Entry(bulk_frame, textvariable=comment_bulk, width=40)
+    comment_bulk_entry.pack(side="left", padx=5)
+    # Table
+    canvas_frame = ttk.Frame(frame_mr)
+    canvas_frame.pack(fill="both", expand=True, padx=12)
+    canvas = tk.Canvas(canvas_frame, height=300, bg="#f5f5f5", highlightthickness=0)
+    scroll = ttk.Scrollbar(canvas_frame, orient="vertical", command=canvas.yview)
+    table_frame = ttk.Frame(canvas)
+    table_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+    canvas.create_window((0, 0), window=table_frame, anchor="nw")
+    canvas.config(yscrollcommand=scroll.set)
+    canvas.pack(side="left", fill="both", expand=True)
+    scroll.pack(side="right", fill="y")
+    headers = ["ID", "Rule Title", "Status", "Comment", "Ignore"]
+    col_weights = [0, 1, 0, 2, 0]
+    for c, col in enumerate(headers):
+        ttk.Label(table_frame, text=col, font=('TkDefaultFont', 10, 'bold')).grid(row=0, column=c, padx=5, pady=3, sticky="nsew")
+        table_frame.columnconfigure(c, weight=col_weights[c])
+    entries = []
+    for i, rule in enumerate(new_rules, 1):
+        bg = "#f0f4fc" if i % 2 == 0 else "#ffffff"
+        row_id = rule["group_id_src"]
+        rule_title = rule["rule_title"] or row_id
+        ttk.Label(table_frame, text=row_id, background=bg, anchor="w").grid(row=i, column=0, sticky="nsew", padx=5, pady=2)
+        title_lbl = ttk.Label(table_frame, text=rule_title, background=bg, anchor="w", wraplength=300, justify="left")
+        title_lbl.grid(row=i, column=1, sticky="nsew", padx=5, pady=2)
+        status_var = tk.StringVar(value="not_reviewed")
+        status_cb = ttk.Combobox(table_frame, textvariable=status_var,
             values=["not_reviewed", "not_applicable", "open", "not_a_finding"], state="readonly", width=18)
-        status_bulk_cb.pack(side="left", padx=5)
-        ttk.Label(bulk_frame, text="Comment:").pack(side="left")
-        self.comment_bulk = tk.StringVar()
-        comment_bulk_entry = ttk.Entry(bulk_frame, textvariable=self.comment_bulk, width=40)
-        comment_bulk_entry.pack(side="left", padx=5)
-        ttk.Button(bulk_frame, text="Apply to all", command=self.bulk_fill).pack(side="left", padx=10)
-
-        # Scrollable Table
-        canvas_frame = ttk.Frame(self)
-        canvas_frame.pack(fill="both", expand=True, padx=12)
-        canvas = tk.Canvas(canvas_frame, height=300, bg="#f5f5f5", highlightthickness=0)
-        scroll = ttk.Scrollbar(canvas_frame, orient="vertical", command=canvas.yview)
-        self.table_frame = ttk.Frame(canvas)
-        self.table_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
-        canvas.create_window((0, 0), window=self.table_frame, anchor="nw")
-        canvas.config(yscrollcommand=scroll.set)
-        canvas.pack(side="left", fill="both", expand=True)
-        scroll.pack(side="right", fill="y")
-
-        # Table Headers
-        headers = ["ID", "Rule Title", "Status", "Comment", "Ignore"]
-        col_weights = [0, 1, 0, 2, 0]
-        for c, col in enumerate(headers):
-            ttk.Label(self.table_frame, text=col, font=('TkDefaultFont', 10, 'bold')).grid(row=0, column=c, padx=5, pady=3, sticky="nsew")
-            self.table_frame.columnconfigure(c, weight=col_weights[c])
-
-        # Rows
-        self.entries = []
-        for i, rule in enumerate(new_rules, 1):
-            bg = "#f0f4fc" if i % 2 == 0 else "#ffffff"
-            row_id = rule["group_id_src"]
-            rule_title = rule["rule_title"] or row_id
-
-            # ID
-            ttk.Label(self.table_frame, text=row_id, background=bg, anchor="w").grid(row=i, column=0, sticky="nsew", padx=5, pady=2)
-
-            # Rule Title (wrapped)
-            title_lbl = ttk.Label(self.table_frame, text=rule_title, background=bg, anchor="w", wraplength=300, justify="left")
-            title_lbl.grid(row=i, column=1, sticky="nsew", padx=5, pady=2)
-
-            # Status
-            status_var = tk.StringVar(value="not_reviewed")
-            status_cb = ttk.Combobox(self.table_frame, textvariable=status_var,
-                values=["not_reviewed", "not_applicable", "open", "not_a_finding"], state="readonly", width=18)
-            status_cb.grid(row=i, column=2, padx=5, pady=2)
-            status_cb.configure(background=bg)
-
-            # Comment (wrapped to 3 lines)
-            comment_var = tk.StringVar()
-            comment_entry = tk.Text(self.table_frame, height=3, width=40, wrap="word", background=bg)
-            comment_entry.grid(row=i, column=3, sticky="nsew", padx=5, pady=2)
-
-            # Ignore
-            ignore_var = tk.BooleanVar(value=False)
-            ignore_cb = ttk.Checkbutton(self.table_frame, variable=ignore_var)
-            ignore_cb.grid(row=i, column=4, padx=5, pady=2)
-            ignore_cb.configure(style="Toolbutton")
-
-            self.entries.append({
-                "group_id_src": row_id,
-                "status_var": status_var,
-                "comment_widget": comment_entry,
-                "ignore_var": ignore_var
-            })
-
-        # Buttons
-        btns = ttk.Frame(self)
-        btns.pack(pady=(12, 8))
-        ttk.Button(btns, text="OK", command=self.on_apply, width=10).pack(side="left", padx=12)
-        ttk.Button(btns, text="Cancel", command=self.on_cancel, width=10).pack(side="left", padx=12)
-
-    def bulk_fill(self):
-        value = self.status_bulk.get()
-        comment = self.comment_bulk.get()
-        for e in self.entries:
+        status_cb.grid(row=i, column=2, padx=5, pady=2)
+        status_cb.configure(background=bg)
+        comment_entry = tk.Text(table_frame, height=3, width=40, wrap="word", background=bg)
+        comment_entry.grid(row=i, column=3, sticky="nsew", padx=5, pady=2)
+        ignore_var = tk.BooleanVar(value=False)
+        ignore_cb = ttk.Checkbutton(table_frame, variable=ignore_var)
+        ignore_cb.grid(row=i, column=4, padx=5, pady=2)
+        ignore_cb.configure(style="Toolbutton")
+        entries.append({
+            "group_id_src": row_id,
+            "status_var": status_var,
+            "comment_widget": comment_entry,
+            "ignore_var": ignore_var
+        })
+    # Bulk fill logic
+    def bulk_fill():
+        value = status_bulk.get()
+        comment = comment_bulk.get()
+        for e in entries:
             if not e["ignore_var"].get():
                 e["status_var"].set(value)
                 e["comment_widget"].delete("1.0", "end")
                 e["comment_widget"].insert("1.0", comment)
-
-    def on_apply(self):
-        selected_cklbs = [fname for fname, var in self.cklb_vars if var.get()]
+    ttk.Button(bulk_frame, text="Apply to all", command=bulk_fill).pack(side="left", padx=10)
+    # OK/Cancel
+    btns = ttk.Frame(frame_mr)
+    btns.pack(pady=(12, 8))
+    def do_ok():
+        selected_cklbs = [fname for fname, var in cklb_vars if var.get()]
         results = []
-        for entry in self.entries:
+        for entry in entries:
             if entry["ignore_var"].get():
                 continue
             results.append({
@@ -336,71 +322,27 @@ class MultiRuleInputDialog(tk.Toplevel):
                 "status": entry["status_var"].get(),
                 "comments": entry["comment_widget"].get("1.0", "end").strip()
             })
-        self.result = {
-            "apply_cklbs": selected_cklbs,
-            "rules": results
-        }
-        self.destroy()
+        frame_mr.destroy()
+        show_multi_rule_input.frame = None
+        on_submit({"apply_cklbs": selected_cklbs, "rules": results})
+    def do_cancel():
+        frame_mr.destroy()
+        show_multi_rule_input.frame = None
+        on_cancel()
+    ttk.Button(btns, text="OK", command=do_ok, width=10).pack(side="left", padx=12)
+    ttk.Button(btns, text="Cancel", command=do_cancel, width=10).pack(side="left", padx=12)
 
-    def on_cancel(self):
-        self.result = None
-        self.destroy()
-
-# === GUI Setup ===
-def on_closing():
-    try:
-        root.destroy()
-    except Exception:
-        pass
-    sys.exit(0)
-
-root = tk.Tk()
-root.lift()
-root.attributes('-topmost', True)
-root.title("CheckMate")
-root.resizable(True, True)  # Allow resizing
-root.configure(bg="#f7fafd")
-root.protocol("WM_DELETE_WINDOW", on_closing)
-
-# === Variables (must be defined before layout) ===
-mode_var = tk.StringVar(value="Operating Systems")
-yaml_path_var = tk.StringVar()
-status_text = tk.StringVar(value="Ready")
-download_var = tk.BooleanVar()
-extract_var = tk.BooleanVar()
-
-build_menu(root, yaml_path_var, on_closing)
-
-usr_dir  = os.path.join(os.getcwd(), 'cklb_proc', 'usr_cklb_lib')
-cklb_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_lib')
-usr_files  = sorted(os.listdir(usr_dir))  if os.path.isdir(usr_dir)  else []
-cklb_files = sorted(os.listdir(cklb_dir)) if os.path.isdir(cklb_dir) else []
-
-usr_sel_var  = tk.StringVar()
-cklb_sel_var = tk.StringVar()
-
-# === Refresh Combo Logic ===
-def refresh_cklb_combobox():
-    new_cklb_files = sorted(os.listdir(cklb_dir)) if os.path.isdir(cklb_dir) else []
-    cklb_combobox['values'] = new_cklb_files
-
-# === Refresh User CKLB Library ===
-def refresh_usr_listbox():
-    usr_files = sorted(os.listdir(usr_dir)) if os.path.isdir(usr_dir) else []
-    file_listbox.delete(0, tk.END)
-    for f in usr_files:
-        file_listbox.insert(tk.END, f)
-
+# Patch update_now_handler to use inline multi-rule input
 # === Handler must come after widgets ===
 def update_now_handler():
     # Check for selection errors
     selected_old_files = [file_listbox.get(i) for i in file_listbox.curselection()]
     new_name = cklb_sel_var.get()
     if not selected_old_files:
-        tk.messagebox.showerror("Selection Error", "Please select at least one CKLB to upgrade.")
+        log_job_status("[ERROR] Please select at least one CKLB to upgrade.")
         return
     if not new_name:
-        tk.messagebox.showerror("Selection Error", "Please select a new CKLB version to upgrade to.")
+        log_job_status("[ERROR] Please select a new CKLB version to upgrade to.")
         return
 
     # --- STIG ID mismatch check before merge ---
@@ -415,14 +357,38 @@ def update_now_handler():
                    f"Old STIG ID: {old_stig_id}\nNew STIG ID: {new_stig_id}\n"
                    f"Number of new rules in the new checklist: {len(new_rules)}\n\n"
                    "Proceed with merge?")
-            if not tk.messagebox.askyesno("STIG ID Mismatch", msg, icon='warning'):
+            # Inline confirmation widget
+            def do_confirm_merge():
+                confirm_frame.destroy()
+                proceed_merge(True)
+            def do_cancel_merge():
+                confirm_frame.destroy()
                 log_job_status("[ERROR] Merge cancelled by user due to STIG ID mismatch.")
-                return
-            force_merge = True
+            confirm_frame = ttk.Frame(frame)
+            confirm_frame.grid(row=5, column=0, columnspan=3, sticky="ew", pady=10)
+            ttk.Label(confirm_frame, text=msg, foreground="red").pack(side="left", padx=10)
+            ttk.Button(confirm_frame, text="Proceed", style="Accent.TButton", command=do_confirm_merge).pack(side="left", padx=10)
+            ttk.Button(confirm_frame, text="Cancel", command=do_cancel_merge).pack(side="left", padx=10)
+            def proceed_merge(force_merge):
+                merged_results = run_merge_task(
+                    selected_old_files=selected_old_files,
+                    new_name=new_name,
+                    usr_dir=usr_dir,
+                    cklb_dir=cklb_dir,
+                    on_status_update=status_text.set,
+                    force=force_merge,
+                    prefix=None
+                )
+                for result in merged_results:
+                    if result["new_rules"]:
+                        log_job_status(f"[INFO] {len(result['new_rules'])} new rules detected. Please review in the main window.")
+                        # TODO: Inline rule review UI
+                log_job_status("[INFO] Job complete: Merge/update finished.")
+            return
         else:
             force_merge = False
     except Exception as e:
-        tk.messagebox.showerror("Error", f"Failed to check STIG IDs: {e}")
+        log_job_status(f"[ERROR] Failed to check STIG IDs: {e}")
         return
 
     # Check if any selected old files lack host_name
@@ -440,20 +406,33 @@ def update_now_handler():
             break
     prefix = None
     if needs_prefix:
-        def set_prefix():
+        # Inline prefix entry UI
+        if hasattr(update_now_handler, 'prefix_frame') and update_now_handler.prefix_frame:
+            update_now_handler.prefix_frame.destroy()
+        prefix_frame = ttk.Frame(frame)
+        prefix_frame.grid(row=6, column=0, columnspan=3, sticky="ew", pady=10)
+        update_now_handler.prefix_frame = prefix_frame
+        ttk.Label(prefix_frame, text="Enter host-name prefix (required):", foreground="red").pack(side="left", padx=10)
+        prefix_var = tk.StringVar()
+        prefix_entry = ttk.Entry(prefix_frame, textvariable=prefix_var, width=30)
+        prefix_entry.pack(side="left", padx=10)
+        def do_set_prefix():
+            val = prefix_var.get().strip()
+            if not val:
+                log_job_status("[ERROR] Prefix cannot be blank. Please enter a valid prefix.")
+                return
             nonlocal prefix
-            while True:
-                prefix = tk.simpledialog.askstring("Prefix Override", "Enter host-name prefix (required):")
-                if prefix is None:
-                    # User cancelled
-                    return False
-                if prefix.strip() == "":
-                    tk.messagebox.showerror("Prefix Required", "Prefix cannot be blank. Please enter a valid prefix.")
-                else:
-                    break
-            return True
-        if not set_prefix():
-            return
+            prefix = val
+            prefix_frame.destroy()
+            update_now_handler.prefix_frame = None
+            proceed_merge(force_merge)
+        def do_cancel_prefix():
+            log_job_status("[INFO] Prefix entry cancelled.")
+            prefix_frame.destroy()
+            update_now_handler.prefix_frame = None
+        ttk.Button(prefix_frame, text="OK", style="Accent.TButton", command=do_set_prefix).pack(side="left", padx=10)
+        ttk.Button(prefix_frame, text="Cancel", command=do_cancel_prefix).pack(side="left", padx=10)
+        return
 
     log_job_status("[INFO] Job started: Merging/updating checklists...")
     merged_results = run_merge_task(
@@ -467,10 +446,7 @@ def update_now_handler():
     )
     for result in merged_results:
         if result["new_rules"]:
-            dialog = MultiRuleInputDialog(root, result["new_rules"], [result["merged_name"]])
-            root.wait_window(dialog)
-            user_input = dialog.result
-            if user_input:
+            def handle_submit(user_input):
                 merged_cklb = load_cklb(result["merged_path"])
                 for rule_entry in user_input["rules"]:
                     for stig in merged_cklb.get("stigs", []):
@@ -480,7 +456,11 @@ def update_now_handler():
                                 rule["comments"] = rule_entry["comments"]
                 save_cklb(result["merged_path"], merged_cklb)
                 status_text.set(f"Updated {len(user_input['rules'])} new rules in {result['merged_name']}")
-    log_job_status("[INFO] Job complete: Merge/update finished.")
+            def handle_cancel():
+                log_job_status("[INFO] Multi-rule input cancelled.")
+            show_multi_rule_input(result["new_rules"], [result["merged_name"]], handle_submit, handle_cancel)
+        else:
+            log_job_status("[INFO] Job complete: Merge/update finished.")
 
 style = ttk.Style()
 style.theme_use("clam")
