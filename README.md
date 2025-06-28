@@ -45,12 +45,11 @@ Planned:
 
 ## License
 
-This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License**.
+This project is licensed under the **MIT License**.
 
-You are free to use, share, and adapt this work for **non-commercial purposes**.  
-Commercial use, resale, or sublicensing of this project or its derivatives is **not permitted** without prior written consent.
+You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the conditions of the MIT License.
 
-See the full license text here: [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)
+See the full license text in [LICENSE.txt](LICENSE.txt).
 
 ## Install Instructions
 
