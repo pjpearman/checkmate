@@ -29,3 +29,5 @@
 [2025-06-28 16:56:04,533] INFO [tui.cleanup:1619] TUI application closing
 [2025-06-28 17:00:04,624] INFO [tui.run:106] Starting CheckMate TUI
 [2025-06-28 17:01:11,595] ERROR [tui.run:111] TUI error: 'CheckMateTUI' object has no attribute 'cleanup'
+[2025-06-28 17:04:16,054] INFO [tui.run:106] Starting CheckMate TUI
+[2025-06-28 17:04:18,177] ERROR [tui.run:111] TUI error: 'CheckMateTUI' object has no attribute 'cleanup'
