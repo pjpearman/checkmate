@@ -102,8 +102,19 @@ class Config:
         }
     
     def _setup_directories(self):
-        """Create all required directories."""
-        for name, path in self.directories.items():
+        """Create only new user_docs-based directories, not legacy cklb_proc ones."""
+        new_dirs = [
+            self.user_docs_dir,
+            self.user_docs_dir / "zip_files",
+            self.user_docs_dir / "cklb_new",
+            self.user_docs_dir / "cklb_artifacts",
+            self.user_docs_dir / "cklb_updated",
+            self.user_docs_dir / "inventory",
+            self.base_dir / "logs",
+            self.base_dir / "tmp",
+            self.base_dir / "baselines"
+        ]
+        for path in new_dirs:
             path.mkdir(parents=True, exist_ok=True, mode=0o755)
     
     def get_user_cklb_dir(self) -> Path:
