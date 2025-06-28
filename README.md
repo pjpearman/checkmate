@@ -8,7 +8,17 @@ Runs on Windows or Linux!
 
 Can be used in air-gapped environments (without downloading features)
 
-## What's New in v2.0.0
+## What's New in v2.1.0
+
+- 🖥️ **Enhanced TUI Interface:** Powerful terminal interface with sophisticated STIG file selection
+- 📋 **Smart File Browser:** Navigate 400+ STIG files without terminal flooding
+- 🎯 **Metadata Display:** View STIG ID, version, release, size, and update dates
+- ⚡ **Multi-Selection:** Select individual files, all files, or clear selections with keyboard shortcuts
+- 🚀 **Progress Feedback:** Real-time download progress and success/failure reporting
+- 🔄 **Unified Core:** Both GUI and TUI now share the same robust core library
+- 📥 **Enhanced Import:** Improved CKLB import with file browser and progress tracking
+
+### Major v2.0.0 Features:
 
 - 🚀 **Major GUI Redesign:** Modern, aligned, and user-friendly layout for checklist merging and downloads.
 - 📥 **Download New CKLB:** Export updated checklists with a dedicated button and popup.
@@ -86,37 +96,63 @@ See the full license text in [LICENSE.txt](LICENSE.txt).
 
 ---
 
-## GUI Mode
+## Application Interfaces
 
-To launch the enhanced GUI:
+CheckMate provides multiple interfaces to suit different user preferences and environments:
+
+### 🖥️ Enhanced GUI Mode (Recommended)
+
+Launch the modern graphical interface:
 
 ```bash
 python checkmate.py gui
 ```
 
-## TUI Mode  
+**Features:**
+- Modern, aligned layout for merging, upgrading, and exporting checklists
+- Drop-downs for mode and files selection
+- Multi-rule editing pop-up for new rules
+- Download/export updated checklists with progress tracking
+- Real-time status and log updates
+- Robust error handling and user feedback
 
-To launch the enhanced Terminal User Interface:
+### 🖱️ Enhanced TUI Mode (Terminal Interface)
+
+Launch the powerful terminal interface:
 
 ```bash
 python checkmate.py tui
 ```
 
-## Legacy GUI (if needed)
+**Features:**
+- **Smart STIG Selection:** Navigate 400+ files without terminal flooding
+- **Rich Metadata Display:** STIG ID, version, release, file size, update dates
+- **Intuitive Navigation:** Arrow keys, Page Up/Down, Home/End
+- **Multi-Selection Support:** Space to toggle, A=all, N=none, Enter=download
+- **Progress Feedback:** Real-time download status and results
+- **Help System:** Press 'H' for comprehensive help
 
-To launch the original GUI:
+**TUI Navigation:**
+```
+STIG Files (438 available, 12 selected)
+Navigation: ↑/↓ arrows, PgUp/PgDn  |  Selection: SPACE to toggle, A=all, N=none
+Actions: ENTER=download selected, D=download all, ESC=back to menu, Q=quit
+
+Status   STIG ID                        Ver    Rel    Size       Updated     
+[✓]      Windows_10                     V2     R1     1.4MB      2023-12-01  
+[ ]      RHEL_8                         V1     R12    2.4MB      2023-11-15  
+[✓]      MS_SQL_Server_2019             V2     R3     830.1KB    2023-10-10  
+```
+
+### 🖥️ Legacy GUI (Compatibility)
+
+If needed, launch the original GUI:
 
 ```bash
 python gui.py
 ```
 
-Features:
-- Modern, aligned layout for merging, upgrading, and exporting checklists
-- Drop-downs for mode and files
-- Multi-rule editing pop-up for new rules
-- Download/export updated checklists
-- Background thread processing with instant status/log updates
-- Robust error/status reporting
+---
 
 **Workflow:**
 1. Create and edit a checklist baseline to match your environment.

@@ -1,0 +1,2 @@
+[2025-06-28 15:24:41,247] INFO [checkmate.web_downloader.fetch_page:73] Fetched page: https://public.cyber.mil/stigs/downloads/
+[2025-06-28 15:24:41,491] INFO [checkmate.web_downloader.parse_table_for_links:114] Found 438 downloadable files

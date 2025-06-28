@@ -886,18 +886,323 @@ class CheckMateTUI:
             self.logger.error(f"Inventory creation error: {e}")
             
     def fetch_download_list(self):
-        """Fetch list of downloadable files."""
+        """Fetch and display list of downloadable files with selection interface."""
         self.status_message = "Fetching download list..."
         self.logger.info("Fetching download list from URL")
         
         try:
             # Use web downloader to fetch available STIGs
             stigs = self.web_downloader.get_available_stigs()
+            if not stigs:
+                self.status_message = "No STIG files found"
+                return
+                
             self.status_message = f"Found {len(stigs)} downloadable STIG files"
             self.logger.info(f"Found {len(stigs)} downloadable STIG files")
+            
+            # Display the STIG selection interface
+            self.display_stig_selection(stigs)
+            
         except Exception as e:
             self.status_message = f"Download list error: {e}"
             self.logger.error(f"Download list error: {e}")
+            
+    def display_stig_selection(self, stigs: List[Dict]):
+        """
+        Display STIG files in a scrollable, selectable interface.
+        
+        Args:
+            stigs: List of STIG file dictionaries with metadata
+        """
+        if not stigs:
+            return
+            
+        # Initialize selection state
+        scroll_pos = 0
+        selected_files = set()
+        current_idx = 0
+        
+        while True:
+            self.stdscr.clear()
+            height, width = self.stdscr.getmaxyx()
+            
+            # Header
+            title = f"STIG Files ({len(stigs)} available, {len(selected_files)} selected)"
+            self.stdscr.addstr(0, 0, title[:width-1], curses.A_BOLD)
+            
+            # Instructions
+            instructions = [
+                "Navigation: ↑/↓ arrows, PgUp/PgDn  |  Selection: SPACE to toggle, A=all, N=none",
+                "Actions: ENTER=download selected, D=download all, ESC=back to menu, Q=quit"
+            ]
+            
+            for i, instruction in enumerate(instructions):
+                if 2 + i < height:
+                    self.stdscr.addstr(2 + i, 0, instruction[:width-1])
+            
+            # Column headers
+            header_line = 4
+            if header_line < height:
+                header = f"{'Status':<8} {'STIG ID':<30} {'Ver':<6} {'Rel':<6} {'Size':<10} {'Updated':<12}"
+                self.stdscr.addstr(header_line, 0, header[:width-1], curses.A_REVERSE)
+            
+            # Calculate visible area
+            content_start = header_line + 1
+            visible_lines = height - content_start - 2  # Leave space for status
+            
+            # Adjust scroll position to keep current selection visible
+            if current_idx < scroll_pos:
+                scroll_pos = current_idx
+            elif current_idx >= scroll_pos + visible_lines:
+                scroll_pos = current_idx - visible_lines + 1
+                
+            # Display STIG files
+            for i in range(visible_lines):
+                file_idx = scroll_pos + i
+                if file_idx >= len(stigs):
+                    break
+                    
+                line_y = content_start + i
+                if line_y >= height - 1:
+                    break
+                    
+                stig = stigs[file_idx]
+                
+                # Format file information
+                status = "[✓]" if file_idx in selected_files else "[ ]"
+                stig_id = stig.get('stig_id', 'Unknown')[:29]
+                version = f"V{stig.get('version', '?')}" if stig.get('version') else "V?"
+                release = f"R{stig.get('release', '?')}" if stig.get('release') else "R?"
+                
+                # Format file size
+                size = stig.get('size')
+                if isinstance(size, int):
+                    if size > 1024*1024:
+                        size_str = f"{size/(1024*1024):.1f}MB"
+                    elif size > 1024:
+                        size_str = f"{size/1024:.1f}KB"
+                    else:
+                        size_str = f"{size}B"
+                else:
+                    size_str = "Unknown"
+                
+                # Format last modified date
+                last_mod = stig.get('last_modified', '')
+                if last_mod:
+                    try:
+                        from datetime import datetime
+                        # Parse common date formats from HTTP headers
+                        for fmt in ['%a, %d %b %Y %H:%M:%S %Z', '%d %b %Y']:
+                            try:
+                                dt = datetime.strptime(last_mod, fmt)
+                                date_str = dt.strftime('%Y-%m-%d')
+                                break
+                            except ValueError:
+                                continue
+                        else:
+                            date_str = last_mod[:12]
+                    except:
+                        date_str = last_mod[:12]
+                else:
+                    date_str = "Unknown"
+                
+                line_text = f"{status:<8} {stig_id:<30} {version:<6} {release:<6} {size_str:<10} {date_str:<12}"
+                
+                # Highlight current selection
+                attr = curses.A_REVERSE if file_idx == current_idx else curses.A_NORMAL
+                
+                self.stdscr.addstr(line_y, 0, line_text[:width-1], attr)
+            
+            # Status line
+            status_y = height - 1
+            status_text = f"File {current_idx + 1}/{len(stigs)} | Selected: {len(selected_files)} | Press 'h' for help"
+            self.stdscr.addstr(status_y, 0, status_text[:width-1], curses.A_REVERSE)
+            
+            self.stdscr.refresh()
+            
+            # Handle input
+            key = self.stdscr.getch()
+            
+            if key == ord('q') or key == ord('Q'):
+                return  # Quit
+            elif key == 27:  # ESC
+                return  # Back to menu
+            elif key == curses.KEY_UP:
+                current_idx = max(0, current_idx - 1)
+            elif key == curses.KEY_DOWN:
+                current_idx = min(len(stigs) - 1, current_idx + 1)
+            elif key == curses.KEY_PPAGE:  # Page Up
+                current_idx = max(0, current_idx - visible_lines)
+            elif key == curses.KEY_NPAGE:  # Page Down
+                current_idx = min(len(stigs) - 1, current_idx + visible_lines)
+            elif key == curses.KEY_HOME:
+                current_idx = 0
+            elif key == curses.KEY_END:
+                current_idx = len(stigs) - 1
+            elif key == ord(' '):  # Space to toggle selection
+                if current_idx in selected_files:
+                    selected_files.remove(current_idx)
+                else:
+                    selected_files.add(current_idx)
+            elif key == ord('a') or key == ord('A'):  # Select all
+                selected_files = set(range(len(stigs)))
+            elif key == ord('n') or key == ord('N'):  # Select none
+                selected_files.clear()
+            elif key == 10 or key == 13:  # Enter - download selected
+                if selected_files:
+                    selected_stigs = [stigs[i] for i in sorted(selected_files)]
+                    self.download_selected_stigs(selected_stigs)
+                    return
+                else:
+                    # Flash message about no selection
+                    self.stdscr.addstr(status_y, 0, "No files selected! Press SPACE to select files.", curses.A_BLINK)
+                    self.stdscr.refresh()
+                    curses.napms(1500)
+            elif key == ord('d') or key == ord('D'):  # Download all
+                self.download_selected_stigs(stigs)
+                return
+            elif key == ord('h') or key == ord('H'):  # Help
+                self.show_stig_selection_help()
+                
+    def show_stig_selection_help(self):
+        """Show help for STIG selection interface."""
+        help_text = [
+            "STIG File Selection Help",
+            "",
+            "Navigation:",
+            "  ↑/↓ arrows    - Move up/down one item",
+            "  PgUp/PgDn     - Move up/down one page", 
+            "  Home/End      - Go to first/last item",
+            "",
+            "Selection:",
+            "  SPACE         - Toggle selection of current item",
+            "  A             - Select all files",
+            "  N             - Clear all selections",
+            "",
+            "Actions:",
+            "  ENTER         - Download selected files",
+            "  D             - Download all files", 
+            "  ESC           - Return to previous menu",
+            "  Q             - Quit application",
+            "  H             - Show this help",
+            "",
+            "File Information:",
+            "  Status        - [✓] selected, [ ] not selected",
+            "  STIG ID       - Security Technical Implementation Guide identifier",
+            "  Ver/Rel       - Version and Release numbers",
+            "  Size          - File size in MB/KB/bytes",
+            "  Updated       - Last modification date",
+            "",
+            "Press any key to continue..."
+        ]
+        
+        self.stdscr.clear()
+        height, width = self.stdscr.getmaxyx()
+        
+        for i, line in enumerate(help_text):
+            if i < height - 1:
+                self.stdscr.addstr(i, 0, line[:width-1])
+        
+        self.stdscr.refresh()
+        self.stdscr.getch()  # Wait for any key
+        
+    def download_selected_stigs(self, selected_stigs: List[Dict]):
+        """
+        Download selected STIG files with progress feedback.
+        
+        Args:
+            selected_stigs: List of selected STIG dictionaries
+        """
+        if not selected_stigs:
+            return
+            
+        self.stdscr.clear()
+        height, width = self.stdscr.getmaxyx()
+        
+        # Show download progress
+        title = f"Downloading {len(selected_stigs)} STIG files..."
+        self.stdscr.addstr(0, 0, title[:width-1], curses.A_BOLD)
+        self.stdscr.addstr(2, 0, "Progress will be shown below. Press 'q' to cancel.", curses.A_DIM)
+        self.stdscr.refresh()
+        
+        try:
+            # Convert to file links format
+            file_links = [(stig.get('filename', 'unknown'), stig.get('url', '')) for stig in selected_stigs]
+            
+            # Download multiple files
+            output_dir = self.config.get_path('zip_files')
+            results = self.web_downloader.download_multiple_files(file_links, output_dir)
+            
+            # Count successes and failures
+            successful = len([r for r in results if r[2] is None])
+            failed = len(results) - successful
+            
+            # Calculate total size
+            total_size = 0
+            for stig in selected_stigs:
+                size = stig.get('size')
+                if isinstance(size, int):
+                    total_size += size
+            
+            # Show results
+            self.stdscr.clear()
+            result_lines = [
+                "Download Complete!",
+                "",
+                f"Files processed: {len(results)}",
+                f"Successfully downloaded: {successful}",
+                f"Failed downloads: {failed}",
+                f"Total size: {self.format_file_size(total_size)}" if total_size > 0 else "Total size: Unknown",
+                f"Download directory: {output_dir}",
+                "",
+                "Press any key to continue..."
+            ]
+            
+            for i, line in enumerate(result_lines):
+                if i < height - 1:
+                    attr = curses.A_BOLD if i == 0 else curses.A_NORMAL
+                    self.stdscr.addstr(i, 0, line[:width-1], attr)
+            
+            self.stdscr.refresh()
+            self.stdscr.getch()  # Wait for key press
+            
+            # Update status and refresh file lists
+            self.status_message = f"Downloaded {successful}/{len(results)} files successfully"
+            self.logger.info(f"Download result: {successful}/{len(results)} files downloaded")
+            self.refresh_file_lists()
+            
+        except Exception as e:
+            # Show error
+            self.stdscr.clear()
+            error_lines = [
+                "Download Error!",
+                "",
+                f"Error: {str(e)}",
+                "",
+                "Press any key to continue..."
+            ]
+            
+            for i, line in enumerate(error_lines):
+                if i < height - 1:
+                    attr = curses.A_BOLD if i == 0 else curses.A_NORMAL
+                    self.stdscr.addstr(i, 0, line[:width-1], attr)
+            
+            self.stdscr.refresh()
+            self.stdscr.getch()
+            
+            self.status_message = f"Download error: {e}"
+            self.logger.error(f"Download error: {e}")
+            
+    def format_file_size(self, size_bytes: int) -> str:
+        """Format file size in human readable format."""
+        if size_bytes >= 1024*1024*1024:
+            return f"{size_bytes/(1024*1024*1024):.1f}GB"
+        elif size_bytes >= 1024*1024:
+            return f"{size_bytes/(1024*1024):.1f}MB"
+        elif size_bytes >= 1024:
+            return f"{size_bytes/1024:.1f}KB"
+        else:
+            return f"{size_bytes}B"
             
     def download_all_files(self):
         """Download all available files."""
