@@ -12,6 +12,7 @@ import logging
 import textwrap
 import threading
 import time
+from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
 
@@ -1443,329 +1444,319 @@ class CheckMateTUI:
             return f"{size_bytes/1024:.1f}KB"
         else:
             return f"{size_bytes}B"
-    
-    def choose_download_mode(self, selected_stigs: List[Dict]):
-        """
-        Show download mode selection interface.
-        
-        Args:
-            selected_stigs: List of selected STIG dictionaries
-        """
-        if not selected_stigs:
-            return
             
-        # Download mode options
-        mode_options = [
-            ("Download ZIP files only", "zip_only"),
-            ("Create CKLB files only", "cklb_only"), 
-            ("Download ZIP and create CKLB", "both")
-        ]
-        
-        selected_mode_idx = 0
-        
-        while True:
-            try:
-                self.stdscr.clear()
-                height, width = self.stdscr.getmaxyx()
-                
-                # Header
-                title = f"Download Mode Selection - {len(selected_stigs)} files"
-                self.stdscr.addstr(0, 0, title[:width-1], curses.A_BOLD)
-                
-                # Instructions
-                instruction1 = "Choose how to process the selected STIG files:"
-                instruction2 = "Use ↑/↓ arrows to navigate, ENTER to confirm, ESC to cancel"
-                
-                self.stdscr.addstr(2, 0, instruction1[:width-1])
-                self.stdscr.addstr(3, 0, instruction2[:width-1], curses.A_DIM)
-                
-                # Draw mode options
-                start_y = 5
-                for i, (mode_desc, mode_key) in enumerate(mode_options):
-                    y_pos = start_y + i + 1
-                    if y_pos >= height - 3:
-                        break
-                    
-                    prefix = "►" if i == selected_mode_idx else " "
-                    line = f"  {prefix} {mode_desc}"
-                    
-                    if i == selected_mode_idx and curses.has_colors():
-                        self.stdscr.attron(curses.color_pair(2))
-                        self.stdscr.addstr(y_pos, 0, line[:width-1])
-                        self.stdscr.attroff(curses.color_pair(2))
-                    else:
-                        self.stdscr.addstr(y_pos, 0, line[:width-1])
-                
-                # Show file count and types
-                info_y = start_y + len(mode_options) + 3
-                if info_y < height - 2:
-                    type_counts = {}
-                    for stig in selected_stigs:
-                        file_type = stig.get('type', 'other')
-                        type_counts[file_type] = type_counts.get(file_type, 0) + 1
-                    
-                    type_summary = ", ".join([f"{count} {type_name}" for type_name, count in type_counts.items()])
-                    self.stdscr.addstr(info_y, 0, f"Selected files: {type_summary}"[:width-1])
-                
-                # Status line
-                status_y = height - 1
-                status = "ENTER=confirm  ESC=cancel  ↑/↓=navigate"
-                self.stdscr.addstr(status_y, 0, status[:width-1], curses.A_REVERSE)
-                
-                self.stdscr.refresh()
-                
-                # Handle input
-                key = self.stdscr.getch()
-                
-                if key == 27:  # ESC - cancel
-                    return
-                elif key == curses.KEY_UP:
-                    selected_mode_idx = max(0, selected_mode_idx - 1)
-                elif key == curses.KEY_DOWN:
-                    selected_mode_idx = min(len(mode_options) - 1, selected_mode_idx + 1)
-                elif key == 10 or key == 13:  # Enter - confirm selection
-                    mode_desc, mode_key = mode_options[selected_mode_idx]
-                    self.logger.info(f"Selected download mode: {mode_key} for {len(selected_stigs)} files")
-                    
-                    if mode_key == "zip_only":
-                        self.download_selected_stigs(selected_stigs)
-                    elif mode_key == "cklb_only":
-                        self.create_cklb_from_selected(selected_stigs)
-                    elif mode_key == "both":
-                        self.download_and_create_cklb(selected_stigs)
-                    
-                    return
-                    
-            except curses.error as e:
-                self.logger.error(f"Curses error in mode selection: {e}")
-                break
-            except Exception as e:
-                self.logger.error(f"Error in mode selection: {e}")
-                self.show_error_screen(f"Mode selection error:\n{str(e)}")
-                break
-    
-    def create_cklb_from_selected(self, selected_stigs: List[Dict]):
-        """
-        Create CKLB files from selected STIG files.
-        
-        Args:
-            selected_stigs: List of selected STIG dictionaries
-        """
-        if not selected_stigs:
-            return
-            
-        self.stdscr.clear()
-        height, width = self.stdscr.getmaxyx()
-        
-        # Show progress
-        title = f"Creating CKLB files from {len(selected_stigs)} STIG files..."
-        self.stdscr.addstr(0, 0, title[:width-1], curses.A_BOLD)
-        self.stdscr.addstr(2, 0, "Processing ZIP files and extracting XCCDF content...", curses.A_DIM)
-        self.stdscr.refresh()
+    def download_all_files(self):
+        """Download all available files."""
+        self.status_message = "Starting download of all files..."
+        self.logger.info("Starting download of all files")
         
         try:
-            # First download the ZIP files to temporary directory
-            temp_dir = self.config.get_path('tmp')
-            file_links = [(stig.get('filename', 'unknown'), stig.get('url', '')) for stig in selected_stigs]
+            # First get available STIGs
+            stigs = self.web_downloader.get_available_stigs()
+            if not stigs:
+                self.status_message = "No STIG files found to download"
+                return
             
-            self.stdscr.addstr(3, 0, "Step 1/2: Downloading ZIP files...", curses.A_DIM)
-            self.stdscr.refresh()
+            # Convert to file links format
+            file_links = [(stig.get('filename', 'unknown'), stig.get('url', '')) for stig in stigs]
             
-            download_results = self.web_downloader.download_multiple_files(file_links, temp_dir)
-            
-            # Process downloaded files for CKLB creation
-            self.stdscr.addstr(4, 0, "Step 2/2: Creating CKLB files...", curses.A_DIM)
-            self.stdscr.refresh()
-            
-            cklb_output_dir = self.config.get_user_cklb_dir()
-            cklb_results = []
-            
-            for file_name, file_path, error in download_results:
-                if error is None and file_path:
-                    try:
-                        # Convert ZIP to CKLB
-                        results = self.cklb_generator.convert_zip_to_cklb(file_path, cklb_output_dir)
-                        cklb_results.extend(results)
-                    except Exception as e:
-                        self.logger.error(f"Error creating CKLB from {file_name}: {e}")
-                        cklb_results.append((None, f"CKLB creation error: {e}"))
-                else:
-                    cklb_results.append((None, f"Download failed: {error}"))
+            # Download multiple files
+            output_dir = self.config.get_path('zip_files')
+            results = self.web_downloader.download_multiple_files(file_links, output_dir)
             
             # Count successes and failures
-            successful_cklb = len([r for r in cklb_results if r[0] is not None])
-            failed_cklb = len(cklb_results) - successful_cklb
+            successful = len([r for r in results if r[2] is None])
+            failed = len(results) - successful
             
-            # Show results
-            self.stdscr.clear()
-            result_lines = [
-                "CKLB Creation Complete!",
-                "",
-                f"Files processed: {len(selected_stigs)}",
-                f"CKLB files created: {successful_cklb}",
-                f"Failed conversions: {failed_cklb}",
-                f"Output directory: {cklb_output_dir}",
-                "",
-                "Press any key to continue..."
-            ]
-            
-            for i, line in enumerate(result_lines):
-                if i < height - 1:
-                    attr = curses.A_BOLD if i == 0 else curses.A_NORMAL
-                    self.stdscr.addstr(i, 0, line[:width-1], attr)
-            
-            self.stdscr.refresh()
-            self.stdscr.getch()
-            
-            # Update status and refresh file lists
-            self.status_message = f"Created {successful_cklb}/{len(selected_stigs)} CKLB files"
-            self.logger.info(f"CKLB creation result: {successful_cklb}/{len(selected_stigs)} files created")
+            self.status_message = f"Download completed: {successful} successful, {failed} failed"
+            self.logger.info(f"Download result: {successful}/{len(results)} files downloaded")
             self.refresh_file_lists()
             
         except Exception as e:
-            # Show error
-            self.stdscr.clear()
-            error_lines = [
-                "CKLB Creation Error!",
-                "",
-                f"Error: {str(e)}",
-                "",
-                "Press any key to continue..."
-            ]
-            
-            for i, line in enumerate(error_lines):
-                if i < height - 1:
-                    attr = curses.A_BOLD if i == 0 else curses.A_NORMAL
-                    self.stdscr.addstr(i, 0, line[:width-1], attr)
-            
-            self.stdscr.refresh()
-            self.stdscr.getch()
-            
-            self.status_message = f"CKLB creation error: {e}"
-            self.logger.error(f"CKLB creation error: {e}")
-    
-    def download_and_create_cklb(self, selected_stigs: List[Dict]):
-        """
-        Download ZIP files and create CKLB files from selected STIG files.
-        
-        Args:
-            selected_stigs: List of selected STIG dictionaries
-        """
-        if not selected_stigs:
-            return
-            
-        self.stdscr.clear()
-        height, width = self.stdscr.getmaxyx()
-        
-        # Show progress
-        title = f"Downloading and Creating CKLB files from {len(selected_stigs)} STIG files..."
-        self.stdscr.addstr(0, 0, title[:width-1], curses.A_BOLD)
-        self.stdscr.addstr(2, 0, "This will download ZIP files and create CKLB files...", curses.A_DIM)
-        self.stdscr.refresh()
-        
-        try:
-            # Download ZIP files
-            zip_output_dir = self.config.get_path('zip_files')
-            file_links = [(stig.get('filename', 'unknown'), stig.get('url', '')) for stig in selected_stigs]
-            
-            self.stdscr.addstr(3, 0, "Step 1/2: Downloading ZIP files...", curses.A_DIM)
-            self.stdscr.refresh()
-            
-            download_results = self.web_downloader.download_multiple_files(file_links, zip_output_dir)
-            
-            # Create CKLB files from downloaded ZIPs
-            self.stdscr.addstr(4, 0, "Step 2/2: Creating CKLB files...", curses.A_DIM)
-            self.stdscr.refresh()
-            
-            cklb_output_dir = self.config.get_user_cklb_dir()
-            cklb_results = []
-            
-            for file_name, file_path, error in download_results:
-                if error is None and file_path:
-                    try:
-                        # Convert ZIP to CKLB
-                        results = self.cklb_generator.convert_zip_to_cklb(file_path, cklb_output_dir)
-                        cklb_results.extend(results)
-                    except Exception as e:
-                        self.logger.error(f"Error creating CKLB from {file_name}: {e}")
-                        cklb_results.append((None, f"CKLB creation error: {e}"))
-                else:
-                    cklb_results.append((None, f"Download failed: {error}"))
-            
-            # Count successes and failures
-            successful_downloads = len([r for r in download_results if r[2] is None])
-            failed_downloads = len(download_results) - successful_downloads
-            successful_cklb = len([r for r in cklb_results if r[0] is not None])
-            failed_cklb = len(cklb_results) - successful_cklb
-            
-            # Calculate total size
-            total_size = 0
-            for stig in selected_stigs:
-                size = stig.get('size')
-                if isinstance(size, int):
-                    total_size += size
-            
-            # Show results
-            self.stdscr.clear()
-            result_lines = [
-                "Download and CKLB Creation Complete!",
-                "",
-                f"Files processed: {len(selected_stigs)}",
-                f"ZIP files downloaded: {successful_downloads} (failed: {failed_downloads})",
-                f"CKLB files created: {successful_cklb} (failed: {failed_cklb})",
-                f"Total download size: {self.format_file_size(total_size)}" if total_size > 0 else "Total size: Unknown",
-                f"ZIP directory: {zip_output_dir}",
-                f"CKLB directory: {cklb_output_dir}",
-                "",
-                "Press any key to continue..."
-            ]
-            
-            for i, line in enumerate(result_lines):
-                if i < height - 1:
-                    attr = curses.A_BOLD if i == 0 else curses.A_NORMAL
-                    self.stdscr.addstr(i, 0, line[:width-1], attr)
-            
-            self.stdscr.refresh()
-            self.stdscr.getch()
-            
-            # Update status and refresh file lists
-            self.status_message = f"Downloaded {successful_downloads} ZIPs, created {successful_cklb} CKLBs"
-            self.logger.info(f"Combined result: {successful_downloads} downloads, {successful_cklb} CKLBs created")
-            self.refresh_file_lists()
-            
-        except Exception as e:
-            # Show error
-            self.stdscr.clear()
-            error_lines = [
-                "Download and CKLB Creation Error!",
-                "",
-                f"Error: {str(e)}",
-                "",
-                "Press any key to continue..."
-            ]
-            
-            for i, line in enumerate(error_lines):
-                if i < height - 1:
-                    attr = curses.A_BOLD if i == 0 else curses.A_NORMAL
-                    self.stdscr.addstr(i, 0, line[:width-1], attr)
-            
-            self.stdscr.refresh()
-            self.stdscr.getch()
-            
-            self.status_message = f"Combined operation error: {e}"
-            self.logger.error(f"Combined operation error: {e}")
+            self.status_message = f"Download error: {e}"
+            self.logger.error(f"Download error: {e}")
             
     def download_specific_types(self):
-        """Download specific file types based on user selection."""
-        self.status_message = "Feature not yet implemented"
-        self.logger.info("download_specific_types called but not implemented")
+        """Download specific file types with type filtering."""
+        self.status_message = "Loading STIG types for filtering..."
+        self.logger.info("Starting type-specific download")
         
+        try:
+            # Get available STIGs
+            stigs = self.web_downloader.get_available_stigs()
+            if not stigs:
+                self.status_message = "No STIG files found"
+                return
+            
+            # Get unique types
+            types = set(stig.get('type', 'other') for stig in stigs)
+            type_list = sorted(types)
+            
+            # Show type selection interface
+            selected_type = self.select_file_type(type_list)
+            if not selected_type:
+                return
+            
+            # Filter STIGs by selected type
+            filtered_stigs = [s for s in stigs if s.get('type') == selected_type]
+            
+            if not filtered_stigs:
+                self.status_message = f"No files found for type: {selected_type}"
+                return
+            
+            # Show selection interface for filtered STIGs
+            self.display_stig_selection(filtered_stigs)
+            
+        except Exception as e:
+            self.status_message = f"Type filtering error: {e}"
+            self.logger.error(f"Type filtering error: {e}")
+    
+    def select_file_type(self, type_list: List[str]) -> Optional[str]:
+        """
+        Show file type selection interface.
+        
+        Args:
+            type_list: List of available file types
+            
+        Returns:
+            Selected type or None if cancelled
+        """
+        if not type_list:
+            return None
+        
+        selected_idx = 0
+        
+        while True:
+            self.stdscr.clear()
+            height, width = self.stdscr.getmaxyx()
+            
+            # Title
+            title = f"Select File Type ({len(type_list)} types available)"
+            self.stdscr.addstr(0, 0, title[:width-1], curses.A_BOLD)
+            
+            # Instructions
+            self.stdscr.addstr(2, 0, "Use ↑/↓ arrows to select, ENTER to confirm, ESC to cancel")
+            
+            # Display types
+            start_y = 4
+            for i, file_type in enumerate(type_list):
+                y_pos = start_y + i
+                if y_pos >= height - 3:
+                    break
+                
+                prefix = "► " if i == selected_idx else "  "
+                
+                if i == selected_idx and curses.has_colors():
+                    self.stdscr.attron(curses.color_pair(2))
+                    self.stdscr.addstr(y_pos, 2, f"{prefix}{file_type}".ljust(width - 4))
+                    self.stdscr.attroff(curses.color_pair(2))
+                else:
+                    self.stdscr.addstr(y_pos, 2, f"{prefix}{file_type}")
+            
+            self.stdscr.refresh()
+            
+            # Handle input
+            key = self.stdscr.getch()
+            
+            if key == 27:  # ESC
+                return None
+            elif key == curses.KEY_UP:
+                selected_idx = max(0, selected_idx - 1)
+            elif key == curses.KEY_DOWN:
+                selected_idx = min(len(type_list) - 1, selected_idx + 1)
+            elif key == 10 or key == 13:  # Enter
+                return type_list[selected_idx]
+    
     def view_downloaded_files(self):
-        """View downloaded files."""
+        """View and manage downloaded files."""
+        self.status_message = "Viewing downloaded files..."
+        zip_files = self.file_lists.get('zip', [])
+        
+        if not zip_files:
+            self.show_error_screen("No downloaded files found.\n\nUse 'Fetch file list from URL' to download STIG files.")
+            return
+        
+        selected_idx = 0
+        
+        while True:
+            self.stdscr.clear()
+            height, width = self.stdscr.getmaxyx()
+            
+            # Title
+            title = f"Downloaded Files ({len(zip_files)} files)"
+            self.stdscr.addstr(0, 0, title[:width-1], curses.A_BOLD)
+            
+            # Instructions
+            instructions = [
+                "Navigation: ↑/↓ arrows, PgUp/PgDn  |  Actions: ENTER=view details, D=delete",
+                "C=create CKLB from selected file, A=create CKLB from all files, ESC=back"
+            ]
+            
+            for i, instruction in enumerate(instructions):
+                if 2 + i < height:
+                    self.stdscr.addstr(2 + i, 0, instruction[:width-1])
+            
+            # File list
+            start_y = 5
+            visible_lines = height - start_y - 3
+            
+            for i in range(visible_lines):
+                file_idx = i
+                if file_idx >= len(zip_files):
+                    break
+                
+                y_pos = start_y + i
+                filename = zip_files[file_idx]
+                
+                prefix = "► " if file_idx == selected_idx else "  "
+                
+                if file_idx == selected_idx and curses.has_colors():
+                    self.stdscr.attron(curses.color_pair(2))
+                    self.stdscr.addstr(y_pos, 2, f"{prefix}{filename}".ljust(width - 4))
+                    self.stdscr.attroff(curses.color_pair(2))
+                else:
+                    self.stdscr.addstr(y_pos, 2, f"{prefix}{filename}"[:width-4])
+            
+            # Status
+            status_text = f"File {selected_idx + 1}/{len(zip_files)}"
+            self.stdscr.addstr(height - 2, 0, status_text[:width-1], curses.A_DIM)
+            
+            self.stdscr.refresh()
+            
+            # Handle input
+            key = self.stdscr.getch()
+            
+            if key == 27:  # ESC
+                break
+            elif key == curses.KEY_UP:
+                selected_idx = max(0, selected_idx - 1)
+            elif key == curses.KEY_DOWN:
+                selected_idx = min(len(zip_files) - 1, selected_idx + 1)
+            elif key == 10 or key == 13:  # Enter - view details
+                self.view_file_details(zip_files[selected_idx])
+            elif key == ord('d') or key == ord('D'):  # Delete
+                self.delete_downloaded_file(zip_files[selected_idx])
+                self.refresh_file_lists()
+                zip_files = self.file_lists.get('zip', [])
+                if not zip_files:
+                    break
+                selected_idx = min(selected_idx, len(zip_files) - 1)
+            elif key == ord('c') or key == ord('C'):  # Create CKLB from selected
+                self.create_cklb_from_zip(zip_files[selected_idx])
+            elif key == ord('a') or key == ord('A'):  # Create CKLB from all
+                self.create_cklb_from_all_zips()
+    
+    def view_file_details(self, filename: str):
+        """View details of a downloaded file."""
+        try:
+            file_path = self.config.get_path('zip_files') / filename
+            if not file_path.exists():
+                self.show_error_screen(f"File not found: {filename}")
+                return
+            
+            # Get file info
+            stat = file_path.stat()
+            size = self.format_file_size(stat.st_size)
+            modified = datetime.fromtimestamp(stat.st_mtime).strftime("%Y-%m-%d %H:%M:%S")
+            
+            details = [
+                f"File Details: {filename}",
+                "",
+                f"Size: {size}",
+                f"Modified: {modified}",
+                f"Path: {file_path}",
+                "",
+                "Press any key to return..."
+            ]
+            
+            self.stdscr.clear()
+            height, width = self.stdscr.getmaxyx()
+            
+            for i, line in enumerate(details):
+                if i < height - 1:
+                    attr = curses.A_BOLD if i == 0 else curses.A_NORMAL
+                    self.stdscr.addstr(i, 0, line[:width-1], attr)
+            
+            self.stdscr.refresh()
+            self.stdscr.getch()
+            
+        except Exception as e:
+            self.show_error_screen(f"Error viewing file details:\n{str(e)}")
+    
+    def delete_downloaded_file(self, filename: str):
+        """Delete a downloaded file with confirmation."""
+        # Simple confirmation (could be enhanced with a proper dialog)
+        try:
+            file_path = self.config.get_path('zip_files') / filename
+            if file_path.exists():
+                file_path.unlink()
+                self.status_message = f"Deleted: {filename}"
+                self.logger.info(f"Deleted file: {filename}")
+            else:
+                self.status_message = f"File not found: {filename}"
+        except Exception as e:
+            self.status_message = f"Delete error: {e}"
+            self.logger.error(f"Error deleting {filename}: {e}")
+    
+    def create_cklb_from_zip(self, filename: str):
+        """Create CKLB file from a single ZIP file."""
+        try:
+            zip_path = self.config.get_path('zip_files') / filename
+            cklb_dir = self.config.get_user_cklb_dir()
+            
+            results = self.cklb_generator.convert_zip_to_cklb(zip_path, cklb_dir)
+            
+            success_count = len([r for r in results if r[0] and not r[1]])
+            
+            if success_count > 0:
+                self.status_message = f"Created {success_count} CKLB file(s) from {filename}"
+                self.refresh_file_lists()
+            else:
+                error_msg = results[0][1] if results and results[0][1] else "Unknown error"
+                self.status_message = f"CKLB creation failed: {error_msg}"
+                
+        except Exception as e:
+            self.status_message = f"CKLB creation error: {e}"
+            self.logger.error(f"Error creating CKLB from {filename}: {e}")
+    
+    def create_cklb_from_all_zips(self):
+        """Create CKLB files from all downloaded ZIP files."""
         zip_files = self.file_lists.get('zip', [])
         if not zip_files:
-            self.status_message = "No downloaded files found"
+            self.status_message = "No ZIP files found"
             return
+        
+        try:
+            zip_dir = self.config.get_path('zip_files')
+            cklb_dir = self.config.get_user_cklb_dir()
             
-        self.status_message = f"Found {len(zip_files)} downloaded files"
-        self.logger.info(f"Viewing {len(zip_files)} downloaded files")
+            total_created = 0
+            
+            for filename in zip_files:
+                zip_path = zip_dir / filename
+                results = self.cklb_generator.convert_zip_to_cklb(zip_path, cklb_dir)
+                total_created += len([r for r in results if r[0] and not r[1]])
+            
+            self.status_message = f"Created {total_created} CKLB files from {len(zip_files)} ZIP files"
+            self.refresh_file_lists()
+            
+        except Exception as e:
+            self.status_message = f"Batch CKLB creation error: {e}"
+            self.logger.error(f"Error in batch CKLB creation: {e}")
+
+
+def main():
+    """Main entry point for TUI application."""
+    try:
+        tui = CheckMateTUI()
+        tui.run()
+    except KeyboardInterrupt:
+        print("\nCheckMate TUI interrupted by user")
+    except Exception as e:
+        print(f"CheckMate TUI error: {e}")
+        import traceback
+        traceback.print_exc()
+
+
+if __name__ == "__main__":
+    main()

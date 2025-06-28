@@ -23,3 +23,9 @@
 [2025-06-28 15:09:46,899] INFO [tui.fetch_download_list:891] Fetching download list from URL
 [2025-06-28 15:09:52,430] INFO [tui.run:105] Starting CheckMate TUI
 [2025-06-28 15:09:57,397] INFO [tui.cleanup:1002] TUI application closing
+[2025-06-28 16:53:38,203] INFO [tui.run:105] Starting CheckMate TUI
+[2025-06-28 16:53:45,742] ERROR [tui.run:110] TUI error: 'CheckMateTUI' object has no attribute 'cleanup'
+[2025-06-28 16:55:51,727] INFO [tui.run:105] Starting CheckMate TUI
+[2025-06-28 16:56:04,533] INFO [tui.cleanup:1619] TUI application closing
+[2025-06-28 17:00:04,624] INFO [tui.run:106] Starting CheckMate TUI
+[2025-06-28 17:01:11,595] ERROR [tui.run:111] TUI error: 'CheckMateTUI' object has no attribute 'cleanup'
