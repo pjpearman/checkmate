@@ -397,18 +397,18 @@ class WebDownloader:
         
         # Determine STIG type with improved detection
         filename_lower = filename.lower()
-        if any(keyword in filename_lower for keyword in ['benchmark']):
+        if 'benchmark' in filename_lower:
             info['type'] = 'benchmark'
-        elif any(keyword in filename_lower for keyword in ['stig']):
-            info['type'] = 'stig'
-        elif any(keyword in filename_lower for keyword in ['checklist', 'cklb']):
+        elif 'checklist' in filename_lower:
             info['type'] = 'checklist'
-        elif any(keyword in filename_lower for keyword in ['products', 'library']):
-            info['type'] = 'products'
-        elif any(keyword in filename_lower for keyword in ['srr', 'readiness']):
-            info['type'] = 'srr'
+        elif any(keyword in filename_lower for keyword in ['library', 'products']):
+            info['type'] = 'other'
         elif any(keyword in filename_lower for keyword in ['scap', 'oval']):
             info['type'] = 'scap'
+        elif any(keyword in filename_lower for keyword in ['srr', 'readiness']):
+            info['type'] = 'srr'
+        elif 'stig' in filename_lower:
+            info['type'] = 'stig'
         else:
             info['type'] = 'other'
         
