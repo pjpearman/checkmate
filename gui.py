@@ -640,28 +640,185 @@ tab1_canvas.pack(side="left", fill="both", expand=True)
 tab1_scrollbar.pack(side="right", fill="y")
 
 # Getting Started Section
-getting_started = ttk.LabelFrame(tab1_frame, text=f"{ICONS['info']} Getting Started", style="TLabelframe")
-getting_started.pack(fill="x", padx=20, pady=(20, 10))
+getting_started = ttk.LabelFrame(tab1_frame, text=f"{ICONS['info']} Getting Started Guide", style="TLabelframe")
+getting_started.pack(fill="both", expand=True, padx=20, pady=(20, 10))
 
-info_text = """Welcome to CheckMate!
+# Create a scrollable text widget for the detailed instructions
+instructions_frame = ttk.Frame(getting_started)
+instructions_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-1. Generate or select a baseline YAML file
-2. Configure scraping options
-3. Run tasks to check for updates
-4. Review logs in the Logs tab
+instructions_text = scrolledtext.ScrolledText(
+    instructions_frame,
+    wrap=tk.WORD,
+    font=FONTS['default'],
+    bg=COLORS['bg_secondary'],
+    fg=COLORS['text_primary'],
+    height=15,
+    state="disabled"
+)
+instructions_text.pack(fill="both", expand=True)
 
-For detailed help, check the documentation."""
+# Detailed instructions content
+detailed_instructions = """Welcome to CheckMate - Your STIG Compliance Management Tool!
 
-ttk.Label(getting_started, text=info_text, font=FONTS['default'], 
-          justify="left", wraplength=600).pack(padx=20, pady=20)
+CheckMate helps you manage STIG (Security Technical Implementation Guide) compliance by automating baseline generation, tracking updates, and managing checklist files. Follow these steps to get started:
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+📋 STEP 1: UNDERSTANDING THE WORKFLOW
+
+CheckMate follows a simple workflow:
+• Generate or import a baseline YAML file that tracks your STIG products
+• Monitor for updates to STIG releases
+• Download and process updated checklists
+• Merge your existing compliance data with new versions
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+🚀 STEP 2: CREATING YOUR FIRST BASELINE
+
+Option A - Generate New Baseline:
+1. Select your "Scrape Mode" from the dropdown:
+   • "Operating Systems" - For OS-related STIGs (Windows, Linux, etc.)
+   • "Applications" - For application STIGs (Apache, IIS, etc.)
+   • "Network" - For network device STIGs (Cisco, etc.)
+   • "SCAP Benchmarks" - For SCAP content
+   • "ALL" - Downloads everything (takes longer)
+
+2. Click "▶ Generate New Baseline" button
+   • This creates a baseline YAML file in the baselines/ directory
+   • The process scans DISA's public STIG library for current releases
+   • Progress will be shown in the Logs & Status tab
+
+Option B - Use Existing Baseline:
+1. Click "📁 Browse" next to "Baseline YAML"
+2. Select an existing baseline_*.yaml file from the baselines/ directory
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+⚙️ STEP 3: CONFIGURING OPTIONS
+
+Before running tasks, configure these options:
+
+• Download ZIPs for updated items:
+  ☑ Check this to automatically download ZIP files for updated STIGs
+  ☐ Leave unchecked to only check for updates without downloading
+
+• Extract .xccdf and generate checklist:
+  ☑ Check this to automatically extract XCCDF files and generate CKL checklists
+  ☐ Leave unchecked if you only want to download ZIPs
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+🔄 STEP 4: RUNNING UPDATE CHECKS
+
+1. Ensure your baseline YAML file is selected
+2. Configure your download/extract options
+3. Click "🚀 Run Tasks" button
+4. Monitor progress in the "📋 Logs & Status" tab
+
+What happens during task execution:
+• CheckMate compares your baseline against current DISA releases
+• New or updated STIGs are identified
+• If enabled, ZIP files are downloaded to cklb_proc/cklb_lib/
+• If enabled, XCCDF files are extracted and converted to CKL format
+• Results are logged with detailed status information
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+📦 STEP 5: MANAGING YOUR CHECKLIST LIBRARY
+
+Initial Setup:
+1. Click "📥 Import CKLB Library" to populate your user checklist library
+2. This imports existing CKL files into cklb_proc/usr_cklb_lib/
+
+Regular Maintenance:
+• Use the "Checklist Management" tab to upgrade existing checklists
+• The system will merge your compliance data with newer STIG versions
+• Your finding statuses and comments are preserved during upgrades
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+🔧 STEP 6: UPGRADING EXISTING CHECKLISTS
+
+Go to the "🔄 Checklist Management" tab:
+
+1. Select CKLBs to upgrade:
+   • Choose one or more checklist files from the left panel
+   • These are your current checklists with compliance data
+
+2. Select new CKLB version:
+   • Choose the updated version from the right panel dropdown
+   • This should be a newer version of the same STIG
+
+3. Click "🔄 Update Now":
+   • CheckMate will merge your existing data with the new version
+   • Finding statuses, comments, and host information are preserved
+   • New rules from the updated STIG will be highlighted for review
+   • If STIG IDs don't match, you'll be prompted to confirm the merge
+
+4. Handle new rules:
+   • If new security rules are detected, a dialog will appear
+   • Set the initial status for new rules (Not Reviewed, N/A, Open, etc.)
+   • Add comments as needed
+   • Apply changes to complete the upgrade
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+📊 STEP 7: MONITORING AND TROUBLESHOOTING
+
+Use the "📋 Logs & Status" tab to:
+• Monitor real-time progress of long-running operations
+• Review detailed logs of all activities
+• Identify and troubleshoot any issues
+• Clear logs when needed for a fresh start
+
+Status indicators:
+• [INFO] - Normal operation messages
+• [ERROR] - Issues that need attention
+• [WARN] - Warnings that may require review
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+🗂️ STEP 8: FILE MANAGEMENT
+
+Use the File menu to:
+• Open baseline directory - View and manage your baseline files
+• Open checklist libraries - Access your CKL files
+• Open XCCDF library - View extracted XCCDF content
+
+Directory structure:
+• baselines/ - Contains your baseline YAML files
+• cklb_proc/usr_cklb_lib/ - Your working checklist library
+• cklb_proc/cklb_lib/ - Downloaded/generated checklists
+• cklb_proc/xccdf_lib/ - Extracted XCCDF files
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+💡 TIPS FOR SUCCESS
+
+• Start with a specific scrape mode rather than "ALL" for faster initial setup
+• Regularly update your baseline to track the latest STIG releases
+• Keep backups of your usr_cklb_lib directory - it contains your compliance work
+• Review the logs after each operation to ensure everything completed successfully
+• Use the reset baseline feature if you need to clear version tracking
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+Need help? Check the documentation or review the log files for detailed error messages."""
+
+# Insert the instructions
+instructions_text.configure(state="normal")
+instructions_text.insert("1.0", detailed_instructions)
+instructions_text.configure(state="disabled")
 
 # Baseline Configuration Section
 baseline_frame = ttk.LabelFrame(tab1_frame, text=f"{ICONS['settings']} Baseline Configuration", style="TLabelframe")
-baseline_frame.pack(fill="x", padx=20, pady=10)
+baseline_frame.pack(fill="x", padx=20, pady=(10, 20))
 
 # Grid layout for baseline controls
 baseline_controls = ttk.Frame(baseline_frame)
-baseline_controls.pack(fill="x", padx=20, pady=20)
+baseline_controls.pack(fill="x", padx=20, pady=15)
 
 # Row 1: Scrape Mode
 ttk.Label(baseline_controls, text="Scrape Mode:", font=FONTS['default']).grid(row=0, column=0, sticky="w", pady=5)
