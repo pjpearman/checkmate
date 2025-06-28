@@ -2438,3 +2438,5 @@ New rules in the updated checklist:
 2025-06-28 13:38:39,884 [INFO] Extracting U_RHEL_8_V2R3_Manual_STIG/U_RHEL_8_STIG_V2R3_Manual-xccdf.xml from U_RHEL_8_V2R3_STIG.zip
 2025-06-28 13:38:39,894 [INFO] Deleted original ZIP: U_RHEL_8_V2R3_STIG.zip
 2025-06-28 13:38:39,967 [INFO] Generated checklist: cklb_proc/cklb_lib/U_RHEL_8_STIG_V2R3_20250628.cklb
+2025-06-28 14:36:13,259 [ERROR] Error refreshing file lists: 'Config' object has no attribute 'get_path'
+2025-06-28 14:36:13,259 [ERROR] Error refreshing file lists: 'Config' object has no attribute 'get_path'

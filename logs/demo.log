@@ -1,0 +1,24 @@
+[2025-06-28 14:26:50,790] INFO [demo.demo_core_functionality:48] ✓ Logging system initialized
+[2025-06-28 14:26:50,791] INFO [demo.demo_core_functionality:58] Found 0 CKLB files in user directory
+[2025-06-28 14:26:50,791] INFO [demo.demo_core_functionality:70] ✓ CKLB handler initialized
+[2025-06-28 14:26:50,791] INFO [demo.demo_core_functionality:105]   ✓ filename validation: 'valid_filename.cklb' -> True
+[2025-06-28 14:26:50,791] INFO [demo.demo_core_functionality:105]   ✓ stig_id validation: 'RHEL_8_STIG' -> True
+[2025-06-28 14:26:50,791] INFO [demo.demo_core_functionality:105]   ✗ filename validation: 'invalid<>filename.cklb' -> False
+[2025-06-28 14:26:50,791] INFO [demo.demo_core_functionality:105]   ✗ filename validation: '' -> False
+[2025-06-28 14:26:50,792] INFO [demo.demo_core_functionality:112] ✓ Web downloader initialized
+[2025-06-28 14:26:50,792] INFO [demo.demo_core_functionality:113]   Default URL: https://public.cyber.mil/stigs/downloads/
+[2025-06-28 14:26:50,792] INFO [demo.demo_core_functionality:114]   (Demo mode - not actually fetching)
+[2025-06-28 14:26:50,792] INFO [demo.demo_core_functionality:121] ✓ CKLB generator initialized
+[2025-06-28 14:26:50,792] INFO [demo.demo_core_functionality:122]   Ready to convert XCCDF files to CKLB format
+[2025-06-28 14:39:56,730] INFO [demo.demo_core_functionality:48] ✓ Logging system initialized
+[2025-06-28 14:39:56,730] INFO [demo.demo_core_functionality:58] Found 0 CKLB files in user directory
+[2025-06-28 14:39:56,731] INFO [demo.demo_core_functionality:70] ✓ CKLB handler initialized
+[2025-06-28 14:39:56,731] INFO [demo.demo_core_functionality:105]   ✓ filename validation: 'valid_filename.cklb' -> True
+[2025-06-28 14:39:56,731] INFO [demo.demo_core_functionality:105]   ✓ stig_id validation: 'RHEL_8_STIG' -> True
+[2025-06-28 14:39:56,731] INFO [demo.demo_core_functionality:105]   ✗ filename validation: 'invalid<>filename.cklb' -> False
+[2025-06-28 14:39:56,731] INFO [demo.demo_core_functionality:105]   ✗ filename validation: '' -> False
+[2025-06-28 14:39:56,731] INFO [demo.demo_core_functionality:112] ✓ Web downloader initialized
+[2025-06-28 14:39:56,731] INFO [demo.demo_core_functionality:113]   Default URL: https://public.cyber.mil/stigs/downloads/
+[2025-06-28 14:39:56,731] INFO [demo.demo_core_functionality:114]   (Demo mode - not actually fetching)
+[2025-06-28 14:39:56,732] INFO [demo.demo_core_functionality:121] ✓ CKLB generator initialized
+[2025-06-28 14:39:56,732] INFO [demo.demo_core_functionality:122]   Ready to convert XCCDF files to CKLB format

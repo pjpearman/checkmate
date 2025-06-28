@@ -6,8 +6,6 @@
 
 Runs on Windows or Linux!
 
-View a demo on YouTube https://youtu.be/OVNBn5JiOXQ
-
 Can be used in air-gapped environments (without downloading features)
 
 ## What's New in v2.0.0
@@ -65,8 +63,8 @@ See the full license text in [LICENSE.txt](LICENSE.txt).
 
 1. **Clone the repo**
     ```bash
-    git clone https://github.com/pjpearman/stigflow.git
-    cd stigflow
+    git clone https://github.com/pjpearman/checkmate.git
+    cd checkmate
     ```
     - No git? Download Checkmate's {current_release}.zip
 

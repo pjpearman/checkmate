@@ -1,5 +1,32 @@
-#ubuntu prereqs
+# CheckMate Requirements
+# Core dependencies for both GUI and TUI
+
+# YAML parsing for configuration
 pyyaml>=6.0
+
+# HTTP requests for downloading STIGs
 requests>=2.26
+
+# JSON schema validation for CKLB files
 jsonschema>=4.0
+
+# HTML parsing for web scraping
 beautifulsoup4>=4.10
+
+# Enhanced path handling (Python 3.7+)
+pathlib2>=2.3; python_version<"3.4"
+
+# Additional dependencies for enhanced functionality
+# Uncomment if needed:
+
+# For advanced logging
+# colorlog>=6.0
+
+# For progress bars
+# tqdm>=4.60
+
+# For advanced file operations
+# send2trash>=1.8
+
+# For Windows users (uncomment if on Windows)
+# windows-curses>=2.3; platform_system=="Windows"

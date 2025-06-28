@@ -1,0 +1,17 @@
+[2025-06-28 14:36:13,259] ERROR [tui.refresh_file_lists:100] Error refreshing file lists: 'Config' object has no attribute 'get_path'
+[2025-06-28 14:36:13,259] ERROR [tui.refresh_file_lists:100] Error refreshing file lists: 'Config' object has no attribute 'get_path'
+[2025-06-28 14:39:35,947] INFO [tui.run:105] Starting CheckMate TUI
+[2025-06-28 14:42:22,816] INFO [tui.run:105] Starting CheckMate TUI
+[2025-06-28 14:42:47,778] INFO [tui.cleanup:810] TUI application closing
+[2025-06-28 14:42:50,387] INFO [tui.run:105] Starting CheckMate TUI
+[2025-06-28 14:42:52,265] INFO [tui.import_cklb_files:684] CKLB import requested
+[2025-06-28 14:42:57,251] INFO [tui.import_cklb_files:684] CKLB import requested
+[2025-06-28 14:43:02,715] INFO [tui.cleanup:810] TUI application closing
+[2025-06-28 14:43:05,493] INFO [tui.run:105] Starting CheckMate TUI
+[2025-06-28 14:43:07,172] INFO [tui.cleanup:810] TUI application closing
+[2025-06-28 14:43:09,137] INFO [tui.run:105] Starting CheckMate TUI
+[2025-06-28 14:43:40,453] INFO [tui.import_cklb_files:684] CKLB import requested
+[2025-06-28 14:43:44,139] INFO [tui.import_cklb_files:684] CKLB import requested
+[2025-06-28 14:44:02,139] INFO [tui.fetch_download_list:716] Fetching download list from URL
+[2025-06-28 14:44:02,139] ERROR [tui.fetch_download_list:725] Download list error: 'WebDownloader' object has no attribute 'get_available_files'
+[2025-06-28 14:44:27,553] INFO [tui.cleanup:810] TUI application closing

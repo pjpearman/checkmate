@@ -10,3 +10,4 @@ cklb_proc/cklb_lib/*
 cklb_proc/
 venv/
 lite/
+docs/ckl-lite
