@@ -23,10 +23,8 @@ root.resizable(True, True)  # Allow resizing
 root.configure(bg="#f7fafd")
 root.protocol("WM_DELETE_WINDOW", on_closing)
 
-# Make the window fill the screen (maximize if possible)
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
-root.geometry(f"{screen_width}x{screen_height}+0+0")
+# Set a fixed, browser-friendly window size (with minsize)
+root.geometry("1200x800+0+0")
 root.minsize(900, 600)
 
 mode_var = tk.StringVar(value="Operating Systems")
@@ -484,9 +482,9 @@ style.theme_use("clam")
 PRIMARY_BG = "#f7fafd"
 SECTION_BG = "#ffffff"
 ACCENT = "#2563eb"
-HEADER_FONT = ("Segoe UI", 13, "bold")
+HEADER_FONT = ("Segoe UI", 12, "bold")
 LABEL_FONT = ("Segoe UI", 10)
-BUTTON_FONT = ("Segoe UI", 11, "bold")
+BUTTON_FONT = ("Segoe UI", 10, "bold")
 
 style.configure("TButton", padding=10, font=BUTTON_FONT, background=ACCENT, foreground="#fff", borderwidth=0)
 style.map("TButton", background=[("active", "#1d4ed8")])
@@ -497,29 +495,60 @@ style.configure("TCombobox", padding=6, font=LABEL_FONT, fieldbackground="#f0f4f
 style.configure("TLabelframe", background=SECTION_BG, borderwidth=2, relief="groove")
 style.configure("TLabelframe.Label", font=HEADER_FONT, background=SECTION_BG, foreground=ACCENT)
 
-frame = ttk.Frame(root, padding=18, style="TLabelframe", relief="flat")
-frame.pack(fill=tk.BOTH, expand=True)
+
+# --- Add a scrollable main area ---
+main_canvas = tk.Canvas(root, borderwidth=0, background=PRIMARY_BG)
+main_canvas.pack(side="left", fill="both", expand=True)
+scrollbar = ttk.Scrollbar(root, orient="vertical", command=main_canvas.yview)
+scrollbar.pack(side="right", fill="y")
+main_canvas.configure(yscrollcommand=scrollbar.set)
+
+# Create a frame inside the canvas for all content
+frame = ttk.Frame(main_canvas, padding=18, style="TLabelframe", relief="flat")
+frame_id = main_canvas.create_window((0, 0), window=frame, anchor="nw")
+
+# Only two columns for the top row
+frame.columnconfigure(0, weight=1, minsize=220)
+frame.columnconfigure(1, weight=3, minsize=660)
+
+# Row configuration for better vertical distribution
+frame.rowconfigure(0, weight=1)
+frame.rowconfigure(1, weight=0)
+frame.rowconfigure(2, weight=2)
+frame.rowconfigure(3, weight=0)
+frame.rowconfigure(4, weight=2)
+
+# Make the canvas resize properly and update scrollregion
+def _on_frame_configure(event):
+    main_canvas.configure(scrollregion=main_canvas.bbox("all"))
+    # If the frame is smaller than the canvas, expand it to fill
+    canvas_width = main_canvas.winfo_width()
+    frame_width = frame.winfo_reqwidth()
+    if frame_width < canvas_width:
+        main_canvas.itemconfig(frame_id, width=canvas_width)
+
+frame.bind("<Configure>", _on_frame_configure)
+def _on_canvas_configure(event):
+    # Set frame width to match canvas width
+    main_canvas.itemconfig(frame_id, width=event.width)
+main_canvas.bind("<Configure>", _on_canvas_configure)
 
 # === Getting Started Panel ===
-getting_started = ttk.Labelframe(frame, text="Getting Started", padding=18, style="TLabelframe")
-getting_started.grid(row=0, column=0, sticky="nsew", pady=(0, 18), padx=(0, 18))
+getting_started = ttk.Labelframe(frame, text="Getting Started", padding=4, style="TLabelframe")
+getting_started.grid(row=0, column=0, sticky="nsew", pady=(0, 8), padx=(0, 6))
 getting_started.columnconfigure(0, weight=1)
 getting_started.rowconfigure(0, weight=1)
 
-# Example content for Getting Started (customize as needed)
-ttks = ttk.Label(getting_started, text="1. Create & Customize Baseline.\n2. Set Custom Baseline. (Used to compare your version against published versions.)\n3. Import completed cklb.\n4. Select task options and Run Tasks. (Ensure correct mode selected for selected baseline.) \n\nIMPORTANT:\nWhen creating your first baseline, CheckMate uses the current release and version info \nfrom the DISA website. This may not align with your current cklbs. Edit the baseline \nto match that of your version release, ex:RHEL8_v1r2.\nBaselines and Scrape Mode misuse are the most common cause of download failures.", font=LABEL_FONT, background=SECTION_BG, justify="left", anchor="nw")
-ttks.grid(row=0, column=0, sticky="nw", padx=0, pady=0)
-
 # === Top Controls Group ===
-top_controls = ttk.Labelframe(frame, text="Scrape and Baseline Options", padding=18, style="TLabelframe")
-top_controls.grid(row=0, column=1, columnspan=2, sticky="nsew", pady=(0, 18), padx=0)
+top_controls = ttk.Labelframe(frame, text="Scrape and Baseline Options", padding=4, style="TLabelframe")
+top_controls.grid(row=0, column=1, sticky="nsew", pady=(0, 8), padx=(0, 0))
+# Use grid weights for responsive layout in top_controls
+top_controls.columnconfigure(0, weight=1)
+top_controls.columnconfigure(1, weight=2)
+top_controls.columnconfigure(2, weight=0)
+top_controls.columnconfigure(3, weight=1)
 
 # Use a single grid for all controls in top_controls for perfect alignment
-scrape_label = ttk.Label(top_controls, text="Scrape Mode:", font=LABEL_FONT)
-scrape_label.grid(row=0, column=0, padx=(0, 10), pady=4, sticky="w")
-scrape_combo = ttk.Combobox(top_controls, textvariable=mode_var, values=["SCAP Benchmarks", "Operating Systems", "Applications", "Network", "ALL"], state="readonly", width=15)
-scrape_combo.grid(row=0, column=1, padx=(0, 10), pady=4, sticky="ew")
-
 yaml_label = ttk.Label(top_controls, text="Baseline YAML:", font=LABEL_FONT)
 yaml_label.grid(row=1, column=0, padx=(0, 10), pady=4, sticky="w")
 yaml_entry = ttk.Entry(top_controls, textvariable=yaml_path_var, width=50)
@@ -528,12 +557,10 @@ yaml_browse = ttk.Button(top_controls, text="Browse", command=lambda: yaml_path_
     filedialog.askopenfilename(filetypes=[("YAML files", "*.yaml")])
 ))
 yaml_browse.grid(row=1, column=2, padx=(0, 10), pady=4, sticky="w")
-
 download_cb = ttk.Checkbutton(top_controls, text="Download ZIPs for updated items", variable=download_var)
 download_cb.grid(row=2, column=0, padx=(0, 10), pady=4, sticky="w")
 extract_cb = ttk.Checkbutton(top_controls, text="Extract .xccdf and generate checklist", variable=extract_var)
 extract_cb.grid(row=2, column=1, padx=(0, 10), pady=4, sticky="w")
-
 btn_col = ttk.Frame(top_controls, style="TLabelframe")
 btn_col.grid(row=0, column=3, rowspan=3, padx=(30,0), pady=4, sticky="nsew")
 ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=run_generate_baseline_with_feedback).pack(fill="x", pady=(0, 10))
@@ -542,23 +569,51 @@ ttk.Button(btn_col, text="Edit Baseline", style="Accent.TButton", command=lambda
 ttk.Button(btn_col, text="Import CKLB Library", style="Accent.TButton", command=import_cklb_with_feedback).pack(fill="x", pady=(0, 10))
 ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=run_compare_with_feedback).pack(fill="x")
 
-for i in range(3):
-    top_controls.columnconfigure(i, weight=1)
-top_controls.columnconfigure(3, weight=0)
+# Shrink all widgets and reduce padding
+scrape_label = ttk.Label(top_controls, text="Scrape Mode:", font=LABEL_FONT)
+scrape_label.grid(row=0, column=0, padx=(0, 4), pady=2, sticky="w")
+scrape_combo = ttk.Combobox(top_controls, textvariable=mode_var, values=["SCAP Benchmarks", "Operating Systems", "Applications", "Network", "ALL"], state="readonly", width=15)
+scrape_combo.grid(row=0, column=1, padx=(0, 4), pady=2, sticky="ew")
 
-# Adjust frame column weights for new layout
-frame.columnconfigure(0, weight=1)  # Getting Started (left 1/4)
-frame.columnconfigure(1, weight=3)  # Top Controls (right 3/4, spans 2 columns)
-frame.columnconfigure(2, weight=3)
+yaml_label = ttk.Label(top_controls, text="Baseline YAML:", font=LABEL_FONT)
+yaml_label.grid(row=1, column=0, padx=(0, 4), pady=2, sticky="w")
+yaml_entry = ttk.Entry(top_controls, textvariable=yaml_path_var, width=36)
+yaml_entry.grid(row=1, column=1, padx=(0, 4), pady=2, sticky="ew")
+yaml_browse = ttk.Button(top_controls, text="Browse", command=lambda: yaml_path_var.set(
+    filedialog.askopenfilename(filetypes=[("YAML files", "*.yaml")])
+))
+yaml_browse.grid(row=1, column=2, padx=(0, 4), pady=2, sticky="w")
+
+download_cb = ttk.Checkbutton(top_controls, text="Download ZIPs for updated items", variable=download_var)
+download_cb.grid(row=2, column=0, padx=(0, 4), pady=2, sticky="w")
+extract_cb = ttk.Checkbutton(top_controls, text="Extract .xccdf and generate checklist", variable=extract_var)
+extract_cb.grid(row=2, column=1, padx=(0, 4), pady=2, sticky="w")
+
+btn_col = ttk.Frame(top_controls, style="TLabelframe")
+btn_col.grid(row=0, column=3, rowspan=3, padx=(8,0), pady=2, sticky="nsew")
+ttk.Button(btn_col, text="Generate New Baseline", style="Accent.TButton", command=run_generate_baseline_with_feedback).pack(fill="x", pady=(0, 4))
+ttk.Button(btn_col, text="Reset Baseline", style="Accent.TButton", command=run_reset_baseline_with_feedback).pack(fill="x", pady=(0, 4))
+ttk.Button(btn_col, text="Edit Baseline", style="Accent.TButton", command=lambda: launch_file_editor(yaml_path_var.get(), root)).pack(fill="x", pady=(0, 4))
+ttk.Button(btn_col, text="Import CKLB Library", style="Accent.TButton", command=import_cklb_with_feedback).pack(fill="x", pady=(0, 4))
+ttk.Button(btn_col, text="Run Tasks", style="Accent.TButton", command=run_compare_with_feedback).pack(fill="x")
+
+# Adjust frame row/column weights for new layout
+## Removed old column/row configs (now set above)
 
 # === Separator ===
 sep1 = ttk.Separator(frame, orient="horizontal")
 sep1.grid(row=1, column=0, columnspan=3, sticky="ew", pady=(0, 18))
 
 # === Merge Area ===
-merge_area = ttk.Labelframe(frame, text="Checklist Merge & Upgrade", padding=18, style="TLabelframe")
+merge_area = ttk.Labelframe(frame, text="Checklist Merge & Upgrade", padding=12, style="TLabelframe")
 merge_area.grid(row=2, column=0, columnspan=3, sticky="nsew", pady=(0, 18))
-frame.rowconfigure(2, weight=2)
+
+# Configure merge_area grid weights for better proportions
+merge_area.columnconfigure(0, weight=2)   # Left panel (User CKLBs)
+merge_area.columnconfigure(1, weight=0)   # Left scrollbar
+merge_area.columnconfigure(2, weight=2)   # Right panel (New CKLB Version)
+merge_area.columnconfigure(3, weight=1)   # Buttons column
+merge_area.rowconfigure(1, weight=1)      # Main content area
 
 # Use a single grid for all controls in merge_area for perfect alignment
 # Clear any previous widgets
@@ -607,17 +662,53 @@ sep2.grid(row=3, column=0, columnspan=3, sticky="ew", pady=(0, 12))
 # === Logs and Status ===
 log_area = ttk.Labelframe(frame, text="Logs & Status", padding=12, style="TLabelframe")
 log_area.grid(row=4, column=0, columnspan=3, sticky="nsew")
-frame.rowconfigure(4, weight=1)
+log_area.columnconfigure(0, weight=1)
+log_area.rowconfigure(0, weight=1)
+log_area.rowconfigure(1, weight=0)
 
-log_output = scrolledtext.ScrolledText(log_area, height=8, wrap=tk.WORD, font=("Consolas", 10), bg="#f0f4fc", relief="flat", borderwidth=1, state="disabled")
-log_output.pack(fill="both", expand=True, pady=(0, 8))
+# Make log output more prominent
+log_output = scrolledtext.ScrolledText(
+    log_area, 
+    wrap=tk.WORD, 
+    font=("Consolas", 10), 
+    bg="#f0f4fc", 
+    relief="flat", 
+    borderwidth=1, 
+    state="disabled",
+    height=15  # Increased height for better visibility
+)
+log_output.grid(row=0, column=0, sticky="nsew", pady=(0, 8))
 
-ttk.Label(log_area, textvariable=status_text, foreground=ACCENT, font=LABEL_FONT, background=SECTION_BG).pack(anchor="w", pady=(0, 2))
+status_label = ttk.Label(
+    log_area, 
+    textvariable=status_text, 
+    foreground=ACCENT, 
+    font=LABEL_FONT, 
+    background=SECTION_BG
+)
+status_label.grid(row=1, column=0, sticky="w", pady=(0, 2))
 
 # === Logging Setup ===
 log_handler = GuiLogger(log_output)
 log_handler.setFormatter(logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s', datefmt='%H:%M:%S'))
 logging.getLogger().addHandler(log_handler)
 logging.getLogger().setLevel(logging.INFO)
+
+# === Fix: Add missing refresh_usr_listbox and refresh_cklb_combobox ===
+def refresh_usr_listbox():
+    global usr_files
+    usr_files = sorted(os.listdir(usr_dir)) if os.path.isdir(usr_dir) else []
+    file_listbox.delete(0, tk.END)
+    for f in usr_files:
+        file_listbox.insert(tk.END, f)
+
+def refresh_cklb_combobox():
+    global cklb_files
+    cklb_files = sorted(os.listdir(cklb_dir)) if os.path.isdir(cklb_dir) else []
+    cklb_combobox['values'] = cklb_files
+    if cklb_files:
+        cklb_sel_var.set(cklb_files[0])
+    else:
+        cklb_sel_var.set("")
 
 root.mainloop()
