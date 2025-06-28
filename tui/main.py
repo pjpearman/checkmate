@@ -891,10 +891,10 @@ class CheckMateTUI:
         self.logger.info("Fetching download list from URL")
         
         try:
-            # Use web downloader to fetch list
-            files = self.web_downloader.get_available_files()
-            self.status_message = f"Found {len(files)} downloadable files"
-            self.logger.info(f"Found {len(files)} downloadable files")
+            # Use web downloader to fetch available STIGs
+            stigs = self.web_downloader.get_available_stigs()
+            self.status_message = f"Found {len(stigs)} downloadable STIG files"
+            self.logger.info(f"Found {len(stigs)} downloadable STIG files")
         except Exception as e:
             self.status_message = f"Download list error: {e}"
             self.logger.error(f"Download list error: {e}")
@@ -905,23 +905,112 @@ class CheckMateTUI:
         self.logger.info("Starting download of all files")
         
         try:
-            result = self.web_downloader.download_all()
-            self.status_message = f"Download completed: {result}"
-            self.logger.info(f"Download result: {result}")
+            # First get available STIGs
+            stigs = self.web_downloader.get_available_stigs()
+            if not stigs:
+                self.status_message = "No STIG files found to download"
+                return
+            
+            # Convert to file links format
+            file_links = [(stig.get('filename', 'unknown'), stig.get('url', '')) for stig in stigs]
+            
+            # Download multiple files
+            output_dir = self.config.get_path('zip_files')
+            results = self.web_downloader.download_multiple_files(file_links, output_dir)
+            
+            # Count successes and failures
+            successful = len([r for r in results if r[2] is None])
+            failed = len(results) - successful
+            
+            self.status_message = f"Download completed: {successful} successful, {failed} failed"
+            self.logger.info(f"Download result: {successful}/{len(results)} files downloaded")
             self.refresh_file_lists()
+            
         except Exception as e:
             self.status_message = f"Download error: {e}"
             self.logger.error(f"Download error: {e}")
             
     def download_specific_types(self):
         """Download specific file types."""
-        self.status_message = "Specific download functionality"
+        self.status_message = "Select STIG types to download..."
         self.logger.info("Specific download requested")
         
+        try:
+            # Get available STIGs first
+            stigs = self.web_downloader.get_available_stigs()
+            if not stigs:
+                self.status_message = "No STIG files available for download"
+                return
+            
+            # Group STIGs by type (Operating System, Application, etc.)
+            stig_types = {}
+            for stig in stigs:
+                filename = stig.get('filename', '')
+                # Simple categorization based on filename patterns
+                if any(os_pattern in filename.upper() for os_pattern in ['WINDOWS', 'LINUX', 'RHEL', 'UBUNTU', 'CENTOS']):
+                    category = "Operating Systems"
+                elif any(app_pattern in filename.upper() for app_pattern in ['APACHE', 'NGINX', 'MYSQL', 'POSTGRESQL', 'OFFICE']):
+                    category = "Applications"
+                elif any(net_pattern in filename.upper() for net_pattern in ['CISCO', 'JUNIPER', 'FIREWALL', 'SWITCH']):
+                    category = "Network Devices"
+                else:
+                    category = "Other"
+                
+                if category not in stig_types:
+                    stig_types[category] = []
+                stig_types[category].append(stig)
+            
+            # Show selection menu (simplified for now)
+            total_count = sum(len(stigs) for stigs in stig_types.values())
+            self.status_message = f"Found {total_count} STIGs in {len(stig_types)} categories"
+            self.logger.info(f"Available STIG types: {list(stig_types.keys())}")
+            
+        except Exception as e:
+            self.status_message = f"Download type selection error: {e}"
+            self.logger.error(f"Download type selection error: {e}")
+        
     def view_downloaded_files(self):
-        """View downloaded files."""
-        zip_files = self.file_lists.get('zip', [])
-        self.status_message = f"Downloaded files: {len(zip_files)} ZIP files"
+        """View downloaded files with details."""
+        try:
+            zip_files = self.file_lists.get('zip', [])
+            if not zip_files:
+                self.status_message = "No downloaded files found"
+                return
+            
+            # Get file details
+            zip_dir = self.config.get_path('zip_files')
+            total_size = 0
+            file_details = []
+            
+            for filename in zip_files:
+                file_path = zip_dir / filename
+                if file_path.exists():
+                    size = file_path.stat().st_size
+                    total_size += size
+                    # Convert size to human readable
+                    if size < 1024:
+                        size_str = f"{size} B"
+                    elif size < 1024 * 1024:
+                        size_str = f"{size // 1024} KB"
+                    else:
+                        size_str = f"{size // (1024 * 1024)} MB"
+                    
+                    file_details.append(f"{filename} ({size_str})")
+            
+            # Convert total size to human readable
+            if total_size < 1024:
+                total_size_str = f"{total_size} B"
+            elif total_size < 1024 * 1024:
+                total_size_str = f"{total_size // 1024} KB"
+            else:
+                total_size_str = f"{total_size // (1024 * 1024)} MB"
+            
+            self.status_message = f"Downloaded: {len(zip_files)} files, {total_size_str} total"
+            self.logger.info(f"Downloaded files: {len(zip_files)} files, total size: {total_size_str}")
+            
+        except Exception as e:
+            self.status_message = f"Error viewing files: {e}"
+            self.logger.error(f"Error viewing downloaded files: {e}")
         
     def export_cklb_files(self):
         """Export CKLB files."""

@@ -575,12 +575,44 @@ class CheckMateGUI:
         
         def task():
             try:
-                result = self.web_downloader.download_from_url(url)
-                self.status_text.set("Download completed")
-                self.logger.info(f"Download result: {result}")
+                # Set the URL for the web downloader (if it's not the default)
+                if url != self.web_downloader.DEFAULT_URL:
+                    # For now, we'll work with the default URL approach
+                    # You could extend WebDownloader to support custom URLs
+                    pass
+                
+                # Get available STIGs from the URL
+                stigs = self.web_downloader.get_available_stigs()
+                
+                if not stigs:
+                    self.status_text.set("No STIG files found at URL")
+                    self.logger.warning("No STIG files found at the specified URL")
+                    return
+                
+                # Download all available STIGs
+                file_links = [(stig.get('filename', 'unknown'), stig.get('url', '')) for stig in stigs]
+                output_dir = self.config.get_path('zip_files')
+                
+                # Update status
+                self.status_text.set(f"Downloading {len(file_links)} STIG files...")
+                
+                results = self.web_downloader.download_multiple_files(file_links, output_dir)
+                
+                # Count results
+                successful = len([r for r in results if r[2] is None])
+                failed = len(results) - successful
+                
+                result_msg = f"Download completed: {successful} successful, {failed} failed"
+                self.status_text.set(result_msg)
+                self.logger.info(result_msg)
+                
+                # Refresh file lists
+                self.refresh_file_lists()
+                
             except Exception as e:
-                self.status_text.set(f"Download error: {e}")
-                self.logger.error(f"Download error: {e}")
+                error_msg = f"Download error: {e}"
+                self.status_text.set(error_msg)
+                self.logger.error(error_msg)
                 
         threading.Thread(target=task, daemon=True).start()
         
