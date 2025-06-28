@@ -123,33 +123,46 @@ class WebDownloader:
             file_url: URL of the file
             
         Returns:
-            Dictionary with file information
+            Dictionary with file information (never None)
         """
+        # Default info structure
+        default_info = {
+            'url': file_url,
+            'filename': os.path.basename(urlparse(file_url).path) or 'unknown',
+            'size': None,
+            'content_type': 'application/zip',
+            'last_modified': '',
+            'etag': ''
+        }
+        
         try:
             response = self.session.head(file_url, timeout=10)
             response.raise_for_status()
             
             info = {
                 'url': file_url,
-                'filename': os.path.basename(urlparse(file_url).path),
+                'filename': os.path.basename(urlparse(file_url).path) or 'unknown',
                 'size': response.headers.get('content-length'),
-                'content_type': response.headers.get('content-type'),
-                'last_modified': response.headers.get('last-modified'),
-                'etag': response.headers.get('etag')
+                'content_type': response.headers.get('content-type', 'application/zip'),
+                'last_modified': response.headers.get('last-modified', ''),
+                'etag': response.headers.get('etag', '')
             }
             
             # Convert size to integer if available
             if info['size']:
                 try:
                     info['size'] = int(info['size'])
-                except ValueError:
-                    pass
+                except (ValueError, TypeError):
+                    info['size'] = None
             
             return info
             
         except requests.RequestException as e:
-            logger.error(f"Failed to get file info for {file_url}: {e}")
-            return {'url': file_url, 'error': str(e)}
+            logger.warning(f"Failed to get file info for {file_url}: {e}")
+            return default_info
+        except Exception as e:
+            logger.error(f"Unexpected error getting file info for {file_url}: {e}")
+            return default_info
     
     def download_file(
         self, 
@@ -276,22 +289,52 @@ class WebDownloader:
             List of STIG file information dictionaries
         """
         try:
+            logger.info("Fetching STIG page content...")
             html_content = self.fetch_page()
+            
+            logger.info("Parsing file links from page...")
             file_links = self.parse_table_for_links(html_content)
             
-            stigs = []
-            for file_name, file_url in file_links:
-                # Parse STIG information from filename
-                stig_info = self.parse_stig_filename(file_name)
-                stig_info['filename'] = file_name
-                stig_info['url'] = file_url
-                
-                # Get additional file info
-                file_info = self.get_file_info(file_url)
-                stig_info.update(file_info)
-                
-                stigs.append(stig_info)
+            if not file_links:
+                logger.warning("No file links found on page")
+                return []
             
+            logger.info(f"Found {len(file_links)} file links, processing metadata...")
+            stigs = []
+            
+            for i, (file_name, file_url) in enumerate(file_links):
+                try:
+                    # Parse STIG information from filename
+                    stig_info = self.parse_stig_filename(file_name)
+                    stig_info['filename'] = file_name
+                    stig_info['url'] = file_url
+                    
+                    # Get additional file info (with error handling)
+                    try:
+                        file_info = self.get_file_info(file_url)
+                        if file_info and isinstance(file_info, dict):
+                            # Only update if we got valid file info
+                            stig_info.update(file_info)
+                    except Exception as e:
+                        logger.warning(f"Failed to get file info for {file_name}: {e}")
+                        # Set default values for missing file info
+                        stig_info.setdefault('size', None)
+                        stig_info.setdefault('content_type', 'application/zip')
+                        stig_info.setdefault('last_modified', '')
+                        stig_info.setdefault('etag', '')
+                    
+                    stigs.append(stig_info)
+                    
+                    # Log progress for large lists
+                    if i > 0 and i % 50 == 0:
+                        logger.info(f"Processed {i}/{len(file_links)} files...")
+                        
+                except Exception as e:
+                    logger.error(f"Error processing STIG file {file_name}: {e}")
+                    # Continue with next file rather than failing completely
+                    continue
+            
+            logger.info(f"Successfully processed {len(stigs)} STIG files")
             return stigs
             
         except Exception as e:

@@ -1,2 +1,3 @@
 [2025-06-28 15:24:41,247] INFO [checkmate.web_downloader.fetch_page:73] Fetched page: https://public.cyber.mil/stigs/downloads/
 [2025-06-28 15:24:41,491] INFO [checkmate.web_downloader.parse_table_for_links:114] Found 438 downloadable files
+[2025-06-28 15:41:09,352] WARNING [checkmate.web_downloader.get_file_info:161] Failed to get file info for https://invalid-url-that-should-fail.com/test.zip: HTTPSConnectionPool(host='invalid-url-that-should-fail.com', port=443): Max retries exceeded with url: /test.zip (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x73f796977a40>: Failed to resolve 'invalid-url-that-should-fail.com' ([Errno -2] Name or service not known)"))
