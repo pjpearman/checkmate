@@ -40,3 +40,5 @@
 [2025-06-28 18:45:16,087] INFO [tui.fetch_download_list:902] Found 438 downloadable STIG files
 [2025-06-28 18:45:23,338] ERROR [tui.display_stig_selection:1303] Unexpected error in STIG selection: 'CheckMateTUI' object has no attribute 'choose_download_mode'
 [2025-06-28 18:47:38,241] ERROR [tui.run:111] TUI error: 'CheckMateTUI' object has no attribute 'cleanup'
+[2025-06-28 19:06:51,545] INFO [tui.fetch_download_list:888] Fetching download list from URL
+[2025-06-28 19:06:56,558] INFO [tui.fetch_download_list:902] Found 438 downloadable STIG files

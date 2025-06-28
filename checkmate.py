@@ -44,7 +44,11 @@ def main():
         elif args.interface == 'tui':
             # Launch TUI
             print("Starting CheckMate TUI...")
-            from tui.main import main as tui_main
+            from tui.main import CheckMateTUI
+            import curses
+            def tui_main():
+                app = CheckMateTUI()
+                curses.wrapper(app.main_loop)
             tui_main()
             
     except ImportError as e:
