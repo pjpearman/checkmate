@@ -2,6 +2,7 @@
 # codespace_x11_setup.sh
 # Sets up Xvfb, x11vnc, and noVNC for GUI forwarding in GitHub Codespaces
 # to launch gui.py, run 'export DISPLAY=:1'
+# cd /workspaces/checkmate && export DISPLAY=:1 && python3 gui.py
 # https://fuzzy-engine-x9769w75xrx3vjxw-6080.app.github.dev/vnc.html
 
 set -e
