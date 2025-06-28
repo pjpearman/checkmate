@@ -369,9 +369,10 @@ class WebDownloader:
             (r'([^_]+(?:_[^_]+)*)_V(\d+)R(\d+)', 'version_release'),               # STIGNAME_V1R2
             
             # Y##M## patterns (year/month)
-            (r'U_([^_]+(?:_[^_]+)*)_Y(\d{2})M(\d{2})_(\d{8})', 'year_month'),      # U_STIGNAME_Y25M04_20250401
-            (r'U_([^_]+(?:_[^_]+)*)_Y(\d{2})M(\d{2})', 'year_month'),              # U_STIGNAME_Y25M04
-            (r'([^_]+(?:_[^_]+)*)_Y(\d{2})M(\d{2})', 'year_month'),                # STIGNAME_Y25M04
+            (r'U_([^_]+(?:_[^_]+)*)_V(\d{2})M(\d{2})_(\d{8})', 'year_month'),      # U_STIGNAME_V25M04_20250401
+            (r'U_([^_]+(?:_[^_]+)*)_V(\d{2})M(\d{2})', 'year_month'),              # U_STIGNAME_V25M04
+            (r'([^_]+(?:_[^_]+)*)_V(\d{2})M(\d{2})', 'year_month'),                # STIGNAME_V25M04
+            (r'([^_]+(?:_[^_]+)*)_(\d{2})M(\d{2})', 'year_month'),                 # STIGNAME_25M04
         ]
         
         for pattern, format_type in patterns:
@@ -388,22 +389,29 @@ class WebDownloader:
                         info['date'] = groups[3]
                 elif format_type == 'year_month':
                     # For Y##M## format, store as version/release for display compatibility
-                    info['version'] = f"Y{groups[1]}" if groups[1] else None
+                    info['version'] = f"V{groups[1]}" if groups[1] else None
                     info['release'] = f"M{groups[2]}" if groups[2] else None
                     if len(groups) > 3:
                         info['date'] = groups[3]
                 
                 break
         
-        # Determine STIG type
-        if any(keyword in filename.lower() for keyword in ['stig', 'benchmark']):
+        # Determine STIG type with improved detection
+        filename_lower = filename.lower()
+        if any(keyword in filename_lower for keyword in ['benchmark']):
+            info['type'] = 'benchmark'
+        elif any(keyword in filename_lower for keyword in ['stig']):
             info['type'] = 'stig'
-        elif 'checklist' in filename.lower():
+        elif any(keyword in filename_lower for keyword in ['checklist', 'cklb']):
             info['type'] = 'checklist'
-        elif 'products' in filename.lower():
+        elif any(keyword in filename_lower for keyword in ['products', 'library']):
             info['type'] = 'products'
-        elif 'srr' in filename.lower():
+        elif any(keyword in filename_lower for keyword in ['srr', 'readiness']):
             info['type'] = 'srr'
+        elif any(keyword in filename_lower for keyword in ['scap', 'oval']):
+            info['type'] = 'scap'
+        else:
+            info['type'] = 'other'
         
         return info
     
