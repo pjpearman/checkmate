@@ -15,3 +15,7 @@
 [2025-06-28 14:44:02,139] INFO [tui.fetch_download_list:716] Fetching download list from URL
 [2025-06-28 14:44:02,139] ERROR [tui.fetch_download_list:725] Download list error: 'WebDownloader' object has no attribute 'get_available_files'
 [2025-06-28 14:44:27,553] INFO [tui.cleanup:810] TUI application closing
+[2025-06-28 14:47:14,754] INFO [tui.run:105] Starting CheckMate TUI
+[2025-06-28 14:47:16,921] INFO [tui.import_cklb_files:684] CKLB import requested
+[2025-06-28 14:47:21,624] INFO [tui.import_cklb_files:684] CKLB import requested
+[2025-06-28 14:47:30,361] INFO [tui.cleanup:810] TUI application closing
