@@ -344,6 +344,7 @@ class WebDownloader:
     def parse_stig_filename(self, filename: str) -> Dict:
         """
         Parse STIG information from filename.
+        Supports both V#R# (version/release) and Y##M## (year/month) patterns.
         
         Args:
             filename: STIG filename
@@ -356,25 +357,42 @@ class WebDownloader:
             'version': None,
             'release': None,
             'date': None,
-            'type': 'unknown'
+            'type': 'unknown',
+            'format': None  # 'version_release' or 'year_month'
         }
         
         # Common STIG filename patterns
         patterns = [
-            r'U_([^_]+(?:_[^_]+)*)_V(\d+)[Rr](\d+)_(\d{8})',  # U_STIGNAME_V1R2_20231201
-            r'U_([^_]+(?:_[^_]+)*)_V(\d+)[Rr](\d+)',          # U_STIGNAME_V1R2
-            r'([^_]+(?:_[^_]+)*)_V(\d+)R(\d+)',               # STIGNAME_V1R2
+            # V#R# patterns (version/release)
+            (r'U_([^_]+(?:_[^_]+)*)_V(\d+)[Rr](\d+)_(\d{8})', 'version_release'),  # U_STIGNAME_V1R2_20231201
+            (r'U_([^_]+(?:_[^_]+)*)_V(\d+)[Rr](\d+)', 'version_release'),          # U_STIGNAME_V1R2
+            (r'([^_]+(?:_[^_]+)*)_V(\d+)R(\d+)', 'version_release'),               # STIGNAME_V1R2
+            
+            # Y##M## patterns (year/month)
+            (r'U_([^_]+(?:_[^_]+)*)_Y(\d{2})M(\d{2})_(\d{8})', 'year_month'),      # U_STIGNAME_Y25M04_20250401
+            (r'U_([^_]+(?:_[^_]+)*)_Y(\d{2})M(\d{2})', 'year_month'),              # U_STIGNAME_Y25M04
+            (r'([^_]+(?:_[^_]+)*)_Y(\d{2})M(\d{2})', 'year_month'),                # STIGNAME_Y25M04
         ]
         
-        for pattern in patterns:
+        for pattern, format_type in patterns:
             match = re.search(pattern, filename)
             if match:
                 groups = match.groups()
                 info['stig_id'] = groups[0]
-                info['version'] = int(groups[1]) if groups[1] else None
-                info['release'] = int(groups[2]) if groups[2] else None
-                if len(groups) > 3:
-                    info['date'] = groups[3]
+                info['format'] = format_type
+                
+                if format_type == 'version_release':
+                    info['version'] = int(groups[1]) if groups[1] else None
+                    info['release'] = int(groups[2]) if groups[2] else None
+                    if len(groups) > 3:
+                        info['date'] = groups[3]
+                elif format_type == 'year_month':
+                    # For Y##M## format, store as version/release for display compatibility
+                    info['version'] = f"Y{groups[1]}" if groups[1] else None
+                    info['release'] = f"M{groups[2]}" if groups[2] else None
+                    if len(groups) > 3:
+                        info['date'] = groups[3]
+                
                 break
         
         # Determine STIG type
@@ -382,6 +400,10 @@ class WebDownloader:
             info['type'] = 'stig'
         elif 'checklist' in filename.lower():
             info['type'] = 'checklist'
+        elif 'products' in filename.lower():
+            info['type'] = 'products'
+        elif 'srr' in filename.lower():
+            info['type'] = 'srr'
         
         return info
     

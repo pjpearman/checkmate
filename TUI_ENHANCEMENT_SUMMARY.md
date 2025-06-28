@@ -18,10 +18,17 @@
 ### 2. **Rich Metadata Display**
 - **Status**: Visual selection indicators `[✓]` / `[ ]`
 - **STIG ID**: Security Technical Implementation Guide identifier
-- **Version**: Version number (e.g., V2)
-- **Release**: Release number (e.g., R1)  
+- **Version**: Version number (e.g., V2) or Year (e.g., Y25)
+- **Release**: Release number (e.g., R1) or Month (e.g., M04)
+- **Format**: Supports both V#R# (version/release) and Y##M## (year/month) patterns
 - **Size**: Human-readable file size (MB/KB/bytes)
 - **Updated**: Last modification date (YYYY-MM-DD)
+
+### 2.1 **Enhanced STIG Format Support**
+- **V#R# Format**: Traditional version/release STIGs (e.g., `U_Windows_10_V2R3_STIG.zip`)
+- **Y##M## Format**: Year/month STIGs (e.g., `U_IBM_zOS_Y25M04_STIG.zip`)
+- **Dual Format Recognition**: Automatically parses and displays both formats
+- **Complete Coverage**: Access to all available STIG files regardless of naming convention
 
 ### 3. **Intuitive Navigation**
 - `↑/↓ arrows`: Move up/down one item
