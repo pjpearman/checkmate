@@ -1,0 +1,1 @@
+This is not a CKLB file - just a text file for testing file filtering.

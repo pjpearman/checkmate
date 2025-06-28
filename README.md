@@ -88,7 +88,23 @@ See the full license text in [LICENSE.txt](LICENSE.txt).
 
 ## GUI Mode
 
-To launch the GUI:
+To launch the enhanced GUI:
+
+```bash
+python checkmate.py gui
+```
+
+## TUI Mode  
+
+To launch the enhanced Terminal User Interface:
+
+```bash
+python checkmate.py tui
+```
+
+## Legacy GUI (if needed)
+
+To launch the original GUI:
 
 ```bash
 python gui.py

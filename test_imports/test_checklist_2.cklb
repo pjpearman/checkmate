@@ -1,0 +1,33 @@
+{
+  "title": "Test STIG Checklist 2",
+  "id": "TEST_STIG_V2R1",
+  "description": "Another sample CKLB file for testing import functionality",
+  "version": "2",
+  "release": "1",
+  "benchmark": {
+    "id": "TEST_STIG"
+  },
+  "stigs": [
+    {
+      "stig_id": "TEST_STIG_V2R1",
+      "rules": [
+        {
+          "rule_id": "SV-001",
+          "rule_title": "Test Rule 1 Updated",
+          "severity": "high",
+          "status": "not_applicable",
+          "finding_details": "This is a test finding",
+          "comments": "Test comment"
+        },
+        {
+          "rule_id": "SV-002",
+          "rule_title": "Test Rule 2",
+          "severity": "low",
+          "status": "open",
+          "finding_details": "",
+          "comments": ""
+        }
+      ]
+    }
+  ]
+}

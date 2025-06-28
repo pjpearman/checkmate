@@ -679,10 +679,185 @@ class CheckMateTUI:
             self.logger.error(f"Comparison error: {e}")
             
     def import_cklb_files(self):
-        """Import CKLB files functionality."""
-        self.status_message = "CKLB import functionality"
+        """Import CKLB files with TUI file browser."""
+        self.status_message = "Select CKLB files to import..."
         self.logger.info("CKLB import requested")
-        # Implementation would prompt for files to import
+        
+        try:
+            # Launch TUI file browser
+            selected_files = self.file_browser_dialog()
+            
+            if not selected_files:
+                self.status_message = "Import cancelled - no files selected"
+                return
+                
+            # Import selected files
+            target_dir = self.config.get_user_cklb_dir()
+            imported_count = 0
+            
+            for file_path in selected_files:
+                try:
+                    if file_path.suffix.lower() == '.cklb':
+                        dest_path = target_dir / file_path.name
+                        
+                        # Copy file to target directory
+                        import shutil
+                        shutil.copy2(file_path, dest_path)
+                        imported_count += 1
+                        self.logger.info(f"Imported: {dest_path}")
+                    else:
+                        self.logger.warning(f"Skipped non-CKLB file: {file_path}")
+                        
+                except Exception as e:
+                    self.logger.error(f"Failed to import {file_path}: {e}")
+                    
+            # Update status and refresh file lists
+            self.status_message = f"Imported {imported_count} CKLB files successfully"
+            self.refresh_file_lists()
+            
+        except Exception as e:
+            self.status_message = f"Import error: {e}"
+            self.logger.error(f"CKLB import error: {e}")
+            
+    def file_browser_dialog(self):
+        """TUI file browser for selecting files."""
+        current_dir = Path.home()  # Start from home directory
+        selected_files = []
+        
+        while True:
+            # Clear screen and show file browser
+            self.stdscr.clear()
+            height, width = self.stdscr.getmaxyx()
+            
+            # Header
+            self.stdscr.addstr(0, 0, "File Browser - Select CKLB Files")
+            self.stdscr.addstr(1, 0, f"Current Directory: {current_dir}")
+            self.stdscr.addstr(2, 0, "─" * width)
+            
+            # Get directory contents
+            try:
+                items = []
+                if current_dir.parent != current_dir:  # Not root
+                    items.append(("..", True, current_dir.parent))
+                    
+                # Add directories first
+                dirs = [d for d in current_dir.iterdir() if d.is_dir()]
+                dirs.sort()
+                for d in dirs:
+                    items.append((d.name + "/", True, d))
+                    
+                # Add files
+                files = [f for f in current_dir.iterdir() if f.is_file()]
+                files.sort()
+                for f in files:
+                    items.append((f.name, False, f))
+                    
+            except PermissionError:
+                self.stdscr.addstr(4, 0, "Permission denied accessing this directory")
+                self.stdscr.addstr(5, 0, "Press any key to go back...")
+                self.stdscr.refresh()
+                self.stdscr.getch()
+                current_dir = current_dir.parent
+                continue
+                
+            # Display items with selection
+            start_y = 4
+            max_items = height - 10  # Leave room for instructions
+            
+            if hasattr(self, 'browser_selected_idx'):
+                browser_selected_idx = self.browser_selected_idx
+            else:
+                browser_selected_idx = 0
+                
+            # Ensure selection is within bounds
+            browser_selected_idx = min(browser_selected_idx, len(items) - 1)
+            browser_selected_idx = max(0, browser_selected_idx)
+            
+            for i, (name, is_dir, path) in enumerate(items[:max_items]):
+                y_pos = start_y + i
+                if y_pos >= height - 6:
+                    break
+                    
+                # Mark selected files
+                marker = ""
+                if not is_dir and path in selected_files:
+                    marker = "✓ "
+                elif is_dir and name != "../":
+                    marker = "📁 "
+                elif name == "../":
+                    marker = "⬆ "
+                else:
+                    # Check if it's a CKLB file
+                    if path.suffix.lower() == '.cklb':
+                        marker = "📄 "
+                    else:
+                        marker = "   "
+                
+                prefix = "► " if i == browser_selected_idx else "  "
+                display_name = f"{marker}{name}"
+                
+                if i == browser_selected_idx and curses.has_colors():
+                    self.stdscr.attron(curses.color_pair(2))
+                    self.stdscr.addstr(y_pos, 0, f"{prefix}{display_name}".ljust(width))
+                    self.stdscr.attroff(curses.color_pair(2))
+                else:
+                    self.stdscr.addstr(y_pos, 0, f"{prefix}{display_name}"[:width-1])
+                    
+            # Show selected files count
+            selected_count = len(selected_files)
+            self.stdscr.addstr(height - 6, 0, f"Selected files: {selected_count}")
+            
+            # Instructions
+            self.stdscr.addstr(height - 5, 0, "Instructions:")
+            self.stdscr.addstr(height - 4, 0, "↑↓: Navigate  ENTER: Open dir/Toggle file selection")
+            self.stdscr.addstr(height - 3, 0, "SPACE: Toggle file selection  A: Select all CKLB files")
+            self.stdscr.addstr(height - 2, 0, "I: Import selected files  ESC: Cancel  Q: Quit browser")
+            
+            self.stdscr.refresh()
+            
+            # Handle input
+            key = self.stdscr.getch()
+            
+            if key == 27:  # ESC - cancel
+                return []
+            elif key == ord('q') or key == ord('Q'):  # Quit browser
+                return []
+            elif key == ord('i') or key == ord('I'):  # Import selected files
+                return selected_files
+            elif key == curses.KEY_UP:
+                browser_selected_idx = max(0, browser_selected_idx - 1)
+            elif key == curses.KEY_DOWN:
+                browser_selected_idx = min(len(items) - 1, browser_selected_idx + 1)
+            elif key == 10 or key == 13:  # Enter
+                if browser_selected_idx < len(items):
+                    name, is_dir, path = items[browser_selected_idx]
+                    if is_dir:
+                        current_dir = path
+                        browser_selected_idx = 0
+                    else:
+                        # Toggle file selection
+                        if path in selected_files:
+                            selected_files.remove(path)
+                        else:
+                            if path.suffix.lower() == '.cklb':
+                                selected_files.append(path)
+            elif key == ord(' '):  # Space - toggle selection
+                if browser_selected_idx < len(items):
+                    name, is_dir, path = items[browser_selected_idx]
+                    if not is_dir and path.suffix.lower() == '.cklb':
+                        if path in selected_files:
+                            selected_files.remove(path)
+                        else:
+                            selected_files.append(path)
+            elif key == ord('a') or key == ord('A'):  # Select all CKLB files
+                cklb_files = [path for name, is_dir, path in items 
+                             if not is_dir and path.suffix.lower() == '.cklb']
+                for f in cklb_files:
+                    if f not in selected_files:
+                        selected_files.append(f)
+                        
+            # Store selection index
+            self.browser_selected_idx = browser_selected_idx
         
     def create_inventory(self):
         """Create inventory file."""

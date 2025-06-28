@@ -592,22 +592,120 @@ class CheckMateGUI:
         self.status_text.set("Ready")
         
     def import_cklb_files(self):
-        """Import CKLB files using the file dialog."""
+        """Import CKLB files using an enhanced file dialog."""
         try:
+            # Create enhanced file selection dialog
             files = filedialog.askopenfilenames(
                 title="Select CKLB Files to Import",
-                filetypes=[("CKLB files", "*.cklb"), ("All files", "*.*")]
+                filetypes=[
+                    ("CKLB files", "*.cklb"),
+                    ("JSON files", "*.json"), 
+                    ("All files", "*.*")
+                ],
+                initialdir=str(Path.home()),
+                multiple=True
             )
-            if files:
-                self.logger.info(f"Importing {len(files)} CKLB files")
-                for file in files:
-                    # Use core file utilities to import
-                    self.file_utils.copy_file(file, self.config.get_path('usr_cklb_lib'))
-                self.refresh_file_lists()
-                self.status_text.set(f"Imported {len(files)} files")
+            
+            if not files:
+                self.status_text.set("Import cancelled - no files selected")
+                return
+                
+            # Show confirmation dialog with file list
+            file_list = "\n".join([f"• {Path(f).name}" for f in files[:10]])
+            if len(files) > 10:
+                file_list += f"\n... and {len(files) - 10} more files"
+                
+            confirm_msg = f"Import {len(files)} CKLB files?\n\nSelected files:\n{file_list}"
+            
+            if not messagebox.askyesno("Confirm Import", confirm_msg):
+                self.status_text.set("Import cancelled by user")
+                return
+                
+            # Start import in background thread
+            self.status_text.set(f"Importing {len(files)} CKLB files...")
+            self.logger.info(f"Starting import of {len(files)} CKLB files")
+            
+            def import_task():
+                try:
+                    target_dir = self.config.get_user_cklb_dir()
+                    target_dir.mkdir(parents=True, exist_ok=True)
+                    
+                    imported_count = 0
+                    skipped_count = 0
+                    error_count = 0
+                    
+                    for file_path in files:
+                        try:
+                            file_path = Path(file_path)
+                            
+                            # Validate file type
+                            if file_path.suffix.lower() not in ['.cklb', '.json']:
+                                self.logger.warning(f"Skipped non-CKLB file: {file_path}")
+                                skipped_count += 1
+                                continue
+                                
+                            # Check if file already exists
+                            dest_path = target_dir / file_path.name
+                            if dest_path.exists():
+                                # Ask user what to do with existing file
+                                response = messagebox.askyesnocancel(
+                                    "File Exists", 
+                                    f"File '{file_path.name}' already exists.\n\nReplace it?",
+                                    icon="question"
+                                )
+                                if response is None:  # Cancel
+                                    break
+                                elif not response:  # No - skip
+                                    skipped_count += 1
+                                    continue
+                                    
+                            # Copy file to target directory
+                            self.file_utils.copy_file(str(file_path), str(dest_path))
+                            imported_count += 1
+                            self.logger.info(f"Imported: {dest_path}")
+                            
+                            # Update progress
+                            progress = (imported_count + skipped_count + error_count) / len(files) * 100
+                            self.status_text.set(f"Importing... {progress:.0f}% ({imported_count} imported)")
+                            
+                        except Exception as e:
+                            self.logger.error(f"Failed to import {file_path}: {e}")
+                            error_count += 1
+                            
+                    # Final status update
+                    result_msg = f"Import completed: {imported_count} imported"
+                    if skipped_count > 0:
+                        result_msg += f", {skipped_count} skipped"
+                    if error_count > 0:
+                        result_msg += f", {error_count} errors"
+                        
+                    self.status_text.set(result_msg)
+                    self.logger.info(result_msg)
+                    
+                    # Refresh file lists
+                    self.refresh_file_lists()
+                    
+                    # Show completion dialog
+                    if error_count > 0:
+                        messagebox.showwarning("Import Completed with Errors", 
+                                             f"{result_msg}\n\nCheck the logs for error details.")
+                    else:
+                        messagebox.showinfo("Import Successful", result_msg)
+                        
+                except Exception as e:
+                    error_msg = f"Import failed: {e}"
+                    self.status_text.set(error_msg)
+                    self.logger.error(error_msg)
+                    messagebox.showerror("Import Error", error_msg)
+                    
+            # Run import in background thread
+            threading.Thread(target=import_task, daemon=True).start()
+            
         except Exception as e:
-            self.logger.error(f"Import error: {e}")
-            messagebox.showerror("Import Error", str(e))
+            error_msg = f"Import error: {e}"
+            self.logger.error(error_msg)
+            messagebox.showerror("Import Error", error_msg)
+            self.status_text.set(error_msg)
             
     def launch_file_editor(self):
         """Launch the file editor."""
