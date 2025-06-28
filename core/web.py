@@ -115,7 +115,7 @@ class WebDownloader:
         
         return file_links
     
-    def get_file_info(self, file_url: str) -> Dict:
+    def get_file_info(self, file_url: str, timeout: int = 5) -> Dict:
         """
         Get file information without downloading.
         
@@ -136,7 +136,7 @@ class WebDownloader:
         }
         
         try:
-            response = self.session.head(file_url, timeout=10)
+            response = self.session.head(file_url, timeout=timeout)
             response.raise_for_status()
             
             info = {
@@ -281,9 +281,12 @@ class WebDownloader:
         
         return results
     
-    def get_available_stigs(self) -> List[Dict]:
+    def get_available_stigs(self, fetch_file_info: bool = False) -> List[Dict]:
         """
         Get list of available STIG files with metadata.
+        
+        Args:
+            fetch_file_info: Whether to fetch detailed file info (slower but more complete)
         
         Returns:
             List of STIG file information dictionaries
@@ -309,24 +312,26 @@ class WebDownloader:
                     stig_info['filename'] = file_name
                     stig_info['url'] = file_url
                     
-                    # Get additional file info (with error handling)
-                    try:
-                        file_info = self.get_file_info(file_url)
-                        if file_info and isinstance(file_info, dict):
-                            # Only update if we got valid file info
-                            stig_info.update(file_info)
-                    except Exception as e:
-                        logger.warning(f"Failed to get file info for {file_name}: {e}")
-                        # Set default values for missing file info
-                        stig_info.setdefault('size', None)
-                        stig_info.setdefault('content_type', 'application/zip')
-                        stig_info.setdefault('last_modified', '')
-                        stig_info.setdefault('etag', '')
+                    # Set default values for file info
+                    stig_info.setdefault('size', None)
+                    stig_info.setdefault('content_type', 'application/zip')
+                    stig_info.setdefault('last_modified', '')
+                    stig_info.setdefault('etag', '')
+                    
+                    # Optionally get detailed file info (slower)
+                    if fetch_file_info:
+                        try:
+                            file_info = self.get_file_info(file_url)
+                            if file_info and isinstance(file_info, dict):
+                                # Only update if we got valid file info
+                                stig_info.update(file_info)
+                        except Exception as e:
+                            logger.warning(f"Failed to get file info for {file_name}: {e}")
                     
                     stigs.append(stig_info)
                     
                     # Log progress for large lists
-                    if i > 0 and i % 50 == 0:
+                    if i > 0 and i % 100 == 0:
                         logger.info(f"Processed {i}/{len(file_links)} files...")
                         
                 except Exception as e:
@@ -449,7 +454,66 @@ class WebDownloader:
                        if not s.get('date') or s['date'] >= cutoff_date]
         
         return filtered
-
+    
+    def enhance_stig_info(self, stigs: List[Dict], max_concurrent: int = 10) -> List[Dict]:
+        """
+        Enhance STIG information by fetching file details.
+        This is a separate step to allow fast initial loading.
+        
+        Args:
+            stigs: List of STIG dictionaries to enhance
+            max_concurrent: Maximum concurrent requests
+            
+        Returns:
+            Enhanced list of STIG dictionaries
+        """
+        import concurrent.futures
+        import threading
+        
+        def fetch_info(stig):
+            """Fetch file info for a single STIG."""
+            try:
+                file_info = self.get_file_info(stig['url'], timeout=3)
+                if file_info and isinstance(file_info, dict):
+                    stig.update(file_info)
+            except Exception as e:
+                logger.debug(f"Failed to enhance info for {stig.get('filename', 'unknown')}: {e}")
+            return stig
+        
+        enhanced_stigs = []
+        
+        try:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=max_concurrent) as executor:
+                # Submit all tasks
+                future_to_stig = {executor.submit(fetch_info, stig): stig for stig in stigs}
+                
+                # Collect results as they complete
+                for future in concurrent.futures.as_completed(future_to_stig):
+                    try:
+                        enhanced_stig = future.result(timeout=5)
+                        enhanced_stigs.append(enhanced_stig)
+                    except Exception as e:
+                        # Use original STIG if enhancement fails
+                        original_stig = future_to_stig[future]
+                        enhanced_stigs.append(original_stig)
+                        logger.debug(f"Enhancement failed for {original_stig.get('filename', 'unknown')}: {e}")
+                        
+        except Exception as e:
+            logger.warning(f"Error in concurrent enhancement: {e}")
+            # Return original stigs if concurrent processing fails
+            return stigs
+        
+        # Sort to maintain original order
+        filename_to_stig = {stig['filename']: stig for stig in enhanced_stigs}
+        ordered_stigs = []
+        for original_stig in stigs:
+            filename = original_stig['filename']
+            if filename in filename_to_stig:
+                ordered_stigs.append(filename_to_stig[filename])
+            else:
+                ordered_stigs.append(original_stig)
+        
+        return ordered_stigs
 
 # Convenience functions for backward compatibility
 def fetch_page(url: str) -> str:

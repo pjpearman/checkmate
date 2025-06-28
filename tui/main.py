@@ -926,7 +926,7 @@ class CheckMateTUI:
         def fetch_worker():
             """Worker thread to fetch STIGs."""
             try:
-                result['stigs'] = self.web_downloader.get_available_stigs()
+                result['stigs'] = self.web_downloader.get_available_stigs(fetch_file_info=False)
                 result['done'] = True
             except Exception as e:
                 result['error'] = str(e)
@@ -1452,7 +1452,7 @@ class CheckMateTUI:
         
         try:
             # First get available STIGs
-            stigs = self.web_downloader.get_available_stigs()
+            stigs = self.web_downloader.get_available_stigs(fetch_file_info=False)
             if not stigs:
                 self.status_message = "No STIG files found to download"
                 return
@@ -1483,7 +1483,7 @@ class CheckMateTUI:
         
         try:
             # Get available STIGs
-            stigs = self.web_downloader.get_available_stigs()
+            stigs = self.web_downloader.get_available_stigs(fetch_file_info=False)
             if not stigs:
                 self.status_message = "No STIG files found"
                 return

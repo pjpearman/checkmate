@@ -33,3 +33,5 @@
 [2025-06-28 17:04:18,177] ERROR [tui.run:111] TUI error: 'CheckMateTUI' object has no attribute 'cleanup'
 [2025-06-28 17:10:17,000] INFO [tui.run:106] Starting CheckMate TUI
 [2025-06-28 17:10:21,461] ERROR [tui.run:111] TUI error: 'CheckMateTUI' object has no attribute 'cleanup'
+[2025-06-28 17:13:41,844] INFO [tui.run:106] Starting CheckMate TUI
+[2025-06-28 17:13:43,807] ERROR [tui.run:111] TUI error: 'CheckMateTUI' object has no attribute 'cleanup'
