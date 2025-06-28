@@ -2215,3 +2215,226 @@ New rules in the updated checklist:
 2025-06-27 17:51:23,216 [INFO] Found file link: VMware NSX STIG Overview, Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMware_NSX_V1R1_Overview.zip (updated: Unknown)
 2025-06-27 17:51:23,216 [INFO] Found file link: VMware NSX-T Data Center STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_NSX-T_Y23M07_STIG.zip (updated: Unknown)
 2025-06-27 17:51:23,264 [INFO] Baseline successfully written to baselines/baseline_alls.yaml
+2025-06-28 13:10:25,430 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=operating-systems
+2025-06-28 13:10:25,467 [INFO] Found file link: DoD Consent Banner with FAQ -> https://dl.dod.cyber.mil/hidden/home/unclass-consent_banner.zip (updated: Unknown)
+2025-06-28 13:10:25,468 [INFO] Found file link: Active Directory Domain STIG - Ver 3, Rel 5 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Domain_V3R5_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,469 [INFO] Found file link: Active Directory Forest STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Forest_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,470 [INFO] Found file link: Anduril NixOS STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Anduril_NixOS_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,472 [INFO] Found file link: Apple macOS 14 (Sonoma) STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_14_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,472 [INFO] Found file link: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R3_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,475 [INFO] Found file link: Canonical Ubuntu 20.04 LTS STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_20-04_LTS_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,475 [INFO] Found file link: Canonical Ubuntu 22.04 LTS STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_22-04_LTS_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,477 [INFO] Found file link: Canonical Ubuntu 24.04 LTS STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_24-04_LTS_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,478 [INFO] Found file link: CloudLinux AlmaLinux OS 9 STIG - Ver 1, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CL_AlmaLinux_OS_9_V1R2_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,479 [INFO] Found file link: General Purpose Operating System SRG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_GPOS_V3R2_SRG.zip (updated: Unknown)
+2025-06-28 13:10:25,481 [INFO] Found file link: IBM AIX 7.x STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_AIX_7-x_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,483 [INFO] Found file link: IBM Hardware Management Console (HMC) STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_HMC_V2R1_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,486 [INFO] Found file link: IBM z/OS STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zOS_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,488 [INFO] Found file link: IBM zSecure Suite STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zSecure_Suite_V1R3_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,490 [INFO] Found file link: IBM zVM Using CA VMSecure STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zVM_Using_CA_VMSecure_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,490 [INFO] Found file link: Mainframe Product SRG - Ver 3, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Mainframe_Product_V3R3_SRG.zip (updated: Unknown)
+2025-06-28 13:10:25,492 [INFO] Found file link: Microsoft Windows 10 STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_10_V3R4_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,494 [INFO] Found file link: Microsoft Windows 11 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_11_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,497 [INFO] Found file link: Microsoft Windows Defender Firewall with Advanced Security STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Defender_Firewall_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,500 [INFO] Found file link: Microsoft Windows PAW STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_PAW_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,504 [INFO] Found file link: Microsoft Windows Server 2019 STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2019_V3R4_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,508 [INFO] Found file link: Microsoft Windows Server 2022 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2022_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,509 [INFO] Found file link: Oracle Linux 7 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_7_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,515 [INFO] Found file link: Oracle Linux 8 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_8_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,516 [INFO] Found file link: Oracle Linux 9 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_9_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,523 [INFO] Found file link: Red Hat Enterprise Linux 8 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,523 [INFO] Found file link: Red Hat Enterprise Linux 9 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_9_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,523 [INFO] Found file link: SLES V11 for System z STIG - Ver 1, Rel 12 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_V11_for_System_z_V1R12_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,529 [INFO] Found file link: Solaris 11 SPARC STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_SPARC_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,531 [INFO] Found file link: Solaris 11 x86 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_x86_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,534 [INFO] Found file link: SUSE Linux Enterprise Micro 5 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLEM_5_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,539 [INFO] Found file link: SUSE Linux Enterprise Server 12 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_12_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,539 [INFO] Found file link: SUSE Linux Enterprise Server 15 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_15_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,540 [INFO] Found file link: Virtual Machine Manager SRG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Virtual_Machine_Manager_V2R2_SRG.zip (updated: Unknown)
+2025-06-28 13:10:25,547 [INFO] Found file link: VMware vSphere 7.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_vSphere_7-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,549 [INFO] Found file link: VMware vSphere 8.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_vSphere_8-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:10:25,554 [INFO] Found file link: z/OS ACF2 Products -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_ACF2_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:10:25,554 [INFO] Found file link: z/OS RACF Products -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_RACF_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:10:25,555 [INFO] Found file link: z/OS SRR Scripts -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_Y25M04_SRR.zip (updated: Unknown)
+2025-06-28 13:10:25,560 [INFO] Found file link: z/OS TSS Products STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_TSS_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:10:25,576 [INFO] Baseline successfully written to baselines/baseline_checklists.yaml
+2025-06-28 13:22:34,514 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=operating-systems
+2025-06-28 13:22:34,550 [INFO] Found file link: DoD Consent Banner with FAQ -> https://dl.dod.cyber.mil/hidden/home/unclass-consent_banner.zip (updated: Unknown)
+2025-06-28 13:22:34,550 [INFO] Found file link: Active Directory Domain STIG - Ver 3, Rel 5 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Domain_V3R5_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,551 [INFO] Found file link: Active Directory Forest STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Forest_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,552 [INFO] Found file link: Anduril NixOS STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Anduril_NixOS_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,553 [INFO] Found file link: Apple macOS 14 (Sonoma) STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_14_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,554 [INFO] Found file link: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R3_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,556 [INFO] Found file link: Canonical Ubuntu 20.04 LTS STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_20-04_LTS_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,556 [INFO] Found file link: Canonical Ubuntu 22.04 LTS STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_22-04_LTS_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,557 [INFO] Found file link: Canonical Ubuntu 24.04 LTS STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_24-04_LTS_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,559 [INFO] Found file link: CloudLinux AlmaLinux OS 9 STIG - Ver 1, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CL_AlmaLinux_OS_9_V1R2_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,560 [INFO] Found file link: General Purpose Operating System SRG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_GPOS_V3R2_SRG.zip (updated: Unknown)
+2025-06-28 13:22:34,562 [INFO] Found file link: IBM AIX 7.x STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_AIX_7-x_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,563 [INFO] Found file link: IBM Hardware Management Console (HMC) STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_HMC_V2R1_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,564 [INFO] Found file link: IBM z/OS STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zOS_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,566 [INFO] Found file link: IBM zSecure Suite STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zSecure_Suite_V1R3_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,568 [INFO] Found file link: IBM zVM Using CA VMSecure STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zVM_Using_CA_VMSecure_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,570 [INFO] Found file link: Mainframe Product SRG - Ver 3, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Mainframe_Product_V3R3_SRG.zip (updated: Unknown)
+2025-06-28 13:22:34,574 [INFO] Found file link: Microsoft Windows 10 STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_10_V3R4_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,576 [INFO] Found file link: Microsoft Windows 11 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_11_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,579 [INFO] Found file link: Microsoft Windows Defender Firewall with Advanced Security STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Defender_Firewall_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,581 [INFO] Found file link: Microsoft Windows PAW STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_PAW_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,583 [INFO] Found file link: Microsoft Windows Server 2019 STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2019_V3R4_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,585 [INFO] Found file link: Microsoft Windows Server 2022 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2022_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,588 [INFO] Found file link: Oracle Linux 7 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_7_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,590 [INFO] Found file link: Oracle Linux 8 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_8_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,593 [INFO] Found file link: Oracle Linux 9 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_9_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,600 [INFO] Found file link: Red Hat Enterprise Linux 8 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,604 [INFO] Found file link: Red Hat Enterprise Linux 9 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_9_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,607 [INFO] Found file link: SLES V11 for System z STIG - Ver 1, Rel 12 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_V11_for_System_z_V1R12_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,611 [INFO] Found file link: Solaris 11 SPARC STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_SPARC_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,611 [INFO] Found file link: Solaris 11 x86 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_x86_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,617 [INFO] Found file link: SUSE Linux Enterprise Micro 5 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLEM_5_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,622 [INFO] Found file link: SUSE Linux Enterprise Server 12 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_12_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,627 [INFO] Found file link: SUSE Linux Enterprise Server 15 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_15_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,627 [INFO] Found file link: Virtual Machine Manager SRG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Virtual_Machine_Manager_V2R2_SRG.zip (updated: Unknown)
+2025-06-28 13:22:34,633 [INFO] Found file link: VMware vSphere 7.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_vSphere_7-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,637 [INFO] Found file link: VMware vSphere 8.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_vSphere_8-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:22:34,641 [INFO] Found file link: z/OS ACF2 Products -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_ACF2_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:22:34,645 [INFO] Found file link: z/OS RACF Products -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_RACF_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:22:34,645 [INFO] Found file link: z/OS SRR Scripts -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_Y25M04_SRR.zip (updated: Unknown)
+2025-06-28 13:22:34,651 [INFO] Found file link: z/OS TSS Products STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_TSS_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:22:34,658 [INFO] Loaded baseline successfully.
+2025-06-28 13:22:34,665 [INFO] [NEW] Not in baseline: DoD Consent Banner with FAQ
+2025-06-28 13:22:34,665 [INFO] [NEW] Not in baseline: Active Directory Domain STIG
+2025-06-28 13:22:34,668 [INFO] [NEW] Not in baseline: Active Directory Forest STIG
+2025-06-28 13:22:34,672 [INFO] [NEW] Not in baseline: Anduril NixOS STIG
+2025-06-28 13:22:34,672 [INFO] [NEW] Not in baseline: Apple macOS 14 (Sonoma) STIG
+2025-06-28 13:22:34,673 [INFO] [NEW] Not in baseline: Apple macOS 15 (Sequoia) STIG
+2025-06-28 13:22:34,679 [INFO] [NEW] Not in baseline: Canonical Ubuntu 20.04 LTS STIG
+2025-06-28 13:22:34,682 [INFO] [NEW] Not in baseline: Canonical Ubuntu 22.04 LTS STIG
+2025-06-28 13:22:34,684 [INFO] [NEW] Not in baseline: Canonical Ubuntu 24.04 LTS STIG
+2025-06-28 13:22:34,686 [INFO] [NEW] Not in baseline: CloudLinux AlmaLinux OS 9 STIG
+2025-06-28 13:22:34,688 [INFO] [NEW] Not in baseline: General Purpose Operating System SRG
+2025-06-28 13:22:34,690 [INFO] [NEW] Not in baseline: IBM AIX 7.x STIG
+2025-06-28 13:22:34,692 [INFO] [NEW] Not in baseline: IBM Hardware Management Console (HMC) STIG
+2025-06-28 13:22:34,694 [INFO] [NEW] Not in baseline: IBM z/OS STIG
+2025-06-28 13:22:34,696 [INFO] [NEW] Not in baseline: IBM zSecure Suite STIG
+2025-06-28 13:22:34,700 [INFO] [NEW] Not in baseline: IBM zVM Using CA VMSecure STIG
+2025-06-28 13:22:34,702 [INFO] [NEW] Not in baseline: Mainframe Product SRG
+2025-06-28 13:22:34,704 [INFO] [NEW] Not in baseline: Microsoft Windows 10 STIG
+2025-06-28 13:22:34,706 [INFO] [NEW] Not in baseline: Microsoft Windows 11 STIG
+2025-06-28 13:22:34,708 [INFO] [NEW] Not in baseline: Microsoft Windows Defender Firewall with Advanced Security STIG
+2025-06-28 13:22:34,710 [INFO] [NEW] Not in baseline: Microsoft Windows PAW STIG
+2025-06-28 13:22:34,711 [INFO] [NEW] Not in baseline: Microsoft Windows Server 2019 STIG
+2025-06-28 13:22:34,713 [INFO] [NEW] Not in baseline: Microsoft Windows Server 2022 STIG
+2025-06-28 13:22:34,715 [INFO] [NEW] Not in baseline: Oracle Linux 7 STIG
+2025-06-28 13:22:34,717 [INFO] [NEW] Not in baseline: Oracle Linux 8 STIG
+2025-06-28 13:22:34,718 [INFO] [NEW] Not in baseline: Oracle Linux 9 STIG
+2025-06-28 13:22:34,718 [INFO] [CHANGE] Version mismatch for Red Hat Enterprise Linux 8 STIG: Expected Ver 1 Rel 1, Found Ver 2 Rel 3
+2025-06-28 13:22:34,724 [INFO] [NEW] Not in baseline: Red Hat Enterprise Linux 9 STIG
+2025-06-28 13:22:34,724 [INFO] [NEW] Not in baseline: SLES V11 for System z STIG
+2025-06-28 13:22:34,726 [INFO] [NEW] Not in baseline: Solaris 11 SPARC STIG
+2025-06-28 13:22:34,729 [INFO] [NEW] Not in baseline: Solaris 11 x86 STIG
+2025-06-28 13:22:34,730 [INFO] [NEW] Not in baseline: SUSE Linux Enterprise Micro 5 STIG
+2025-06-28 13:22:34,733 [INFO] [NEW] Not in baseline: SUSE Linux Enterprise Server 12 STIG
+2025-06-28 13:22:34,734 [INFO] [NEW] Not in baseline: SUSE Linux Enterprise Server 15 STIG
+2025-06-28 13:22:34,736 [INFO] [NEW] Not in baseline: Virtual Machine Manager SRG
+2025-06-28 13:22:34,736 [INFO] [NEW] Not in baseline: VMware vSphere 7.0 STIG
+2025-06-28 13:22:34,738 [INFO] [NEW] Not in baseline: VMware vSphere 8.0 STIG
+2025-06-28 13:22:34,741 [INFO] [NEW] Not in baseline: z/OS ACF2 Products
+2025-06-28 13:22:34,741 [INFO] [NEW] Not in baseline: z/OS RACF Products
+2025-06-28 13:22:34,746 [INFO] [NEW] Not in baseline: z/OS SRR Scripts
+2025-06-28 13:22:34,746 [INFO] [NEW] Not in baseline: z/OS TSS Products STIG
+2025-06-28 13:22:34,747 [INFO] Found 1 new/changed items. Starting downloads...
+2025-06-28 13:22:34,749 [INFO] Downloading Red Hat Enterprise Linux 8 STIG from https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V2R3_STIG.zip (attempt 1)...
+2025-06-28 13:22:35,266 [INFO] Saved to cklb_proc/xccdf_lib/U_RHEL_8_V2R3_STIG.zip
+2025-06-28 13:22:35,272 [INFO] Extracting U_RHEL_8_V2R3_Manual_STIG/U_RHEL_8_STIG_V2R3_Manual-xccdf.xml from U_RHEL_8_V2R3_STIG.zip
+2025-06-28 13:22:35,279 [INFO] Deleted original ZIP: U_RHEL_8_V2R3_STIG.zip
+2025-06-28 13:22:35,369 [INFO] Generated checklist: cklb_proc/cklb_lib/U_RHEL_8_STIG_V2R3_20250628.cklb
+2025-06-28 13:38:39,554 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=operating-systems
+2025-06-28 13:38:39,593 [INFO] Found file link: DoD Consent Banner with FAQ -> https://dl.dod.cyber.mil/hidden/home/unclass-consent_banner.zip (updated: Unknown)
+2025-06-28 13:38:39,593 [INFO] Found file link: Active Directory Domain STIG - Ver 3, Rel 5 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Domain_V3R5_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,594 [INFO] Found file link: Active Directory Forest STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Forest_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,595 [INFO] Found file link: Anduril NixOS STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Anduril_NixOS_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,596 [INFO] Found file link: Apple macOS 14 (Sonoma) STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_14_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,596 [INFO] Found file link: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R3_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,597 [INFO] Found file link: Canonical Ubuntu 20.04 LTS STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_20-04_LTS_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,597 [INFO] Found file link: Canonical Ubuntu 22.04 LTS STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_22-04_LTS_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,598 [INFO] Found file link: Canonical Ubuntu 24.04 LTS STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_24-04_LTS_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,599 [INFO] Found file link: CloudLinux AlmaLinux OS 9 STIG - Ver 1, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CL_AlmaLinux_OS_9_V1R2_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,599 [INFO] Found file link: General Purpose Operating System SRG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_GPOS_V3R2_SRG.zip (updated: Unknown)
+2025-06-28 13:38:39,600 [INFO] Found file link: IBM AIX 7.x STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_AIX_7-x_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,600 [INFO] Found file link: IBM Hardware Management Console (HMC) STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_HMC_V2R1_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,601 [INFO] Found file link: IBM z/OS STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zOS_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,601 [INFO] Found file link: IBM zSecure Suite STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zSecure_Suite_V1R3_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,602 [INFO] Found file link: IBM zVM Using CA VMSecure STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zVM_Using_CA_VMSecure_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,602 [INFO] Found file link: Mainframe Product SRG - Ver 3, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Mainframe_Product_V3R3_SRG.zip (updated: Unknown)
+2025-06-28 13:38:39,603 [INFO] Found file link: Microsoft Windows 10 STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_10_V3R4_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,603 [INFO] Found file link: Microsoft Windows 11 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_11_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,604 [INFO] Found file link: Microsoft Windows Defender Firewall with Advanced Security STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Defender_Firewall_V2R2_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,605 [INFO] Found file link: Microsoft Windows PAW STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_PAW_V3R1_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,606 [INFO] Found file link: Microsoft Windows Server 2019 STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2019_V3R4_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,607 [INFO] Found file link: Microsoft Windows Server 2022 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2022_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,607 [INFO] Found file link: Oracle Linux 7 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_7_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,608 [INFO] Found file link: Oracle Linux 8 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_8_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,608 [INFO] Found file link: Oracle Linux 9 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_9_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,609 [INFO] Found file link: Red Hat Enterprise Linux 8 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V2R3_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,609 [INFO] Found file link: Red Hat Enterprise Linux 9 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_9_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,610 [INFO] Found file link: SLES V11 for System z STIG - Ver 1, Rel 12 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_V11_for_System_z_V1R12_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,611 [INFO] Found file link: Solaris 11 SPARC STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_SPARC_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,611 [INFO] Found file link: Solaris 11 x86 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_x86_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,612 [INFO] Found file link: SUSE Linux Enterprise Micro 5 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLEM_5_V1R1_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,612 [INFO] Found file link: SUSE Linux Enterprise Server 12 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_12_V3R2_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,613 [INFO] Found file link: SUSE Linux Enterprise Server 15 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_15_V2R4_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,613 [INFO] Found file link: Virtual Machine Manager SRG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Virtual_Machine_Manager_V2R2_SRG.zip (updated: Unknown)
+2025-06-28 13:38:39,614 [INFO] Found file link: VMware vSphere 7.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_vSphere_7-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,614 [INFO] Found file link: VMware vSphere 8.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_vSphere_8-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-28 13:38:39,615 [INFO] Found file link: z/OS ACF2 Products -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_ACF2_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:38:39,615 [INFO] Found file link: z/OS RACF Products -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_RACF_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:38:39,616 [INFO] Found file link: z/OS SRR Scripts -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_Y25M04_SRR.zip (updated: Unknown)
+2025-06-28 13:38:39,616 [INFO] Found file link: z/OS TSS Products STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_TSS_Y25M04_Products.zip (updated: Unknown)
+2025-06-28 13:38:39,618 [INFO] Loaded baseline successfully.
+2025-06-28 13:38:39,619 [INFO] [NEW] Not in baseline: DoD Consent Banner with FAQ
+2025-06-28 13:38:39,619 [INFO] [NEW] Not in baseline: Active Directory Domain STIG
+2025-06-28 13:38:39,619 [INFO] [NEW] Not in baseline: Active Directory Forest STIG
+2025-06-28 13:38:39,619 [INFO] [NEW] Not in baseline: Anduril NixOS STIG
+2025-06-28 13:38:39,620 [INFO] [NEW] Not in baseline: Apple macOS 14 (Sonoma) STIG
+2025-06-28 13:38:39,620 [INFO] [NEW] Not in baseline: Apple macOS 15 (Sequoia) STIG
+2025-06-28 13:38:39,620 [INFO] [NEW] Not in baseline: Canonical Ubuntu 20.04 LTS STIG
+2025-06-28 13:38:39,621 [INFO] [NEW] Not in baseline: Canonical Ubuntu 22.04 LTS STIG
+2025-06-28 13:38:39,621 [INFO] [NEW] Not in baseline: Canonical Ubuntu 24.04 LTS STIG
+2025-06-28 13:38:39,621 [INFO] [NEW] Not in baseline: CloudLinux AlmaLinux OS 9 STIG
+2025-06-28 13:38:39,622 [INFO] [NEW] Not in baseline: General Purpose Operating System SRG
+2025-06-28 13:38:39,622 [INFO] [NEW] Not in baseline: IBM AIX 7.x STIG
+2025-06-28 13:38:39,622 [INFO] [NEW] Not in baseline: IBM Hardware Management Console (HMC) STIG
+2025-06-28 13:38:39,623 [INFO] [NEW] Not in baseline: IBM z/OS STIG
+2025-06-28 13:38:39,623 [INFO] [NEW] Not in baseline: IBM zSecure Suite STIG
+2025-06-28 13:38:39,623 [INFO] [NEW] Not in baseline: IBM zVM Using CA VMSecure STIG
+2025-06-28 13:38:39,624 [INFO] [NEW] Not in baseline: Mainframe Product SRG
+2025-06-28 13:38:39,624 [INFO] [NEW] Not in baseline: Microsoft Windows 10 STIG
+2025-06-28 13:38:39,625 [INFO] [NEW] Not in baseline: Microsoft Windows 11 STIG
+2025-06-28 13:38:39,625 [INFO] [NEW] Not in baseline: Microsoft Windows Defender Firewall with Advanced Security STIG
+2025-06-28 13:38:39,626 [INFO] [NEW] Not in baseline: Microsoft Windows PAW STIG
+2025-06-28 13:38:39,626 [INFO] [NEW] Not in baseline: Microsoft Windows Server 2019 STIG
+2025-06-28 13:38:39,626 [INFO] [NEW] Not in baseline: Microsoft Windows Server 2022 STIG
+2025-06-28 13:38:39,626 [INFO] [NEW] Not in baseline: Oracle Linux 7 STIG
+2025-06-28 13:38:39,627 [INFO] [NEW] Not in baseline: Oracle Linux 8 STIG
+2025-06-28 13:38:39,627 [INFO] [NEW] Not in baseline: Oracle Linux 9 STIG
+2025-06-28 13:38:39,627 [INFO] [CHANGE] Version mismatch for Red Hat Enterprise Linux 8 STIG: Expected Ver 1 Rel 1, Found Ver 2 Rel 3
+2025-06-28 13:38:39,628 [INFO] [NEW] Not in baseline: Red Hat Enterprise Linux 9 STIG
+2025-06-28 13:38:39,628 [INFO] [NEW] Not in baseline: SLES V11 for System z STIG
+2025-06-28 13:38:39,628 [INFO] [NEW] Not in baseline: Solaris 11 SPARC STIG
+2025-06-28 13:38:39,629 [INFO] [NEW] Not in baseline: Solaris 11 x86 STIG
+2025-06-28 13:38:39,629 [INFO] [NEW] Not in baseline: SUSE Linux Enterprise Micro 5 STIG
+2025-06-28 13:38:39,629 [INFO] [NEW] Not in baseline: SUSE Linux Enterprise Server 12 STIG
+2025-06-28 13:38:39,630 [INFO] [NEW] Not in baseline: SUSE Linux Enterprise Server 15 STIG
+2025-06-28 13:38:39,630 [INFO] [NEW] Not in baseline: Virtual Machine Manager SRG
+2025-06-28 13:38:39,630 [INFO] [NEW] Not in baseline: VMware vSphere 7.0 STIG
+2025-06-28 13:38:39,631 [INFO] [NEW] Not in baseline: VMware vSphere 8.0 STIG
+2025-06-28 13:38:39,631 [INFO] [NEW] Not in baseline: z/OS ACF2 Products
+2025-06-28 13:38:39,631 [INFO] [NEW] Not in baseline: z/OS RACF Products
+2025-06-28 13:38:39,632 [INFO] [NEW] Not in baseline: z/OS SRR Scripts
+2025-06-28 13:38:39,632 [INFO] [NEW] Not in baseline: z/OS TSS Products STIG
+2025-06-28 13:38:39,633 [INFO] Found 1 new/changed items. Starting downloads...
+2025-06-28 13:38:39,633 [INFO] Downloading Red Hat Enterprise Linux 8 STIG from https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V2R3_STIG.zip (attempt 1)...
+2025-06-28 13:38:39,881 [INFO] Saved to cklb_proc/xccdf_lib/U_RHEL_8_V2R3_STIG.zip
+2025-06-28 13:38:39,884 [INFO] Extracting U_RHEL_8_V2R3_Manual_STIG/U_RHEL_8_STIG_V2R3_Manual-xccdf.xml from U_RHEL_8_V2R3_STIG.zip
+2025-06-28 13:38:39,894 [INFO] Deleted original ZIP: U_RHEL_8_V2R3_STIG.zip
+2025-06-28 13:38:39,967 [INFO] Generated checklist: cklb_proc/cklb_lib/U_RHEL_8_STIG_V2R3_20250628.cklb

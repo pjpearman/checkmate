@@ -166,6 +166,166 @@ style.configure("Modern.TCombobox",
     font=FONTS['default'])
 
 # === Helper Functions ===
+class ProgressPopup:
+    """A popup window that shows progress for long-running background tasks."""
+    
+    def __init__(self, parent, title="Processing...", message="Please wait while the task completes."):
+        self.parent = parent
+        self.popup = None
+        self.start_time = None
+        self.timer_label = None
+        self.progress_var = None
+        self.is_running = False
+        
+        self.create_popup(title, message)
+    
+    def create_popup(self, title, message):
+        """Create and display the progress popup."""
+        self.popup = tk.Toplevel(self.parent)
+        self.popup.title(title)
+        center_window_on_parent(self.popup, self.parent, 400, 200)
+        self.popup.configure(bg=COLORS['bg_primary'])
+        self.popup.grab_set()  # Make modal
+        self.popup.protocol("WM_DELETE_WINDOW", self.on_close_attempt)
+        
+        # Main frame
+        main_frame = ttk.Frame(self.popup, style="Card.TFrame")
+        main_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        
+        # Icon and title
+        header_frame = ttk.Frame(main_frame)
+        header_frame.pack(fill="x", pady=(0, 15))
+        
+        # Spinning icon (using rotating characters)
+        self.icon_label = ttk.Label(header_frame, text="⏳", font=('Inter', 16))
+        self.icon_label.pack(side="left", padx=(0, 10))
+        
+        ttk.Label(header_frame, text=title, font=FONTS['heading']).pack(side="left")
+        
+        # Message
+        ttk.Label(main_frame, text=message, font=FONTS['default'], 
+                 wraplength=300, justify="center").pack(pady=(0, 15))
+        
+        # Progress bar
+        self.progress_var = tk.DoubleVar()
+        progress_bar = ttk.Progressbar(main_frame, mode='indeterminate', length=300)
+        progress_bar.pack(pady=(0, 15))
+        progress_bar.start(10)  # Start animation
+        
+        # Timer display
+        timer_frame = ttk.Frame(main_frame)
+        timer_frame.pack(fill="x")
+        
+        ttk.Label(timer_frame, text="Elapsed time:", font=FONTS['small']).pack(side="left")
+        self.timer_label = ttk.Label(timer_frame, text="00:00", font=FONTS['mono'], 
+                                   foreground=COLORS['accent'])
+        self.timer_label.pack(side="right")
+        
+        # Status text
+        self.status_label = ttk.Label(main_frame, text="Initializing...", 
+                                    font=FONTS['small'], foreground=COLORS['text_secondary'])
+        self.status_label.pack(pady=(10, 0))
+        
+        # Start the timer
+        self.start_time = threading.Lock()
+        self.is_running = True
+        self.start_timer()
+        self.animate_icon()
+    
+    def start_timer(self):
+        """Start the elapsed time timer."""
+        import time
+        self.start_time = time.time()
+        self.update_timer()
+    
+    def update_timer(self):
+        """Update the elapsed time display."""
+        if not self.is_running or not self.popup.winfo_exists():
+            return
+            
+        try:
+            import time
+            elapsed = time.time() - self.start_time
+            minutes = int(elapsed // 60)
+            seconds = int(elapsed % 60)
+            time_str = f"{minutes:02d}:{seconds:02d}"
+            self.timer_label.configure(text=time_str)
+            
+            # Schedule next update
+            self.popup.after(1000, self.update_timer)
+        except:
+            pass
+    
+    def animate_icon(self):
+        """Animate the progress icon."""
+        if not self.is_running or not self.popup.winfo_exists():
+            return
+            
+        try:
+            # Cycle through different clock icons
+            icons = ["⏳", "⌛", "🕐", "🕑", "🕒", "🕓"]
+            current_text = self.icon_label.cget("text")
+            try:
+                current_index = icons.index(current_text)
+                next_index = (current_index + 1) % len(icons)
+            except ValueError:
+                next_index = 0
+            
+            self.icon_label.configure(text=icons[next_index])
+            
+            # Schedule next animation frame
+            self.popup.after(500, self.animate_icon)
+        except:
+            pass
+    
+    def update_status(self, status_text):
+        """Update the status message."""
+        if self.popup and self.popup.winfo_exists():
+            try:
+                self.status_label.configure(text=status_text)
+                self.popup.update_idletasks()
+            except:
+                pass
+    
+    def on_close_attempt(self):
+        """Handle user attempting to close the popup."""
+        # Don't allow closing while task is running
+        pass
+    
+    def close(self):
+        """Close the progress popup."""
+        self.is_running = False
+        if self.popup and self.popup.winfo_exists():
+            try:
+                self.popup.grab_release()
+                self.popup.destroy()
+            except:
+                pass
+
+def center_window_on_parent(window, parent, width=700, height=500):
+    """Center a window relative to its parent window instead of the screen."""
+    window.update_idletasks()
+    
+    # Get parent window position and size
+    parent.update_idletasks()
+    parent_x = parent.winfo_x()
+    parent_y = parent.winfo_y()
+    parent_width = parent.winfo_width()
+    parent_height = parent.winfo_height()
+    
+    # Calculate position to center on parent
+    x = parent_x + (parent_width // 2) - (width // 2)
+    y = parent_y + (parent_height // 2) - (height // 2)
+    
+    # Ensure the window stays on screen
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    x = max(0, min(x, screen_width - width))
+    y = max(0, min(y, screen_height - height))
+    
+    window.geometry(f"{width}x{height}+{x}+{y}")
+    window.minsize(400, 300)
+
 def log_job_status(message):
     if hasattr(root, 'log_output'):
         root.log_output.configure(state="normal")
@@ -196,12 +356,24 @@ def get_internal_mode(mode_label):
 # === Button Commands with Feedback ===
 def run_generate_baseline_with_feedback():
     log_job_status("[INFO] Job started: Generating new baseline...")
+    
+    # Show progress popup
+    progress_popup = ProgressPopup(
+        root, 
+        "Generating Baseline", 
+        "Scanning DISA STIG library and creating baseline file..."
+    )
+    
     def on_status_update(status):
         status_text.set(status)
+        progress_popup.update_status(status)
         if status == "Done":
             log_job_status("[INFO] Job complete: Baseline generation finished.")
+            progress_popup.close()
         elif status.startswith("Error"):
             log_job_status(f"[ERROR] {status}")
+            progress_popup.close()
+    
     threading.Thread(target=lambda: run_generate_baseline_task(
         mode=get_internal_mode(mode_var.get()),
         on_status_update=on_status_update,
@@ -210,17 +382,41 @@ def run_generate_baseline_with_feedback():
 
 def import_cklb_with_feedback():
     log_job_status("[INFO] Job started: Importing CKLB library...")
-    threading.Thread(target=lambda: import_cklb_files(on_import_complete=refresh_usr_listbox)).start()
-    log_job_status("[INFO] Job complete: CKLB import finished.")
+    
+    # Show progress popup
+    progress_popup = ProgressPopup(
+        root, 
+        "Importing CKLB Library", 
+        "Processing and importing checklist files..."
+    )
+    
+    def on_complete():
+        refresh_usr_listbox()
+        log_job_status("[INFO] Job complete: CKLB import finished.")
+        progress_popup.close()
+    
+    threading.Thread(target=lambda: import_cklb_files(on_import_complete=on_complete)).start()
 
 def run_compare_with_feedback():
     log_job_status("[INFO] Job started: Running tasks...")
+    
+    # Show progress popup
+    progress_popup = ProgressPopup(
+        root, 
+        "Running Tasks", 
+        "Checking for updates and processing STIG files..."
+    )
+    
     def on_status_update(status):
         status_text.set(status)
+        progress_popup.update_status(status)
         if status == "Done":
             log_job_status("[INFO] Job complete: Tasks finished.")
+            progress_popup.close()
         elif status.startswith("Error"):
             log_job_status(f"[ERROR] {status}")
+            progress_popup.close()
+    
     threading.Thread(target=lambda: run_compare_task(
         mode=get_internal_mode(mode_var.get()),
         baseline_path=yaml_path_var.get(),
@@ -234,8 +430,9 @@ def run_compare_with_feedback():
 def download_cklb_popup():
     popup = tk.Toplevel(root)
     popup.title("Download CKLB Files")
-    popup.geometry("500x400")
+    center_window_on_parent(popup, root, 500, 400)
     popup.configure(bg=COLORS['bg_primary'])
+    popup.grab_set()  # Make popup modal
     
     ttk.Label(popup, text="Select CKLB(s) to download:", font=FONTS['heading']).pack(pady=(20, 10))
     
@@ -574,26 +771,47 @@ def update_now_handler():
 
 def run_merge_with_prefix(prefix, force_merge):
     log_job_status("[INFO] Job started: Merging checklists...")
-    merged_results = run_merge_task(
-        selected_old_files=[file_listbox.get(i) for i in file_listbox.curselection()],
-        new_name=cklb_sel_var.get(),
-        usr_dir=usr_dir,
-        cklb_dir=cklb_dir,
-        on_status_update=status_text.set,
-        force=force_merge,
-        prefix=prefix
+    
+    # Show progress popup
+    progress_popup = ProgressPopup(
+        root, 
+        "Merging Checklists", 
+        "Updating checklists with new STIG versions..."
     )
     
-    for result in merged_results:
-        if result["new_rules"]:
-            show_multi_rule_input(
-                result["new_rules"], 
-                [result["merged_name"]], 
-                lambda user_input: handle_rule_updates(result, user_input),
-                lambda: log_job_status("[INFO] Rule input cancelled.")
+    def on_merge_complete():
+        progress_popup.close()
+    
+    def run_merge():
+        try:
+            merged_results = run_merge_task(
+                selected_old_files=[file_listbox.get(i) for i in file_listbox.curselection()],
+                new_name=cklb_sel_var.get(),
+                usr_dir=usr_dir,
+                cklb_dir=cklb_dir,
+                on_status_update=lambda status: (status_text.set(status), progress_popup.update_status(status)),
+                force=force_merge,
+                prefix=prefix
             )
-        else:
-            log_job_status("[INFO] Merge complete.")
+            
+            # Close progress popup before showing rule input
+            progress_popup.close()
+            
+            for result in merged_results:
+                if result["new_rules"]:
+                    show_multi_rule_input(
+                        result["new_rules"], 
+                        [result["merged_name"]], 
+                        lambda user_input: handle_rule_updates(result, user_input),
+                        lambda: log_job_status("[INFO] Rule input cancelled.")
+                    )
+                else:
+                    log_job_status("[INFO] Merge complete.")
+        except Exception as e:
+            progress_popup.close()
+            log_job_status(f"[ERROR] Merge failed: {e}")
+    
+    threading.Thread(target=run_merge).start()
 
 def handle_rule_updates(result, user_input):
     merged_cklb = load_cklb(result["merged_path"])

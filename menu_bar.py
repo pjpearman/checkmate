@@ -4,12 +4,37 @@ import yaml, json
 import os
 import subprocess
 
+def center_window_on_parent(window, parent, width=700, height=500):
+    """Center a window relative to its parent window instead of the screen."""
+    window.update_idletasks()
+    
+    # Get parent window position and size
+    parent.update_idletasks()
+    parent_x = parent.winfo_x()
+    parent_y = parent.winfo_y()
+    parent_width = parent.winfo_width()
+    parent_height = parent.winfo_height()
+    
+    # Calculate position to center on parent
+    x = parent_x + (parent_width // 2) - (width // 2)
+    y = parent_y + (parent_height // 2) - (height // 2)
+    
+    # Ensure the window stays on screen
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    x = max(0, min(x, screen_width - width))
+    y = max(0, min(y, screen_height - height))
+    
+    window.geometry(f"{width}x{height}+{x}+{y}")
+    window.minsize(400, 300)
+
 def open_directory_frame(parent, dir_path, editor_cmd):
     # Create a new window
     win = Toplevel(parent)
-    center_window(win, 700, 500)
+    center_window_on_parent(win, parent, 700, 500)
     win.title(f"Files in {os.path.basename(dir_path)}")
     win.minsize(400, 300)
+    win.grab_set()  # Make window modal
     frame = Frame(win)
     frame.pack(fill='both', expand=True)
 
@@ -29,9 +54,9 @@ def open_directory_frame(parent, dir_path, editor_cmd):
     def delete_selected():
         sel = list(listbox.curselection())
         if not sel:
-            messagebox.showwarning("No selection", "Select files to delete.")
+            messagebox.showwarning("No selection", "Select files to delete.", parent=win)
             return
-        confirm = messagebox.askyesno("Confirm Delete", f"Delete {len(sel)} file(s)?")
+        confirm = messagebox.askyesno("Confirm Delete", f"Delete {len(sel)} file(s)?", parent=win)
         if confirm:
             for idx in reversed(sel):
                 fname = listbox.get(idx)
@@ -39,12 +64,12 @@ def open_directory_frame(parent, dir_path, editor_cmd):
                     os.remove(os.path.join(dir_path, fname))
                     listbox.delete(idx)
                 except Exception as e:
-                    messagebox.showerror("Error", f"Failed to delete {fname}: {e}")
+                    messagebox.showerror("Error", f"Failed to delete {fname}: {e}", parent=win)
 
     def edit_selected():
         sel = list(listbox.curselection())
         if not sel:
-            messagebox.showwarning("No selection", "Select a file to edit.")
+            messagebox.showwarning("No selection", "Select a file to edit.", parent=win)
             return
         # Only allow editing one file at a time
         fname = listbox.get(sel[0])
@@ -56,9 +81,9 @@ def open_directory_frame(parent, dir_path, editor_cmd):
             import time
             time.sleep(0.5)
             if proc.poll() is not None:
-                messagebox.showerror("Error", f"Editor process exited immediately.\nCommand: {cmd}\nCheck if file_editor.py runs standalone.")
+                messagebox.showerror("Error", f"Editor process exited immediately.\nCommand: {cmd}\nCheck if file_editor.py runs standalone.", parent=win)
         except Exception as e:
-            messagebox.showerror("Error", f"Failed to open editor: {e}\nCommand: {cmd}")
+            messagebox.showerror("Error", f"Failed to open editor: {e}\nCommand: {cmd}", parent=win)
         win.destroy()
 
     def cancel():
@@ -86,16 +111,7 @@ def build_menu(root, yaml_path_var, on_closing):
 
     # Help Menu
     help_menu = tk.Menu(menu_bar, tearoff=0)
-    help_menu.add_command(label="About", command=lambda: messagebox.showinfo("About", "CheckMate GUI\nVersion 2.0"))
+    help_menu.add_command(label="About", command=lambda: messagebox.showinfo("About", "CheckMate GUI\nVersion 2.0", parent=root))
     menu_bar.add_cascade(label="Help", menu=help_menu)
 
     root.config(menu=menu_bar)
-
-def center_window(win, width=700, height=500):
-    win.update_idletasks()
-    screen_width = win.winfo_screenwidth()
-    screen_height = win.winfo_screenheight()
-    x = max((screen_width // 2) - (width // 2), 0)
-    y = max((screen_height // 2) - (height // 2), 0)
-    win.geometry(f"{width}x{height}+{x}+{y}")
-    win.minsize(400, 300)
