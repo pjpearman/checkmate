@@ -97,3 +97,17 @@
 [2025-06-29 07:58:31,531] INFO [tui.import_cklb_files:706] Imported: /workspaces/checkmate/user_docs/cklb_artifacts/mytesthost2_v2r1.cklb
 [2025-06-29 07:58:31,532] INFO [tui.import_cklb_files:706] Imported: /workspaces/checkmate/user_docs/cklb_artifacts/mytesthost3_v2r1.cklb
 [2025-06-29 07:58:31,532] INFO [tui.import_cklb_files:706] Imported: /workspaces/checkmate/user_docs/cklb_artifacts/splunkv1r5old.cklb
+[2025-06-29 08:00:19,786] INFO [tui.fetch_download_list:919] Fetching download list from URL
+[2025-06-29 08:00:25,804] INFO [tui.fetch_download_list:933] Found 438 downloadable STIG files
+[2025-06-29 08:00:39,796] INFO [tui.download_and_create_cklb:1689] CKLB creation result: 4/4 files processed
+[2025-06-29 08:05:48,131] INFO [tui.fetch_download_list:929] Fetching download list from URL
+[2025-06-29 08:05:53,137] INFO [tui.fetch_download_list:943] Found 438 downloadable STIG files
+[2025-06-29 08:06:02,118] INFO [tui.download_and_create_cklb:1699] CKLB creation result: 4/4 files processed
+[2025-06-29 08:06:24,973] INFO [tui.fetch_download_list:929] Fetching download list from URL
+[2025-06-29 08:06:29,992] INFO [tui.fetch_download_list:943] Found 438 downloadable STIG files
+[2025-06-29 08:06:41,544] INFO [tui.download_and_create_cklb:1699] CKLB creation result: 4/4 files processed
+[2025-06-29 08:06:42,344] INFO [tui.cleanup:144] CheckMate TUI cleanup completed
+[2025-06-29 08:19:04,786] INFO [tui.fetch_download_list:929] Fetching download list from URL
+[2025-06-29 08:19:10,803] INFO [tui.fetch_download_list:943] Found 438 downloadable STIG files
+[2025-06-29 08:19:23,147] INFO [tui.download_and_create_cklb:1699] CKLB creation result: 4/4 files processed
+[2025-06-29 08:19:34,185] INFO [tui.cleanup:144] CheckMate TUI cleanup completed

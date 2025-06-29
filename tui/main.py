@@ -131,9 +131,19 @@ class CheckMateTUI:
                 self.setup_curses()
             except Exception as e:
                 self.logger.error(f"Main loop error: {e}")
-                self.show_error(f"Error: {e}")
+                self.show_error_screen(f"Error: {e}")
                 
         self.cleanup()
+        
+    def cleanup(self):
+        """Clean up resources and restore terminal state."""
+        try:
+            if self.stdscr:
+                self.stdscr.clear()
+                self.stdscr.refresh()
+            self.logger.info("CheckMate TUI cleanup completed")
+        except Exception as e:
+            self.logger.error(f"Cleanup error: {e}")
         
     def setup_curses(self):
         """Setup curses display settings."""
