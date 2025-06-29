@@ -383,19 +383,12 @@ def run_generate_baseline_with_feedback():
 def import_cklb_with_feedback():
     log_job_status("[INFO] Job started: Importing CKLB library...")
     
-    # Show progress popup
-    progress_popup = ProgressPopup(
-        root, 
-        "Importing CKLB Library", 
-        "Processing and importing checklist files..."
-    )
-    
     def on_complete():
         refresh_usr_listbox()
         log_job_status("[INFO] Job complete: CKLB import finished.")
-        progress_popup.close()
     
-    threading.Thread(target=lambda: import_cklb_files(on_import_complete=on_complete)).start()
+    # Run import directly on main thread so file dialog appears properly
+    import_cklb_files(on_import_complete=on_complete, parent=root)
 
 def run_compare_with_feedback():
     log_job_status("[INFO] Job started: Running tasks...")

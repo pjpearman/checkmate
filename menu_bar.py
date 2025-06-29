@@ -45,10 +45,30 @@ def open_directory_frame(parent, dir_path, editor_cmd):
     listbox.pack(side='left', fill='both', expand=True)
     scrollbar.config(command=listbox.yview)
 
-    # Populate listbox
-    files = [f for f in os.listdir(dir_path) if os.path.isfile(os.path.join(dir_path, f))]
-    for f in files:
-        listbox.insert(END, f)
+    # Populate listbox with files and directories
+    current_dir = [dir_path]  # Use a list to allow modification in nested functions
+    def populate_listbox(path):
+        listbox.delete(0, END)  # Clear current listbox content
+        # Add parent directory navigation if not root
+        if os.path.abspath(path) != os.path.abspath(os.sep):
+            listbox.insert(END, "..")
+        # Add directories (with trailing slash)
+        try:
+            entries = os.listdir(path)
+            dirs = [d for d in entries if os.path.isdir(os.path.join(path, d))]
+            files = [f for f in entries if os.path.isfile(os.path.join(path, f))]
+            for d in sorted(dirs, key=lambda e: e.lower()):
+                listbox.insert(END, d + "/")
+            for f in sorted(files, key=lambda e: e.lower()):
+                listbox.insert(END, f)
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to list directory {path}: {e}", parent=win)
+        # Always keep the cursor visible
+        if listbox.size() > 0:
+            listbox.selection_clear(0, END)
+            listbox.see(0)
+
+    populate_listbox(current_dir[0])
 
     # Button actions
     def delete_selected():
@@ -60,8 +80,11 @@ def open_directory_frame(parent, dir_path, editor_cmd):
         if confirm:
             for idx in reversed(sel):
                 fname = listbox.get(idx)
+                if fname == ".." or fname.endswith("/"):
+                    continue  # Don't delete parent nav or directories here
                 try:
-                    os.remove(os.path.join(dir_path, fname))
+                    path_to_remove = os.path.join(current_dir[0], fname)
+                    os.remove(path_to_remove)  # Remove file
                     listbox.delete(idx)
                 except Exception as e:
                     messagebox.showerror("Error", f"Failed to delete {fname}: {e}", parent=win)
@@ -71,9 +94,11 @@ def open_directory_frame(parent, dir_path, editor_cmd):
         if not sel:
             messagebox.showwarning("No selection", "Select a file to edit.", parent=win)
             return
-        # Only allow editing one file at a time
         fname = listbox.get(sel[0])
-        file_path = os.path.join(dir_path, fname)
+        if fname == ".." or fname.endswith("/"):
+            messagebox.showwarning("Invalid Selection", "Please select a file (not a directory) to edit.", parent=win)
+            return
+        file_path = os.path.join(current_dir[0], fname)
         cmd = ["python3", editor_cmd, file_path]
         cwd = os.path.dirname(os.path.abspath(__file__))
         try:
@@ -86,8 +111,28 @@ def open_directory_frame(parent, dir_path, editor_cmd):
             messagebox.showerror("Error", f"Failed to open editor: {e}\nCommand: {cmd}", parent=win)
         win.destroy()
 
+    def on_double_click(event):
+        sel = list(listbox.curselection())
+        if not sel:
+            return
+        fname = listbox.get(sel[0])
+        if fname == "..":
+            parent_dir = os.path.dirname(current_dir[0])
+            current_dir[0] = parent_dir
+            populate_listbox(current_dir[0])
+            win.title(f"Files in {os.path.basename(current_dir[0])}")
+        elif fname.endswith("/"):
+            new_dir = os.path.join(current_dir[0], fname[:-1])
+            current_dir[0] = new_dir
+            populate_listbox(current_dir[0])
+            win.title(f"Files in {os.path.basename(current_dir[0])}")
+        # else: do nothing (file)
+
     def cancel():
         win.destroy()
+
+    # Bind double-click event
+    listbox.bind("<Double-Button-1>", on_double_click)
 
     # Buttons
     btn_frame = Frame(win)

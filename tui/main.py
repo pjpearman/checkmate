@@ -759,7 +759,7 @@ class CheckMateTUI:
                 current_dir = current_dir.parent
                 continue
                 
-            # Display items with selection
+            # Display items with selection and scrolling
             start_y = 4
             max_items = height - 10  # Leave room for instructions
             
@@ -768,14 +768,35 @@ class CheckMateTUI:
             else:
                 browser_selected_idx = 0
                 
+            if hasattr(self, 'browser_scroll_offset'):
+                scroll_offset = self.browser_scroll_offset
+            else:
+                scroll_offset = 0
+                
             # Ensure selection is within bounds
             browser_selected_idx = min(browser_selected_idx, len(items) - 1)
             browser_selected_idx = max(0, browser_selected_idx)
             
-            for i, (name, is_dir, path) in enumerate(items[:max_items]):
+            # Adjust scroll offset to keep selected item visible
+            if browser_selected_idx < scroll_offset:
+                scroll_offset = browser_selected_idx
+            elif browser_selected_idx >= scroll_offset + max_items:
+                scroll_offset = browser_selected_idx - max_items + 1
+                
+            # Ensure scroll offset is within bounds
+            scroll_offset = max(0, min(scroll_offset, len(items) - max_items))
+            if len(items) <= max_items:
+                scroll_offset = 0
+                
+            # Display visible items
+            visible_items = items[scroll_offset:scroll_offset + max_items]
+            for i, (name, is_dir, path) in enumerate(visible_items):
                 y_pos = start_y + i
                 if y_pos >= height - 6:
                     break
+                    
+                actual_idx = scroll_offset + i
+                actual_idx = scroll_offset + i
                     
                 # Mark selected files
                 marker = ""
@@ -792,15 +813,21 @@ class CheckMateTUI:
                     else:
                         marker = "   "
                 
-                prefix = "► " if i == browser_selected_idx else "  "
+                prefix = "► " if actual_idx == browser_selected_idx else "  "
                 display_name = f"{marker}{name}"
                 
-                if i == browser_selected_idx and curses.has_colors():
+                if actual_idx == browser_selected_idx and curses.has_colors():
                     self.stdscr.attron(curses.color_pair(2))
                     self.stdscr.addstr(y_pos, 0, f"{prefix}{display_name}".ljust(width))
                     self.stdscr.attroff(curses.color_pair(2))
                 else:
                     self.stdscr.addstr(y_pos, 0, f"{prefix}{display_name}"[:width-1])
+                    
+            # Show scroll indicator if there are more items
+            if len(items) > max_items:
+                total_items = len(items)
+                scroll_indicator = f"[{scroll_offset + 1}-{min(scroll_offset + max_items, total_items)} of {total_items}]"
+                self.stdscr.addstr(height - 7, 0, scroll_indicator)
                     
             # Show selected files count
             selected_count = len(selected_files)
@@ -833,6 +860,7 @@ class CheckMateTUI:
                     if is_dir:
                         current_dir = path
                         browser_selected_idx = 0
+                        scroll_offset = 0  # Reset scroll when changing directories
                     else:
                         # Toggle file selection
                         if path in selected_files:
@@ -855,8 +883,9 @@ class CheckMateTUI:
                     if f not in selected_files:
                         selected_files.append(f)
                         
-            # Store selection index
+            # Store selection index and scroll offset
             self.browser_selected_idx = browser_selected_idx
+            self.browser_scroll_offset = scroll_offset
         
     def create_inventory(self):
         """Create inventory file."""

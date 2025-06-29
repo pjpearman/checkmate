@@ -83,3 +83,17 @@
 [2025-06-28 19:48:56,332] ERROR [tui.download_and_create_cklb:1681] Error processing ZIP /workspaces/checkmate/user_docs/zip_files/U_Apache_Server_2-4_Windows_Y25M04_STIG.zip: 'FileUtils' object has no attribute 'extract_xccdf_from_zip'
 [2025-06-28 19:48:56,332] INFO [tui.download_and_create_cklb:1683] Created 0 CKLBs in /workspaces/checkmate/user_docs/cklb_new
 [2025-06-28 19:49:06,785] INFO [tui.download_and_create_cklb:1776] CKLB creation result: 4/4 files processed
+[2025-06-29 07:44:10,459] INFO [tui.view_downloaded_files:1688] Viewing downloaded files
+[2025-06-29 07:44:18,062] INFO [tui.import_cklb_files:683] CKLB import requested
+[2025-06-29 07:46:48,153] INFO [tui.import_cklb_files:683] CKLB import requested
+[2025-06-29 07:48:31,971] INFO [tui.import_cklb_files:683] CKLB import requested
+[2025-06-29 07:50:56,905] INFO [tui.import_cklb_files:683] CKLB import requested
+[2025-06-29 07:52:00,609] INFO [tui.import_cklb_files:683] CKLB import requested
+[2025-06-29 07:54:55,993] INFO [tui.import_cklb_files:683] CKLB import requested
+[2025-06-29 07:57:35,267] INFO [tui.import_cklb_files:683] CKLB import requested
+[2025-06-29 07:58:00,785] INFO [tui.import_cklb_files:683] CKLB import requested
+[2025-06-29 07:58:31,528] INFO [tui.import_cklb_files:706] Imported: /workspaces/checkmate/user_docs/cklb_artifacts/mytesthost1_v2r1.cklb
+[2025-06-29 07:58:31,530] INFO [tui.import_cklb_files:706] Imported: /workspaces/checkmate/user_docs/cklb_artifacts/mytesthost1a_v2r1.cklb
+[2025-06-29 07:58:31,531] INFO [tui.import_cklb_files:706] Imported: /workspaces/checkmate/user_docs/cklb_artifacts/mytesthost2_v2r1.cklb
+[2025-06-29 07:58:31,532] INFO [tui.import_cklb_files:706] Imported: /workspaces/checkmate/user_docs/cklb_artifacts/mytesthost3_v2r1.cklb
+[2025-06-29 07:58:31,532] INFO [tui.import_cklb_files:706] Imported: /workspaces/checkmate/user_docs/cklb_artifacts/splunkv1r5old.cklb
