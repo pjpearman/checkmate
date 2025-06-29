@@ -1570,122 +1570,6 @@ class CheckMateTUI:
     
     def download_and_create_cklb(self, selected_stigs: List[Dict], keep_zip: bool = True):
         """
-        Download selected STIG ZIPs and generate CKLBs from them, saving all new CKLBs to user_docs/cklb_new.
-        Only user-imported CKLBs should go to cklb_artifacts.
-        """
-        if not selected_stigs:
-            self.status_message = "No STIGs selected for download/CKLB creation."
-            return
-        self.logger.info(f"Starting download and CKLB creation for {len(selected_stigs)} STIGs.")
-        zip_dir = self.config.get_path('zip_files')
-        cklb_dir = self.config.get_path('cklb_new')  # Always use cklb_new for generated CKLBs
-        os.makedirs(zip_dir, exist_ok=True)
-        os.makedirs(cklb_dir, exist_ok=True)
-        successes = 0
-        failures = 0
-        for stig in selected_stigs:
-            try:
-                zip_filename = stig.get('filename')
-                zip_url = stig.get('url')
-                if not zip_filename or not zip_url:
-                    self.logger.warning(f"Skipping STIG with missing filename or URL: {stig}")
-                    continue
-                zip_path = zip_dir / zip_filename
-                # Download ZIP if not already present
-                if not zip_path.exists():
-                    self.logger.info(f"Downloading ZIP: {zip_url} -> {zip_path}")
-                    self.web_downloader.download_file(zip_url, zip_path)
-                else:
-                    self.logger.info(f"ZIP already exists, skipping download: {zip_path}")
-                # Extract XCCDF from ZIP
-                xccdf_path = self.web_downloader.extract_xccdf_from_zip(zip_path)
-                if not xccdf_path or not os.path.exists(xccdf_path):
-                    self.logger.error(f"Failed to extract XCCDF from {zip_path}")
-                    failures += 1
-                    continue
-                # Generate CKLB in cklb_new
-                cklb_name = Path(xccdf_path).stem + ".cklb"
-                output_cklb = cklb_dir / cklb_name
-                self.logger.info(f"Generating CKLB: {output_cklb} from {xccdf_path}")
-                result = self.cklb_generator.convert_xml_to_cklb(str(xccdf_path), str(output_cklb))
-                if result:
-                    self.logger.info(f"CKLB generated: {output_cklb}")
-                    successes += 1
-                else:
-                    self.logger.error(f"CKLB generation failed for {xccdf_path}")
-                    failures += 1
-                # Optionally remove ZIP after CKLB creation
-                if not keep_zip and zip_path.exists():
-                    try:
-                        os.remove(zip_path)
-                        self.logger.info(f"Removed ZIP after CKLB creation: {zip_path}")
-                    except Exception as e:
-                        self.logger.warning(f"Failed to remove ZIP: {zip_path}: {e}")
-            except Exception as e:
-                self.logger.error(f"Error processing STIG {stig}: {e}")
-                failures += 1
-        self.status_message = f"CKLB creation complete: {successes} succeeded, {failures} failed."
-        self.logger.info(self.status_message)
-        self.refresh_file_lists()
-        """
-        Download selected STIG ZIPs and create CKLBs in user_docs/cklb_new (not cklb_artifacts).
-        Args:
-            selected_stigs: List of selected STIG dictionaries
-            keep_zip: Whether to keep ZIP files after CKLB creation
-        """
-        if not selected_stigs:
-            return
-        self.stdscr.clear()
-        height, width = self.stdscr.getmaxyx()
-        title = f"Downloading and Creating CKLBs for {len(selected_stigs)} STIGs..."
-        self.stdscr.addstr(0, 0, title[:width-1], curses.A_BOLD)
-        self.stdscr.refresh()
-        try:
-            # Download ZIPs
-            file_links = [(stig.get('filename', 'unknown'), stig.get('url', '')) for stig in selected_stigs]
-            zip_dir = self.config.get_path('zip_files')
-            cklb_dir = self.config.get_path('cklb_new')  # Ensure output is cklb_new
-            results = self.web_downloader.download_multiple_files(file_links, zip_dir)
-            # Create CKLBs from downloaded ZIPs
-            created_count = 0
-            for stig, (filename, url, error) in zip(selected_stigs, results):
-                if error is not None:
-                    self.logger.error(f"Failed to download {filename}: {error}")
-                    continue
-                zip_path = zip_dir / filename
-                # Extract XCCDF from ZIP and generate CKLB
-                try:
-                    # This assumes a method exists to extract XCCDF and generate CKLB
-                    # You may need to adapt this to your actual extraction/generation logic
-                    xccdf_file = self.file_utils.extract_xccdf_from_zip(zip_path)
-                    if xccdf_file:
-                        cklb_name = Path(xccdf_file).stem + ".cklb"
-                        output_cklb = cklb_dir / cklb_name
-                        self.logger.debug(f"Generating CKLB: {output_cklb}")
-                        result = self.cklb_generator.convert_xml_to_cklb(str(xccdf_file), str(output_cklb))
-                        if result:
-                            created_count += 1
-                            self.logger.info(f"CKLB created: {output_cklb}")
-                        else:
-                            self.logger.error(f"CKLB generation failed for {xccdf_file}")
-                        # Optionally remove ZIP if not keeping
-                        if not keep_zip:
-                            try:
-                                zip_path.unlink()
-                                self.logger.info(f"Deleted ZIP: {zip_path}")
-                            except Exception as e:
-                                self.logger.warning(f"Failed to delete ZIP {zip_path}: {e}")
-                    else:
-                        self.logger.error(f"No XCCDF found in ZIP: {zip_path}")
-                except Exception as e:
-                    self.logger.error(f"Error processing ZIP {zip_path}: {e}")
-            self.status_message = f"Created {created_count} CKLBs in cklb_new"
-            self.logger.info(f"Created {created_count} CKLBs in {cklb_dir}")
-            self.refresh_file_lists()
-        except Exception as e:
-            self.status_message = f"Download/Create error: {e}"
-            self.logger.error(f"Download/Create CKLB error: {e}")
-        """
         Download STIG files and create CKLB files from them.
         
         Args:
@@ -1726,7 +1610,7 @@ class CheckMateTUI:
                     zip_path = zip_dir / filename
                     if zip_path.exists():
                         # Use CKLB generator to create CKLB from ZIP
-                        output_dir = self.config.get_path('cklb_artifacts')
+                        output_dir = self.config.get_path('cklb_new')
                         results = self.cklb_generator.convert_zip_to_cklb(zip_path, output_dir)
                         
                         # Check if CKLB was created successfully
@@ -1758,7 +1642,7 @@ class CheckMateTUI:
                 f"CKLB files created: {cklb_created}",
                 f"CKLB creation failed: {cklb_failed}",
                 f"ZIP files {'removed' if not keep_zip else 'kept'}: {len(successful_downloads)}",
-                f"CKLB directory: {self.config.get_path('cklb_artifacts')}",
+                f"CKLB directory: {self.config.get_path('cklb_new')}",
                 "",
                 "Press any key to continue..."
             ]
