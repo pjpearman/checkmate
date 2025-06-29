@@ -12,7 +12,7 @@ import zipfile
 import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Tuple, Union, Optional
+from typing import Dict, List, Tuple, Union, Optional, Set
 import xml.etree.ElementTree as ET
 
 from .config import Config
@@ -297,21 +297,22 @@ class CKLBGenerator:
         logger.info(f"Generated CKLB file: {output_path}")
         return output_path
     
-    def extract_xccdf_from_zip(self, zip_path: Union[str, Path]) -> Optional[Path]:
+    def extract_xccdf_from_zip(self, zip_path: Union[str, Path]) -> List[Path]:
         """
-        Extract XCCDF file from ZIP archive.
+        Extract all XCCDF files from ZIP archive.
         
         Args:
             zip_path: Path to ZIP file
             
         Returns:
-            Path to extracted XCCDF file, or None if not found
+            List of paths to extracted XCCDF files, empty list if none found
         """
         zip_path = Path(zip_path)
+        extracted_paths = []
         
         if not zip_path.exists():
             logger.error(f"ZIP file not found: {zip_path}")
-            return None
+            return extracted_paths
         
         try:
             with zipfile.ZipFile(zip_path, 'r') as zip_file:
@@ -325,21 +326,22 @@ class CKLBGenerator:
                 
                 if not xccdf_files:
                     logger.warning(f"No XCCDF files found in {zip_path}")
-                    return None
+                    return extracted_paths
                 
-                # Use the first XCCDF file found
-                xccdf_name = xccdf_files[0]
-                
-                # Extract to temporary directory
+                # Extract all XCCDF files found to a temporary directory
                 temp_dir = Path(tempfile.mkdtemp())
-                extracted_path = temp_dir / Path(xccdf_name).name
                 
-                with zip_file.open(xccdf_name) as source:
-                    with open(extracted_path, 'wb') as target:
-                        target.write(source.read())
+                for xccdf_name in xccdf_files:
+                    extracted_path = temp_dir / Path(xccdf_name).name
+                    
+                    with zip_file.open(xccdf_name) as source:
+                        with open(extracted_path, 'wb') as target:
+                            target.write(source.read())
+                    
+                    logger.info(f"Extracted XCCDF: {extracted_path}")
+                    extracted_paths.append(extracted_path)
                 
-                logger.info(f"Extracted XCCDF: {extracted_path}")
-                return extracted_path
+                return extracted_paths
                 
         except zipfile.BadZipFile:
             logger.error(f"Invalid ZIP file: {zip_path}")
@@ -354,7 +356,7 @@ class CKLBGenerator:
         output_dir: Union[str, Path]
     ) -> List[Tuple[Optional[Path], Optional[str]]]:
         """
-        Convert ZIP file containing XCCDF to CKLB.
+        Convert ZIP file containing XCCDF files to CKLB files.
         
         Args:
             zip_path: Path to ZIP file
@@ -368,28 +370,44 @@ class CKLBGenerator:
         output_dir.mkdir(parents=True, exist_ok=True)
         
         results = []
+        temp_dirs = set()  # Keep track of temp directories for cleanup
         
         try:
-            # Extract XCCDF from ZIP
-            xccdf_path = self.extract_xccdf_from_zip(zip_path)
-            if not xccdf_path:
-                results.append((None, f"No XCCDF file found in {zip_path.name}"))
+            # Extract all XCCDF files from ZIP
+            xccdf_paths = self.extract_xccdf_from_zip(zip_path)
+            if not xccdf_paths:
+                results.append((None, f"No XCCDF files found in {zip_path.name}"))
                 return results
             
-            # Generate CKLB filename
-            cklb_name = zip_path.stem + ".cklb"
-            cklb_path = output_dir / cklb_name
+            # Process each XCCDF file
+            for i, xccdf_path in enumerate(xccdf_paths):
+                try:
+                    # Remember the temp directory for cleanup
+                    temp_dirs.add(xccdf_path.parent)
+                    
+                    # Generate CKLB filename
+                    # If multiple XCCDFs, append index to filename
+                    suffix = f"_{i+1}" if len(xccdf_paths) > 1 else ""
+                    cklb_name = f"{zip_path.stem}{suffix}.cklb"
+                    cklb_path = output_dir / cklb_name
+                    
+                    # Convert XCCDF to CKLB
+                    final_path = self.convert_xml_to_cklb(xccdf_path, cklb_path)
+                    results.append((final_path, None))
+                    
+                except Exception as e:
+                    error_msg = f"Error converting {xccdf_path.name}: {e}"
+                    logger.error(error_msg)
+                    results.append((None, error_msg))
             
-            # Convert XCCDF to CKLB
-            final_path = self.convert_xml_to_cklb(xccdf_path, cklb_path)
-            results.append((final_path, None))
-            
-            # Clean up temporary XCCDF file
-            try:
-                xccdf_path.unlink()
-                xccdf_path.parent.rmdir()
-            except Exception:
-                pass  # Ignore cleanup errors
+            # Clean up temporary XCCDF files and directories
+            for temp_dir in temp_dirs:
+                try:
+                    for file in temp_dir.iterdir():
+                        file.unlink()
+                    temp_dir.rmdir()
+                except Exception:
+                    pass  # Ignore cleanup errors
             
         except Exception as e:
             error_msg = f"Error converting {zip_path.name}: {e}"
@@ -406,7 +424,7 @@ def generate_cklb_json(input_file: str) -> Dict:
     return generator.generate_cklb_from_xml(input_file)
 
 def convert_xccdf_zip_to_cklb(zip_path: str, output_dir: str) -> List[Tuple[Optional[str], Optional[str]]]:
-    """Convert ZIP to CKLB using default generator."""
+    """Convert ZIP containing XCCDF files to CKLB files using default generator."""
     generator = CKLBGenerator()
     results = generator.convert_zip_to_cklb(zip_path, output_dir)
     # Convert Path objects to strings for backward compatibility

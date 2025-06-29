@@ -5,18 +5,33 @@ import shutil
 from tkinter import filedialog, Tk
 import logging
 
-def import_cklb_files(target_dir="cklb_proc/usr_cklb_lib", on_import_complete=None):
+def import_cklb_files(target_dir="cklb_proc/usr_cklb_lib", on_import_complete=None, parent=None):
     os.makedirs(target_dir, exist_ok=True)
 
-    # Suppress main tkinter window
-    root = Tk()
-    root.withdraw()
+    # Use parent window if provided, otherwise create a temporary one
+    if parent is None:
+        root = Tk()
+        root.withdraw()
+        dialog_parent = root
+    else:
+        dialog_parent = parent
 
-    # Ask for CKLB files
+    # Start in user's home directory or current working directory
+    initial_dir = os.path.expanduser("~")
+    if not os.path.exists(initial_dir):
+        initial_dir = os.getcwd()
+
+    # Ask for CKLB files with better positioning
     file_paths = filedialog.askopenfilenames(
-        title="Select CKLB Files",
-        filetypes=[("CKLB Files", "*.cklb")]
+        parent=dialog_parent,
+        title="Select CKLB Files to Import",
+        filetypes=[("CKLB Files", "*.cklb"), ("All Files", "*.*")],
+        initialdir=initial_dir
     )
+
+    # Clean up temporary root if we created one
+    if parent is None:
+        root.destroy()
 
     if not file_paths:
         logging.info("No files selected.")
