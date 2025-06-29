@@ -12,6 +12,7 @@ import logging
 import textwrap
 import threading
 import time
+import shutil
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
@@ -70,21 +71,22 @@ class CheckMateTUI:
         """Refresh file lists from directories."""
         try:
             # Get user CKLB files
-            usr_dir = self.config.get_path('usr_cklb_lib')
+            usr_dir = self.config.get_path('cklb_artifacts')
             if usr_dir.exists():
                 self.file_lists['usr_cklb'] = sorted([f for f in os.listdir(usr_dir) if f.endswith('.cklb')])
             else:
                 self.file_lists['usr_cklb'] = []
                 
             # Get library CKLB files
-            cklb_dir = self.config.get_path('cklb_lib')
+            cklb_dir = self.config.get_path('cklb_new')
             if cklb_dir.exists():
                 self.file_lists['lib_cklb'] = sorted([f for f in os.listdir(cklb_dir) if f.endswith('.cklb')])
             else:
                 self.file_lists['lib_cklb'] = []
                 
-            # Get XCCDF files
-            xccdf_dir = self.config.get_path('xccdf_lib')
+            # Get XCCDF files - for now we'll keep looking in the legacy location
+            # since XCCDF files are typically extracted temporarily
+            xccdf_dir = self.config.get_path('tmp')
             if xccdf_dir.exists():
                 self.file_lists['xccdf'] = sorted([f for f in os.listdir(xccdf_dir) if f.endswith('.xml')])
             else:
@@ -635,22 +637,22 @@ class CheckMateTUI:
                 
     # Core functionality methods
     def generate_cklb_from_xccdf(self, xccdf_file):
-        """Generate CKLB from selected XCCDF file."""
+        """Generate CKLB from selected XCCDF file and save to cklb_new."""
         self.status_message = f"Generating CKLB from {xccdf_file}..."
         self.logger.info(f"Starting CKLB generation from {xccdf_file}")
-        
         try:
-            xccdf_path = self.config.get_path('xccdf_lib') / xccdf_file
-            result = self.cklb_generator.convert_xccdf_to_cklb(str(xccdf_path))
-            
+            xccdf_path = self.config.get_path('tmp') / xccdf_file
+            cklb_dir = self.config.get_path('cklb_new')
+            cklb_name = Path(xccdf_file).stem + ".cklb"
+            output_cklb = cklb_dir / cklb_name
+            result = self.cklb_generator.convert_xml_to_cklb(str(xccdf_path), str(output_cklb))
             if result:
-                self.status_message = "CKLB generation completed successfully"
-                self.logger.info("CKLB generation completed successfully")
+                self.status_message = f"CKLB generated: {output_cklb.name}"
+                self.logger.info(f"CKLB generation completed: {output_cklb}")
                 self.refresh_file_lists()
             else:
                 self.status_message = "CKLB generation failed"
                 self.logger.error("CKLB generation failed")
-                
         except Exception as e:
             self.status_message = f"Generation error: {e}"
             self.logger.error(f"CKLB generation error: {e}")
@@ -689,7 +691,7 @@ class CheckMateTUI:
                 return
                 
             # Import selected files
-            target_dir = self.config.get_user_cklb_dir()
+            target_dir = self.config.get_path('cklb_artifacts')
             imported_count = 0
             
             for file_path in selected_files:
@@ -1608,7 +1610,11 @@ class CheckMateTUI:
                     zip_path = zip_dir / filename
                     if zip_path.exists():
                         # Use CKLB generator to create CKLB from ZIP
-                        success = self.cklb_generator.process_zip_file(str(zip_path))
+                        output_dir = self.config.get_path('cklb_new')
+                        results = self.cklb_generator.convert_zip_to_cklb(zip_path, output_dir)
+                        
+                        # Check if CKLB was created successfully
+                        success = any(result[0] is not None for result in results)
                         if success:
                             cklb_created += 1
                             # Remove ZIP if requested
@@ -1616,6 +1622,10 @@ class CheckMateTUI:
                                 zip_path.unlink()
                         else:
                             cklb_failed += 1
+                            # Log any errors
+                            for result in results:
+                                if result[1]:  # Error message exists
+                                    self.logger.error(f"CKLB creation error: {result[1]}")
                     else:
                         cklb_failed += 1
                         
@@ -1632,7 +1642,7 @@ class CheckMateTUI:
                 f"CKLB files created: {cklb_created}",
                 f"CKLB creation failed: {cklb_failed}",
                 f"ZIP files {'removed' if not keep_zip else 'kept'}: {len(successful_downloads)}",
-                f"CKLB directory: {self.config.get_path('usr_cklb_lib')}",
+                f"CKLB directory: {self.config.get_path('cklb_new')}",
                 "",
                 "Press any key to continue..."
             ]
@@ -1671,3 +1681,91 @@ class CheckMateTUI:
             
             self.status_message = f"Download/CKLB creation error: {e}"
             self.logger.error(f"Download/CKLB creation error: {e}")
+    
+    def view_downloaded_files(self):
+        """View and manage downloaded files."""
+        self.status_message = "Viewing downloaded files..."
+        self.logger.info("Viewing downloaded files")
+        
+        try:
+            zip_dir = self.config.get_path('zip_files')
+            if not zip_dir.exists():
+                self.status_message = "No download directory found"
+                return
+                
+            zip_files = list(zip_dir.glob('*.zip'))
+            if not zip_files:
+                self.status_message = "No downloaded files found"
+                return
+                
+            # Simple file listing for now
+            file_info = []
+            for zip_file in zip_files[:10]:  # Limit to first 10 files
+                size = zip_file.stat().st_size
+                size_str = self.format_file_size(size)
+                file_info.append(f"{zip_file.name} ({size_str})")
+            
+            self.status_message = f"Found {len(zip_files)} downloaded files"
+            
+        except Exception as e:
+            self.status_message = f"Error viewing downloaded files: {e}"
+            self.logger.error(f"Error viewing downloaded files: {e}")
+            
+    def export_cklb_files(self):
+        """Export CKLB files to a target directory."""
+        self.status_message = "Export functionality not yet implemented"
+        self.logger.info("CKLB export requested")
+        
+    def clean_temp_files(self):
+        """Clean temporary files."""
+        self.status_message = "Cleaning temporary files..."
+        self.logger.info("Cleaning temporary files")
+        
+        try:
+            temp_dir = self.config.get_path('tmp')
+            if temp_dir.exists():
+                import shutil
+                shutil.rmtree(temp_dir)
+                temp_dir.mkdir(exist_ok=True)
+                cleaned = True
+            else:
+                cleaned = False
+                
+            if cleaned:
+                self.status_message = "Temporary files cleaned successfully"
+            else:
+                self.status_message = "No temporary files to clean"
+                
+        except Exception as e:
+            self.status_message = f"Error cleaning temp files: {e}"
+            self.logger.error(f"Error cleaning temp files: {e}")
+            
+    def validate_files(self):
+        """Validate file integrity."""
+        self.status_message = "File validation not yet implemented"
+        self.logger.info("File validation requested")
+        
+    def show_directory_stats(self):
+        """Show directory statistics."""
+        self.status_message = "Gathering directory statistics..."
+        self.logger.info("Directory statistics requested")
+        
+        try:
+            stats = {}
+            for name, path in self.config.get_all_directories().items():
+                if path.exists():
+                    file_count = len(list(path.glob('*')))
+                    stats[name] = file_count
+                else:
+                    stats[name] = 0
+                    
+            self.status_message = f"Statistics gathered for {len(stats)} directories"
+            
+        except Exception as e:
+            self.status_message = f"Error gathering statistics: {e}"
+            self.logger.error(f"Error gathering statistics: {e}")
+            
+    def organize_files(self):
+        """Organize files by type."""
+        self.status_message = "File organization not yet implemented"
+        self.logger.info("File organization requested")
