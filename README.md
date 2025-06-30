@@ -167,7 +167,6 @@ stigflow/
 ├── scraper.py            # Scrapes DISA STIG pages
 ├── comparator.py         # Compares current vs baseline
 ├── downloader.py         # Downloads updated ZIPs
-├── baseline_generator.py # Creates baseline YAMLs
 ├── xccdf_extractor.py    # Extracts XCCDFs from ZIPs
 ├── cklb_generator.py     # Generates .cklb JSON from XCCDF
 ├── selected_merger.py    # Merges old and new .cklb files

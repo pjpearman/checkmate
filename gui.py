@@ -42,10 +42,8 @@ cklb_files = sorted(os.listdir(cklb_dir)) if os.path.isdir(cklb_dir) else []
 usr_sel_var  = tk.StringVar()
 cklb_sel_var = tk.StringVar()
 
-from cklb_importer import import_cklb_files
-from handlers import run_generate_baseline_task, run_compare_task, run_merge_task
+from handlers import run_compare_task, run_merge_task
 from selected_merger import load_cklb, save_cklb, check_stig_id_match
-from reset_baseline import reset_baseline_fields
 from file_editor import launch_file_editor
 from menu_bar import build_menu
 
@@ -358,49 +356,6 @@ def get_internal_mode(mode_label):
     return mapping.get(mode_label, "benchmark")
 
 # === Button Commands with Feedback ===
-def run_generate_baseline_with_feedback():
-    log_job_status("[INFO] Job started: Generating new baseline...")
-    
-    # Show progress popup
-    progress_popup = ProgressPopup(
-        root, 
-        "Generating Baseline", 
-        "Scanning DISA STIG library and creating baseline file..."
-    )
-    
-    def on_status_update(status):
-        status_text.set(status)
-        progress_popup.update_status(status)
-        if status == "Done":
-            log_job_status("[INFO] Job complete: Baseline generation finished.")
-            progress_popup.close()
-        elif status.startswith("Error"):
-            log_job_status(f"[ERROR] {status}")
-            progress_popup.close()
-    
-    threading.Thread(target=lambda: run_generate_baseline_task(
-        mode=get_internal_mode(mode_var.get()),
-        on_status_update=on_status_update,
-        clear_log=lambda: root.log_output.delete(1.0, tk.END)
-    )).start()
-
-def import_cklb_with_feedback():
-    log_job_status("[INFO] Job started: Importing CKLB library...")
-    
-    # Show progress popup
-    progress_popup = ProgressPopup(
-        root, 
-        "Importing CKLB Library", 
-        "Processing and importing checklist files..."
-    )
-    
-    def on_complete():
-        refresh_usr_listbox()
-        log_job_status("[INFO] Job complete: CKLB import finished.")
-        progress_popup.close()
-    
-    threading.Thread(target=lambda: import_cklb_files(on_import_complete=on_complete)).start()
-
 def run_compare_with_feedback():
     log_job_status("[INFO] Job started: Running tasks...")
     
@@ -494,63 +449,6 @@ def download_cklb_popup():
                style="Accent.TButton", command=do_download).pack(side="left", padx=5)
     ttk.Button(btn_frame, text="Cancel", 
                style="Secondary.TButton", command=popup.destroy).pack(side="left", padx=5)
-
-def run_reset_baseline_with_feedback():
-    baseline_path = yaml_path_var.get()
-    if not baseline_path or not os.path.exists(baseline_path):
-        log_job_status("[ERROR] Please select a valid Baseline YAML file.")
-        return
-    try:
-        with open(baseline_path, 'r') as f:
-            data = yaml.safe_load(f)
-        products = list(data.keys())
-    except Exception as e:
-        log_job_status(f"[ERROR] Failed to load baseline: {e}")
-        return
-    
-    # Create inline selection widget
-    if hasattr(run_reset_baseline_with_feedback, 'sel_frame'):
-        run_reset_baseline_with_feedback.sel_frame.destroy()
-    
-    sel_frame = ttk.LabelFrame(baseline_frame, text="Reset Baseline Products", style="TLabelframe")
-    sel_frame.pack(fill="x", pady=10)
-    run_reset_baseline_with_feedback.sel_frame = sel_frame
-    
-    select_all_var = tk.BooleanVar()
-    prod_vars = []
-    
-    def on_select_all():
-        for _, var in prod_vars:
-            var.set(select_all_var.get())
-    
-    ttk.Checkbutton(sel_frame, text="Select All", variable=select_all_var, 
-                    command=on_select_all).pack(anchor="w", padx=10, pady=5)
-    
-    for prod in products:
-        var = tk.BooleanVar()
-        cb = ttk.Checkbutton(sel_frame, text=prod, variable=var)
-        cb.pack(anchor="w", padx=30, pady=2)
-        prod_vars.append((prod, var))
-    
-    def do_reset():
-        selected = [prod for prod, var in prod_vars if var.get()]
-        if not selected:
-            log_job_status("[ERROR] Please select at least one product.")
-            return
-        
-        if reset_baseline_fields(baseline_path, selected):
-            log_job_status(f"[INFO] Reset Release and Version for {len(selected)} product(s).")
-            sel_frame.destroy()
-        else:
-            log_job_status("[ERROR] Failed to reset baseline.")
-    
-    btn_frame = ttk.Frame(sel_frame)
-    btn_frame.pack(pady=10)
-    ttk.Button(btn_frame, text=f"{ICONS['reset']} Reset Selected", 
-               style="Accent.TButton", command=do_reset).pack(side="left", padx=5)
-    ttk.Button(btn_frame, text="Cancel", 
-               style="Secondary.TButton", 
-               command=lambda: sel_frame.destroy()).pack(side="left", padx=5)
 
 # Multi-rule input handler
 def show_multi_rule_input(new_rules, checklist_files, on_submit, on_cancel):
@@ -1046,24 +944,12 @@ CheckMate follows a simple workflow:
 
 ═══════════════════════════════════════════════════════════════════════════════════
 
-🚀 STEP 2: CREATING YOUR FIRST BASELINE
+🚀 STEP 2: SETTING UP YOUR BASELINE
 
-Option A - Generate New Baseline:
-1. Select your "Scrape Mode" from the dropdown:
-   • "Operating Systems" - For OS-related STIGs (Windows, Linux, etc.)
-   • "Applications" - For application STIGs (Apache, IIS, etc.)
-   • "Network" - For network device STIGs (Cisco, etc.)
-   • "SCAP Benchmarks" - For SCAP content
-   • "ALL" - Downloads everything (takes longer)
-
-2. Click "▶ Generate New Baseline" button
-   • This creates a baseline YAML file in the baselines/ directory
-   • The process scans DISA's public STIG library for current releases
-   • Progress will be shown in the Logs & Status tab
-
-Option B - Use Existing Baseline:
+To get started, you'll need a baseline YAML file:
 1. Click "📁 Browse" next to "Baseline YAML"
 2. Select an existing baseline_*.yaml file from the baselines/ directory
+3. If you don't have a baseline file, you can create one manually or obtain one from your system administrator
 
 ═══════════════════════════════════════════════════════════════════════════════════
 
@@ -1085,10 +971,10 @@ Before running tasks, configure these options:
 
 1. Ensure your baseline YAML file is selected
 2. Configure your download/extract options
-3. Click "🚀 Run Tasks" button
+3. Use the "Checklist Management" tab to manage your checklists
 4. Monitor progress in the "📋 Logs & Status" tab
 
-What happens during task execution:
+What happens during update checks:
 • CheckMate compares your baseline against current DISA releases
 • New or updated STIGs are identified
 • If enabled, ZIP files are downloaded to cklb_proc/cklb_lib/
@@ -1099,14 +985,10 @@ What happens during task execution:
 
 📦 STEP 5: MANAGING YOUR CHECKLIST LIBRARY
 
-Initial Setup:
-1. Click "📥 Import CKLB Library" to populate your user checklist library
-2. This imports existing CKL files into cklb_proc/usr_cklb_lib/
-
-Regular Maintenance:
-• Use the "Checklist Management" tab to upgrade existing checklists
-• The system will merge your compliance data with newer STIG versions
-• Your finding statuses and comments are preserved during upgrades
+Use the "Checklist Management" tab to:
+• Upgrade existing checklists with newer STIG versions
+• Merge your compliance data while preserving finding statuses and comments
+• Import and organize your checklist files
 
 ═══════════════════════════════════════════════════════════════════════════════════
 
@@ -1172,7 +1054,6 @@ Directory structure:
 • Regularly update your baseline to track the latest STIG releases
 • Keep backups of your usr_cklb_lib directory - it contains your compliance work
 • Review the logs after each operation to ensure everything completed successfully
-• Use the reset baseline feature if you need to clear version tracking
 
 ═══════════════════════════════════════════════════════════════════════════════════
 
@@ -1197,22 +1078,6 @@ ttk.Button(baseline_controls, text=f"{ICONS['download']} Fetch from DISA",
 
 # Configure grid weights
 baseline_controls.columnconfigure(1, weight=1)
-
-# Action buttons
-btn_frame = ttk.Frame(baseline_frame)
-btn_frame.pack(fill="x", padx=20, pady=(10, 20))
-
-ttk.Button(btn_frame, text=f"{ICONS['play']} Generate New Baseline", 
-           style="Accent.TButton", command=run_generate_baseline_with_feedback).pack(side="left", padx=5)
-ttk.Button(btn_frame, text=f"{ICONS['reset']} Reset Baseline", 
-           style="Accent.TButton", command=run_reset_baseline_with_feedback).pack(side="left", padx=5)
-ttk.Button(btn_frame, text=f"{ICONS['edit']} Edit Baseline", 
-           style="Secondary.TButton", 
-           command=lambda: launch_file_editor(yaml_path_var.get(), root)).pack(side="left", padx=5)
-ttk.Button(btn_frame, text=f"{ICONS['import']} Import CKLB Library", 
-           style="Secondary.TButton", command=import_cklb_with_feedback).pack(side="left", padx=5)
-ttk.Button(btn_frame, text=f"{ICONS['run']} Run Tasks", 
-           style="Accent.TButton", command=run_compare_with_feedback).pack(side="left", padx=5)
 
 # === Tab 2: Checklist Management ===
 tab2 = ttk.Frame(notebook)
