@@ -164,6 +164,10 @@ style.configure("Modern.TCombobox",
     borderwidth=1,
     relief="solid",
     font=FONTS['default'])
+style.configure("Modern.TCheckbutton",
+    background=COLORS['bg_secondary'],
+    foreground=COLORS['text_primary'],
+    font=FONTS['default'])
 
 # === Helper Functions ===
 class ProgressPopup:
@@ -838,6 +842,184 @@ def refresh_cklb_combobox():
     if cklb_files:
         cklb_sel_var.set(cklb_files[0])
 
+# === DISA Fetch Dialog ===
+def show_disa_fetch_dialog():
+    """Show dialog for selecting STIG technologies to fetch from DISA"""
+    
+    popup = tk.Toplevel(root)
+    popup.title("Fetch from DISA")
+    popup.geometry("500x400")
+    popup.configure(bg=COLORS['bg_primary'])
+    popup.transient(root)
+    popup.grab_set()
+    
+    # Center the popup
+    popup.update_idletasks()
+    x = (popup.winfo_screenwidth() // 2) - (popup.winfo_width() // 2)
+    y = (popup.winfo_screenheight() // 2) - (popup.winfo_height() // 2)
+    popup.geometry(f"+{x}+{y}")
+    
+    # Header
+    header_frame = ttk.Frame(popup)
+    header_frame.pack(fill="x", padx=20, pady=20)
+    
+    ttk.Label(header_frame, text="Select Technology Categories", 
+              font=FONTS['heading']).pack()
+    ttk.Label(header_frame, text="Choose which types of STIGs to download and process", 
+              font=FONTS['default'], foreground=COLORS['text_secondary']).pack(pady=(5, 0))
+    
+    # Technology categories
+    categories_frame = ttk.Frame(popup)
+    categories_frame.pack(fill="both", expand=True, padx=20, pady=10)
+    
+    # Variables for checkboxes
+    scap_var = tk.BooleanVar()
+    os_var = tk.BooleanVar()
+    app_var = tk.BooleanVar()
+    network_var = tk.BooleanVar()
+    
+    ttk.Checkbutton(categories_frame, text="SCAP Benchmarks", 
+                    variable=scap_var, style="Modern.TCheckbutton").pack(anchor="w", pady=5)
+    ttk.Checkbutton(categories_frame, text="Operating Systems", 
+                    variable=os_var, style="Modern.TCheckbutton").pack(anchor="w", pady=5)
+    ttk.Checkbutton(categories_frame, text="Applications", 
+                    variable=app_var, style="Modern.TCheckbutton").pack(anchor="w", pady=5)
+    ttk.Checkbutton(categories_frame, text="Network/Perimeter/Wireless", 
+                    variable=network_var, style="Modern.TCheckbutton").pack(anchor="w", pady=5)
+    
+    # Output format selection
+    output_frame = ttk.LabelFrame(popup, text="Output Format")
+    output_frame.pack(fill="x", padx=20, pady=10)
+    
+    format_var = tk.StringVar(value="stigs")
+    ttk.Radiobutton(output_frame, text="STIGs (Generate CKLB checklists)", 
+                    variable=format_var, value="stigs").pack(anchor="w", padx=10, pady=5)
+    ttk.Radiobutton(output_frame, text="Benchmarks (Extract XCCDF only)", 
+                    variable=format_var, value="benchmarks").pack(anchor="w", padx=10, pady=5)
+    
+    # Buttons
+    btn_frame = ttk.Frame(popup)
+    btn_frame.pack(fill="x", padx=20, pady=20)
+    
+    def start_fetch():
+        selected_categories = []
+        if scap_var.get():
+            selected_categories.append("benchmark")
+        if os_var.get():
+            selected_categories.append("checklist")
+        if app_var.get():
+            selected_categories.append("application")
+        if network_var.get():
+            selected_categories.append("network")
+            
+        if not selected_categories:
+            log_job_status("[ERROR] Please select at least one technology category.")
+            return
+            
+        output_format = format_var.get()
+        popup.destroy()
+        
+        # Start the fetch process
+        fetch_from_disa(selected_categories, output_format)
+    
+    ttk.Button(btn_frame, text=f"{ICONS['download']} Start Fetch", 
+               style="Accent.TButton", command=start_fetch).pack(side="right", padx=(10, 0))
+    ttk.Button(btn_frame, text="Cancel", 
+               style="Secondary.TButton", command=popup.destroy).pack(side="right")
+
+def fetch_from_disa(categories, output_format):
+    """Main function to fetch STIGs from DISA and process them"""
+    log_job_status("[INFO] Starting DISA fetch process...")
+    
+    # Show progress popup
+    progress_popup = ProgressPopup(
+        root, 
+        "Fetching from DISA", 
+        "Downloading and processing STIG files from DISA..."
+    )
+    
+    def on_status_update(status):
+        status_text.set(status)
+        progress_popup.update_status(status)
+        if status == "Done":
+            log_job_status("[INFO] DISA fetch complete.")
+            progress_popup.close()
+        elif status.startswith("Error"):
+            log_job_status(f"[ERROR] {status}")
+            progress_popup.close()
+    
+    # Run in separate thread
+    threading.Thread(target=lambda: run_disa_fetch_task(
+        categories=categories,
+        output_format=output_format,
+        on_status_update=on_status_update
+    ), daemon=True).start()
+
+def run_disa_fetch_task(categories, output_format, on_status_update):
+    """Background task to fetch and process STIGs from DISA"""
+    try:
+        from scraper import scrape_stigs
+        from downloader import download_updates
+        from xccdf_extractor import extract_xccdf_from_zip
+        from cklb_generator import generate_cklb_json
+        
+        # Step 1: Scrape DISA for STIGs
+        on_status_update("Scanning DISA STIG library...")
+        all_items = []
+        
+        for category in categories:
+            mode_mapping = {
+                "benchmark": "benchmark",
+                "checklist": "checklist", 
+                "application": "application",
+                "network": "network"
+            }
+            scraped_items = scrape_stigs(mode=mode_mapping[category])
+            all_items.extend(scraped_items)
+        
+        log_job_status(f"[INFO] Found {len(all_items)} STIG items to process.")
+        
+        # Step 2: Download ZIP files
+        on_status_update("Downloading STIG ZIP files...")
+        download_updates(all_items, target_dir="cklb_proc/xccdf_lib")
+        
+        if output_format == "stigs":
+            # Step 3: Extract XCCDF files and generate CKLB
+            on_status_update("Extracting XCCDF files...")
+            zip_dir = "cklb_proc/xccdf_lib"
+            output_dir = "user_docs/cklb_new"
+            os.makedirs(output_dir, exist_ok=True)
+            
+            generated_count = 0
+            for item in all_items:
+                zip_filename = os.path.basename(item['URL'])
+                zip_path = os.path.join(zip_dir, zip_filename)
+                
+                if os.path.exists(zip_path):
+                    # Extract XCCDF
+                    xccdf_files = extract_xccdf_from_zip(zip_path, "cklb_proc/xccdf_lib")
+                    
+                    if xccdf_files:
+                        for xccdf_file in xccdf_files:
+                            # Generate CKLB
+                            cklb_filename = os.path.basename(xccdf_file).replace('-xccdf.xml', '.cklb')
+                            cklb_path = os.path.join(output_dir, cklb_filename)
+                            
+                            try:
+                                generate_cklb_json(xccdf_file, cklb_path)
+                                generated_count += 1
+                                log_job_status(f"[INFO] Generated: {cklb_filename}")
+                            except Exception as e:
+                                log_job_status(f"[ERROR] Failed to generate CKLB for {xccdf_file}: {e}")
+            
+            log_job_status(f"[INFO] Generated {generated_count} CKLB files in {output_dir}")
+        
+        on_status_update("Done")
+        
+    except Exception as e:
+        log_job_status(f"[ERROR] DISA fetch failed: {e}")
+        on_status_update(f"Error: {e}")
+
 # === Create Notebook (Tabbed Interface) ===
 notebook = ttk.Notebook(root)
 notebook.pack(fill="both", expand=True, padx=0, pady=0)
@@ -1038,20 +1220,9 @@ baseline_frame.pack(fill="x", padx=20, pady=(10, 20))
 baseline_controls = ttk.Frame(baseline_frame)
 baseline_controls.pack(fill="x", padx=20, pady=15)
 
-# Row 1: Scrape Mode
-ttk.Label(baseline_controls, text="Scrape Mode:", font=FONTS['default']).grid(row=0, column=0, sticky="w", pady=5)
-mode_combo = ttk.Combobox(baseline_controls, textvariable=mode_var, 
-                          values=["SCAP Benchmarks", "Operating Systems", "Applications", "Network", "ALL"], 
-                          state="readonly", width=25, style="Modern.TCombobox")
-mode_combo.grid(row=0, column=1, sticky="ew", pady=5, padx=(10, 0))
-
-# Row 2: Baseline YAML
-ttk.Label(baseline_controls, text="Baseline YAML:", font=FONTS['default']).grid(row=1, column=0, sticky="w", pady=5)
-yaml_entry = ttk.Entry(baseline_controls, textvariable=yaml_path_var, style="Modern.TEntry")
-yaml_entry.grid(row=1, column=1, sticky="ew", pady=5, padx=(10, 0))
-ttk.Button(baseline_controls, text=f"{ICONS['folder']} Browse", 
-           command=lambda: yaml_path_var.set(filedialog.askopenfilename(filetypes=[("YAML files", "*.yaml")])),
-           style="Secondary.TButton").grid(row=1, column=2, pady=5, padx=(10, 0))
+# Fetch from DISA button
+ttk.Button(baseline_controls, text=f"{ICONS['download']} Fetch from DISA", 
+           style="Accent.TButton", command=show_disa_fetch_dialog).pack(pady=10)
 
 # Configure grid weights
 baseline_controls.columnconfigure(1, weight=1)
@@ -1203,3 +1374,181 @@ log_job_status("[INFO] Ready to process checklists.")
 build_menu(root, yaml_path_var, on_closing)
 
 root.mainloop()
+
+# === DISA Fetch Dialog ===
+def show_disa_fetch_dialog():
+    """Show dialog for selecting STIG technologies to fetch from DISA"""
+    
+    popup = tk.Toplevel(root)
+    popup.title("Fetch from DISA")
+    popup.geometry("500x400")
+    popup.configure(bg=COLORS['bg_primary'])
+    popup.transient(root)
+    popup.grab_set()
+    
+    # Center the popup
+    popup.update_idletasks()
+    x = (popup.winfo_screenwidth() // 2) - (popup.winfo_width() // 2)
+    y = (popup.winfo_screenheight() // 2) - (popup.winfo_height() // 2)
+    popup.geometry(f"+{x}+{y}")
+    
+    # Header
+    header_frame = ttk.Frame(popup)
+    header_frame.pack(fill="x", padx=20, pady=20)
+    
+    ttk.Label(header_frame, text="Select Technology Categories", 
+              font=FONTS['heading']).pack()
+    ttk.Label(header_frame, text="Choose which types of STIGs to download and process", 
+              font=FONTS['default'], foreground=COLORS['text_secondary']).pack(pady=(5, 0))
+    
+    # Technology categories
+    categories_frame = ttk.Frame(popup)
+    categories_frame.pack(fill="both", expand=True, padx=20, pady=10)
+    
+    # Variables for checkboxes
+    scap_var = tk.BooleanVar()
+    os_var = tk.BooleanVar()
+    app_var = tk.BooleanVar()
+    network_var = tk.BooleanVar()
+    
+    ttk.Checkbutton(categories_frame, text="SCAP Benchmarks", 
+                    variable=scap_var, style="Modern.TCheckbutton").pack(anchor="w", pady=5)
+    ttk.Checkbutton(categories_frame, text="Operating Systems", 
+                    variable=os_var, style="Modern.TCheckbutton").pack(anchor="w", pady=5)
+    ttk.Checkbutton(categories_frame, text="Applications", 
+                    variable=app_var, style="Modern.TCheckbutton").pack(anchor="w", pady=5)
+    ttk.Checkbutton(categories_frame, text="Network/Perimeter/Wireless", 
+                    variable=network_var, style="Modern.TCheckbutton").pack(anchor="w", pady=5)
+    
+    # Output format selection
+    output_frame = ttk.LabelFrame(popup, text="Output Format")
+    output_frame.pack(fill="x", padx=20, pady=10)
+    
+    format_var = tk.StringVar(value="stigs")
+    ttk.Radiobutton(output_frame, text="STIGs (Generate CKLB checklists)", 
+                    variable=format_var, value="stigs").pack(anchor="w", padx=10, pady=5)
+    ttk.Radiobutton(output_frame, text="Benchmarks (Extract XCCDF only)", 
+                    variable=format_var, value="benchmarks").pack(anchor="w", padx=10, pady=5)
+    
+    # Buttons
+    btn_frame = ttk.Frame(popup)
+    btn_frame.pack(fill="x", padx=20, pady=20)
+    
+    def start_fetch():
+        selected_categories = []
+        if scap_var.get():
+            selected_categories.append("benchmark")
+        if os_var.get():
+            selected_categories.append("checklist")
+        if app_var.get():
+            selected_categories.append("application")
+        if network_var.get():
+            selected_categories.append("network")
+            
+        if not selected_categories:
+            log_job_status("[ERROR] Please select at least one technology category.")
+            return
+            
+        output_format = format_var.get()
+        popup.destroy()
+        
+        # Start the fetch process
+        fetch_from_disa(selected_categories, output_format)
+    
+    ttk.Button(btn_frame, text=f"{ICONS['download']} Start Fetch", 
+               style="Accent.TButton", command=start_fetch).pack(side="right", padx=(10, 0))
+    ttk.Button(btn_frame, text="Cancel", 
+               style="Secondary.TButton", command=popup.destroy).pack(side="right")
+
+def fetch_from_disa(categories, output_format):
+    """Main function to fetch STIGs from DISA and process them"""
+    log_job_status("[INFO] Starting DISA fetch process...")
+    
+    # Show progress popup
+    progress_popup = ProgressPopup(
+        root, 
+        "Fetching from DISA", 
+        "Downloading and processing STIG files from DISA..."
+    )
+    
+    def on_status_update(status):
+        status_text.set(status)
+        progress_popup.update_status(status)
+        if status == "Done":
+            log_job_status("[INFO] DISA fetch complete.")
+            progress_popup.close()
+        elif status.startswith("Error"):
+            log_job_status(f"[ERROR] {status}")
+            progress_popup.close()
+    
+    # Run in separate thread
+    threading.Thread(target=lambda: run_disa_fetch_task(
+        categories=categories,
+        output_format=output_format,
+        on_status_update=on_status_update
+    ), daemon=True).start()
+
+def run_disa_fetch_task(categories, output_format, on_status_update):
+    """Background task to fetch and process STIGs from DISA"""
+    try:
+        from scraper import scrape_stigs
+        from downloader import download_updates
+        from xccdf_extractor import extract_xccdf_from_zip
+        from cklb_generator import generate_cklb_json
+        
+        # Step 1: Scrape DISA for STIGs
+        on_status_update("Scanning DISA STIG library...")
+        all_items = []
+        
+        for category in categories:
+            mode_mapping = {
+                "benchmark": "benchmark",
+                "checklist": "checklist", 
+                "application": "application",
+                "network": "network"
+            }
+            scraped_items = scrape_stigs(mode=mode_mapping[category])
+            all_items.extend(scraped_items)
+        
+        log_job_status(f"[INFO] Found {len(all_items)} STIG items to process.")
+        
+        # Step 2: Download ZIP files
+        on_status_update("Downloading STIG ZIP files...")
+        download_updates(all_items, target_dir="cklb_proc/xccdf_lib")
+        
+        if output_format == "stigs":
+            # Step 3: Extract XCCDF files and generate CKLB
+            on_status_update("Extracting XCCDF files...")
+            zip_dir = "cklb_proc/xccdf_lib"
+            output_dir = "user_docs/cklb_new"
+            os.makedirs(output_dir, exist_ok=True)
+            
+            generated_count = 0
+            for item in all_items:
+                zip_filename = os.path.basename(item['URL'])
+                zip_path = os.path.join(zip_dir, zip_filename)
+                
+                if os.path.exists(zip_path):
+                    # Extract XCCDF
+                    xccdf_files = extract_xccdf_from_zip(zip_path, "cklb_proc/xccdf_lib")
+                    
+                    if xccdf_files:
+                        for xccdf_file in xccdf_files:
+                            # Generate CKLB
+                            cklb_filename = os.path.basename(xccdf_file).replace('-xccdf.xml', '.cklb')
+                            cklb_path = os.path.join(output_dir, cklb_filename)
+                            
+                            try:
+                                generate_cklb_json(xccdf_file, cklb_path)
+                                generated_count += 1
+                                log_job_status(f"[INFO] Generated: {cklb_filename}")
+                            except Exception as e:
+                                log_job_status(f"[ERROR] Failed to generate CKLB for {xccdf_file}: {e}")
+            
+            log_job_status(f"[INFO] Generated {generated_count} CKLB files in {output_dir}")
+        
+        on_status_update("Done")
+        
+    except Exception as e:
+        log_job_status(f"[ERROR] DISA fetch failed: {e}")
+        on_status_update(f"Error: {e}")
