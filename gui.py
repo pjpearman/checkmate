@@ -786,10 +786,16 @@ def show_disa_fetch_dialog():
         if not selected_indices:
             log_job_status("[ERROR] Please select at least one STIG item.")
             return
-        selected_items = [stig_listbox.get(i) for i in selected_indices]
-        selected_dicts = [all_items[i-1] for i in selected_indices]  # -1 for header row
+        
+        # Filter out header and separator rows (indices 0 and 1)
+        valid_indices = [i for i in selected_indices if i > 1]
+        if not valid_indices:
+            log_job_status("[ERROR] Please select at least one STIG item (not header rows).")
+            return
+            
+        selected_dicts = [all_items[i-2] for i in valid_indices]  # -2 for header and separator rows
         popup.destroy()
-        fetch_from_disa(selected_dicts)
+        fetch_from_disa(selected_dicts, "stigs")  # Default to generating CKLB files
 
     ttk.Button(btn_frame, text="Create CKLBs", 
                style="Accent.TButton", command=start_fetch).pack(side="right", padx=(10, 0))
@@ -802,27 +808,41 @@ def show_disa_fetch_dialog():
             from scraper import scrape_stigs
             status_label = header_frame.nametowidget("status_label")
             status_label.config(text="Fetching available STIGs from DISA...")
-            items = scrape_stigs(mode="all")
+            items = scrape_stigs()
             if not items:
                 status_label.config(text="No STIGs found.")
                 return
+                
             nonlocal all_items
             all_items = items
             stig_listbox.delete(0, tk.END)
-            stig_listbox.insert(tk.END, f"{'STIG':<60} | {'Version':>8} | {'Release':>8} | {'Update Time':>20}")
+            
+            # Add header row
+            header = f"{'STIG Product':<70} | {'Ver':>6} | {'Rel':>6} | {'Updated':>15}"
+            stig_listbox.insert(tk.END, header)
             stig_listbox.itemconfig(0, {'fg': COLORS['text_secondary']})
+            
+            # Add separator
+            separator = "─" * len(header)
+            stig_listbox.insert(tk.END, separator)
+            stig_listbox.itemconfig(1, {'fg': COLORS['text_secondary']})
+            
             for item in items:
                 title = item.get('Product', 'Unknown')
                 version = item.get('Version', 'Unknown')
                 release = item.get('Release', 'Unknown')
                 update_time = item.get('Updated', 'Unknown')
-                title_disp = (title[:57] + '...') if len(title) > 60 else title.ljust(60)
-                version_disp = str(version).rjust(8)
-                release_disp = str(release).rjust(8)
-                update_disp = str(update_time).rjust(20)
+                
+                # Truncate long titles
+                title_disp = (title[:67] + '...') if len(title) > 70 else title.ljust(70)
+                version_disp = str(version).rjust(6)
+                release_disp = str(release).rjust(6)
+                update_disp = str(update_time).rjust(15)
+                
                 display = f"{title_disp} | {version_disp} | {release_disp} | {update_disp}"
                 stig_listbox.insert(tk.END, display)
-            status_label.config(text="Select one or more STIGs to download and process.")
+                
+            status_label.config(text=f"Found {len(items)} STIGs. Select one or more to download and process.")
         except Exception as e:
             status_label = header_frame.nametowidget("status_label")
             status_label.config(text=f"Error fetching STIGs: {e}")
@@ -862,6 +882,7 @@ def run_disa_fetch_task(selected_items, output_format, on_status_update):
         from xccdf_extractor import extract_xccdf_from_zip
         from cklb_generator import generate_cklb_json
         import os
+        import json
         on_status_update("Downloading STIG ZIP files...")
         download_updates(selected_items, target_dir="cklb_proc/xccdf_lib")
         if output_format == "stigs":
@@ -880,7 +901,9 @@ def run_disa_fetch_task(selected_items, output_format, on_status_update):
                             cklb_filename = os.path.basename(xccdf_file).replace('-xccdf.xml', '.cklb')
                             cklb_path = os.path.join(output_dir, cklb_filename)
                             try:
-                                generate_cklb_json(xccdf_file, cklb_path)
+                                cklb_json = generate_cklb_json(xccdf_file)
+                                with open(cklb_path, 'w') as f:
+                                    json.dump(cklb_json, f, indent=2)
                                 generated_count += 1
                             except Exception as e:
                                 log_job_status(f"[ERROR] Failed to generate CKLB for {xccdf_file}: {e}")
@@ -1201,153 +1224,3 @@ log_job_status("[INFO] Ready to process checklists.")
 build_menu(root, yaml_path_var, on_closing)
 
 root.mainloop()
-
-# === DISA Fetch Dialog ===
-def show_disa_fetch_dialog():
-    """Show dialog for selecting STIGs to fetch from DISA"""
-    import threading
-    popup = tk.Toplevel(root)
-    popup.title("Fetch from DISA")
-    popup.geometry("600x500")
-    popup.configure(bg=COLORS['bg_primary'])
-    popup.transient(root)
-    popup.grab_set()
-    
-    # Center the popup
-    popup.update_idletasks()
-    x = (popup.winfo_screenwidth() // 2) - (popup.winfo_width() // 2)
-    y = (popup.winfo_screenheight() // 2) - (popup.winfo_height() // 2)
-    popup.geometry(f"+{x}+{y}")
-
-    # Header
-    header_frame = ttk.Frame(popup)
-    header_frame.pack(fill="x", padx=20, pady=20)
-    ttk.Label(header_frame, text="Select STIGs to Download", font=FONTS['heading']).pack()
-    ttk.Label(header_frame, text="Fetching available STIGs from DISA...", 
-              font=FONTS['default'], foreground=COLORS['text_secondary'], name="status_label").pack(pady=(5, 0))
-
-    # List frame for STIGs
-    list_frame = ttk.Frame(popup, style="Card.TFrame")
-    list_frame.pack(fill="both", expand=True, padx=20, pady=(0, 10))
-    
-    stig_scrollbar = ttk.Scrollbar(list_frame)
-    stig_scrollbar.pack(side="right", fill="y")
-    
-    stig_listbox = tk.Listbox(list_frame, selectmode=tk.MULTIPLE, font=FONTS['default'],
-        bg=COLORS['input_bg'], fg=COLORS['text_primary'], selectbackground=COLORS['accent'],
-        yscrollcommand=stig_scrollbar.set, width=80, height=15)
-    stig_listbox.pack(side="left", fill="both", expand=True)
-    stig_scrollbar.config(command=stig_listbox.yview)
-
-    # Buttons
-    btn_frame = ttk.Frame(popup)
-    btn_frame.pack(fill="x", padx=20, pady=20)
-    
-    def start_fetch():
-        selected_indices = stig_listbox.curselection()
-        if not selected_indices:
-            log_job_status("[ERROR] Please select at least one STIG item.")
-            return
-        selected_items = [stig_listbox.get(i) for i in selected_indices]
-        selected_dicts = [all_items[i-1] for i in selected_indices]  # -1 for header row
-        popup.destroy()
-        fetch_from_disa(selected_dicts)
-
-    ttk.Button(btn_frame, text="Create CKLBs", 
-               style="Accent.TButton", command=start_fetch).pack(side="right", padx=(10, 0))
-    ttk.Button(btn_frame, text="Cancel", 
-               style="Secondary.TButton", command=popup.destroy).pack(side="right")
-
-    # Fetch STIGs in background
-    def fetch_stigs():
-        try:
-            from scraper import scrape_stigs
-            status_label = header_frame.nametowidget("status_label")
-            status_label.config(text="Fetching available STIGs from DISA...")
-            items = scrape_stigs(mode="all")
-            if not items:
-                status_label.config(text="No STIGs found.")
-                return
-            nonlocal all_items
-            all_items = items
-            stig_listbox.delete(0, tk.END)
-            stig_listbox.insert(tk.END, f"{'STIG':<60} | {'Version':>8} | {'Release':>8} | {'Update Time':>20}")
-            stig_listbox.itemconfig(0, {'fg': COLORS['text_secondary']})
-            for item in items:
-                title = item.get('Product', 'Unknown')
-                version = item.get('Version', 'Unknown')
-                release = item.get('Release', 'Unknown')
-                update_time = item.get('Updated', 'Unknown')
-                title_disp = (title[:57] + '...') if len(title) > 60 else title.ljust(60)
-                version_disp = str(version).rjust(8)
-                release_disp = str(release).rjust(8)
-                update_disp = str(update_time).rjust(20)
-                display = f"{title_disp} | {version_disp} | {release_disp} | {update_disp}"
-                stig_listbox.insert(tk.END, display)
-            status_label.config(text="Select one or more STIGs to download and process.")
-        except Exception as e:
-            status_label = header_frame.nametowidget("status_label")
-            status_label.config(text=f"Error fetching STIGs: {e}")
-            log_job_status(f"[ERROR] Failed to fetch STIGs: {e}")
-    all_items = []
-    threading.Thread(target=fetch_stigs, daemon=True).start()
-
-def fetch_from_disa(selected_items, output_format):
-    """Main function to fetch selected STIGs from DISA and process them"""
-    log_job_status("[INFO] Starting DISA fetch process...")
-    progress_popup = ProgressPopup(
-        root, 
-        "Fetching from DISA", 
-        "Downloading and processing selected STIG files from DISA..."
-    )
-    def on_status_update(status):
-        status_text.set(status)
-        progress_popup.update_status(status)
-        if status == "Done":
-            log_job_status("[INFO] DISA fetch complete.")
-            progress_popup.close()
-        elif status.startswith("Error"):
-            log_job_status(f"[ERROR] {status}")
-            progress_popup.close()
-    threading.Thread(target=lambda: run_disa_fetch_task(
-        selected_items=selected_items,
-        output_format=output_format,
-        on_status_update=on_status_update
-    ), daemon=True).start()
-
-# Update run_disa_fetch_task to accept selected_items
-
-def run_disa_fetch_task(selected_items, output_format, on_status_update):
-    """Background task to fetch and process selected STIGs from DISA"""
-    try:
-        from downloader import download_updates
-        from xccdf_extractor import extract_xccdf_from_zip
-        from cklb_generator import generate_cklb_json
-        import os
-        on_status_update("Downloading STIG ZIP files...")
-        download_updates(selected_items, target_dir="cklb_proc/xccdf_lib")
-        if output_format == "stigs":
-            on_status_update("Extracting XCCDF files and generating CKLB...")
-            zip_dir = "cklb_proc/xccdf_lib"
-            output_dir = "user_docs/cklb_new"
-            os.makedirs(output_dir, exist_ok=True)
-            generated_count = 0
-            for item in selected_items:
-                zip_filename = os.path.basename(item['URL'])
-                zip_path = os.path.join(zip_dir, zip_filename)
-                if os.path.exists(zip_path):
-                    xccdf_files = extract_xccdf_from_zip(zip_path, "cklb_proc/xccdf_lib")
-                    if xccdf_files:
-                        for xccdf_file in xccdf_files:
-                            cklb_filename = os.path.basename(xccdf_file).replace('-xccdf.xml', '.cklb')
-                            cklb_path = os.path.join(output_dir, cklb_filename)
-                            try:
-                                generate_cklb_json(xccdf_file, cklb_path)
-                                generated_count += 1
-                            except Exception as e:
-                                log_job_status(f"[ERROR] Failed to generate CKLB for {xccdf_file}: {e}")
-            log_job_status(f"[INFO] Generated {generated_count} CKLB files in {output_dir}")
-        on_status_update("Done")
-    except Exception as e:
-        log_job_status(f"[ERROR] DISA fetch failed: {e}")
-        on_status_update(f"Error: {e}")

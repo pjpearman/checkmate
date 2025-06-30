@@ -4166,3 +4166,660 @@ New rules in the updated checklist:
 2025-06-30 18:12:56,611 [INFO] Found file link: VMware NSX Manager STIG, Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMware_NSX_Manager_V1R1_STIG.zip (updated: Unknown)
 2025-06-30 18:12:56,613 [INFO] Found file link: VMware NSX STIG Overview, Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMware_NSX_V1R1_Overview.zip (updated: Unknown)
 2025-06-30 18:12:56,614 [INFO] Found file link: VMware NSX-T Data Center STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_NSX-T_Y23M07_STIG.zip (updated: Unknown)
+2025-06-30 19:18:46,980 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=scap
+2025-06-30 19:18:47,047 [INFO] Found file link: DoD Consent Banner with FAQ -> https://dl.dod.cyber.mil/hidden/home/unclass-consent_banner.zip (updated: Unknown)
+2025-06-30 19:18:47,048 [INFO] Found file link: Adobe Acrobat Reader DC Continuous Track STIG Benchmark - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Adobe_Acrobat_Reader_DC_Continuous_V2R3_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,049 [INFO] Found file link: Canonical Ubuntu 20.04 LTS STIG SCAP Benchmark - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_20-04_LTS_V2R3_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,050 [INFO] Found file link: Canonical Ubuntu 22.04 LTS STIG SCAP Benchmark - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_22-04_LTS_V2R2_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,050 [INFO] Found file link: Cisco IOS XE Router NDM STIG Benchmark - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_IOS-XE_Router_NDM_V3R2_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,051 [INFO] Found file link: Cisco IOS XE Router RTR STIG Benchmark - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_IOS-XE_Router_RTR_V3R2_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,051 [INFO] Found file link: Google Chrome STIG Benchmark - Ver 2, Rel 10 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Google_Chrome_V2R10_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,052 [INFO] Found file link: Kubernetes STIG SCAP Benchmark - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Kubernetes_V2R3_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,053 [INFO] Found file link: Microsoft Defender Antivirus STIG Benchmark - Ver 2, Rel 5 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Defender_Antivirus_V2R5_STIG_SCAP_1-2_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,053 [INFO] Found file link: Microsoft DotNet Framework 4.0 STIG SCAP Benchmark - Ver 2, Rel 6 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_DotNet_Framework_4-0_V2R6_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,054 [INFO] Found file link: Microsoft Edge STIG Benchmark - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Edge_V2R2_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,054 [INFO] Found file link: Microsoft Internet Explorer 11 STIG Benchmark - Ver 2, Rel 6 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_IE11_V2R6_STIG_SCAP_1-2_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,055 [INFO] Found file link: Microsoft Office 365 ProPlus STIG SCAP Benchmark - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Office_365_ProPlus_V3R4_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,055 [INFO] Found file link: Microsoft Windows 10 STIG SCAP Benchmark - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_10_V3R4_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,056 [INFO] Found file link: Microsoft Windows 11 STIG SCAP Benchmark - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_11_V2R4_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,057 [INFO] Found file link: Microsoft Windows Defender Firewall with Advanced Security STIG Benchmark - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Defender_Firewall_V2R3_STIG_SCAP_1-2_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,057 [INFO] Found file link: Microsoft Windows Server 2019 STIG SCAP Benchmark – Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2019_V3R4_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,058 [INFO] Found file link: Microsoft Windows Server 2022 STIG SCAP Benchmark - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2022_V2R4_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,059 [INFO] Found file link: Mozilla Firefox for Linux STIG SCAP Benchmark - Ver 6, Rel 5 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MOZ_Firefox_Linux_V6R5_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,060 [INFO] Found file link: Mozilla Firefox for Windows STIG SCAP Benchmark - Ver 6, Rel 6 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MOZ_Firefox_Windows_V6R6_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,061 [INFO] Found file link: Oracle Linux 7 STIG Benchmark - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_7_V3R1_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,061 [INFO] Found file link: Oracle Linux 8 STIG SCAP Benchmark - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_8_V2R4_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,062 [INFO] Found file link: Red Hat Enterprise Linux 8 STIG SCAP Benchmark - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V2R3_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,062 [INFO] Found file link: Red Hat Enterprise Linux 9 STIG SCAP Benchmark - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_9_V2R4_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,063 [INFO] Found file link: SCC 5.10.2 RHEL 7/Oracle Linux 7/SLES12/SLES 15 x86 64 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_rhel7_sles12-15_oracle-linux7_x86_64_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,063 [INFO] Found file link: SCC 5.10.2 RHEL 8/Oracle Linux 8 Aarch64 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_rhel8_oracle-linux8_aarch64_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,064 [INFO] Found file link: SCC 5.10.2 RHEL 8/Oracle Linux 8 x86 64 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_rhel8_oracle-linux8_x86_64_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,065 [INFO] Found file link: SCC 5.10.2 RHEL 9/Oracle Linux 9 x86 64 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_rhel9_oracle-linux9_x86_64_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,065 [INFO] Found file link: SCC 5.10.2 RPM GPG key -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/RPM-GPG-KEY-scc-5.10.2.zip (updated: Unknown)
+2025-06-30 19:18:47,066 [INFO] Found file link: SCC 5.10.2 Solaris 11 i386 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_solaris11_i386_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,066 [INFO] Found file link: SCC 5.10.2 Solaris 11 SPARC -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_solaris11_sparc_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,067 [INFO] Found file link: SCC 5.10.2 Ubuntu 18/20 AMD64 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_ubuntu18_ubuntu20_amd64_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,067 [INFO] Found file link: SCC 5.10.2 Ubuntu 20/Raspios-bulleye Aarch64 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_ubuntu20_raspios-bullseye_arm64_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,068 [INFO] Found file link: SCC 5.10.2 Ubuntu 22 AMD64 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_ubuntu22_amd64_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,068 [INFO] Found file link: SCC 5.10.2 UNIX Remote Scanning Plugin -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/SCC_5.10.2_UNIX_Remote_Scanning_Plugin.zip (updated: Unknown)
+2025-06-30 19:18:47,069 [INFO] Found file link: SCC 5.10.2 Windows -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/scc-5.10.2_Windows_bundle.zip (updated: Unknown)
+2025-06-30 19:18:47,069 [INFO] Found file link: Solaris 11 SPARC STIG Benchmark - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_SPARC_V3R2_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,070 [INFO] Found file link: Solaris 11 x86 STIG Benchmark - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_X86_V3R2_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,070 [INFO] Found file link: SUSE Linux Enterprise Server 12 STIG Benchmark - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_12_V3R2_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,070 [INFO] Found file link: SUSE Linux Enterprise Server 15 STIG SCAP Benchmark - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_15_V2R4_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:47,071 [INFO] Found file link: Tri-Lab Operating System Stack (TOSS) 4 STIG Benchmark - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_TOSS_4_V2R2_STIG_SCAP_1-3_Benchmark.zip (updated: Unknown)
+2025-06-30 19:18:51,367 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=operating-systems
+2025-06-30 19:18:51,406 [INFO] Found file link: DoD Consent Banner with FAQ -> https://dl.dod.cyber.mil/hidden/home/unclass-consent_banner.zip (updated: Unknown)
+2025-06-30 19:18:51,407 [INFO] Found file link: Active Directory Domain STIG - Ver 3, Rel 5 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Domain_V3R5_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,408 [INFO] Found file link: Active Directory Forest STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Active_Directory_Forest_V3R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,408 [INFO] Found file link: Anduril NixOS STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Anduril_NixOS_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,408 [INFO] Found file link: Apple macOS 14 (Sonoma) STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_14_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,409 [INFO] Found file link: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,411 [INFO] Found file link: Canonical Ubuntu 20.04 LTS STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_20-04_LTS_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,413 [INFO] Found file link: Canonical Ubuntu 22.04 LTS STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_22-04_LTS_V2R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,414 [INFO] Found file link: Canonical Ubuntu 24.04 LTS STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CAN_Ubuntu_24-04_LTS_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,415 [INFO] Found file link: CloudLinux AlmaLinux OS 9 STIG - Ver 1, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CL_AlmaLinux_OS_9_V1R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,415 [INFO] Found file link: General Purpose Operating System SRG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_GPOS_V3R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:51,416 [INFO] Found file link: IBM AIX 7.x STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_AIX_7-x_V3R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,416 [INFO] Found file link: IBM Hardware Management Console (HMC) STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_HMC_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,417 [INFO] Found file link: IBM z/OS STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zOS_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,417 [INFO] Found file link: IBM zSecure Suite STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zSecure_Suite_V1R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,418 [INFO] Found file link: IBM zVM Using CA VMSecure STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_zVM_Using_CA_VMSecure_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,418 [INFO] Found file link: Mainframe Product SRG - Ver 3, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Mainframe_Product_V3R3_SRG.zip (updated: Unknown)
+2025-06-30 19:18:51,419 [INFO] Found file link: Microsoft Windows 10 STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_10_V3R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,419 [INFO] Found file link: Microsoft Windows 11 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_11_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,420 [INFO] Found file link: Microsoft Windows Defender Firewall with Advanced Security STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Defender_Firewall_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,420 [INFO] Found file link: Microsoft Windows PAW STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_PAW_V3R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,421 [INFO] Found file link: Microsoft Windows Server 2019 STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2019_V3R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,421 [INFO] Found file link: Microsoft Windows Server 2022 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_2022_V2R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,422 [INFO] Found file link: Oracle Linux 7 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_7_V3R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,423 [INFO] Found file link: Oracle Linux 8 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_8_V2R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,423 [INFO] Found file link: Oracle Linux 9 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Linux_9_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,423 [INFO] Found file link: Red Hat Enterprise Linux 8 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_8_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,424 [INFO] Found file link: Red Hat Enterprise Linux 9 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RHEL_9_V2R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,425 [INFO] Found file link: SLES V11 for System z STIG - Ver 1, Rel 12 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_V11_for_System_z_V1R12_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,425 [INFO] Found file link: Solaris 11 SPARC STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_SPARC_V3R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,426 [INFO] Found file link: Solaris 11 x86 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SOL_11_x86_V3R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,426 [INFO] Found file link: SUSE Linux Enterprise Micro 5 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLEM_5_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,427 [INFO] Found file link: SUSE Linux Enterprise Server 12 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_12_V3R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,427 [INFO] Found file link: SUSE Linux Enterprise Server 15 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SLES_15_V2R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,428 [INFO] Found file link: Virtual Machine Manager SRG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Virtual_Machine_Manager_V2R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:51,428 [INFO] Found file link: VMware vSphere 7.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_vSphere_7-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,429 [INFO] Found file link: VMware vSphere 8.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_vSphere_8-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:51,429 [INFO] Found file link: z/OS ACF2 Products -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_ACF2_Y25M04_Products.zip (updated: Unknown)
+2025-06-30 19:18:51,429 [INFO] Found file link: z/OS RACF Products -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_RACF_Y25M04_Products.zip (updated: Unknown)
+2025-06-30 19:18:51,430 [INFO] Found file link: z/OS SRR Scripts -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_Y25M04_SRR.zip (updated: Unknown)
+2025-06-30 19:18:51,431 [INFO] Found file link: z/OS TSS Products STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_zOS_TSS_Y25M04_Products.zip (updated: Unknown)
+2025-06-30 19:18:55,163 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=app-security
+2025-06-30 19:18:55,226 [INFO] Found file link: DoD Consent Banner with FAQ -> https://dl.dod.cyber.mil/hidden/home/unclass-consent_banner.zip (updated: Unknown)
+2025-06-30 19:18:55,226 [INFO] Found file link: Adobe Acrobat Professional DC Continuous Track STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Adobe_Acrobat_Pro_DC_Continuous_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,227 [INFO] Found file link: Adobe Acrobat Reader DC Continuous Track STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Adobe_Acrobat_Reader_DC_Continuous_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,227 [INFO] Found file link: Apache Server 2.4 Unix STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apache_Server_2-4_Unix_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,228 [INFO] Found file link: Apache Server 2.4 Windows STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apache_Server_2-4_Windows_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,229 [INFO] Found file link: Apache Tomcat Application Server 9 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apache_Tomcat_Application_Server_9_V3R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,229 [INFO] Found file link: Application Security and Development STIG - Ver 6, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_ASD_V6R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,230 [INFO] Found file link: Application Server SRG - Ver 4, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Application_Server_V4R3_SRG.zip (updated: Unknown)
+2025-06-30 19:18:55,231 [INFO] Found file link: AvePoint Compliance Guardian STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_AP_Compliance_Guardian_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,231 [INFO] Found file link: AvePoint DocAve 6 STIG - Ver 1, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_AvePoint_DocAve_6_V1R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,231 [INFO] Found file link: CA IDMS STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CA_IDMS_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,233 [INFO] Found file link: Citrix Virtual Apps and Desktops (VAD) 7.x STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Citrix_VAD_7-x_Y22M01_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,233 [INFO] Found file link: Citrix XenDesktop 7.x STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Citrix_XenDesktop_7-x_Y20M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,234 [INFO] Found file link: Container Platform SRG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Container_Platform_V2R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:55,234 [INFO] Found file link: Crunchy Data Postgres 16 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CD_Postgres_16_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,235 [INFO] Found file link: Crunchy Data PostgreSQL STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_CD_PGSQL_V3R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,236 [INFO] Found file link: Database SRG - Ver 4, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Database_V4R3_SRG.zip (updated: Unknown)
+2025-06-30 19:18:55,236 [INFO] Found file link: Dragos Platform 2.x STIG - Ver 1, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Dragos_Platform_2-x_V1R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,237 [INFO] Found file link: EnterpriseDB Postgres Advanced Server (EPAS) STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_EPAS_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,237 [INFO] Found file link: Google Chrome STIG - Ver 2, Rel 10 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Google_Chrome_V2R10_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,238 [INFO] Found file link: HYCU Protégé STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_HYCU_Protege_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,238 [INFO] Found file link: IBM DB2 V10.5 STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_DB2_V10-5_LUW_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,239 [INFO] Found file link: IBM WebSphere Liberty Server STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_WebSphere_Liberty_Server_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,240 [INFO] Found file link: IBM WebSphere Traditional V9.x STIG Version 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_WebSphere_Traditional_V9-x_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,241 [INFO] Found file link: JBoss Enterprise Application Platform 6.3 STIG - Ver 2, Rel 6 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_JBoss_EAP_6-3_V2R6_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,242 [INFO] Found file link: Kubernetes STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Kubernetes_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,242 [INFO] Found file link: MariaDB Enterprise 10.x STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MariaDB_Enterprise_10-x_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,243 [INFO] Found file link: MarkLogic Server v9 STIG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MarkLogic_Server_v9_V3R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,243 [INFO] Found file link: Microsoft Access 2016 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Microsoft_Access_2016_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,244 [INFO] Found file link: Microsoft Azure SQL Database STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Azure_SQL_DB_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,244 [INFO] Found file link: Microsoft Defender Antivirus STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Defender_Antivirus_V2R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,245 [INFO] Found file link: Microsoft DotNet Framework 4.0 STIG - Ver 2, Rel 6 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_DotNet_Framework_4-0_V2R6_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,245 [INFO] Found file link: Microsoft Edge STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Edge_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,246 [INFO] Found file link: Microsoft Excel 2016 STIG - Ver 2, Rel 1​ -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Excel_2016_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,246 [INFO] Found file link: Microsoft Exchange 2016 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Exchange_2016_Y25M01_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,247 [INFO] Found file link: Microsoft Exchange 2019 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Exchange_2019_Y25M01_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,247 [INFO] Found file link: Microsoft IIS 10.0 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_IIS_10-0_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,248 [INFO] Found file link: Microsoft Internet Explorer 11 STIG - Ver 2, Rel 5 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_IE11_V2R5_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,249 [INFO] Found file link: Microsoft Office 365 ProPlus STIG - Ver 3, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Office_365_ProPlus_V3R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,250 [INFO] Found file link: Microsoft Office System 2016 STIG - Ver 2, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Office_System_2016_V2R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,250 [INFO] Found file link: Microsoft OneDrive STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_OneDrive_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,251 [INFO] Found file link: Microsoft OneNote 2016 STIG - Ver 1, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Microsoft_OneNote_2016_V1R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,252 [INFO] Found file link: Microsoft Outlook 2016 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Outlook_2016_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,253 [INFO] Found file link: Microsoft PowerPoint 2016 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Microsoft_PowerPoint_2016_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,253 [INFO] Found file link: Microsoft Project 2016 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Microsoft_Project_2016_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,254 [INFO] Found file link: Microsoft Publisher 2016 STIG - Ver 1, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Publisher_2016_V1R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,255 [INFO] Found file link: Microsoft Skype for Business 2016 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Microsoft_Skype_for_Business_2016_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,255 [INFO] Found file link: Microsoft SQL Server 2016 STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_SQL_Server_2016_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,256 [INFO] Found file link: Microsoft SQL Server 2022 Draft STIG - Ver 1, Rel 0.1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_SQL_Server_2022_V1R0-1_IDraftSTIG.zip (updated: Unknown)
+2025-06-30 19:18:55,256 [INFO] Found file link: Microsoft Visio 2016 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Microsoft_Visio_2016_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,257 [INFO] Found file link: Microsoft Word 2016 STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Microsoft_Word_2016_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,257 [INFO] Found file link: Mirantis Kubernetes Engine STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Mirantis_Kubernetes_Engine_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,258 [INFO] Found file link: MongoDB 7.x STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MongoDB_Enterprise_Advanced_7-x_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,258 [INFO] Found file link: Mozilla Firefox STIG - Ver 6, Rel 5 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MOZ_Firefox_V6R5_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,259 [INFO] Found file link: Oracle Database 12c STIG - Ver 3, Rel 4 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Database_12c_V3R4_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,259 [INFO] Found file link: Oracle Database 19c STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_Database_19c_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,260 [INFO] Found file link: Oracle MySQL 8.0 STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Oracle_MySQL_8-0_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,260 [INFO] Found file link: Palo Alto Networks Prisma Cloud Compute STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_PAN_Prisma_Cloud_Compute_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,261 [INFO] Found file link: Rancher Government Solutions Multi-Cluster Manager STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RGS_MCM_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,261 [INFO] Found file link: Rancher Government Solutions RKE2 STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RGS_RKE2_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,262 [INFO] Found file link: Red Hat Ansible Automation Controller STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RH_Ansible_Automation_Controller_Y24M10_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,262 [INFO] Found file link: Red Hat OpenShift Container Platform 4.12 STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RH_OpenShift_Container_Platform_4-12_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,263 [INFO] Found file link: Redis Enterprise 6.x STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Redis_Enterprise_6-x_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,263 [INFO] Found file link: SPEC Innovations Innoslate 4.x STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SPEC_Innovations_Innoslate_4-x_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,264 [INFO] Found file link: Tanium 7.x STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Tanium_7-x_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,264 [INFO] Found file link: Tanium 7.x TanOS STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Tanium_7-x_TanOS_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:55,264 [INFO] Found file link: Web Server SRG - Ver 4, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Web_Server_V4R3_SRG.zip (updated: Unknown)
+2025-06-30 19:18:55,264 [INFO] Found file link: Xylok Security Suite 20.x STIG - Ver 1, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Xylok_Security_Suite_20-x_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,140 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/?_dl_facet_stigs=network-perimeter-wireless
+2025-06-30 19:18:59,184 [INFO] Found file link: DoD Consent Banner with FAQ -> https://dl.dod.cyber.mil/hidden/home/unclass-consent_banner.zip (updated: Unknown)
+2025-06-30 19:18:59,184 [INFO] Found file link: Akamai KSD Service IL2 ALG STIG Version 1​​​ -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Akamai_KSD_Service_IL2_ALG_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,185 [INFO] Found file link: Akamai KSD Service IL2 NDM STIG Version 1​​​​ -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Akamai_KSD_Service_IL2_NDM_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,185 [INFO] Found file link: Akamai KSD Service IL2 STIG Overview​​ -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Akamai_KSD_Service_IL2_V1R1_Overview.zip (updated: Unknown)
+2025-06-30 19:18:59,186 [INFO] Found file link: Application Layer Gateway SRG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Application_Layer_Gateway_V2R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,187 [INFO] Found file link: Arista MLS EOS 4.X STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Arista_MLS_EOS_4-X_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,187 [INFO] Found file link: Authentication, Authorization, and Accounting Services (AAA) SRG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_AAA_Services_V2R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,188 [INFO] Found file link: BIND 9.x STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_BIND_9-x_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,188 [INFO] Found file link: Central Log Server SRG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Central_Log_Server_V3R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,189 [INFO] Found file link: Cisco ASA STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_ASA_Y24M10_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,189 [INFO] Found file link: Cisco IOS Router STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_IOS_Router_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,190 [INFO] Found file link: Cisco IOS Switch STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_IOS_Switch_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,190 [INFO] Found file link: Cisco IOS XE Router STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_IOS-XE_Router_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,190 [INFO] Found file link: Cisco IOS XE Switch STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_IOS-XE_Switch_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,191 [INFO] Found file link: Cisco IOS XR Router STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_IOS-XR_Router_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,192 [INFO] Found file link: Cisco ISE STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_ISE_Y24M10_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,192 [INFO] Found file link: Cisco NX OS Switch STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Cisco_NX-OS_Switch_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,193 [INFO] Found file link: Dell OS10 Switch STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Dell_OS10_Switch_Y24M12_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,193 [INFO] Found file link: Domain Name System (DNS) SRG - Ver 4, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Domain_Name_System_V4R1_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,194 [INFO] Found file link: Enterprise Voice, Video, and Messaging SRG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_EVVM_Y25M01_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,194 [INFO] Found file link: F5 BIG-IP TMOS STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_F5_BIG-IP_TMOS_Y24M09_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,195 [INFO] Found file link: Firewall SRG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Firewall_V3R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,195 [INFO] Found file link: Forescout STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_FS_Y25M01_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,196 [INFO] Found file link: Fortinet FortiGate Firewall STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_FN_FortiGate_Firewall_Y23M07_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,196 [INFO] Found file link: HP FlexFabric Switch STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_HP_FlexFabric_Switch_Y20M07_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,196 [INFO] Found file link: HPE 3PAR StoreServ 3.2.x STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_HPE_3PAR_StoreServ_3-2-x_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,197 [INFO] Found file link: HPE 3PAR StoreServ OS STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_HPE_3PAR_StoreServ_OS_Y24M07_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,197 [INFO] Found file link: HPE Aruba Networking AOS STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_HPE_Aruba_Networking_AOS_Y24M10_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,198 [INFO] Found file link: HPE Nimble Storage Array STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_HPE_Nimble_Storage_Array_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,198 [INFO] Found file link: IBM DataPower NDM STIG - Ver 1, Rel 2​ -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_DataPower_NDM_V1R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,199 [INFO] Found file link: IBM DataPower STIG ALG STIG Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_DataPower_ALG_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,199 [INFO] Found file link: IBM DataPower STIG Overview, Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IBM_DataPower_V1R1_Overview.zip (updated: Unknown)
+2025-06-30 19:18:59,200 [INFO] Found file link: Infoblox 7.x DNS STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Infoblox_7-x_DNS_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,201 [INFO] Found file link: Infoblox 8.x DNS STIG - Ver 1, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IB_8-x_DNS_V1R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,201 [INFO] Found file link: Intrusion Detection and Prevention System Technology SRG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_IDPS_V3R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,202 [INFO] Found file link: Ivanti Connect Secure STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Ivanti_Connect_Secure_Y24M10_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,202 [INFO] Found file link: Juniper EX Series Switches STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Juniper_EX_Switches_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,203 [INFO] Found file link: Juniper Router STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Juniper_Router_Y25M01_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,203 [INFO] Found file link: Juniper SRX Services Gateway STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Juniper_SRX_SG_Y25M01_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,204 [INFO] Found file link: Layer 2 Switch SRG - Ver 3, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Layer_2_Switch_V3R2_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,204 [INFO] Found file link: Microsoft Windows Server DNS STIG - Ver 2, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MS_Windows_Server_DNS_V2R3_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,205 [INFO] Found file link: Mozilla Firefox STIG - Ver 6, Rel 6 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_MOZ_Firefox_V6R6_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,205 [INFO] Found file link: NetApp ONTAP DSC 9.x STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_NetApp_ONTAP_DSC_9-x_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,206 [INFO] Found file link: Network Device Management SRG - Ver 5, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_NDM_V5R3_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,206 [INFO] Found file link: Network Infrastructure Policy STIG - Ver 10, Rel 7 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Network_Infrastructure_Policy_V10R7_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,207 [INFO] Found file link: Network WLAN STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Network_WLAN_Y23M10_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,207 [INFO] Found file link: Palo Alto Networks STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_PAN_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,208 [INFO] Found file link: Riverbed NetProfiler STIG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_RB_NetProfiler_V2R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,208 [INFO] Found file link: Router SRG - Ver 5, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Router_V5R1_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,209 [INFO] Found file link: SDN Controller SRG - Ver 2, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SDN_Controller_V2R1_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,209 [INFO] Found file link: SEL-2740S STIG Ver 1 Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SEL-2740S_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,210 [INFO] Found file link: Software-Defined Networking (SDN) Using Network Virtualization (NV) STIG Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SDN_NV_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,210 [INFO] Found file link: Splunk Enterprise 7.x for Windows STIG - Ver 3, Rel 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Splunk_Enterprise_7-x_for_Windows_V3R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,211 [INFO] Found file link: Splunk Enterprise 8.x for Linux STIG - Ver 2, Rel 2 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Splunk_Enterprise_8-x_for_Linux_V2R2_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,211 [INFO] Found file link: Symantec ProxySG STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_SYM_ProxySG_Y20M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,212 [INFO] Found file link: Trend MicroTippingPoint STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_TM_TippingPoint_Y25M04_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,212 [INFO] Found file link: Virtual Private Network (VPN) SRG - Ver 3, Rel 3 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VPN_V3R3_SRG.zip (updated: Unknown)
+2025-06-30 19:18:59,213 [INFO] Found file link: VMware NSX 4.x STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_NSX_4-x_Y25M01_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,213 [INFO] Found file link: VMware NSX Distributed Logical Router STIG, Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMware_NSX_Distributed_Logical_Router_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,214 [INFO] Found file link: VMware NSX Manager STIG, Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMware_NSX_Manager_V1R1_STIG.zip (updated: Unknown)
+2025-06-30 19:18:59,214 [INFO] Found file link: VMware NSX STIG Overview, Ver 1 -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMware_NSX_V1R1_Overview.zip (updated: Unknown)
+2025-06-30 19:18:59,214 [INFO] Found file link: VMware NSX-T Data Center STIG -> https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_VMW_NSX-T_Y23M07_STIG.zip (updated: Unknown)
+2025-06-30 19:51:30,957 [INFO] Starting STIG scraping from https://public.cyber.mil/stigs/downloads/
+2025-06-30 19:51:35,769 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/
+2025-06-30 19:51:35,996 [INFO] Found: DoD Consent Banner with FAQ (VUnknown RUnknown) - Unknown
+2025-06-30 19:51:35,996 [INFO] Found: Active Directory Domain STIG - Ver 3, Rel 5 (V3 R5) - 13 Sep 2024
+2025-06-30 19:51:35,998 [INFO] Found: Active Directory Forest STIG - Ver 3, Rel 1 (V3 R1) - 13 Sep 2024
+2025-06-30 19:51:35,998 [INFO] Found: Adobe Acrobat Professional DC Continuous Track STIG - Ver 2, Rel 1 (V2 R1) - 26 Jul 2021
+2025-06-30 19:51:35,998 [INFO] Found: Adobe Acrobat Reader DC Continuous Track STIG - Ver 2, Rel 1 (V2 R1) - 26 Jul 2021
+2025-06-30 19:51:35,999 [INFO] Found: Adobe Acrobat Reader DC Continuous Track STIG Benchmark - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-06-30 19:51:36,000 [INFO] Found: Akamai KSD Service IL2 ALG STIG Version 1​​​ (V1 R1) - 23 Oct 2017
+2025-06-30 19:51:36,000 [INFO] Found: Akamai KSD Service IL2 NDM STIG Version 1​​​​ (V1 R1) - 23 Oct 2017
+2025-06-30 19:51:36,001 [INFO] Found: Akamai KSD Service IL2 STIG Overview​​ (V1 R1) - 23 Oct 2017
+2025-06-30 19:51:36,001 [INFO] Found: Anduril NixOS STIG - Ver 1, Rel 1 (V1 R1) - 19 Nov 2024
+2025-06-30 19:51:36,002 [INFO] Found: Apache Server 2.4 Unix STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,002 [INFO] Found: Apache Server 2.4 Windows STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,003 [INFO] Found: Apache Tomcat Application Server 9 STIG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-06-30 19:51:36,003 [INFO] Found: Apple iOS-iPadOS 18 STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-06-30 19:51:36,004 [INFO] Found: Apple iOS/iPadOS 16 BYOAD STIG - Ver 1, Rel 1 (VY23 RM08) - 08 Sep 2023
+2025-06-30 19:51:36,004 [INFO] Found: Apple iOS/iPadOS 16 STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-06-30 19:51:36,005 [INFO] Found: Apple iOS/iPadOS 17 BYOAD STIG (VY24 RM02) - 02 Feb 2024
+2025-06-30 19:51:36,005 [INFO] Found: Apple iOS/iPadOS 17 STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-06-30 19:51:36,006 [INFO] Found: Apple macOS 14 (Sonoma) STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-06-30 19:51:36,006 [INFO] Found: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-06-30 19:51:36,007 [INFO] Found: Application Layer Gateway SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-06-30 19:51:36,007 [INFO] Found: Application Programming Interface Draft SRG - Ver 1, Rel 0.1 (V1 R0) - 09 May 2025
+2025-06-30 19:51:36,008 [INFO] Found: Application Security and Development STIG - Ver 6, Rel 3 (V6 R3) - 07 Apr 2025
+2025-06-30 19:51:36,008 [INFO] Found: Application Server SRG - Ver 4, Rel 3 (V4 R3) - 07 Apr 2025
+2025-06-30 19:51:36,009 [INFO] Found: Arista MLS EOS 4.X STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,009 [INFO] Found: Authentication, Authorization, and Accounting Services (AAA) SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-06-30 19:51:36,010 [INFO] Found: AvePoint Compliance Guardian STIG - Ver 1, Rel 1 (V1 R1) - 07 Mar 2023
+2025-06-30 19:51:36,010 [INFO] Found: AvePoint DocAve 6 STIG - Ver 1, Rel 2 (V1 R2) - 24 Aug 2022
+2025-06-30 19:51:36,011 [INFO] Found: BIND 9.x Draft STIG - Ver 3, Rel 0.1 (V3 R0) - 11 Mar 2025
+2025-06-30 19:51:36,011 [INFO] Found: BIND 9.x STIG - Ver 2, Rel 3 (V2 R3) - 02 May 2024
+2025-06-30 19:51:36,012 [INFO] Found: BlackBerry CylancePROTECT Mobile for UEM STIG - Ver 1, Rel 2 (V1 R2) - 22 Jan 2024
+2025-06-30 19:51:36,012 [INFO] Found: BlackBerry Enterprise Mobility Server (BEMS) 2.x STIG - Ver 1, Rel 3 (V1 R3) - 28 Jul 2020
+2025-06-30 19:51:36,013 [INFO] Found: BlackBerry Enterprise Mobility Server (BEMS) 3.x STIG - Ver 1, Rel 2 (V1 R2) - 20 Jul 2023
+2025-06-30 19:51:36,013 [INFO] Found: Blackberry UEM STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2021
+2025-06-30 19:51:36,014 [INFO] Found: CA IDMS STIG - Ver 2, Rel 1 (V2 R1) - 23 Oct 2024
+2025-06-30 19:51:36,014 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-06-30 19:51:36,015 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG for Ansible - Ver 1, Rel 11 (V1 R11) - 22 Jan 2024
+2025-06-30 19:51:36,015 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-06-30 19:51:36,016 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-06-30 19:51:36,016 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG for Ansible - Ver 2, Rel 4 (V2 R4) - 09 May 2025
+2025-06-30 19:51:36,016 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG for Chef - Ver 2, Rel 4 (V2 R4) - 09 May 2025
+2025-06-30 19:51:36,017 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R2) - 09 Apr 2025
+2025-06-30 19:51:36,017 [INFO] Found: Canonical Ubuntu 24.04 LTS STIG - Ver 1, Rel 1 (V1 R1) - 21 Feb 2025
+2025-06-30 19:51:36,018 [INFO] Found: CCI List (VUnknown RUnknown) - 27 Jan 2025
+2025-06-30 19:51:36,018 [INFO] Found: CCI Specification (V2 R0) - 01 May 2014
+2025-06-30 19:51:36,019 [INFO] Found: Central Log Server SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-06-30 19:51:36,019 [INFO] Found: Cisco ACI Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 12 Feb 2025
+2025-06-30 19:51:36,019 [INFO] Found: Cisco ASA STIG (VY24 RM10) - 23 Oct 2024
+2025-06-30 19:51:36,019 [INFO] Found: Cisco IOS Router STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,020 [INFO] Found: Cisco IOS Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-06-30 19:51:36,020 [INFO] Found: Cisco IOS XE Router NDM RTR STIG for Ansible - Ver 2, Rel 3 (V2 R3) - 22 Oct 2021
+2025-06-30 19:51:36,020 [INFO] Found: Cisco IOS XE Router NDM STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-06-30 19:51:36,020 [INFO] Found: Cisco IOS XE Router RTR STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-06-30 19:51:36,021 [INFO] Found: Cisco IOS XE Router STIG (VY25 RM04) - 10 Apr 2025
+2025-06-30 19:51:36,021 [INFO] Found: Cisco IOS XE Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-06-30 19:51:36,021 [INFO] Found: Cisco IOS XR Router STIG (VY25 RM04) - 10 Apr 2025
+2025-06-30 19:51:36,021 [INFO] Found: Cisco ISE STIG (VY24 RM10) - 23 Oct 2024
+2025-06-30 19:51:36,023 [INFO] Found: Cisco NX OS Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-06-30 19:51:36,024 [INFO] Found: Citrix Virtual Apps and Desktops (VAD) 7.x STIG (VY22 RM01) - 24 Jan 2022
+2025-06-30 19:51:36,024 [INFO] Found: Citrix XenDesktop 7.x STIG (VY20 RM04) - 23 Apr 2020
+2025-06-30 19:51:36,025 [INFO] Found: Cloud Computing SRG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,025 [INFO] Found: CloudLinux AlmaLinux OS 9 STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-06-30 19:51:36,026 [INFO] Found: Compilation - SRG-STIG Library (VUnknown RUnknown) - 09 Apr 2025
+2025-06-30 19:51:36,026 [INFO] Found: Container Platform SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-06-30 19:51:36,027 [INFO] Found: Crunchy Data Postgres 16 STIG - Ver 1, Rel 1 (V1 R1) - 20 Jun 2024
+2025-06-30 19:51:36,027 [INFO] Found: Crunchy Data PostgreSQL STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-06-30 19:51:36,028 [INFO] Found: Database SRG - Ver 4, Rel 3 (V4 R3) - 28 Jan 2025
+2025-06-30 19:51:36,028 [INFO] Found: Dell OS10 Switch STIG (VY24 RM12) - 18 Dec 2024
+2025-06-30 19:51:36,028 [INFO] Found: Domain Name System (DNS) SRG - Ver 4, Rel 1 (V4 R1) - 17 Jul 2024
+2025-06-30 19:51:36,029 [INFO] Found: Dragos Platform 2.x STIG - Ver 1, Rel 2 (V1 R2) - 28 Jan 2025
+2025-06-30 19:51:36,030 [INFO] Found: Enterprise Voice, Video, and Messaging SRG (VY25 RM01) - 06 Feb 2025
+2025-06-30 19:51:36,030 [INFO] Found: EnterpriseDB Postgres Advanced Server (EPAS) STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-06-30 19:51:36,031 [INFO] Found: F5 BIG-IP TMOS STIG (VY24 RM09) - 30 Sep 2024
+2025-06-30 19:51:36,031 [INFO] Found: Firewall SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-06-30 19:51:36,032 [INFO] Found: Forescout STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,032 [INFO] Found: Fortinet FortiGate Firewall STIG (VY23 RM07) - 20 Jul 2023
+2025-06-30 19:51:36,032 [INFO] Found: General Purpose Operating System SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-06-30 19:51:36,033 [INFO] Found: Google Android 13 BYOAD STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,033 [INFO] Found: Google Android 13 STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,034 [INFO] Found: Google Android 14 BYOAD STIG (VY24 RM03) - 11 Mar 2024
+2025-06-30 19:51:36,034 [INFO] Found: Google Android 14 STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,035 [INFO] Found: Google Android 15 STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,035 [INFO] Found: Google Chrome STIG - Ver 2, Rel 10 (V2 R10) - 23 Oct 2024
+2025-06-30 19:51:36,035 [INFO] Found: Google Chrome STIG Benchmark - Ver 2, Rel 10 (V2 R10) - 23 Oct 2024
+2025-06-30 19:51:36,036 [INFO] Found: Group Policy Objects (GPOs) - April 2025 (VUnknown RUnknown) - 29 Apr 2025
+2025-06-30 19:51:36,036 [INFO] Found: Honeywell Android 13 STIG (VY25 RM04) - 09 May 2025
+2025-06-30 19:51:36,037 [INFO] Found: HP FlexFabric Switch STIG (VY20 RM07) - 28 Jul 2020
+2025-06-30 19:51:36,038 [INFO] Found: HPE 3PAR StoreServ 3.2.x STIG - Ver 2, Rel 1 (V2 R1) - 25 Jan 2022
+2025-06-30 19:51:36,039 [INFO] Found: HPE 3PAR StoreServ OS STIG (VY24 RM07) - 17 Jul 2024
+2025-06-30 19:51:36,039 [INFO] Found: HPE Aruba Networking AOS STIG (VY24 RM10) - 07 Nov 2024
+2025-06-30 19:51:36,040 [INFO] Found: HPE Nimble Storage Array STIG (V2 R1) - 17 Jul 2024
+2025-06-30 19:51:36,040 [INFO] Found: HYCU Protégé STIG - Ver 1, Rel 1 (V1 R1) - 01 Nov 2024
+2025-06-30 19:51:36,040 [INFO] Found: IBM AIX 7.x STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-06-30 19:51:36,041 [INFO] Found: IBM DataPower NDM STIG - Ver 1, Rel 2​ (V1 R2) - 01 Dec 2018
+2025-06-30 19:51:36,041 [INFO] Found: IBM DataPower STIG ALG STIG Ver 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,042 [INFO] Found: IBM DataPower STIG Overview, Ver 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,042 [INFO] Found: IBM DB2 V10.5 STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-06-30 19:51:36,043 [INFO] Found: IBM Hardware Management Console (HMC) STIG - Ver 2, Rel 1 (V2 R1) - 23 Oct 2024
+2025-06-30 19:51:36,043 [INFO] Found: IBM MaaS360 with Watson v10-x MDM STIG - Ver1, Rel 2 (V1 R2) - 15 Aug 2019
+2025-06-30 19:51:36,044 [INFO] Found: IBM WebSphere Liberty Server STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-06-30 19:51:36,044 [INFO] Found: IBM WebSphere Traditional V9.x STIG Version 1 (V1 R1) - 26 Jun 2019
+2025-06-30 19:51:36,045 [INFO] Found: IBM z/OS STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,045 [INFO] Found: IBM zSecure Suite STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-06-30 19:51:36,045 [INFO] Found: IBM zVM Using CA VMSecure STIG - Ver 2, Rel 2 (V2 R2) - 21 Oct 2022
+2025-06-30 19:51:36,046 [INFO] Found: Infoblox 7.x DNS STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2021
+2025-06-30 19:51:36,046 [INFO] Found: Infoblox 8.x DNS STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-06-30 19:51:36,047 [INFO] Found: Intrusion Detection and Prevention System Technology SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-06-30 19:51:36,047 [INFO] Found: Intune Policy - April 2025 (VUnknown RUnknown) - 29 Apr 2025
+2025-06-30 19:51:36,048 [INFO] Found: ISEC7 Sphere STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-06-30 19:51:36,048 [INFO] Found: Ivanti Connect Secure STIG (VY24 RM10) - 23 Oct 2024
+2025-06-30 19:51:36,049 [INFO] Found: Ivanti EPMM Server STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-06-30 19:51:36,049 [INFO] Found: Ivanti Sentry 9.x STIG (VY24 RM10) - 23 Oct 2024
+2025-06-30 19:51:36,049 [INFO] Found: Jamf Pro v10.x EMM STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-06-30 19:51:36,050 [INFO] Found: JBoss Enterprise Application Platform 6.3 STIG - Ver 2, Rel 6 (V2 R6) - 07 Apr 2025
+2025-06-30 19:51:36,050 [INFO] Found: Juniper EX Series Switches STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,051 [INFO] Found: Juniper Router STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,051 [INFO] Found: Juniper SRX Services Gateway STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,052 [INFO] Found: Juniper SRX SG STIG for Ansible - Ver 1, Rel 1 (V1 R1) - 19 Nov 2020
+2025-06-30 19:51:36,052 [INFO] Found: Kubernetes STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-06-30 19:51:36,053 [INFO] Found: Kubernetes STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-06-30 19:51:36,054 [INFO] Found: Layer 2 Switch SRG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-06-30 19:51:36,054 [INFO] Found: Mainframe Product SRG - Ver 3, Rel 3 (V3 R3) - 28 Jan 2025
+2025-06-30 19:51:36,055 [INFO] Found: MariaDB Enterprise 10.x STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-06-30 19:51:36,055 [INFO] Found: MarkLogic Server v9 STIG - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-06-30 19:51:36,055 [INFO] Found: Microsoft Access 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,056 [INFO] Found: Microsoft Azure SQL Database STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-06-30 19:51:36,056 [INFO] Found: Microsoft Defender Antivirus STIG - Ver 2, Rel 4 (V2 R4) - 25 May 2022
+2025-06-30 19:51:36,057 [INFO] Found: Microsoft Defender Antivirus STIG Benchmark - Ver 2, Rel 5 (V2 R5) - 22 Jan 2024
+2025-06-30 19:51:36,057 [INFO] Found: Microsoft Defender for Endpoint Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 26 Mar 2025
+2025-06-30 19:51:36,058 [INFO] Found: Microsoft DotNet Framework 4.0 STIG - Ver 2, Rel 6 (V2 R6) - 07 Apr 2025
+2025-06-30 19:51:36,058 [INFO] Found: Microsoft DotNet Framework 4.0 STIG SCAP Benchmark - Ver 2, Rel 6 (V2 R6) - 08 Apr 2025
+2025-06-30 19:51:36,059 [INFO] Found: Microsoft Edge STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-06-30 19:51:36,059 [INFO] Found: Microsoft Edge STIG Benchmark - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-06-30 19:51:36,060 [INFO] Found: Microsoft Entra ID STIG - Ver 1, Rel 1 (V1 R1) - 02 Apr 2025
+2025-06-30 19:51:36,060 [INFO] Found: Microsoft Excel 2016 STIG - Ver 2, Rel 1​ (V2 R1) - 22 Apr 2024
+2025-06-30 19:51:36,060 [INFO] Found: Microsoft Exchange 2016 STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,061 [INFO] Found: Microsoft Exchange 2019 STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,061 [INFO] Found: Microsoft IIS 10.0 STIG (VY25 RM04) - 10 Apr 2025
+2025-06-30 19:51:36,062 [INFO] Found: Microsoft Internet Explorer 11 STIG - Ver 2, Rel 5 (V2 R5) - 22 Jan 2024
+2025-06-30 19:51:36,062 [INFO] Found: Microsoft Internet Explorer 11 STIG Benchmark - Ver 2, Rel 6 (V2 R6) - 22 Jan 2024
+2025-06-30 19:51:36,063 [INFO] Found: Microsoft Intune (Desktop & Mobile) STIG (VY25 RM04) - 09 May 2025
+2025-06-30 19:51:36,063 [INFO] Found: Microsoft Office 365 ProPlus STIG - Ver 3, Rel 3 (V3 R3) - 07 Apr 2025
+2025-06-30 19:51:36,064 [INFO] Found: Microsoft Office 365 ProPlus STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-06-30 19:51:36,064 [INFO] Found: Microsoft Office System 2016 STIG - Ver 2, Rel 4 (V2 R4) - 28 Jan 2025
+2025-06-30 19:51:36,065 [INFO] Found: Microsoft OneDrive STIG - Ver 2, Rel 3 (V2 R3) - 20 Jul 2023
+2025-06-30 19:51:36,065 [INFO] Found: Microsoft OneNote 2016 STIG - Ver 1, Rel 2 (V1 R2) - 01 Dec 2018
+2025-06-30 19:51:36,066 [INFO] Found: Microsoft Outlook 2016 STIG - Ver 2, Rel 3 (V2 R3) - 19 Apr 2022
+2025-06-30 19:51:36,066 [INFO] Found: Microsoft PowerPoint 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,067 [INFO] Found: Microsoft Project 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,067 [INFO] Found: Microsoft Publisher 2016 STIG - Ver 1, Rel 3 (V1 R3) - 01 Dec 2018
+2025-06-30 19:51:36,067 [INFO] Found: Microsoft Skype for Business 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,068 [INFO] Found: Microsoft SQL Server 2016 STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,068 [INFO] Found: Microsoft SQL Server 2022 Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 23 Jan 2025
+2025-06-30 19:51:36,069 [INFO] Found: Microsoft Visio 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,069 [INFO] Found: Microsoft Windows 10 STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-06-30 19:51:36,070 [INFO] Found: Microsoft Windows 10 STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-06-30 19:51:36,070 [INFO] Found: Microsoft Windows 11 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-06-30 19:51:36,071 [INFO] Found: Microsoft Windows 11 STIG for Chef - Ver 1, Rel 3 (V1 R3) - 17 Aug 2023
+2025-06-30 19:51:36,071 [INFO] Found: Microsoft Windows 11 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-06-30 19:51:36,072 [INFO] Found: Microsoft Windows Defender Firewall with Advanced Security STIG - Ver 2, Rel 2 (V2 R2) - 30 Oct 2023
+2025-06-30 19:51:36,072 [INFO] Found: Microsoft Windows Defender Firewall with Advanced Security STIG Benchmark - Ver 2, Rel 3 (V2 R3) - 30 Oct 2023
+2025-06-30 19:51:36,072 [INFO] Found: Microsoft Windows PAW STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-06-30 19:51:36,073 [INFO] Found: Microsoft Windows Server 2016 STIG for PowerShell DSC - Ver 1, Rel 3 (V1 R3) - 22 Jun 2020
+2025-06-30 19:51:36,073 [INFO] Found: Microsoft Windows Server 2019 STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-06-30 19:51:36,074 [INFO] Found: Microsoft Windows Server 2019 STIG for Chef - Ver 1, Rel 2 (V1 R2) - 22 Jun 2020
+2025-06-30 19:51:36,075 [INFO] Found: Microsoft Windows Server 2019 STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-06-30 19:51:36,075 [INFO] Found: Microsoft Windows Server 2022 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-06-30 19:51:36,076 [INFO] Found: Microsoft Windows Server 2022 STIG for Chef - Ver 1, Rel 1 (V1 R1) - 03 Feb 2023
+2025-06-30 19:51:36,076 [INFO] Found: Microsoft Windows Server 2022 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-06-30 19:51:36,077 [INFO] Found: Microsoft Windows Server DNS STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-06-30 19:51:36,077 [INFO] Found: Microsoft Word 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,077 [INFO] Found: Mirantis Kubernetes Engine STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-06-30 19:51:36,078 [INFO] Found: MobileIron Core v10.x MDM STIG Ver 1 Rel 1 (V1 R1) - 06 Jun 2019
+2025-06-30 19:51:36,078 [INFO] Found: MongoDB 7.x STIG - Ver 1, Rel 1 (V1 R1) - 01 Oct 2024
+2025-06-30 19:51:36,079 [INFO] Found: Motorola Solutions Android 13 STIG (VY25 RM03) - 07 Apr 2025
+2025-06-30 19:51:36,079 [INFO] Found: Mozilla Firefox for Linux STIG SCAP Benchmark - Ver 6, Rel 5 (V6 R5) - 08 Apr 2025
+2025-06-30 19:51:36,080 [INFO] Found: Mozilla Firefox for Windows STIG SCAP Benchmark - Ver 6, Rel 6 (V6 R6) - 08 Apr 2025
+2025-06-30 19:51:36,080 [INFO] Found: Mozilla Firefox STIG - Ver 6, Rel 5 (V6 R5) - 20 Jul 2023
+2025-06-30 19:51:36,080 [INFO] Found: Mozilla Firefox STIG - Ver 6, Rel 6 (V6 R6) - 07 Apr 2025
+2025-06-30 19:51:36,081 [INFO] Found: NetApp ONTAP DSC 9.x STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-06-30 19:51:36,081 [INFO] Found: Network Device Management SRG - Ver 5, Rel 3 (V5 R3) - 07 Apr 2025
+2025-06-30 19:51:36,082 [INFO] Found: Network Infrastructure Policy STIG - Ver 10, Rel 7 (V10 R7) - 23 Oct 2024
+2025-06-30 19:51:36,082 [INFO] Found: Network WLAN STIG (VY23 RM10) - 23 Oct 2023
+2025-06-30 19:51:36,083 [INFO] Found: Okta IDaaS STIG - Ver 1, Rel 1 (V1 R1) - 07 May 2025
+2025-06-30 19:51:36,083 [INFO] Found: Oracle Database 12c STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-06-30 19:51:36,084 [INFO] Found: Oracle Database 19c STIG - Ver 1, Rel 1 (V1 R1) - 21 Feb 2025
+2025-06-30 19:51:36,084 [INFO] Found: Oracle Linux 7 STIG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-06-30 19:51:36,084 [INFO] Found: Oracle Linux 7 STIG Benchmark - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-06-30 19:51:36,085 [INFO] Found: Oracle Linux 8 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-06-30 19:51:36,085 [INFO] Found: Oracle Linux 8 STIG for Ansible - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-06-30 19:51:36,086 [INFO] Found: Oracle Linux 8 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-06-30 19:51:36,086 [INFO] Found: Oracle Linux 9 STIG - Ver 1, Rel 1 (V1 R1) - 24 Apr 2025
+2025-06-30 19:51:36,087 [INFO] Found: Oracle MySQL 8.0 STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-06-30 19:51:36,087 [INFO] Found: Palo Alto Networks Prisma Cloud Compute STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-06-30 19:51:36,087 [INFO] Found: Palo Alto Networks STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,088 [INFO] Found: Palo Alto Networks STIG for Ansible - Ver 1, Rel 4 (V1 R4) - 04 Jan 2022
+2025-06-30 19:51:36,088 [INFO] Found: Rancher Government Solutions Multi-Cluster Manager STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-06-30 19:51:36,089 [INFO] Found: Rancher Government Solutions RKE2 STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-06-30 19:51:36,089 [INFO] Found: Red Hat Ansible Automation Controller STIG (VY24 RM10) - 23 Oct 2024
+2025-06-30 19:51:36,090 [INFO] Found: Red Hat Enterprise Linux 8 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-06-30 19:51:36,090 [INFO] Found: Red Hat Enterprise Linux 8 STIG for Ansible - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-06-30 19:51:36,091 [INFO] Found: Red Hat Enterprise Linux 8 STIG for Chef - Ver 1, Rel 13 (V1 R13) - 22 Jan 2024
+2025-06-30 19:51:36,091 [INFO] Found: Red Hat Enterprise Linux 8 STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-06-30 19:51:36,091 [INFO] Found: Red Hat Enterprise Linux 9 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-06-30 19:51:36,092 [INFO] Found: Red Hat Enterprise Linux 9 STIG for Ansible- Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-06-30 19:51:36,092 [INFO] Found: Red Hat Enterprise Linux 9 STIG for Chef- Ver 1, Rel 2 (V1 R2) - 11 Mar 2024
+2025-06-30 19:51:36,093 [INFO] Found: Red Hat Enterprise Linux 9 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-06-30 19:51:36,093 [INFO] Found: Red Hat OpenShift Container Platform 4.12 STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-06-30 19:51:36,094 [INFO] Found: Redis Enterprise 6.x STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-06-30 19:51:36,094 [INFO] Found: Rev. 4 Sunset - Apache Server 2.4 Unix STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,095 [INFO] Found: Rev. 4 Sunset - Apache Server 2.4 Windows STIG (VY23 RM01) - 13 Jan 2023
+2025-06-30 19:51:36,095 [INFO] Found: Rev. 4 Sunset - Apache Tomcat Application Server 9 STIG - Ver 2, Rel 7 (V2 R7) - 22 Jan 2024
+2025-06-30 19:51:36,096 [INFO] Found: Rev. 4 Sunset - Apple iOS/iPadOS 16 STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-06-30 19:51:36,096 [INFO] Found: Rev. 4 Sunset - Apple iOS/iPadOS 17 STIG - Ver 1, Rel 1 (V1 R1) - 16 Oct 2023
+2025-06-30 19:51:36,097 [INFO] Found: Rev. 4 Sunset - Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 2 (V1 R2) - 22 Apr 2024
+2025-06-30 19:51:36,097 [INFO] Found: Rev. 4 Sunset - Application Layer Gateway (ALG) SRG - Ver 1, Rel 2 (V1 R2) - 01 Dec 2018
+2025-06-30 19:51:36,098 [INFO] Found: Rev. 4 Sunset - Application Security and Development STIG - Ver 5, Rel 3 (V5 R3) - 20 Jul 2023
+2025-06-30 19:51:36,099 [INFO] Found: Rev. 4 Sunset - Application Server SRG - Ver 3, Rel 4 (V3 R4) - 20 Jul 2023
+2025-06-30 19:51:36,099 [INFO] Found: Rev. 4 Sunset - Arista MLS EOS 4.2x STIG (VY23 RM02) - 14 Feb 2023
+2025-06-30 19:51:36,099 [INFO] Found: Rev. 4 Sunset - Authentication, Authorization, and Accounting Services (AAA) SRG - Ver 1, Rel 2 (V1 R2) - 16 Jan 2020
+2025-06-30 19:51:36,100 [INFO] Found: Rev. 4 Sunset - Canonical Ubuntu 22.04 LTS STIG - Ver 1, Rel 1 (V1 R1) - 03 Apr 2024
+2025-06-30 19:51:36,100 [INFO] Found: Rev. 4 Sunset - Central Log Server SRG - Ver 2, Rel 2 (V2 R2) - 21 Oct 2022
+2025-06-30 19:51:36,101 [INFO] Found: Rev. 4 Sunset - Cisco ASA STIG (VY23 RM10) - 23 Oct 2023
+2025-06-30 19:51:36,101 [INFO] Found: Rev. 4 Sunset - Cisco IOS Router STIG (VY24 RM01) - 22 Jan 2024
+2025-06-30 19:51:36,102 [INFO] Found: Rev. 4 Sunset - Cisco IOS Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,102 [INFO] Found: Rev. 4 Sunset - Cisco IOS XE Router STIG (VY24 RM01) - 22 Jan 2024
+2025-06-30 19:51:36,103 [INFO] Found: Rev. 4 Sunset - Cisco IOS XE Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,103 [INFO] Found: Rev. 4 Sunset - Cisco IOS XR Router STIG (VY24 RM01) - 22 Jan 2024
+2025-06-30 19:51:36,104 [INFO] Found: Rev. 4 Sunset - Cisco ISE STIG (VY24 RM01) - 22 Jan 2024
+2025-06-30 19:51:36,104 [INFO] Found: Rev. 4 Sunset - Cisco NX OS Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,104 [INFO] Found: Rev. 4 Sunset - Container Platform SRG - Ver 1, Rel 5 (V1 R5) - 22 Jan 2024
+2025-06-30 19:51:36,105 [INFO] Found: Rev. 4 Sunset - Crunchy Data PostgreSQL STIG - Ver 2, Rel 2 (V2 R2) - 22 Jan 2024
+2025-06-30 19:51:36,105 [INFO] Found: Rev. 4 Sunset - Database SRG - Ver 3, Rel 4 (V3 R4) - 22 Jan 2024
+2025-06-30 19:51:36,106 [INFO] Found: Rev. 4 Sunset - Domain Name System SRG - Ver 3, Rel 2 (V3 R2) - 21 Mar 2025
+2025-06-30 19:51:36,106 [INFO] Found: Rev. 4 Sunset - EnterpriseDB Postgres Advanced Server (EPAS) STIG - Ver 1, Rel 1 (V1 R1) - 11 Jan 2024
+2025-06-30 19:51:36,107 [INFO] Found: Rev. 4 Sunset - Firewall SRG - Ver 2, Rel 3 (V2 R3) - 21 Oct 2022
+2025-06-30 19:51:36,107 [INFO] Found: Rev. 4 Sunset - Forescout STIG (VY23 RM07) - 20 Jul 2023
+2025-06-30 19:51:36,107 [INFO] Found: Rev. 4 Sunset - General Purpose Operating System SRG - Ver 2, Rel 7 (V2 R7) - 22 Jan 2024
+2025-06-30 19:51:36,108 [INFO] Found: Rev. 4 Sunset - Google Android 13 STIG - Ver 1, Rel 1 (V1 R1) - 01 Nov 2022
+2025-06-30 19:51:36,108 [INFO] Found: Rev. 4 Sunset - Google Android 14 STIG (VY23 RM10) - 12 Oct 2023
+2025-06-30 19:51:36,109 [INFO] Found: Rev. 4 Sunset - HPE 3PAR StoreServ OS STIG (VY24 RM01) - 22 Jan 2024
+2025-06-30 19:51:36,109 [INFO] Found: Rev. 4 Sunset - HPE Nimble Storage Array STIG - Ver 1, Rel 2 (V1 R2) - 22 Jan 2024
+2025-06-30 19:51:36,110 [INFO] Found: Rev. 4 Sunset - IBM Hardware Management Console (HMC) STIG (VY23 RM04) - 24 Apr 2023
+2025-06-30 19:51:36,110 [INFO] Found: Rev. 4 Sunset - IBM z/OS STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,111 [INFO] Found: Rev. 4 Sunset - Intrusion Detection and Prevention System SRG - Ver 2, Rel 6 (V2 R6) - 28 Jul 2020
+2025-06-30 19:51:36,111 [INFO] Found: Rev. 4 Sunset - Ivanti Connect Secure STIG (VY23 RM11) - 16 Nov 2023
+2025-06-30 19:51:36,111 [INFO] Found: Rev. 4 Sunset - Ivanti MobileIron Core MDM Server STIG - Ver 1, Rel 1 (V1 R1) - 06 Dec 2021
+2025-06-30 19:51:36,112 [INFO] Found: Rev. 4 Sunset - Ivanti MobileIron Sentry 9.x STIG - Ver 1, Rel 1 (VUnknown RUnknown) - 26 Oct 2021
+2025-06-30 19:51:36,112 [INFO] Found: Rev. 4 Sunset - Jamf Pro v10.x EMM STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-06-30 19:51:36,113 [INFO] Found: Rev. 4 Sunset - Juniper EX Series Switches STIG (VY24 RM01) - 22 Jan 2024
+2025-06-30 19:51:36,113 [INFO] Found: Rev. 4 Sunset - Juniper Router STIG (VY23 RM06) - 17 May 2023
+2025-06-30 19:51:36,114 [INFO] Found: Rev. 4 Sunset - Juniper SRX Services Gateway STIG (VY22 RM10) - 21 Oct 2022
+2025-06-30 19:51:36,114 [INFO] Found: Rev. 4 Sunset - Kubernetes STIG - Ver 1, Rel 11 (V1 R11) - 23 Oct 2023
+2025-06-30 19:51:36,115 [INFO] Found: Rev. 4 Sunset - Layer 2 Switch SRG - Ver 2, Rel 1 (V2 R1) - 21 May 2021
+2025-06-30 19:51:36,115 [INFO] Found: Rev. 4 Sunset - Mainframe Product SRG - Ver 2, Rel 1 (V2 R1) - 21 Oct 2022
+2025-06-30 19:51:36,116 [INFO] Found: Rev. 4 Sunset - MariaDB Enterprise 10.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-06-30 19:51:36,116 [INFO] Found: Rev. 4 Sunset - MarkLogic Server v9 STIG - Ver 2, Rel 2 (V2 R2) - 25 Jan 2024
+2025-06-30 19:51:36,116 [INFO] Found: Rev. 4 Sunset - Microsoft Azure SQL Database STIG - Ver 1, Rel 2 (V1 R2) - 20 Jul 2023
+2025-06-30 19:51:36,117 [INFO] Found: Rev. 4 Sunset - Microsoft Edge STIG - Ver 1, Rel 8 (V1 R8) - 22 Apr 2024
+2025-06-30 19:51:36,117 [INFO] Found: Rev. 4 Sunset - Microsoft Exchange 2019 STIG (VY24 RM01) - 18 Jan 2024
+2025-06-30 19:51:36,118 [INFO] Found: Rev. 4 Sunset - Microsoft IIS 10.0 Server STIG (VY23 RM10) - 23 Oct 2023
+2025-06-30 19:51:36,118 [INFO] Found: Rev. 4 Sunset - Microsoft Office 365 ProPlus STIG - Ver 2, Rel 12 (V2 R12) - 22 Apr 2024
+2025-06-30 19:51:36,119 [INFO] Found: Rev. 4 Sunset - Microsoft SQL Server 2016 STIG (VY24 RM04) - 30 Apr 2024
+2025-06-30 19:51:36,119 [INFO] Found: Rev. 4 Sunset - Microsoft Windows 11 STIG - Ver 1, Rel 6 (V1 R6) - 02 May 2024
+2025-06-30 19:51:36,120 [INFO] Found: Rev. 4 Sunset - Microsoft Windows PAW STIG - Ver 2, Rel 3 (V2 R3) - 30 Oct 2023
+2025-06-30 19:51:36,120 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server 2019 STIG - Ver 2, Rel 9 (V2 R9) - 02 May 2024
+2025-06-30 19:51:36,121 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server 2022 STIG - Ver 1, Rel 5 (V1 R5) - 02 May 2024
+2025-06-30 19:51:36,121 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server Domain Name System STIG - Ver 1, Rel 1 (V1 R1) - 25 Jan 2024
+2025-06-30 19:51:36,122 [INFO] Found: Rev. 4 Sunset - Mirantis Kubernetes Engine STIG - Ver 1, Rel 1 (V1 R1) - 15 Apr 2024
+2025-06-30 19:51:36,122 [INFO] Found: Rev. 4 Sunset - NetApp ONTAP DSC 9.x STIG - Ver 1, Rel 4 (V1 R4) - 22 Apr 2024
+2025-06-30 19:51:36,123 [INFO] Found: Rev. 4 Sunset - Network Device Management SRG - Ver 4, Rel 3 (V4 R3) - 17 May 2023
+2025-06-30 19:51:36,123 [INFO] Found: Rev. 4 Sunset - Oracle Database 12c STIG - Ver 2, Rel 9 (V2 R9) - 22 Jan 2024
+2025-06-30 19:51:36,123 [INFO] Found: Rev. 4 Sunset - Oracle Linux 8 STIG - Ver 1, Rel 10 (V1 R10) - 22 Apr 2024
+2025-06-30 19:51:36,124 [INFO] Found: Rev. 4 Sunset - Oracle MySQL 8.0 STIG - Ver 1, Rel 5 (V1 R5) - 25 Jan 2024
+2025-06-30 19:51:36,124 [INFO] Found: Rev. 4 Sunset - Palo Alto Networks Prisma Cloud Compute STIG - Ver 1, Rel 3 (V1 R3) - 20 Jul 2023
+2025-06-30 19:51:36,125 [INFO] Found: Rev. 4 Sunset - Palo Alto Networks STIG (VY24 RM01) - 22 Jan 2024
+2025-06-30 19:51:36,125 [INFO] Found: Rev. 4 Sunset - Rancher Government Solutions Multi-Cluster Manager STIG - Ver 1, Rel 3 (V1 R3) - 20 Jul 2023
+2025-06-30 19:51:36,126 [INFO] Found: Rev. 4 Sunset - Rancher Government Solutions RKE2 STIG - Ver 1, Rel 5 (V1 R5) - 22 Apr 2024
+2025-06-30 19:51:36,126 [INFO] Found: Rev. 4 Sunset - Red Hat Ansible Automation Controller STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,127 [INFO] Found: Rev. 4 Sunset - Red Hat Enterprise Linux 9 STIG - Ver 1, Rel 3 (V1 R3) - 22 Apr 2024
+2025-06-30 19:51:36,127 [INFO] Found: Rev. 4 Sunset - Red Hat OpenShift Container Platform 4.12 STIG - Ver 1, Rel 1 (V1 R1) - 08 Sep 2023
+2025-06-30 19:51:36,129 [INFO] Found: Rev. 4 Sunset - Redis Enterprise 6.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-06-30 19:51:36,130 [INFO] Found: Rev. 4 Sunset - Riverbed NetProfiler STIG - Ver 1, Rel 1 (V1 R1) - 14 Feb 2023
+2025-06-30 19:51:36,130 [INFO] Found: Rev. 4 Sunset - Router SRG - Ver 4, Rel 3 (V4 R3) - 22 Apr 2024
+2025-06-30 19:51:36,131 [INFO] Found: Rev. 4 Sunset - Samsung Android OS 13 with Knox 3.x STIG (VY23 RM01) - 30 Jan 2023
+2025-06-30 19:51:36,132 [INFO] Found: Rev. 4 Sunset - Samsung Android OS 14 with Knox 3.x STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,133 [INFO] Found: Rev. 4 Sunset - SDN Controller SRG - Ver 1, Rel 2 (V1 R2) - 23 Apr 2020
+2025-06-30 19:51:36,133 [INFO] Found: Rev. 4 Sunset - Solaris 11 SPARC STIG - Ver 2, Rel 10 (V2 R10) - 22 Apr 2024
+2025-06-30 19:51:36,134 [INFO] Found: Rev. 4 Sunset - Solaris 11 x86 STIG - Ver 2, Rel 10 (V2 R10) - 22 Apr 2024
+2025-06-30 19:51:36,135 [INFO] Found: Rev. 4 Sunset - Splunk Enterprise 7.x for Windows STIG - Ver 2, Rel 4 (V2 R4) - 20 Jul 2023
+2025-06-30 19:51:36,135 [INFO] Found: Rev. 4 Sunset - Splunk Enterprise 8.x for Linux STIG - Ver 1, Rel 5 (V1 R5) - 23 Oct 2023
+2025-06-30 19:51:36,136 [INFO] Found: Rev. 4 Sunset - SUSE Linux Enterprise Server 15 STIG - Ver 1, Rel 13 (V1 R13) - 22 Apr 2024
+2025-06-30 19:51:36,137 [INFO] Found: Rev. 4 Sunset - Tanium 7.x STIG - Ver 1, Rel 2 (V1 R2) - 25 Aug 2022
+2025-06-30 19:51:36,137 [INFO] Found: Rev. 4 Sunset - Tanium 7.x TanOS STIG - Ver 1, Rel 1 (V1 R1) - 29 Nov 2022
+2025-06-30 19:51:36,138 [INFO] Found: Rev. 4 Sunset - Trellix Application Control 8.x STIG - Ver 2, Rel 2 (V2 R2) - 22 Jan 2024
+2025-06-30 19:51:36,139 [INFO] Found: Rev. 4 Sunset - Trend Micro TippingPoint STIG (VY22 RM07) - 27 Jul 2022
+2025-06-30 19:51:36,139 [INFO] Found: Rev. 4 Sunset - Tri-Lab Operating System Stack (TOSS) 4 STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-06-30 19:51:36,140 [INFO] Found: Rev. 4 Sunset - Unified Endpoint Management Server SRG (VY23 RM04) - 24 Apr 2023
+2025-06-30 19:51:36,141 [INFO] Found: Rev. 4 Sunset - Virtual Machine Manager SRG - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-06-30 19:51:36,141 [INFO] Found: Rev. 4 Sunset - Virtual Private Network (VPN) SRG - Ver 2, Rel 6 (V2 R6) - 11 Apr 2024
+2025-06-30 19:51:36,142 [INFO] Found: Rev. 4 Sunset - Web Server SRG - Ver 3, Rel 3 (V3 R3) - 11 Apr 2024
+2025-06-30 19:51:36,143 [INFO] Found: Riverbed NetProfiler STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-06-30 19:51:36,144 [INFO] Found: Router SRG - Ver 5, Rel 1 (V5 R1) - 17 Jul 2024
+2025-06-30 19:51:36,144 [INFO] Found: Samsung Android 14 BYOAD STIG (VY24 RM03) - 13 Mar 2024
+2025-06-30 19:51:36,145 [INFO] Found: Samsung Android 15 BYOAD STIG (VY25 RM04) - 09 May 2025
+2025-06-30 19:51:36,146 [INFO] Found: Samsung Android OS 13 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,146 [INFO] Found: Samsung Android OS 14 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,147 [INFO] Found: Samsung Android OS 15 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,148 [INFO] Found: Samsung SDS EMM STIG - Ver 1, Rel 3 (V1 R3) - 27 Jul 2022
+2025-06-30 19:51:36,148 [INFO] Found: SCC 5.10.2 RHEL 7/Oracle Linux 7/SLES12/SLES 15 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,149 [INFO] Found: SCC 5.10.2 RHEL 8/Oracle Linux 8 Aarch64 (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,150 [INFO] Found: SCC 5.10.2 RHEL 8/Oracle Linux 8 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,150 [INFO] Found: SCC 5.10.2 RHEL 9/Oracle Linux 9 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,151 [INFO] Found: SCC 5.10.2 RPM GPG key (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,152 [INFO] Found: SCC 5.10.2 Solaris 11 i386 (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,152 [INFO] Found: SCC 5.10.2 Solaris 11 SPARC (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,153 [INFO] Found: SCC 5.10.2 Ubuntu 18/20 AMD64 (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,154 [INFO] Found: SCC 5.10.2 Ubuntu 20/Raspios-bulleye Aarch64 (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,154 [INFO] Found: SCC 5.10.2 Ubuntu 22 AMD64 (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,155 [INFO] Found: SCC 5.10.2 UNIX Remote Scanning Plugin (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,156 [INFO] Found: SCC 5.10.2 Windows (VUnknown RUnknown) - 28 Mar 2025
+2025-06-30 19:51:36,156 [INFO] Found: SDN Controller SRG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-06-30 19:51:36,157 [INFO] Found: SEL-2740S STIG Ver 1 Rel 1 (V1 R1) - 1 SEL-2740
+2025-06-30 19:51:36,158 [INFO] Found: SLES V11 for System z STIG - Ver 1, Rel 12 (V1 R12) - 09 Mar 2019
+2025-06-30 19:51:36,158 [INFO] Found: Software-Defined Networking (SDN) Using Network Virtualization (NV) STIG Ver 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,159 [INFO] Found: Solaris 11 SPARC STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-06-30 19:51:36,160 [INFO] Found: Solaris 11 SPARC STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-06-30 19:51:36,160 [INFO] Found: Solaris 11 x86 STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-06-30 19:51:36,161 [INFO] Found: Solaris 11 x86 STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-06-30 19:51:36,161 [INFO] Found: SPEC Innovations Innoslate 4.x STIG - Ver 1, Rel 1 (V1 R1) - 28 Sep 2022
+2025-06-30 19:51:36,162 [INFO] Found: Splunk Enterprise 7.x for Windows STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-06-30 19:51:36,163 [INFO] Found: Splunk Enterprise 8.x for Linux STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-06-30 19:51:36,163 [INFO] Found: STIG Viewer 2.18 (VUnknown RUnknown) - 12 Aug 2024
+2025-06-30 19:51:36,164 [INFO] Found: STIG Viewer 2.18-Linux (VUnknown RUnknown) - 12 Aug 2024
+2025-06-30 19:51:36,164 [INFO] Found: STIG Viewer 2.18-Win64 (VUnknown RUnknown) - 12 Aug 2024
+2025-06-30 19:51:36,165 [INFO] Found: STIG Viewer 2.18-Win64 msi (VUnknown RUnknown) - 12 Aug 2024
+2025-06-30 19:51:36,166 [INFO] Found: Stig Viewer 3 CKLB JSON Schema (VUnknown RUnknown) - 10 Jan 2024
+2025-06-30 19:51:36,166 [INFO] Found: STIG Viewer 3.5.1-Linux (VUnknown RUnknown) - 27 Mar 2025
+2025-06-30 19:51:36,167 [INFO] Found: STIG Viewer 3.5.1-Win64 (VUnknown RUnknown) - 27 Mar 2025
+2025-06-30 19:51:36,168 [INFO] Found: STIG Viewer 3.5.1-Win64 msi (VUnknown RUnknown) - 27 Mar 2025
+2025-06-30 19:51:36,169 [INFO] Found: Sunset - A10 Networks ADC STIG (VY24 RM07) - 17 Jul 2024
+2025-06-30 19:51:36,169 [INFO] Found: Sunset - Apache 2.2 STIG UNIX - Ver 1, Rel 11 (V1 R11) - 13 May 2019
+2025-06-30 19:51:36,170 [INFO] Found: Sunset - Apache 2.2 STIG Windows - Ver 1, Rel 13​ (V1 R13) - 13 May 2019
+2025-06-30 19:51:36,171 [INFO] Found: Sunset - Apple iOS/iPadOS 15 - Ver 1, Rel 4 (V1 R4) - 22 Apr 2024
+2025-06-30 19:51:36,171 [INFO] Found: Sunset - Apple macOS 12 STIG - Ver 1, Rel 9 (V1 R9) - 17 Jul 2024
+2025-06-30 19:51:36,172 [INFO] Found: Sunset - Apple macOS 13 (Ventura) STIG - Ver 1, Rel 5 (V1 R5) - 28 Jan 2025
+2025-06-30 19:51:36,172 [INFO] Found: Sunset - Arista MultiLayer Switch DCS 7000 Series STIG (VY24 RM07) - 17 Jul 2024
+2025-06-30 19:51:36,172 [INFO] Found: Sunset - CA API Gateway STIG (VY24 RM07) - 17 Jul 2024
+2025-06-30 19:51:36,174 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG - Ver 2, Rel 15 (V2 R15) - 17 Jul 2024
+2025-06-30 19:51:36,174 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG Benchmark - Ver 2, Rel 11 (V2 R11) - 22 Jan 2024
+2025-06-30 19:51:36,175 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG Benchmark - Ver 2, Rel 12 (V2 R12) - 17 Jul 2024
+2025-06-30 19:51:36,176 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG for Ansible - Ver 2, Rel 13 (V2 R13) - 22 Jan 2024
+2025-06-30 19:51:36,176 [INFO] Found: Sunset - Canonical Ubuntu 20.04 LTS STIG Benchmark - Ver 1, Rel 9 (V1 R9) - 22 Jan 2024
+2025-06-30 19:51:36,177 [INFO] Found: Sunset - Cisco IOS-XE Router NDM STIG Benchmark - Ver 1, Rel 7 (V1 R7) - 24 Apr 2023
+2025-06-30 19:51:36,178 [INFO] Found: Sunset - Cisco IOS-XE Router RTR STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 24 Apr 2023
+2025-06-30 19:51:36,179 [INFO] Found: Sunset - DBN 6300 STIG (VY24 RM07) - 17 Jul 2024
+2025-06-30 19:51:36,179 [INFO] Found: Sunset - Docker Enterprise 2.x Linux/Unix STIG - Ver 2, Rel 2 (V2 R2) - 17 Jul 2024
+2025-06-30 19:51:36,180 [INFO] Found: Sunset - Docker Enterprise 2.x Linux/Unix STIG for Ansible - Ver 1, Rel 1 (V1 R1) - 22 Jun 2020
+2025-06-30 19:51:36,181 [INFO] Found: Sunset - EDB Postgres Advanced Server v11 on Windows STIG - Ver 2, Rel 4 (V2 R4) - 17 Jul 2024
+2025-06-30 19:51:36,181 [INFO] Found: Sunset - EDB Postgres Advanced Server v9.6 STIG - Ver 2, Rel 3 (V2 R3) - 22 Jan 2024
+2025-06-30 19:51:36,182 [INFO] Found: Sunset - Esri ArcGIS for Server 10.3 STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-06-30 19:51:36,182 [INFO] Found: Sunset - F5 BIG-IP STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,183 [INFO] Found: Sunset - ForeScout CounterACT ALG STIG - Ver 1, Rel 3 (V1 R3) - 13 Aug 2024
+2025-06-30 19:51:36,183 [INFO] Found: Sunset - ForeScout CounterACT NDM STIG - Ver 1, Rel 2 (V1 R2) - 13 Aug 2024
+2025-06-30 19:51:36,184 [INFO] Found: Sunset - Honeywell Android 9.x STIG (VY24 RM01) - 22 Jan 2024
+2025-06-30 19:51:36,185 [INFO] Found: Sunset - IBM Aspera Platform 4.2 STIG - Ver 1, Rel 3 (V1 R3) - 28 Jan 2025
+2025-06-30 19:51:36,186 [INFO] Found: Sunset - IBM MQ Appliance V9-0 STIG (VY24 RM07) - 17 Jul 2024
+2025-06-30 19:51:36,186 [INFO] Found: Sunset - Kubernetes STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-06-30 19:51:36,187 [INFO] Found: Sunset - McAfee Application Control 7.x STIG - Ver 1, Rel 4 (V1 R4) - 28 Jan 2025
+2025-06-30 19:51:36,187 [INFO] Found: Sunset - Microsoft SCOM STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-06-30 19:51:36,188 [INFO] Found: Sunset - Microsoft Windows 10 STIG - Ver 2, Rel 9 (V2 R9) - 02 May 2024
+2025-06-30 19:51:36,188 [INFO] Found: Sunset - Microsoft Windows 2012 Server Domain Name System STIG - Ver 2, Rel 7 (V2 R7) - 17 Jul 2024
+2025-06-30 19:51:36,189 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG - Ver 2, Rel 10 (V2 R10) - 23 Jan 2025
+2025-06-30 19:51:36,190 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG Benchmark - Ver 2, Rel 8 (V2 R8) - 23 Jan 2025
+2025-06-30 19:51:36,191 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG for Chef - Ver 1, Rel 3 (V1 R3) - 23 Jan 2025
+2025-06-30 19:51:36,191 [INFO] Found: Sunset - MongoDB 3.x STIG - Ver 2, Rel 2 (V2 R2) - 25 Jan 2024
+2025-06-30 19:51:36,192 [INFO] Found: Sunset - MongoDB 3.x STIG - Ver 2, Rel 3 (V2 R3) - 17 Jul 2024
+2025-06-30 19:51:36,192 [INFO] Found: Sunset - MongoDB 4.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-06-30 19:51:36,193 [INFO] Found: Sunset - MongoDB 4.x STIG - Ver 1, Rel 4 (V1 R4) - 17 Jul 2024
+2025-06-30 19:51:36,194 [INFO] Found: Sunset - MS SQL Server 2014 STIG (VY24 RM07) - 13 Aug 2024
+2025-06-30 19:51:36,195 [INFO] Found: Sunset - Multifunction Device and Network Printers STIG - Ver 2, Rel 15 (V2 R15) - 28 Jan 2025
+2025-06-30 19:51:36,195 [INFO] Found: Sunset - Nutanix AOS 5.20.x STIG (VY24 RM07) - 13 Aug 2024
+2025-06-30 19:51:36,196 [INFO] Found: Sunset - Oracle Database 11.2g STIG - Ver 2, Rel 5 (V2 R5) - 17 Jul 2024
+2025-06-30 19:51:36,197 [INFO] Found: Sunset - Oracle HTTP Server 12.1.3 STIG - Ver 2, Rel 3 (V2 R3) - 07 Feb 2025
+2025-06-30 19:51:36,197 [INFO] Found: Sunset - Oracle Linux 8 STIG Benchmark - Ver 1, Rel 8 (V1 R8) - 22 Jan 2024
+2025-06-30 19:51:36,198 [INFO] Found: Sunset - Oracle WebLogic Server 12c STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-06-30 19:51:36,199 [INFO] Found: Sunset - PostgreSQL 9.x STIG - Ver 2, Rel 5 (V2 R5) - 17 Jul 2024
+2025-06-30 19:51:36,200 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG - Ver 3, Rel 15 (V3 R15) - 17 Jul 2024
+2025-06-30 19:51:36,200 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG Benchmark - Ver 3, Rel 15 (V3 R15) - 17 Jul 2024
+2025-06-30 19:51:36,201 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG for Ansible - Ver 3, Rel 14 (V3 R14) - 22 Jan 2024
+2025-06-30 19:51:36,201 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG for Chef - Ver 3, Rel 8 (V3 R8) - 27 Jul 2022
+2025-06-30 19:51:36,202 [INFO] Found: Sunset - Red Hat Enterprise Linux 8 STIG Benchmark - Ver 1, Rel 12 (V1 R12) - 22 Jan 2024
+2025-06-30 19:51:36,203 [INFO] Found: Sunset - Red Hat Enterprise Linux 9 Benchmark - Ver 1, Rel 1 (V1 R1) - 21 Feb 2024
+2025-06-30 19:51:36,203 [INFO] Found: Sunset - Riverbed Steelhead CX v8 STIG (VY24 RM07) - 17 Jul 2024
+2025-06-30 19:51:36,204 [INFO] Found: Sunset - Solaris 11 SPARC STIG Benchmark - Ver 2, Rel 4 (V2 R4) - 24 Apr 2023
+2025-06-30 19:51:36,205 [INFO] Found: Sunset - Storage Area Network STIG - Ver 2, Rel 5 (V2 R5) - 28 Jan 2025
+2025-06-30 19:51:36,206 [INFO] Found: Sunset - SUSE Linux Enterprise Server 15 STIG Benchmark - Ver 1, Rel 6 (V1 R6) - 22 Jan 2024
+2025-06-30 19:51:36,207 [INFO] Found: Sunset - Tanium 7.0 STIG - Ver 2, Rel 1 (V2 R1) - 07 Apr 2025
+2025-06-30 19:51:36,207 [INFO] Found: Sunset - Tanium 7.3 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-06-30 19:51:36,208 [INFO] Found: Sunset - TOSS 4 STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-06-30 19:51:36,209 [INFO] Found: Sunset - Trend Micro Deep Security 9.x STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2024
+2025-06-30 19:51:36,210 [INFO] Found: Sunset - VMware Horizon 7.13 STIG (VY24 RM04) - 22 Apr 2024
+2025-06-30 19:51:36,210 [INFO] Found: Sunset - VMware vRealize Automation 7.x STIG (VY23 RM10) - 23 Oct 2023
+2025-06-30 19:51:36,211 [INFO] Found: Sunset - VMware vRealize Operations Manager Cassandra STIG - Ver 1, Rel 2 (V1 R2) - 23 Oct 2023
+2025-06-30 19:51:36,212 [INFO] Found: Sunset - VMware vRealize Ops 6.x STIG (VY23 RM10) - 23 Oct 2023
+2025-06-30 19:51:36,212 [INFO] Found: Sunset - VMware Workspace ONE UEM STIG - Ver 2, Rel 2 (V2 R2) - 17 Jul 2024
+2025-06-30 19:51:36,213 [INFO] Found: SUSE Linux Enterprise Micro 5 STIG - Ver 1, Rel 1 (V1 R1) - 20 Jun 2024
+2025-06-30 19:51:36,214 [INFO] Found: SUSE Linux Enterprise Server 12 STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-06-30 19:51:36,215 [INFO] Found: SUSE Linux Enterprise Server 12 STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-06-30 19:51:36,215 [INFO] Found: SUSE Linux Enterprise Server 15 for Ansible - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-06-30 19:51:36,216 [INFO] Found: SUSE Linux Enterprise Server 15 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-06-30 19:51:36,217 [INFO] Found: SUSE Linux Enterprise Server 15 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-06-30 19:51:36,217 [INFO] Found: Symantec ProxySG STIG (VY20 RM04) - 23 Apr 2020
+2025-06-30 19:51:36,218 [INFO] Found: Tanium 7.x STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-06-30 19:51:36,219 [INFO] Found: Tanium 7.x TanOS STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,219 [INFO] Found: Traditional Security STIG Checklist - Ver 2, Rel 6 (V2 R6) - 23 Oct 2024
+2025-06-30 19:51:36,220 [INFO] Found: Trellix Application Control 8.x STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-06-30 19:51:36,221 [INFO] Found: Trend MicroTippingPoint STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,221 [INFO] Found: Tri-Lab Operating System Stack (TOSS) 4 STIG Benchmark - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-06-30 19:51:36,222 [INFO] Found: Unified Endpoint Management Server SRG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,223 [INFO] Found: Virtual Machine Manager SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-06-30 19:51:36,224 [INFO] Found: Virtual Private Network (VPN) SRG - Ver 3, Rel 3 (V3 R3) - 28 Jan 2025
+2025-06-30 19:51:36,224 [INFO] Found: VMware NSX 4.x STIG (VY25 RM01) - 28 Jan 2025
+2025-06-30 19:51:36,225 [INFO] Found: VMware NSX Distributed Logical Router STIG, Ver 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,226 [INFO] Found: VMware NSX Manager STIG, Ver 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,226 [INFO] Found: VMware NSX STIG Overview, Ver 1 (V1 R1) - 01 Dec 2018
+2025-06-30 19:51:36,227 [INFO] Found: VMware NSX-T Data Center STIG (VY23 RM07) - 20 Jul 2023
+2025-06-30 19:51:36,227 [INFO] Found: VMware vSphere 7.0 STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,228 [INFO] Found: VMware vSphere 8.0 STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,229 [INFO] Found: Web Server SRG - Ver 4, Rel 3 (V4 R3) - 07 Apr 2025
+2025-06-30 19:51:36,229 [INFO] Found: Windows Server 2022 STIG with Ansible - Ver 1, Rel 1 (V1 R1) - 08 Feb 2023
+2025-06-30 19:51:36,230 [INFO] Found: Xylok Security Suite 20.x STIG - Ver 1, Rel 1 (V1 R1) - 23 Jan 2025
+2025-06-30 19:51:36,231 [INFO] Found: z/OS ACF2 Products (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,231 [INFO] Found: z/OS RACF Products (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,233 [INFO] Found: z/OS SRR Scripts (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,233 [INFO] Found: z/OS TSS Products STIG (VY25 RM04) - 07 Apr 2025
+2025-06-30 19:51:36,234 [INFO] Found: Zebra Android 11 COBO STIG - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-06-30 19:51:36,235 [INFO] Found: Zebra Android 13 STIG (VY24 RM12) - 23 Dec 2024
+2025-06-30 19:51:36,236 [INFO] Successfully scraped 438 STIG items
