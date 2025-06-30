@@ -746,16 +746,12 @@ def show_disa_fetch_dialog():
     import threading
     popup = tk.Toplevel(root)
     popup.title("Fetch from DISA")
-    popup.geometry("600x500")
     popup.configure(bg=COLORS['bg_primary'])
     popup.transient(root)
     popup.grab_set()
     
-    # Center the popup
-    popup.update_idletasks()
-    x = (popup.winfo_screenwidth() // 2) - (popup.winfo_width() // 2)
-    y = (popup.winfo_screenheight() // 2) - (popup.winfo_height() // 2)
-    popup.geometry(f"+{x}+{y}")
+    # Center the popup on the main window
+    center_window_on_parent(popup, root, 600, 500)
 
     # Header
     header_frame = ttk.Frame(popup)
@@ -795,9 +791,9 @@ def show_disa_fetch_dialog():
             
         selected_dicts = [all_items[i-2] for i in valid_indices]  # -2 for header and separator rows
         popup.destroy()
-        fetch_from_disa(selected_dicts, "stigs")  # Default to generating CKLB files
+        show_download_choice_dialog(selected_dicts)
 
-    ttk.Button(btn_frame, text="Create CKLBs", 
+    ttk.Button(btn_frame, text="Continue", 
                style="Accent.TButton", command=start_fetch).pack(side="right", padx=(10, 0))
     ttk.Button(btn_frame, text="Cancel", 
                style="Secondary.TButton", command=popup.destroy).pack(side="right")
@@ -850,13 +846,93 @@ def show_disa_fetch_dialog():
     all_items = []
     threading.Thread(target=fetch_stigs, daemon=True).start()
 
+def show_download_choice_dialog(selected_items):
+    """Show a professional dialog to choose between ZIP download or CKLB creation"""
+    choice_popup = tk.Toplevel(root)
+    choice_popup.title("Choose Download Option")
+    choice_popup.configure(bg=COLORS['bg_primary'])
+    choice_popup.transient(root)
+    choice_popup.grab_set()
+    choice_popup.resizable(False, False)
+    
+    # Center the popup on the main window
+    center_window_on_parent(choice_popup, root, 500, 300)
+    
+    # Main content frame
+    main_frame = ttk.Frame(choice_popup, style="Card.TFrame")
+    main_frame.pack(fill="both", expand=True, padx=20, pady=20)
+    
+    # Header
+    header_frame = ttk.Frame(main_frame)
+    header_frame.pack(fill="x", pady=(0, 20))
+    
+    ttk.Label(header_frame, text="Select Download Format", 
+              font=FONTS['heading']).pack()
+    ttk.Label(header_frame, text=f"Processing {len(selected_items)} selected STIG(s)", 
+              font=FONTS['default'], foreground=COLORS['text_secondary']).pack(pady=(5, 0))
+    
+    # Options frame
+    options_frame = ttk.Frame(main_frame)
+    options_frame.pack(fill="x", pady=(0, 20))
+    
+    # ZIP Download option
+    zip_frame = ttk.Frame(options_frame, style="Card.TFrame", relief="raised", borderwidth=1)
+    zip_frame.pack(fill="x", pady=(0, 10))
+    
+    zip_content = ttk.Frame(zip_frame)
+    zip_content.pack(fill="x", padx=15, pady=15)
+    
+    ttk.Label(zip_content, text=f"{ICONS['download']} Download ZIP Files Only", 
+              font=FONTS['heading']).pack(anchor="w")
+    ttk.Label(zip_content, text="Download the raw STIG ZIP files without processing", 
+              font=FONTS['default'], foreground=COLORS['text_secondary']).pack(anchor="w", pady=(5, 0))
+    
+    # CKLB option
+    cklb_frame = ttk.Frame(options_frame, style="Card.TFrame", relief="raised", borderwidth=1)
+    cklb_frame.pack(fill="x")
+    
+    cklb_content = ttk.Frame(cklb_frame)
+    cklb_content.pack(fill="x", padx=15, pady=15)
+    
+    ttk.Label(cklb_content, text=f"{ICONS['check']} Create CKLB Files", 
+              font=FONTS['heading']).pack(anchor="w")
+    ttk.Label(cklb_content, text="Download ZIPs, extract XCCDF files, and generate CKLB checklists", 
+              font=FONTS['default'], foreground=COLORS['text_secondary']).pack(anchor="w", pady=(5, 0))
+    
+    # Buttons frame
+    btn_frame = ttk.Frame(main_frame)
+    btn_frame.pack(fill="x", pady=(10, 0))
+    
+    def choose_zip():
+        choice_popup.destroy()
+        fetch_from_disa(selected_items, "zip_only")
+    
+    def choose_cklb():
+        choice_popup.destroy()
+        fetch_from_disa(selected_items, "cklb")
+    
+    ttk.Button(btn_frame, text="Cancel", 
+               style="Secondary.TButton", command=choice_popup.destroy).pack(side="left")
+    
+    ttk.Button(btn_frame, text=f"{ICONS['download']} Download ZIPs", 
+               style="Secondary.TButton", command=choose_zip).pack(side="right", padx=(10, 0))
+    
+    ttk.Button(btn_frame, text=f"{ICONS['check']} Create CKLBs", 
+               style="Accent.TButton", command=choose_cklb).pack(side="right", padx=(10, 0))
+
 def fetch_from_disa(selected_items, output_format):
     """Main function to fetch selected STIGs from DISA and process them"""
     log_job_status("[INFO] Starting DISA fetch process...")
+    
+    if output_format == "zip_only":
+        action_text = "Downloading STIG ZIP files..."
+    else:
+        action_text = "Downloading and processing selected STIG files from DISA..."
+    
     progress_popup = ProgressPopup(
         root, 
         "Fetching from DISA", 
-        "Downloading and processing selected STIG files from DISA..."
+        action_text
     )
     def on_status_update(status):
         status_text.set(status)
@@ -881,33 +957,55 @@ def run_disa_fetch_task(selected_items, output_format, on_status_update):
         from downloader import download_updates
         from xccdf_extractor import extract_xccdf_from_zip
         from cklb_generator import generate_cklb_json
+        from datetime import datetime
         import os
         import json
+        
         on_status_update("Downloading STIG ZIP files...")
         download_updates(selected_items, target_dir="cklb_proc/xccdf_lib")
-        if output_format == "stigs":
-            on_status_update("Extracting XCCDF files and generating CKLB...")
-            zip_dir = "cklb_proc/xccdf_lib"
-            output_dir = "user_docs/cklb_new"
-            os.makedirs(output_dir, exist_ok=True)
-            generated_count = 0
-            for item in selected_items:
-                zip_filename = os.path.basename(item['URL'])
-                zip_path = os.path.join(zip_dir, zip_filename)
-                if os.path.exists(zip_path):
-                    xccdf_files = extract_xccdf_from_zip(zip_path, "cklb_proc/xccdf_lib")
-                    if xccdf_files:
-                        for xccdf_file in xccdf_files:
-                            cklb_filename = os.path.basename(xccdf_file).replace('-xccdf.xml', '.cklb')
+        
+        if output_format == "zip_only":
+            log_job_status(f"[INFO] Downloaded {len(selected_items)} ZIP files to cklb_proc/xccdf_lib")
+            on_status_update("Done")
+            return
+        
+        # For CKLB creation (output_format == "cklb")
+        on_status_update("Extracting XCCDF files and generating CKLB...")
+        zip_dir = "cklb_proc/xccdf_lib"
+        output_dir = "cklb_proc/cklb_lib"  # Use standard output directory
+        os.makedirs(output_dir, exist_ok=True)
+        
+        generated_count = 0
+        for item in selected_items:
+            zip_filename = os.path.basename(item['URL'])
+            zip_path = os.path.join(zip_dir, zip_filename)
+            if os.path.exists(zip_path):
+                xccdf_files = extract_xccdf_from_zip(zip_path, "cklb_proc/xccdf_extracted")
+                if xccdf_files:
+                    if not isinstance(xccdf_files, list):
+                        xccdf_files = [xccdf_files]
+                    for xccdf_file in xccdf_files:
+                        try:
+                            # Generate CKLB with proper filename
+                            basename = os.path.basename(xccdf_file).replace('-xccdf.xml', '').replace('Manual', '').strip('_- ')
+                            date_str = datetime.now().strftime("%Y%m%d")
+                            cklb_filename = f"{basename}_{date_str}.cklb"
                             cklb_path = os.path.join(output_dir, cklb_filename)
-                            try:
-                                cklb_json = generate_cklb_json(xccdf_file)
-                                with open(cklb_path, 'w') as f:
-                                    json.dump(cklb_json, f, indent=2)
-                                generated_count += 1
-                            except Exception as e:
-                                log_job_status(f"[ERROR] Failed to generate CKLB for {xccdf_file}: {e}")
-            log_job_status(f"[INFO] Generated {generated_count} CKLB files in {output_dir}")
+                            
+                            # Generate CKLB JSON - discussion text is preserved in cklb_generator.py
+                            cklb_json = generate_cklb_json(xccdf_file)
+                            with open(cklb_path, 'w') as f:
+                                json.dump(cklb_json, f, indent=2)
+                            generated_count += 1
+                            log_job_status(f"[INFO] Generated CKLB: {cklb_filename}")
+                        except Exception as e:
+                            log_job_status(f"[ERROR] Failed to generate CKLB for {xccdf_file}: {e}")
+                else:
+                    log_job_status(f"[WARNING] No XCCDF files found in {zip_filename}")
+            else:
+                log_job_status(f"[WARNING] ZIP file not found: {zip_path}")
+        
+        log_job_status(f"[INFO] Generated {generated_count} CKLB files in {output_dir}")
         on_status_update("Done")
     except Exception as e:
         log_job_status(f"[ERROR] DISA fetch failed: {e}")
