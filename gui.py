@@ -879,35 +879,21 @@ def show_disa_fetch_dialog():
     stig_listbox.pack(side="left", fill="both", expand=True)
     stig_scrollbar.config(command=stig_listbox.yview)
 
-    # Output format selection
-    output_frame = ttk.LabelFrame(popup, text="Output Format")
-    output_frame.pack(fill="x", padx=20, pady=10)
-    format_var = tk.StringVar(value="stigs")
-    ttk.Radiobutton(output_frame, text="STIGs (Generate CKLB checklists)", 
-                    variable=format_var, value="stigs").pack(anchor="w", padx=10, pady=5)
-    ttk.Radiobutton(output_frame, text="Benchmarks (Extract XCCDF only)", 
-                    variable=format_var, value="benchmarks").pack(anchor="w", padx=10, pady=5)
-
     # Buttons
     btn_frame = ttk.Frame(popup)
     btn_frame.pack(fill="x", padx=20, pady=20)
     
     def start_fetch():
         selected_indices = stig_listbox.curselection()
-        # Skip header row if present
-        if selected_indices and selected_indices[0] == 0:
-            selected_indices = selected_indices[1:]
         if not selected_indices:
             log_job_status("[ERROR] Please select at least one STIG item.")
             return
         selected_items = [stig_listbox.get(i) for i in selected_indices]
-        # Map back to item dicts
         selected_dicts = [all_items[i-1] for i in selected_indices]  # -1 for header row
-        output_format = format_var.get()
         popup.destroy()
-        fetch_from_disa(selected_dicts, output_format)
+        fetch_from_disa(selected_dicts)
 
-    ttk.Button(btn_frame, text=f"{ICONS['download']} Start Fetch", 
+    ttk.Button(btn_frame, text="Create CKLBs", 
                style="Accent.TButton", command=start_fetch).pack(side="right", padx=(10, 0))
     ttk.Button(btn_frame, text="Cancel", 
                style="Secondary.TButton", command=popup.destroy).pack(side="right")
@@ -922,27 +908,23 @@ def show_disa_fetch_dialog():
             if not items:
                 status_label.config(text="No STIGs found.")
                 return
-            # Save for later
             nonlocal all_items
             all_items = items
             stig_listbox.delete(0, tk.END)
-            # Add a header row for clarity
-            stig_listbox.insert(tk.END, f"{'STIG':60} | {'Version':8} | {'Release':8} | {'Update Time':20}")
+            stig_listbox.insert(tk.END, f"{'STIG':<60} | {'Version':>8} | {'Release':>8} | {'Update Time':>20}")
             stig_listbox.itemconfig(0, {'fg': COLORS['text_secondary']})
             for item in items:
-                # Ensure the Title field is correctly extracted
                 title = item.get('Product', 'Unknown')
                 version = item.get('Version', 'Unknown')
                 release = item.get('Release', 'Unknown')
                 update_time = item.get('Updated', 'Unknown')
-                # Truncate or pad title for alignment
                 title_disp = (title[:57] + '...') if len(title) > 60 else title.ljust(60)
-                version_disp = str(version).ljust(8)
-                release_disp = str(release).ljust(8)
-                update_disp = str(update_time).ljust(20)
+                version_disp = str(version).rjust(8)
+                release_disp = str(release).rjust(8)
+                update_disp = str(update_time).rjust(20)
                 display = f"{title_disp} | {version_disp} | {release_disp} | {update_disp}"
                 stig_listbox.insert(tk.END, display)
-            status_label.config(text=f"Select one or more STIGs to download and process.")
+            status_label.config(text="Select one or more STIGs to download and process.")
         except Exception as e:
             status_label = header_frame.nametowidget("status_label")
             status_label.config(text=f"Error fetching STIGs: {e}")
@@ -1392,35 +1374,21 @@ def show_disa_fetch_dialog():
     stig_listbox.pack(side="left", fill="both", expand=True)
     stig_scrollbar.config(command=stig_listbox.yview)
 
-    # Output format selection
-    output_frame = ttk.LabelFrame(popup, text="Output Format")
-    output_frame.pack(fill="x", padx=20, pady=10)
-    format_var = tk.StringVar(value="stigs")
-    ttk.Radiobutton(output_frame, text="STIGs (Generate CKLB checklists)", 
-                    variable=format_var, value="stigs").pack(anchor="w", padx=10, pady=5)
-    ttk.Radiobutton(output_frame, text="Benchmarks (Extract XCCDF only)", 
-                    variable=format_var, value="benchmarks").pack(anchor="w", padx=10, pady=5)
-
     # Buttons
     btn_frame = ttk.Frame(popup)
     btn_frame.pack(fill="x", padx=20, pady=20)
     
     def start_fetch():
         selected_indices = stig_listbox.curselection()
-        # Skip header row if present
-        if selected_indices and selected_indices[0] == 0:
-            selected_indices = selected_indices[1:]
         if not selected_indices:
             log_job_status("[ERROR] Please select at least one STIG item.")
             return
         selected_items = [stig_listbox.get(i) for i in selected_indices]
-        # Map back to item dicts
         selected_dicts = [all_items[i-1] for i in selected_indices]  # -1 for header row
-        output_format = format_var.get()
         popup.destroy()
-        fetch_from_disa(selected_dicts, output_format)
+        fetch_from_disa(selected_dicts)
 
-    ttk.Button(btn_frame, text=f"{ICONS['download']} Start Fetch", 
+    ttk.Button(btn_frame, text="Create CKLBs", 
                style="Accent.TButton", command=start_fetch).pack(side="right", padx=(10, 0))
     ttk.Button(btn_frame, text="Cancel", 
                style="Secondary.TButton", command=popup.destroy).pack(side="right")
@@ -1435,27 +1403,23 @@ def show_disa_fetch_dialog():
             if not items:
                 status_label.config(text="No STIGs found.")
                 return
-            # Save for later
             nonlocal all_items
             all_items = items
             stig_listbox.delete(0, tk.END)
-            # Add a header row for clarity
-            stig_listbox.insert(tk.END, f"{'STIG':60} | {'Version':8} | {'Release':8} | {'Update Time':20}")
+            stig_listbox.insert(tk.END, f"{'STIG':<60} | {'Version':>8} | {'Release':>8} | {'Update Time':>20}")
             stig_listbox.itemconfig(0, {'fg': COLORS['text_secondary']})
             for item in items:
-                # Ensure the Title field is correctly extracted
                 title = item.get('Product', 'Unknown')
                 version = item.get('Version', 'Unknown')
                 release = item.get('Release', 'Unknown')
                 update_time = item.get('Updated', 'Unknown')
-                # Truncate or pad title for alignment
                 title_disp = (title[:57] + '...') if len(title) > 60 else title.ljust(60)
-                version_disp = str(version).ljust(8)
-                release_disp = str(release).ljust(8)
-                update_disp = str(update_time).ljust(20)
+                version_disp = str(version).rjust(8)
+                release_disp = str(release).rjust(8)
+                update_disp = str(update_time).rjust(20)
                 display = f"{title_disp} | {version_disp} | {release_disp} | {update_disp}"
                 stig_listbox.insert(tk.END, display)
-            status_label.config(text=f"Select one or more STIGs to download and process.")
+            status_label.config(text="Select one or more STIGs to download and process.")
         except Exception as e:
             status_label = header_frame.nametowidget("status_label")
             status_label.config(text=f"Error fetching STIGs: {e}")
