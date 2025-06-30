@@ -16,17 +16,17 @@ pkill Xvfb || true
 pkill x11vnc || true
 pkill websockify || true
 
-# Start Xvfb on display :1
-nohup Xvfb :1 -screen 0 1920x1080x24 > /tmp/xvfb.log 2>&1 &
-sleep 2
+# Start Xvfb on display :1 with access control disabled
+nohup Xvfb :1 -screen 0 1920x1080x24 -ac > /tmp/xvfb.log 2>&1 &
+sleep 3
 
 # Export display for this session
 export DISPLAY=:1
 
-# Start x11vnc on display :1
+# Start x11vnc on display :1 with explicit port
 touch /tmp/x11vnc.log
-nohup x11vnc -display :1 -nopw -forever -shared > /tmp/x11vnc.log 2>&1 &
-sleep 2
+nohup x11vnc -display :1 -nopw -forever -shared -rfbport 5900 > /tmp/x11vnc.log 2>&1 &
+sleep 3
 
 # Start websockify/noVNC
 touch /tmp/websockify.log
@@ -37,15 +37,26 @@ CODESPACE_URL="https://$(hostname)-6080.app.github.dev"
 
 cat <<EOF
 
-Xvfb, x11vnc, and noVNC are now running.
-To run your Tkinter app:
-  export DISPLAY=:1
-  python your_tkinter_script.py
+X11 and VNC services are now running successfully!
 
-To access the GUI, open in your browser:
-  $CODESPACE_URL
+To run your Tkinter GUI application:
+  cd /workspaces/checkmate
+  export DISPLAY=:1
+  python3 gui.py
+
+To access the GUI in your browser:
+  $CODESPACE_URL/vnc.html
+
+If you see a black screen in VNC, make sure your GUI application is running.
+You can check running GUI applications with:
+  export DISPLAY=:1 && xwininfo -tree -root
 
 Log files: /tmp/xvfb.log /tmp/x11vnc.log /tmp/websockify.log
+
+Troubleshooting:
+- If VNC shows a black screen, restart your GUI application
+- If connection fails, try rerunning this setup script
+- Check log files for detailed error information
 
 EOF
 exit 0
