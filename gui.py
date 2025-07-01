@@ -34,10 +34,15 @@ status_text = tk.StringVar(value="Ready")
 download_var = tk.BooleanVar()
 extract_var = tk.BooleanVar()
 
-usr_dir  = os.path.join(os.getcwd(), 'cklb_proc', 'usr_cklb_lib')
+usr_dir  = os.path.join(os.getcwd(), 'cklb_proc', 'user_cklb_library')
 cklb_dir = os.path.join(os.getcwd(), 'cklb_proc', 'cklb_lib')
-usr_files  = sorted(os.listdir(usr_dir))  if os.path.isdir(usr_dir)  else []
-cklb_files = sorted(os.listdir(cklb_dir)) if os.path.isdir(cklb_dir) else []
+
+# Ensure directories exist
+os.makedirs(usr_dir, exist_ok=True)
+os.makedirs(cklb_dir, exist_ok=True)
+
+usr_files  = sorted([f for f in os.listdir(usr_dir) if f.lower().endswith('.cklb')])  if os.path.isdir(usr_dir)  else []
+cklb_files = sorted([f for f in os.listdir(cklb_dir) if f.lower().endswith('.cklb')]) if os.path.isdir(cklb_dir) else []
 
 usr_sel_var  = tk.StringVar()
 cklb_sel_var = tk.StringVar()
@@ -566,22 +571,40 @@ def show_multi_rule_input(new_rules, checklist_files, on_submit, on_cancel):
 
 def update_now_handler():
     selected_old_files = [file_listbox.get(i) for i in file_listbox.curselection()]
-    new_name = cklb_sel_var.get()
+    selected_new_indices = cklb_listbox.curselection()
     
     if not selected_old_files:
-        log_job_status("[ERROR] Please select at least one CKLB to upgrade.")
+        log_job_status("[ERROR] Please select at least one CKLB to upgrade from the left panel.")
         return
-    if not new_name:
-        log_job_status("[ERROR] Please select a new CKLB version.")
+    if not selected_new_indices:
+        log_job_status("[ERROR] Please select at least one new CKLB version from the right panel.")
         return
+    
+    # Get the selected new CKLB files
+    selected_new_files = []
+    for i in selected_new_indices:
+        item_text = cklb_listbox.get(i)
+        if item_text.startswith("📁 "):  # Browsed file
+            # Use the full path from browsed_files
+            if hasattr(cklb_listbox, 'browsed_files') and i < len(cklb_listbox.browsed_files):
+                selected_new_files.append(cklb_listbox.browsed_files[i])
+        else:  # File from cklb_lib directory
+            selected_new_files.append(os.path.join(cklb_dir, item_text))
+    
+    if not selected_new_files:
+        log_job_status("[ERROR] Could not determine selected new CKLB files.")
+        return
+    
+    # For now, use the first selected new file (maintain existing logic)
+    new_file_path = selected_new_files[0]
+    new_name = os.path.basename(new_file_path)
     
     # Check STIG ID mismatch
     old_path = os.path.join(usr_dir, selected_old_files[0])
-    new_path = os.path.join(cklb_dir, new_name)
     
     try:
         old_data = load_cklb(old_path)
-        new_data = load_cklb(new_path)
+        new_data = load_cklb(new_file_path)
         is_match, old_stig_id, new_stig_id, new_rules = check_stig_id_match(old_data, new_data)
         
         if not is_match:
@@ -601,7 +624,7 @@ def update_now_handler():
                     selected_old_files=selected_old_files,
                     new_name=new_name,
                     usr_dir=usr_dir,
-                    cklb_dir=cklb_dir,
+                    cklb_dir=os.path.dirname(new_file_path),  # Use directory of selected file
                     on_status_update=status_text.set,
                     force=force_merge,
                     prefix=None
@@ -661,7 +684,7 @@ def update_now_handler():
                 log_job_status("[ERROR] Prefix cannot be blank.")
                 return
             prefix_frame.destroy()
-            run_merge_with_prefix(prefix, force_merge)
+            run_merge_with_prefix(prefix, force_merge, new_file_path, new_name)
         
         ttk.Button(prefix_frame, text="OK", style="Accent.TButton",
                   command=do_set_prefix).pack(side="left", padx=5)
@@ -669,9 +692,9 @@ def update_now_handler():
                   command=lambda: (prefix_frame.destroy(),
                                  log_job_status("[INFO] Cancelled."))).pack(side="left", padx=5)
     else:
-        run_merge_with_prefix(None, force_merge)
+        run_merge_with_prefix(None, force_merge, new_file_path, new_name)
 
-def run_merge_with_prefix(prefix, force_merge):
+def run_merge_with_prefix(prefix, force_merge, new_file_path, new_name):
     log_job_status("[INFO] Job started: Merging checklists...")
     
     # Show progress popup
@@ -688,9 +711,9 @@ def run_merge_with_prefix(prefix, force_merge):
         try:
             merged_results = run_merge_task(
                 selected_old_files=[file_listbox.get(i) for i in file_listbox.curselection()],
-                new_name=cklb_sel_var.get(),
+                new_name=new_name,
                 usr_dir=usr_dir,
-                cklb_dir=cklb_dir,
+                cklb_dir=os.path.dirname(new_file_path),  # Use directory of selected file
                 on_status_update=lambda status: (status_text.set(status), progress_popup.update_status(status)),
                 force=force_merge,
                 prefix=prefix
@@ -731,14 +754,18 @@ def refresh_usr_listbox():
     usr_files = sorted(os.listdir(usr_dir)) if os.path.isdir(usr_dir) else []
     file_listbox.delete(0, tk.END)
     for f in usr_files:
-        file_listbox.insert(tk.END, f)
+        if f.lower().endswith('.cklb'):  # Only show CKLB files
+            file_listbox.insert(tk.END, f)
 
 def refresh_cklb_combobox():
     global cklb_files
-    cklb_files = sorted(os.listdir(cklb_dir)) if os.path.isdir(cklb_dir) else []
-    cklb_combobox['values'] = cklb_files
-    if cklb_files:
-        cklb_sel_var.set(cklb_files[0])
+    cklb_files = sorted([f for f in os.listdir(cklb_dir) if f.lower().endswith('.cklb')]) if os.path.isdir(cklb_dir) else []
+    cklb_listbox.delete(0, tk.END)
+    for f in cklb_files:
+        cklb_listbox.insert(tk.END, f)
+    if cklb_files and hasattr(root, 'cklb_combobox'):
+        root.cklb_combobox['values'] = cklb_files
+        cklb_sel_var.set(cklb_files[0] if cklb_files else "")
 
 # === DISA Fetch Dialog ===
 def show_disa_fetch_dialog():
@@ -1068,6 +1095,70 @@ def run_disa_fetch_task(selected_items, output_format, on_status_update):
     except Exception as e:
         log_job_status(f"[ERROR] DISA fetch failed: {e}")
         on_status_update(f"Error: {e}")
+
+def import_cklb_files():
+    """Import CKLB files into the user library directory"""
+    import shutil
+    
+    # Open file dialog to select CKLB files
+    file_paths = filedialog.askopenfilenames(
+        title="Select CKLB files to import",
+        filetypes=[("CKLB files", "*.cklb"), ("All files", "*.*")],
+        multiple=True
+    )
+    
+    if not file_paths:
+        log_job_status("[INFO] Import cancelled.")
+        return
+    
+    # Ensure user directory exists
+    os.makedirs(usr_dir, exist_ok=True)
+    
+    imported_count = 0
+    errors = []
+    
+    for file_path in file_paths:
+        try:
+            filename = os.path.basename(file_path)
+            
+            # Validate file extension
+            if not filename.lower().endswith('.cklb'):
+                errors.append(f"Skipped {filename}: Not a CKLB file")
+                continue
+            
+            dest_path = os.path.join(usr_dir, filename)
+            
+            # Check if file already exists
+            if os.path.exists(dest_path):
+                # Ask user if they want to overwrite
+                from tkinter import messagebox
+                overwrite = messagebox.askyesno(
+                    "File Exists", 
+                    f"File '{filename}' already exists in the user library.\n\nOverwrite?",
+                    icon="question"
+                )
+                if not overwrite:
+                    log_job_status(f"[INFO] Skipped {filename}: File exists")
+                    continue
+            
+            # Copy the file
+            shutil.copy2(file_path, dest_path)
+            imported_count += 1
+            log_job_status(f"[INFO] Imported: {filename}")
+            
+        except Exception as e:
+            errors.append(f"Failed to import {os.path.basename(file_path)}: {e}")
+    
+    # Log results
+    if errors:
+        for error in errors:
+            log_job_status(f"[ERROR] {error}")
+    
+    log_job_status(f"[INFO] Import complete: {imported_count} files imported to user library")
+    
+    # Refresh the user files listbox
+    refresh_usr_listbox()
+
 # === Create Notebook (Tabbed Interface) ===
 notebook = ttk.Notebook(root)
 notebook.pack(fill="both", expand=True, padx=0, pady=0)
@@ -1104,7 +1195,7 @@ instructions_text = scrolledtext.ScrolledText(
     height=15,
     state="disabled"
 )
-instructions_text.pack(fill="both", expand=True)
+instructions_text.pack(fill="both", expand=True, padx=20, pady=(20, 10))
 
 # Detailed instructions content
 detailed_instructions = """Welcome to CheckMate - Your STIG Compliance Management Tool!
@@ -1277,11 +1368,19 @@ content_frame.columnconfigure(0, weight=1)
 content_frame.columnconfigure(1, weight=1)
 
 # Left panel: User CKLBs
-left_panel = ttk.LabelFrame(content_frame, text="Select CKLBs to upgrade", style="TLabelframe")
+left_panel = ttk.LabelFrame(content_frame, text="User CKLB Library (cklb_proc/user_cklb_library)", style="TLabelframe")
 left_panel.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
 
+# Import button for left panel
+import_frame = ttk.Frame(left_panel)
+import_frame.pack(fill="x", padx=10, pady=(10, 5))
+ttk.Button(import_frame, text=f"{ICONS['import']} Import CKLB(s)", 
+           style="Accent.TButton", command=import_cklb_files).pack(side="left")
+ttk.Button(import_frame, text=f"{ICONS['reset']} Refresh", 
+           style="Secondary.TButton", command=refresh_usr_listbox).pack(side="left", padx=(10, 0))
+
 file_listbox_frame = ttk.Frame(left_panel)
-file_listbox_frame.pack(fill="both", expand=True, padx=10, pady=10)
+file_listbox_frame.pack(fill="both", expand=True, padx=10, pady=(5, 10))
 
 file_scrollbar = ttk.Scrollbar(file_listbox_frame)
 file_scrollbar.pack(side="right", fill="y")
@@ -1297,21 +1396,71 @@ file_listbox = tk.Listbox(file_listbox_frame,
 file_listbox.pack(side="left", fill="both", expand=True)
 file_scrollbar.config(command=file_listbox.yview)
 
-# Populate listbox
+# Populate listbox with only CKLB files
 for f in usr_files:
-    file_listbox.insert(tk.END, f)
+    if f.lower().endswith('.cklb'):
+        file_listbox.insert(tk.END, f)
 
-# Right panel: New version
-right_panel = ttk.LabelFrame(content_frame, text="Select new CKLB version", style="TLabelframe")
+# Right panel: CKLB Library
+right_panel = ttk.LabelFrame(content_frame, text="CKLB Library (cklb_proc/cklb_lib)", style="TLabelframe")
 right_panel.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
 
-cklb_frame = ttk.Frame(right_panel)
-cklb_frame.pack(fill="x", padx=10, pady=10)
+# Browse button for right panel
+browse_frame = ttk.Frame(right_panel)
+browse_frame.pack(fill="x", padx=10, pady=(10, 5))
 
-cklb_combobox = ttk.Combobox(cklb_frame, textvariable=cklb_sel_var, 
-                             values=cklb_files, state='readonly', 
-                             font=FONTS['default'], style="Modern.TCombobox")
-cklb_combobox.pack(fill="x")
+def browse_cklb_directory():
+    """Browse to select CKLB files from a different directory"""
+    file_paths = filedialog.askopenfilenames(
+        title="Select CKLB files",
+        initialdir=cklb_dir,
+        filetypes=[("CKLB files", "*.cklb"), ("All files", "*.*")],
+        multiple=True
+    )
+    
+    if file_paths:
+        # Clear current selection and add selected files
+        cklb_listbox.delete(0, tk.END)
+        selected_files = []
+        for file_path in file_paths:
+            filename = os.path.basename(file_path)
+            if filename.lower().endswith('.cklb'):
+                cklb_listbox.insert(tk.END, f"📁 {filename}")  # Add folder icon to distinguish browsed files
+                selected_files.append(file_path)
+        
+        # Store the full paths for later use
+        cklb_listbox.browsed_files = selected_files
+        log_job_status(f"[INFO] Selected {len(selected_files)} CKLB files from browse")
+
+ttk.Button(browse_frame, text=f"{ICONS['folder']} Browse...", 
+           style="Secondary.TButton", command=browse_cklb_directory).pack(side="left")
+ttk.Button(browse_frame, text=f"{ICONS['reset']} Refresh Library", 
+           style="Secondary.TButton", command=refresh_cklb_combobox).pack(side="left", padx=(10, 0))
+
+cklb_listbox_frame = ttk.Frame(right_panel)
+cklb_listbox_frame.pack(fill="both", expand=True, padx=10, pady=(5, 10))
+
+cklb_scrollbar = ttk.Scrollbar(cklb_listbox_frame)
+cklb_scrollbar.pack(side="right", fill="y")
+
+cklb_listbox = tk.Listbox(cklb_listbox_frame, 
+                         selectmode=tk.MULTIPLE,
+                         font=FONTS['default'],
+                         bg=COLORS['input_bg'],
+                         fg=COLORS['text_primary'],
+                         selectbackground=COLORS['accent'],
+                         selectforeground="#ffffff",
+                         yscrollcommand=cklb_scrollbar.set)
+cklb_listbox.pack(side="left", fill="both", expand=True)
+cklb_scrollbar.config(command=cklb_listbox.yview)
+
+# Initialize browsed_files attribute
+cklb_listbox.browsed_files = []
+
+# Populate right listbox with CKLB files from cklb_lib
+for f in cklb_files:
+    if f.lower().endswith('.cklb'):
+        cklb_listbox.insert(tk.END, f)
 
 # Buttons
 button_frame = ttk.Frame(checklist_frame)
