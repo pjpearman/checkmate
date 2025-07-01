@@ -7484,3 +7484,895 @@ New rules in the updated checklist:
 2025-07-01 17:37:56,798 [INFO] Found: Zebra Android 11 COBO STIG - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
 2025-07-01 17:37:56,798 [INFO] Found: Zebra Android 13 STIG (VY24 RM12) - 23 Dec 2024
 2025-07-01 17:37:56,804 [INFO] Successfully scraped 438 STIG items
+2025-07-01 17:42:26,678 [INFO] Starting STIG scraping from https://public.cyber.mil/stigs/downloads/
+2025-07-01 17:42:32,221 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/
+2025-07-01 17:42:32,451 [INFO] Found: DoD Consent Banner with FAQ (VUnknown RUnknown) - Unknown
+2025-07-01 17:42:32,451 [INFO] Found: Active Directory Domain STIG - Ver 3, Rel 5 (V3 R5) - 13 Sep 2024
+2025-07-01 17:42:32,452 [INFO] Found: Active Directory Forest STIG - Ver 3, Rel 1 (V3 R1) - 13 Sep 2024
+2025-07-01 17:42:32,453 [INFO] Found: Adobe Acrobat Professional DC Continuous Track STIG - Ver 2, Rel 1 (V2 R1) - 26 Jul 2021
+2025-07-01 17:42:32,454 [INFO] Found: Adobe Acrobat Reader DC Continuous Track STIG - Ver 2, Rel 1 (V2 R1) - 26 Jul 2021
+2025-07-01 17:42:32,454 [INFO] Found: Adobe Acrobat Reader DC Continuous Track STIG Benchmark - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-07-01 17:42:32,455 [INFO] Found: Akamai KSD Service IL2 ALG STIG Version 1​​​ (V1 R1) - 23 Oct 2017
+2025-07-01 17:42:32,455 [INFO] Found: Akamai KSD Service IL2 NDM STIG Version 1​​​​ (V1 R1) - 23 Oct 2017
+2025-07-01 17:42:32,456 [INFO] Found: Akamai KSD Service IL2 STIG Overview​​ (V1 R1) - 23 Oct 2017
+2025-07-01 17:42:32,456 [INFO] Found: Anduril NixOS STIG - Ver 1, Rel 1 (V1 R1) - 19 Nov 2024
+2025-07-01 17:42:32,457 [INFO] Found: Apache Server 2.4 Unix STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,457 [INFO] Found: Apache Server 2.4 Windows STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,458 [INFO] Found: Apache Tomcat Application Server 9 STIG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-07-01 17:42:32,459 [INFO] Found: Apple iOS-iPadOS 18 STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-07-01 17:42:32,459 [INFO] Found: Apple iOS/iPadOS 16 BYOAD STIG - Ver 1, Rel 1 (VY23 RM08) - 08 Sep 2023
+2025-07-01 17:42:32,460 [INFO] Found: Apple iOS/iPadOS 16 STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:32,460 [INFO] Found: Apple iOS/iPadOS 17 BYOAD STIG (VY24 RM02) - 02 Feb 2024
+2025-07-01 17:42:32,460 [INFO] Found: Apple iOS/iPadOS 17 STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:32,461 [INFO] Found: Apple macOS 14 (Sonoma) STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-07-01 17:42:32,461 [INFO] Found: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-07-01 17:42:32,462 [INFO] Found: Application Layer Gateway SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:32,463 [INFO] Found: Application Programming Interface Draft SRG - Ver 1, Rel 0.1 (V1 R0) - 09 May 2025
+2025-07-01 17:42:32,463 [INFO] Found: Application Security and Development STIG - Ver 6, Rel 3 (V6 R3) - 07 Apr 2025
+2025-07-01 17:42:32,464 [INFO] Found: Application Server SRG - Ver 4, Rel 3 (V4 R3) - 07 Apr 2025
+2025-07-01 17:42:32,464 [INFO] Found: Arista MLS EOS 4.X STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,465 [INFO] Found: Authentication, Authorization, and Accounting Services (AAA) SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:32,465 [INFO] Found: AvePoint Compliance Guardian STIG - Ver 1, Rel 1 (V1 R1) - 07 Mar 2023
+2025-07-01 17:42:32,466 [INFO] Found: AvePoint DocAve 6 STIG - Ver 1, Rel 2 (V1 R2) - 24 Aug 2022
+2025-07-01 17:42:32,466 [INFO] Found: BIND 9.x Draft STIG - Ver 3, Rel 0.1 (V3 R0) - 11 Mar 2025
+2025-07-01 17:42:32,467 [INFO] Found: BIND 9.x STIG - Ver 2, Rel 3 (V2 R3) - 02 May 2024
+2025-07-01 17:42:32,467 [INFO] Found: BlackBerry CylancePROTECT Mobile for UEM STIG - Ver 1, Rel 2 (V1 R2) - 22 Jan 2024
+2025-07-01 17:42:32,468 [INFO] Found: BlackBerry Enterprise Mobility Server (BEMS) 2.x STIG - Ver 1, Rel 3 (V1 R3) - 28 Jul 2020
+2025-07-01 17:42:32,468 [INFO] Found: BlackBerry Enterprise Mobility Server (BEMS) 3.x STIG - Ver 1, Rel 2 (V1 R2) - 20 Jul 2023
+2025-07-01 17:42:32,469 [INFO] Found: Blackberry UEM STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2021
+2025-07-01 17:42:32,469 [INFO] Found: CA IDMS STIG - Ver 2, Rel 1 (V2 R1) - 23 Oct 2024
+2025-07-01 17:42:32,470 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-07-01 17:42:32,470 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG for Ansible - Ver 1, Rel 11 (V1 R11) - 22 Jan 2024
+2025-07-01 17:42:32,470 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-07-01 17:42:32,471 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:32,471 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG for Ansible - Ver 2, Rel 4 (V2 R4) - 09 May 2025
+2025-07-01 17:42:32,472 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG for Chef - Ver 2, Rel 4 (V2 R4) - 09 May 2025
+2025-07-01 17:42:32,472 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R2) - 09 Apr 2025
+2025-07-01 17:42:32,473 [INFO] Found: Canonical Ubuntu 24.04 LTS STIG - Ver 1, Rel 1 (V1 R1) - 21 Feb 2025
+2025-07-01 17:42:32,473 [INFO] Found: CCI List (VUnknown RUnknown) - 27 Jan 2025
+2025-07-01 17:42:32,474 [INFO] Found: CCI Specification (V2 R0) - 01 May 2014
+2025-07-01 17:42:32,474 [INFO] Found: Central Log Server SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:32,475 [INFO] Found: Cisco ACI Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 12 Feb 2025
+2025-07-01 17:42:32,475 [INFO] Found: Cisco ASA STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:32,476 [INFO] Found: Cisco IOS Router STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,476 [INFO] Found: Cisco IOS Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:32,476 [INFO] Found: Cisco IOS XE Router NDM RTR STIG for Ansible - Ver 2, Rel 3 (V2 R3) - 22 Oct 2021
+2025-07-01 17:42:32,477 [INFO] Found: Cisco IOS XE Router NDM STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:32,477 [INFO] Found: Cisco IOS XE Router RTR STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:32,478 [INFO] Found: Cisco IOS XE Router STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:32,478 [INFO] Found: Cisco IOS XE Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:32,479 [INFO] Found: Cisco IOS XR Router STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:32,479 [INFO] Found: Cisco ISE STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:32,480 [INFO] Found: Cisco NX OS Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:32,480 [INFO] Found: Citrix Virtual Apps and Desktops (VAD) 7.x STIG (VY22 RM01) - 24 Jan 2022
+2025-07-01 17:42:32,480 [INFO] Found: Citrix XenDesktop 7.x STIG (VY20 RM04) - 23 Apr 2020
+2025-07-01 17:42:32,481 [INFO] Found: Cloud Computing SRG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,481 [INFO] Found: CloudLinux AlmaLinux OS 9 STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-07-01 17:42:32,482 [INFO] Found: Compilation - SRG-STIG Library (VUnknown RUnknown) - 09 Apr 2025
+2025-07-01 17:42:32,482 [INFO] Found: Container Platform SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:32,483 [INFO] Found: Crunchy Data Postgres 16 STIG - Ver 1, Rel 1 (V1 R1) - 20 Jun 2024
+2025-07-01 17:42:32,483 [INFO] Found: Crunchy Data PostgreSQL STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:32,484 [INFO] Found: Database SRG - Ver 4, Rel 3 (V4 R3) - 28 Jan 2025
+2025-07-01 17:42:32,484 [INFO] Found: Dell OS10 Switch STIG (VY24 RM12) - 18 Dec 2024
+2025-07-01 17:42:32,485 [INFO] Found: Domain Name System (DNS) SRG - Ver 4, Rel 1 (V4 R1) - 17 Jul 2024
+2025-07-01 17:42:32,485 [INFO] Found: Dragos Platform 2.x STIG - Ver 1, Rel 2 (V1 R2) - 28 Jan 2025
+2025-07-01 17:42:32,486 [INFO] Found: Enterprise Voice, Video, and Messaging SRG (VY25 RM01) - 06 Feb 2025
+2025-07-01 17:42:32,486 [INFO] Found: EnterpriseDB Postgres Advanced Server (EPAS) STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:32,487 [INFO] Found: F5 BIG-IP TMOS STIG (VY24 RM09) - 30 Sep 2024
+2025-07-01 17:42:32,487 [INFO] Found: Firewall SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:32,488 [INFO] Found: Forescout STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,488 [INFO] Found: Fortinet FortiGate Firewall STIG (VY23 RM07) - 20 Jul 2023
+2025-07-01 17:42:32,488 [INFO] Found: General Purpose Operating System SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:32,489 [INFO] Found: Google Android 13 BYOAD STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,489 [INFO] Found: Google Android 13 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,490 [INFO] Found: Google Android 14 BYOAD STIG (VY24 RM03) - 11 Mar 2024
+2025-07-01 17:42:32,490 [INFO] Found: Google Android 14 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,491 [INFO] Found: Google Android 15 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,491 [INFO] Found: Google Chrome STIG - Ver 2, Rel 10 (V2 R10) - 23 Oct 2024
+2025-07-01 17:42:32,492 [INFO] Found: Google Chrome STIG Benchmark - Ver 2, Rel 10 (V2 R10) - 23 Oct 2024
+2025-07-01 17:42:32,492 [INFO] Found: Group Policy Objects (GPOs) - April 2025 (VUnknown RUnknown) - 29 Apr 2025
+2025-07-01 17:42:32,492 [INFO] Found: Honeywell Android 13 STIG (VY25 RM04) - 09 May 2025
+2025-07-01 17:42:32,493 [INFO] Found: HP FlexFabric Switch STIG (VY20 RM07) - 28 Jul 2020
+2025-07-01 17:42:32,494 [INFO] Found: HPE 3PAR StoreServ 3.2.x STIG - Ver 2, Rel 1 (V2 R1) - 25 Jan 2022
+2025-07-01 17:42:32,494 [INFO] Found: HPE 3PAR StoreServ OS STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:32,494 [INFO] Found: HPE Aruba Networking AOS STIG (VY24 RM10) - 07 Nov 2024
+2025-07-01 17:42:32,495 [INFO] Found: HPE Nimble Storage Array STIG (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:32,495 [INFO] Found: HYCU Protégé STIG - Ver 1, Rel 1 (V1 R1) - 01 Nov 2024
+2025-07-01 17:42:32,496 [INFO] Found: IBM AIX 7.x STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-07-01 17:42:32,496 [INFO] Found: IBM DataPower NDM STIG - Ver 1, Rel 2​ (V1 R2) - 01 Dec 2018
+2025-07-01 17:42:32,497 [INFO] Found: IBM DataPower STIG ALG STIG Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,497 [INFO] Found: IBM DataPower STIG Overview, Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,498 [INFO] Found: IBM DB2 V10.5 STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-07-01 17:42:32,498 [INFO] Found: IBM Hardware Management Console (HMC) STIG - Ver 2, Rel 1 (V2 R1) - 23 Oct 2024
+2025-07-01 17:42:32,499 [INFO] Found: IBM MaaS360 with Watson v10-x MDM STIG - Ver1, Rel 2 (V1 R2) - 15 Aug 2019
+2025-07-01 17:42:32,499 [INFO] Found: IBM WebSphere Liberty Server STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-07-01 17:42:32,500 [INFO] Found: IBM WebSphere Traditional V9.x STIG Version 1 (V1 R1) - 26 Jun 2019
+2025-07-01 17:42:32,500 [INFO] Found: IBM z/OS STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,501 [INFO] Found: IBM zSecure Suite STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-07-01 17:42:32,501 [INFO] Found: IBM zVM Using CA VMSecure STIG - Ver 2, Rel 2 (V2 R2) - 21 Oct 2022
+2025-07-01 17:42:32,502 [INFO] Found: Infoblox 7.x DNS STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2021
+2025-07-01 17:42:32,502 [INFO] Found: Infoblox 8.x DNS STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-07-01 17:42:32,503 [INFO] Found: Intrusion Detection and Prevention System Technology SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:32,503 [INFO] Found: Intune Policy - April 2025 (VUnknown RUnknown) - 29 Apr 2025
+2025-07-01 17:42:32,504 [INFO] Found: ISEC7 Sphere STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-07-01 17:42:32,504 [INFO] Found: Ivanti Connect Secure STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:32,505 [INFO] Found: Ivanti EPMM Server STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-07-01 17:42:32,505 [INFO] Found: Ivanti Sentry 9.x STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:32,506 [INFO] Found: Jamf Pro v10.x EMM STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:32,506 [INFO] Found: JBoss Enterprise Application Platform 6.3 STIG - Ver 2, Rel 6 (V2 R6) - 07 Apr 2025
+2025-07-01 17:42:32,507 [INFO] Found: Juniper EX Series Switches STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,507 [INFO] Found: Juniper Router STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,508 [INFO] Found: Juniper SRX Services Gateway STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,508 [INFO] Found: Juniper SRX SG STIG for Ansible - Ver 1, Rel 1 (V1 R1) - 19 Nov 2020
+2025-07-01 17:42:32,509 [INFO] Found: Kubernetes STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:32,509 [INFO] Found: Kubernetes STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-07-01 17:42:32,510 [INFO] Found: Layer 2 Switch SRG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-07-01 17:42:32,510 [INFO] Found: Mainframe Product SRG - Ver 3, Rel 3 (V3 R3) - 28 Jan 2025
+2025-07-01 17:42:32,510 [INFO] Found: MariaDB Enterprise 10.x STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-07-01 17:42:32,511 [INFO] Found: MarkLogic Server v9 STIG - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:32,511 [INFO] Found: Microsoft Access 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,512 [INFO] Found: Microsoft Azure SQL Database STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:32,512 [INFO] Found: Microsoft Defender Antivirus STIG - Ver 2, Rel 4 (V2 R4) - 25 May 2022
+2025-07-01 17:42:32,513 [INFO] Found: Microsoft Defender Antivirus STIG Benchmark - Ver 2, Rel 5 (V2 R5) - 22 Jan 2024
+2025-07-01 17:42:32,513 [INFO] Found: Microsoft Defender for Endpoint Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 26 Mar 2025
+2025-07-01 17:42:32,514 [INFO] Found: Microsoft DotNet Framework 4.0 STIG - Ver 2, Rel 6 (V2 R6) - 07 Apr 2025
+2025-07-01 17:42:32,514 [INFO] Found: Microsoft DotNet Framework 4.0 STIG SCAP Benchmark - Ver 2, Rel 6 (V2 R6) - 08 Apr 2025
+2025-07-01 17:42:32,515 [INFO] Found: Microsoft Edge STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:32,515 [INFO] Found: Microsoft Edge STIG Benchmark - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:32,515 [INFO] Found: Microsoft Entra ID STIG - Ver 1, Rel 1 (V1 R1) - 02 Apr 2025
+2025-07-01 17:42:32,516 [INFO] Found: Microsoft Excel 2016 STIG - Ver 2, Rel 1​ (V2 R1) - 22 Apr 2024
+2025-07-01 17:42:32,516 [INFO] Found: Microsoft Exchange 2016 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,517 [INFO] Found: Microsoft Exchange 2019 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,517 [INFO] Found: Microsoft IIS 10.0 STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:32,518 [INFO] Found: Microsoft Internet Explorer 11 STIG - Ver 2, Rel 5 (V2 R5) - 22 Jan 2024
+2025-07-01 17:42:32,518 [INFO] Found: Microsoft Internet Explorer 11 STIG Benchmark - Ver 2, Rel 6 (V2 R6) - 22 Jan 2024
+2025-07-01 17:42:32,519 [INFO] Found: Microsoft Intune (Desktop & Mobile) STIG (VY25 RM04) - 09 May 2025
+2025-07-01 17:42:32,519 [INFO] Found: Microsoft Office 365 ProPlus STIG - Ver 3, Rel 3 (V3 R3) - 07 Apr 2025
+2025-07-01 17:42:32,520 [INFO] Found: Microsoft Office 365 ProPlus STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-07-01 17:42:32,520 [INFO] Found: Microsoft Office System 2016 STIG - Ver 2, Rel 4 (V2 R4) - 28 Jan 2025
+2025-07-01 17:42:32,520 [INFO] Found: Microsoft OneDrive STIG - Ver 2, Rel 3 (V2 R3) - 20 Jul 2023
+2025-07-01 17:42:32,521 [INFO] Found: Microsoft OneNote 2016 STIG - Ver 1, Rel 2 (V1 R2) - 01 Dec 2018
+2025-07-01 17:42:32,521 [INFO] Found: Microsoft Outlook 2016 STIG - Ver 2, Rel 3 (V2 R3) - 19 Apr 2022
+2025-07-01 17:42:32,522 [INFO] Found: Microsoft PowerPoint 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,522 [INFO] Found: Microsoft Project 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,523 [INFO] Found: Microsoft Publisher 2016 STIG - Ver 1, Rel 3 (V1 R3) - 01 Dec 2018
+2025-07-01 17:42:32,523 [INFO] Found: Microsoft Skype for Business 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,524 [INFO] Found: Microsoft SQL Server 2016 STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,524 [INFO] Found: Microsoft SQL Server 2022 Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 23 Jan 2025
+2025-07-01 17:42:32,524 [INFO] Found: Microsoft Visio 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,525 [INFO] Found: Microsoft Windows 10 STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-07-01 17:42:32,525 [INFO] Found: Microsoft Windows 10 STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-07-01 17:42:32,526 [INFO] Found: Microsoft Windows 11 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:32,526 [INFO] Found: Microsoft Windows 11 STIG for Chef - Ver 1, Rel 3 (V1 R3) - 17 Aug 2023
+2025-07-01 17:42:32,527 [INFO] Found: Microsoft Windows 11 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:32,528 [INFO] Found: Microsoft Windows Defender Firewall with Advanced Security STIG - Ver 2, Rel 2 (V2 R2) - 30 Oct 2023
+2025-07-01 17:42:32,528 [INFO] Found: Microsoft Windows Defender Firewall with Advanced Security STIG Benchmark - Ver 2, Rel 3 (V2 R3) - 30 Oct 2023
+2025-07-01 17:42:32,529 [INFO] Found: Microsoft Windows PAW STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:32,529 [INFO] Found: Microsoft Windows Server 2016 STIG for PowerShell DSC - Ver 1, Rel 3 (V1 R3) - 22 Jun 2020
+2025-07-01 17:42:32,530 [INFO] Found: Microsoft Windows Server 2019 STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-07-01 17:42:32,530 [INFO] Found: Microsoft Windows Server 2019 STIG for Chef - Ver 1, Rel 2 (V1 R2) - 22 Jun 2020
+2025-07-01 17:42:32,531 [INFO] Found: Microsoft Windows Server 2019 STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-07-01 17:42:32,531 [INFO] Found: Microsoft Windows Server 2022 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:32,531 [INFO] Found: Microsoft Windows Server 2022 STIG for Chef - Ver 1, Rel 1 (V1 R1) - 03 Feb 2023
+2025-07-01 17:42:32,532 [INFO] Found: Microsoft Windows Server 2022 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:32,532 [INFO] Found: Microsoft Windows Server DNS STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:32,533 [INFO] Found: Microsoft Word 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,533 [INFO] Found: Mirantis Kubernetes Engine STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:32,534 [INFO] Found: MobileIron Core v10.x MDM STIG Ver 1 Rel 1 (V1 R1) - 06 Jun 2019
+2025-07-01 17:42:32,534 [INFO] Found: MongoDB 7.x STIG - Ver 1, Rel 1 (V1 R1) - 01 Oct 2024
+2025-07-01 17:42:32,535 [INFO] Found: Motorola Solutions Android 13 STIG (VY25 RM03) - 07 Apr 2025
+2025-07-01 17:42:32,535 [INFO] Found: Mozilla Firefox for Linux STIG SCAP Benchmark - Ver 6, Rel 5 (V6 R5) - 08 Apr 2025
+2025-07-01 17:42:32,535 [INFO] Found: Mozilla Firefox for Windows STIG SCAP Benchmark - Ver 6, Rel 6 (V6 R6) - 08 Apr 2025
+2025-07-01 17:42:32,536 [INFO] Found: Mozilla Firefox STIG - Ver 6, Rel 5 (V6 R5) - 20 Jul 2023
+2025-07-01 17:42:32,536 [INFO] Found: Mozilla Firefox STIG - Ver 6, Rel 6 (V6 R6) - 07 Apr 2025
+2025-07-01 17:42:32,537 [INFO] Found: NetApp ONTAP DSC 9.x STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:32,537 [INFO] Found: Network Device Management SRG - Ver 5, Rel 3 (V5 R3) - 07 Apr 2025
+2025-07-01 17:42:32,538 [INFO] Found: Network Infrastructure Policy STIG - Ver 10, Rel 7 (V10 R7) - 23 Oct 2024
+2025-07-01 17:42:32,538 [INFO] Found: Network WLAN STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:32,539 [INFO] Found: Okta IDaaS STIG - Ver 1, Rel 1 (V1 R1) - 07 May 2025
+2025-07-01 17:42:32,539 [INFO] Found: Oracle Database 12c STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-07-01 17:42:32,539 [INFO] Found: Oracle Database 19c STIG - Ver 1, Rel 1 (V1 R1) - 21 Feb 2025
+2025-07-01 17:42:32,540 [INFO] Found: Oracle Linux 7 STIG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-07-01 17:42:32,540 [INFO] Found: Oracle Linux 7 STIG Benchmark - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-07-01 17:42:32,541 [INFO] Found: Oracle Linux 8 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:32,541 [INFO] Found: Oracle Linux 8 STIG for Ansible - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:32,542 [INFO] Found: Oracle Linux 8 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:32,542 [INFO] Found: Oracle Linux 9 STIG - Ver 1, Rel 1 (V1 R1) - 24 Apr 2025
+2025-07-01 17:42:32,542 [INFO] Found: Oracle MySQL 8.0 STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:32,543 [INFO] Found: Palo Alto Networks Prisma Cloud Compute STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:32,543 [INFO] Found: Palo Alto Networks STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,544 [INFO] Found: Palo Alto Networks STIG for Ansible - Ver 1, Rel 4 (V1 R4) - 04 Jan 2022
+2025-07-01 17:42:32,544 [INFO] Found: Rancher Government Solutions Multi-Cluster Manager STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:32,545 [INFO] Found: Rancher Government Solutions RKE2 STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-07-01 17:42:32,545 [INFO] Found: Red Hat Ansible Automation Controller STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:32,546 [INFO] Found: Red Hat Enterprise Linux 8 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:32,546 [INFO] Found: Red Hat Enterprise Linux 8 STIG for Ansible - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:32,547 [INFO] Found: Red Hat Enterprise Linux 8 STIG for Chef - Ver 1, Rel 13 (V1 R13) - 22 Jan 2024
+2025-07-01 17:42:32,547 [INFO] Found: Red Hat Enterprise Linux 8 STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-07-01 17:42:32,547 [INFO] Found: Red Hat Enterprise Linux 9 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:32,548 [INFO] Found: Red Hat Enterprise Linux 9 STIG for Ansible- Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:32,549 [INFO] Found: Red Hat Enterprise Linux 9 STIG for Chef- Ver 1, Rel 2 (V1 R2) - 11 Mar 2024
+2025-07-01 17:42:32,549 [INFO] Found: Red Hat Enterprise Linux 9 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:32,550 [INFO] Found: Red Hat OpenShift Container Platform 4.12 STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:32,550 [INFO] Found: Redis Enterprise 6.x STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:32,551 [INFO] Found: Rev. 4 Sunset - Apache Server 2.4 Unix STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,551 [INFO] Found: Rev. 4 Sunset - Apache Server 2.4 Windows STIG (VY23 RM01) - 13 Jan 2023
+2025-07-01 17:42:32,551 [INFO] Found: Rev. 4 Sunset - Apache Tomcat Application Server 9 STIG - Ver 2, Rel 7 (V2 R7) - 22 Jan 2024
+2025-07-01 17:42:32,552 [INFO] Found: Rev. 4 Sunset - Apple iOS/iPadOS 16 STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:32,552 [INFO] Found: Rev. 4 Sunset - Apple iOS/iPadOS 17 STIG - Ver 1, Rel 1 (V1 R1) - 16 Oct 2023
+2025-07-01 17:42:32,553 [INFO] Found: Rev. 4 Sunset - Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 2 (V1 R2) - 22 Apr 2024
+2025-07-01 17:42:32,553 [INFO] Found: Rev. 4 Sunset - Application Layer Gateway (ALG) SRG - Ver 1, Rel 2 (V1 R2) - 01 Dec 2018
+2025-07-01 17:42:32,554 [INFO] Found: Rev. 4 Sunset - Application Security and Development STIG - Ver 5, Rel 3 (V5 R3) - 20 Jul 2023
+2025-07-01 17:42:32,554 [INFO] Found: Rev. 4 Sunset - Application Server SRG - Ver 3, Rel 4 (V3 R4) - 20 Jul 2023
+2025-07-01 17:42:32,555 [INFO] Found: Rev. 4 Sunset - Arista MLS EOS 4.2x STIG (VY23 RM02) - 14 Feb 2023
+2025-07-01 17:42:32,555 [INFO] Found: Rev. 4 Sunset - Authentication, Authorization, and Accounting Services (AAA) SRG - Ver 1, Rel 2 (V1 R2) - 16 Jan 2020
+2025-07-01 17:42:32,556 [INFO] Found: Rev. 4 Sunset - Canonical Ubuntu 22.04 LTS STIG - Ver 1, Rel 1 (V1 R1) - 03 Apr 2024
+2025-07-01 17:42:32,556 [INFO] Found: Rev. 4 Sunset - Central Log Server SRG - Ver 2, Rel 2 (V2 R2) - 21 Oct 2022
+2025-07-01 17:42:32,557 [INFO] Found: Rev. 4 Sunset - Cisco ASA STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:32,557 [INFO] Found: Rev. 4 Sunset - Cisco IOS Router STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:32,557 [INFO] Found: Rev. 4 Sunset - Cisco IOS Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,558 [INFO] Found: Rev. 4 Sunset - Cisco IOS XE Router STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:32,558 [INFO] Found: Rev. 4 Sunset - Cisco IOS XE Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,559 [INFO] Found: Rev. 4 Sunset - Cisco IOS XR Router STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:32,559 [INFO] Found: Rev. 4 Sunset - Cisco ISE STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:32,560 [INFO] Found: Rev. 4 Sunset - Cisco NX OS Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,560 [INFO] Found: Rev. 4 Sunset - Container Platform SRG - Ver 1, Rel 5 (V1 R5) - 22 Jan 2024
+2025-07-01 17:42:32,560 [INFO] Found: Rev. 4 Sunset - Crunchy Data PostgreSQL STIG - Ver 2, Rel 2 (V2 R2) - 22 Jan 2024
+2025-07-01 17:42:32,561 [INFO] Found: Rev. 4 Sunset - Database SRG - Ver 3, Rel 4 (V3 R4) - 22 Jan 2024
+2025-07-01 17:42:32,561 [INFO] Found: Rev. 4 Sunset - Domain Name System SRG - Ver 3, Rel 2 (V3 R2) - 21 Mar 2025
+2025-07-01 17:42:32,562 [INFO] Found: Rev. 4 Sunset - EnterpriseDB Postgres Advanced Server (EPAS) STIG - Ver 1, Rel 1 (V1 R1) - 11 Jan 2024
+2025-07-01 17:42:32,562 [INFO] Found: Rev. 4 Sunset - Firewall SRG - Ver 2, Rel 3 (V2 R3) - 21 Oct 2022
+2025-07-01 17:42:32,563 [INFO] Found: Rev. 4 Sunset - Forescout STIG (VY23 RM07) - 20 Jul 2023
+2025-07-01 17:42:32,563 [INFO] Found: Rev. 4 Sunset - General Purpose Operating System SRG - Ver 2, Rel 7 (V2 R7) - 22 Jan 2024
+2025-07-01 17:42:32,564 [INFO] Found: Rev. 4 Sunset - Google Android 13 STIG - Ver 1, Rel 1 (V1 R1) - 01 Nov 2022
+2025-07-01 17:42:32,564 [INFO] Found: Rev. 4 Sunset - Google Android 14 STIG (VY23 RM10) - 12 Oct 2023
+2025-07-01 17:42:32,565 [INFO] Found: Rev. 4 Sunset - HPE 3PAR StoreServ OS STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:32,565 [INFO] Found: Rev. 4 Sunset - HPE Nimble Storage Array STIG - Ver 1, Rel 2 (V1 R2) - 22 Jan 2024
+2025-07-01 17:42:32,565 [INFO] Found: Rev. 4 Sunset - IBM Hardware Management Console (HMC) STIG (VY23 RM04) - 24 Apr 2023
+2025-07-01 17:42:32,566 [INFO] Found: Rev. 4 Sunset - IBM z/OS STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,566 [INFO] Found: Rev. 4 Sunset - Intrusion Detection and Prevention System SRG - Ver 2, Rel 6 (V2 R6) - 28 Jul 2020
+2025-07-01 17:42:32,567 [INFO] Found: Rev. 4 Sunset - Ivanti Connect Secure STIG (VY23 RM11) - 16 Nov 2023
+2025-07-01 17:42:32,567 [INFO] Found: Rev. 4 Sunset - Ivanti MobileIron Core MDM Server STIG - Ver 1, Rel 1 (V1 R1) - 06 Dec 2021
+2025-07-01 17:42:32,568 [INFO] Found: Rev. 4 Sunset - Ivanti MobileIron Sentry 9.x STIG - Ver 1, Rel 1 (VUnknown RUnknown) - 26 Oct 2021
+2025-07-01 17:42:32,568 [INFO] Found: Rev. 4 Sunset - Jamf Pro v10.x EMM STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-07-01 17:42:32,569 [INFO] Found: Rev. 4 Sunset - Juniper EX Series Switches STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:32,569 [INFO] Found: Rev. 4 Sunset - Juniper Router STIG (VY23 RM06) - 17 May 2023
+2025-07-01 17:42:32,570 [INFO] Found: Rev. 4 Sunset - Juniper SRX Services Gateway STIG (VY22 RM10) - 21 Oct 2022
+2025-07-01 17:42:32,570 [INFO] Found: Rev. 4 Sunset - Kubernetes STIG - Ver 1, Rel 11 (V1 R11) - 23 Oct 2023
+2025-07-01 17:42:32,571 [INFO] Found: Rev. 4 Sunset - Layer 2 Switch SRG - Ver 2, Rel 1 (V2 R1) - 21 May 2021
+2025-07-01 17:42:32,571 [INFO] Found: Rev. 4 Sunset - Mainframe Product SRG - Ver 2, Rel 1 (V2 R1) - 21 Oct 2022
+2025-07-01 17:42:32,572 [INFO] Found: Rev. 4 Sunset - MariaDB Enterprise 10.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:32,572 [INFO] Found: Rev. 4 Sunset - MarkLogic Server v9 STIG - Ver 2, Rel 2 (V2 R2) - 25 Jan 2024
+2025-07-01 17:42:32,572 [INFO] Found: Rev. 4 Sunset - Microsoft Azure SQL Database STIG - Ver 1, Rel 2 (V1 R2) - 20 Jul 2023
+2025-07-01 17:42:32,573 [INFO] Found: Rev. 4 Sunset - Microsoft Edge STIG - Ver 1, Rel 8 (V1 R8) - 22 Apr 2024
+2025-07-01 17:42:32,573 [INFO] Found: Rev. 4 Sunset - Microsoft Exchange 2019 STIG (VY24 RM01) - 18 Jan 2024
+2025-07-01 17:42:32,574 [INFO] Found: Rev. 4 Sunset - Microsoft IIS 10.0 Server STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:32,574 [INFO] Found: Rev. 4 Sunset - Microsoft Office 365 ProPlus STIG - Ver 2, Rel 12 (V2 R12) - 22 Apr 2024
+2025-07-01 17:42:32,575 [INFO] Found: Rev. 4 Sunset - Microsoft SQL Server 2016 STIG (VY24 RM04) - 30 Apr 2024
+2025-07-01 17:42:32,575 [INFO] Found: Rev. 4 Sunset - Microsoft Windows 11 STIG - Ver 1, Rel 6 (V1 R6) - 02 May 2024
+2025-07-01 17:42:32,576 [INFO] Found: Rev. 4 Sunset - Microsoft Windows PAW STIG - Ver 2, Rel 3 (V2 R3) - 30 Oct 2023
+2025-07-01 17:42:32,576 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server 2019 STIG - Ver 2, Rel 9 (V2 R9) - 02 May 2024
+2025-07-01 17:42:32,577 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server 2022 STIG - Ver 1, Rel 5 (V1 R5) - 02 May 2024
+2025-07-01 17:42:32,577 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server Domain Name System STIG - Ver 1, Rel 1 (V1 R1) - 25 Jan 2024
+2025-07-01 17:42:32,578 [INFO] Found: Rev. 4 Sunset - Mirantis Kubernetes Engine STIG - Ver 1, Rel 1 (V1 R1) - 15 Apr 2024
+2025-07-01 17:42:32,578 [INFO] Found: Rev. 4 Sunset - NetApp ONTAP DSC 9.x STIG - Ver 1, Rel 4 (V1 R4) - 22 Apr 2024
+2025-07-01 17:42:32,578 [INFO] Found: Rev. 4 Sunset - Network Device Management SRG - Ver 4, Rel 3 (V4 R3) - 17 May 2023
+2025-07-01 17:42:32,579 [INFO] Found: Rev. 4 Sunset - Oracle Database 12c STIG - Ver 2, Rel 9 (V2 R9) - 22 Jan 2024
+2025-07-01 17:42:32,579 [INFO] Found: Rev. 4 Sunset - Oracle Linux 8 STIG - Ver 1, Rel 10 (V1 R10) - 22 Apr 2024
+2025-07-01 17:42:32,580 [INFO] Found: Rev. 4 Sunset - Oracle MySQL 8.0 STIG - Ver 1, Rel 5 (V1 R5) - 25 Jan 2024
+2025-07-01 17:42:32,580 [INFO] Found: Rev. 4 Sunset - Palo Alto Networks Prisma Cloud Compute STIG - Ver 1, Rel 3 (V1 R3) - 20 Jul 2023
+2025-07-01 17:42:32,581 [INFO] Found: Rev. 4 Sunset - Palo Alto Networks STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:32,581 [INFO] Found: Rev. 4 Sunset - Rancher Government Solutions Multi-Cluster Manager STIG - Ver 1, Rel 3 (V1 R3) - 20 Jul 2023
+2025-07-01 17:42:32,582 [INFO] Found: Rev. 4 Sunset - Rancher Government Solutions RKE2 STIG - Ver 1, Rel 5 (V1 R5) - 22 Apr 2024
+2025-07-01 17:42:32,582 [INFO] Found: Rev. 4 Sunset - Red Hat Ansible Automation Controller STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,582 [INFO] Found: Rev. 4 Sunset - Red Hat Enterprise Linux 9 STIG - Ver 1, Rel 3 (V1 R3) - 22 Apr 2024
+2025-07-01 17:42:32,583 [INFO] Found: Rev. 4 Sunset - Red Hat OpenShift Container Platform 4.12 STIG - Ver 1, Rel 1 (V1 R1) - 08 Sep 2023
+2025-07-01 17:42:32,583 [INFO] Found: Rev. 4 Sunset - Redis Enterprise 6.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:32,584 [INFO] Found: Rev. 4 Sunset - Riverbed NetProfiler STIG - Ver 1, Rel 1 (V1 R1) - 14 Feb 2023
+2025-07-01 17:42:32,584 [INFO] Found: Rev. 4 Sunset - Router SRG - Ver 4, Rel 3 (V4 R3) - 22 Apr 2024
+2025-07-01 17:42:32,585 [INFO] Found: Rev. 4 Sunset - Samsung Android OS 13 with Knox 3.x STIG (VY23 RM01) - 30 Jan 2023
+2025-07-01 17:42:32,585 [INFO] Found: Rev. 4 Sunset - Samsung Android OS 14 with Knox 3.x STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,586 [INFO] Found: Rev. 4 Sunset - SDN Controller SRG - Ver 1, Rel 2 (V1 R2) - 23 Apr 2020
+2025-07-01 17:42:32,586 [INFO] Found: Rev. 4 Sunset - Solaris 11 SPARC STIG - Ver 2, Rel 10 (V2 R10) - 22 Apr 2024
+2025-07-01 17:42:32,587 [INFO] Found: Rev. 4 Sunset - Solaris 11 x86 STIG - Ver 2, Rel 10 (V2 R10) - 22 Apr 2024
+2025-07-01 17:42:32,587 [INFO] Found: Rev. 4 Sunset - Splunk Enterprise 7.x for Windows STIG - Ver 2, Rel 4 (V2 R4) - 20 Jul 2023
+2025-07-01 17:42:32,588 [INFO] Found: Rev. 4 Sunset - Splunk Enterprise 8.x for Linux STIG - Ver 1, Rel 5 (V1 R5) - 23 Oct 2023
+2025-07-01 17:42:32,588 [INFO] Found: Rev. 4 Sunset - SUSE Linux Enterprise Server 15 STIG - Ver 1, Rel 13 (V1 R13) - 22 Apr 2024
+2025-07-01 17:42:32,589 [INFO] Found: Rev. 4 Sunset - Tanium 7.x STIG - Ver 1, Rel 2 (V1 R2) - 25 Aug 2022
+2025-07-01 17:42:32,589 [INFO] Found: Rev. 4 Sunset - Tanium 7.x TanOS STIG - Ver 1, Rel 1 (V1 R1) - 29 Nov 2022
+2025-07-01 17:42:32,589 [INFO] Found: Rev. 4 Sunset - Trellix Application Control 8.x STIG - Ver 2, Rel 2 (V2 R2) - 22 Jan 2024
+2025-07-01 17:42:32,590 [INFO] Found: Rev. 4 Sunset - Trend Micro TippingPoint STIG (VY22 RM07) - 27 Jul 2022
+2025-07-01 17:42:32,591 [INFO] Found: Rev. 4 Sunset - Tri-Lab Operating System Stack (TOSS) 4 STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:32,591 [INFO] Found: Rev. 4 Sunset - Unified Endpoint Management Server SRG (VY23 RM04) - 24 Apr 2023
+2025-07-01 17:42:32,592 [INFO] Found: Rev. 4 Sunset - Virtual Machine Manager SRG - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-07-01 17:42:32,592 [INFO] Found: Rev. 4 Sunset - Virtual Private Network (VPN) SRG - Ver 2, Rel 6 (V2 R6) - 11 Apr 2024
+2025-07-01 17:42:32,593 [INFO] Found: Rev. 4 Sunset - Web Server SRG - Ver 3, Rel 3 (V3 R3) - 11 Apr 2024
+2025-07-01 17:42:32,593 [INFO] Found: Riverbed NetProfiler STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:32,593 [INFO] Found: Router SRG - Ver 5, Rel 1 (V5 R1) - 17 Jul 2024
+2025-07-01 17:42:32,594 [INFO] Found: Samsung Android 14 BYOAD STIG (VY24 RM03) - 13 Mar 2024
+2025-07-01 17:42:32,594 [INFO] Found: Samsung Android 15 BYOAD STIG (VY25 RM04) - 09 May 2025
+2025-07-01 17:42:32,595 [INFO] Found: Samsung Android OS 13 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,595 [INFO] Found: Samsung Android OS 14 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,596 [INFO] Found: Samsung Android OS 15 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,596 [INFO] Found: Samsung SDS EMM STIG - Ver 1, Rel 3 (V1 R3) - 27 Jul 2022
+2025-07-01 17:42:32,597 [INFO] Found: SCC 5.10.2 RHEL 7/Oracle Linux 7/SLES12/SLES 15 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,597 [INFO] Found: SCC 5.10.2 RHEL 8/Oracle Linux 8 Aarch64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,598 [INFO] Found: SCC 5.10.2 RHEL 8/Oracle Linux 8 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,598 [INFO] Found: SCC 5.10.2 RHEL 9/Oracle Linux 9 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,598 [INFO] Found: SCC 5.10.2 RPM GPG key (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,599 [INFO] Found: SCC 5.10.2 Solaris 11 i386 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,599 [INFO] Found: SCC 5.10.2 Solaris 11 SPARC (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,600 [INFO] Found: SCC 5.10.2 Ubuntu 18/20 AMD64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,600 [INFO] Found: SCC 5.10.2 Ubuntu 20/Raspios-bulleye Aarch64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,601 [INFO] Found: SCC 5.10.2 Ubuntu 22 AMD64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,601 [INFO] Found: SCC 5.10.2 UNIX Remote Scanning Plugin (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,602 [INFO] Found: SCC 5.10.2 Windows (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:32,602 [INFO] Found: SDN Controller SRG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:32,602 [INFO] Found: SEL-2740S STIG Ver 1 Rel 1 (V1 R1) - 1 SEL-2740
+2025-07-01 17:42:32,603 [INFO] Found: SLES V11 for System z STIG - Ver 1, Rel 12 (V1 R12) - 09 Mar 2019
+2025-07-01 17:42:32,603 [INFO] Found: Software-Defined Networking (SDN) Using Network Virtualization (NV) STIG Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,604 [INFO] Found: Solaris 11 SPARC STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:32,605 [INFO] Found: Solaris 11 SPARC STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:32,605 [INFO] Found: Solaris 11 x86 STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:32,606 [INFO] Found: Solaris 11 x86 STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:32,606 [INFO] Found: SPEC Innovations Innoslate 4.x STIG - Ver 1, Rel 1 (V1 R1) - 28 Sep 2022
+2025-07-01 17:42:32,607 [INFO] Found: Splunk Enterprise 7.x for Windows STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:32,607 [INFO] Found: Splunk Enterprise 8.x for Linux STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-07-01 17:42:32,608 [INFO] Found: STIG Viewer 2.18 (VUnknown RUnknown) - 12 Aug 2024
+2025-07-01 17:42:32,608 [INFO] Found: STIG Viewer 2.18-Linux (VUnknown RUnknown) - 12 Aug 2024
+2025-07-01 17:42:32,608 [INFO] Found: STIG Viewer 2.18-Win64 (VUnknown RUnknown) - 12 Aug 2024
+2025-07-01 17:42:32,609 [INFO] Found: STIG Viewer 2.18-Win64 msi (VUnknown RUnknown) - 12 Aug 2024
+2025-07-01 17:42:32,609 [INFO] Found: Stig Viewer 3 CKLB JSON Schema (VUnknown RUnknown) - 10 Jan 2024
+2025-07-01 17:42:32,610 [INFO] Found: STIG Viewer 3.5.1-Linux (VUnknown RUnknown) - 27 Mar 2025
+2025-07-01 17:42:32,610 [INFO] Found: STIG Viewer 3.5.1-Win64 (VUnknown RUnknown) - 27 Mar 2025
+2025-07-01 17:42:32,611 [INFO] Found: STIG Viewer 3.5.1-Win64 msi (VUnknown RUnknown) - 27 Mar 2025
+2025-07-01 17:42:32,611 [INFO] Found: Sunset - A10 Networks ADC STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:32,612 [INFO] Found: Sunset - Apache 2.2 STIG UNIX - Ver 1, Rel 11 (V1 R11) - 13 May 2019
+2025-07-01 17:42:32,612 [INFO] Found: Sunset - Apache 2.2 STIG Windows - Ver 1, Rel 13​ (V1 R13) - 13 May 2019
+2025-07-01 17:42:32,613 [INFO] Found: Sunset - Apple iOS/iPadOS 15 - Ver 1, Rel 4 (V1 R4) - 22 Apr 2024
+2025-07-01 17:42:32,613 [INFO] Found: Sunset - Apple macOS 12 STIG - Ver 1, Rel 9 (V1 R9) - 17 Jul 2024
+2025-07-01 17:42:32,614 [INFO] Found: Sunset - Apple macOS 13 (Ventura) STIG - Ver 1, Rel 5 (V1 R5) - 28 Jan 2025
+2025-07-01 17:42:32,614 [INFO] Found: Sunset - Arista MultiLayer Switch DCS 7000 Series STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:32,615 [INFO] Found: Sunset - CA API Gateway STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:32,615 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG - Ver 2, Rel 15 (V2 R15) - 17 Jul 2024
+2025-07-01 17:42:32,616 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG Benchmark - Ver 2, Rel 11 (V2 R11) - 22 Jan 2024
+2025-07-01 17:42:32,616 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG Benchmark - Ver 2, Rel 12 (V2 R12) - 17 Jul 2024
+2025-07-01 17:42:32,617 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG for Ansible - Ver 2, Rel 13 (V2 R13) - 22 Jan 2024
+2025-07-01 17:42:32,617 [INFO] Found: Sunset - Canonical Ubuntu 20.04 LTS STIG Benchmark - Ver 1, Rel 9 (V1 R9) - 22 Jan 2024
+2025-07-01 17:42:32,618 [INFO] Found: Sunset - Cisco IOS-XE Router NDM STIG Benchmark - Ver 1, Rel 7 (V1 R7) - 24 Apr 2023
+2025-07-01 17:42:32,618 [INFO] Found: Sunset - Cisco IOS-XE Router RTR STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 24 Apr 2023
+2025-07-01 17:42:32,619 [INFO] Found: Sunset - DBN 6300 STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:32,619 [INFO] Found: Sunset - Docker Enterprise 2.x Linux/Unix STIG - Ver 2, Rel 2 (V2 R2) - 17 Jul 2024
+2025-07-01 17:42:32,620 [INFO] Found: Sunset - Docker Enterprise 2.x Linux/Unix STIG for Ansible - Ver 1, Rel 1 (V1 R1) - 22 Jun 2020
+2025-07-01 17:42:32,620 [INFO] Found: Sunset - EDB Postgres Advanced Server v11 on Windows STIG - Ver 2, Rel 4 (V2 R4) - 17 Jul 2024
+2025-07-01 17:42:32,621 [INFO] Found: Sunset - EDB Postgres Advanced Server v9.6 STIG - Ver 2, Rel 3 (V2 R3) - 22 Jan 2024
+2025-07-01 17:42:32,621 [INFO] Found: Sunset - Esri ArcGIS for Server 10.3 STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-07-01 17:42:32,621 [INFO] Found: Sunset - F5 BIG-IP STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,622 [INFO] Found: Sunset - ForeScout CounterACT ALG STIG - Ver 1, Rel 3 (V1 R3) - 13 Aug 2024
+2025-07-01 17:42:32,622 [INFO] Found: Sunset - ForeScout CounterACT NDM STIG - Ver 1, Rel 2 (V1 R2) - 13 Aug 2024
+2025-07-01 17:42:32,623 [INFO] Found: Sunset - Honeywell Android 9.x STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:32,623 [INFO] Found: Sunset - IBM Aspera Platform 4.2 STIG - Ver 1, Rel 3 (V1 R3) - 28 Jan 2025
+2025-07-01 17:42:32,624 [INFO] Found: Sunset - IBM MQ Appliance V9-0 STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:32,624 [INFO] Found: Sunset - Kubernetes STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-07-01 17:42:32,625 [INFO] Found: Sunset - McAfee Application Control 7.x STIG - Ver 1, Rel 4 (V1 R4) - 28 Jan 2025
+2025-07-01 17:42:32,625 [INFO] Found: Sunset - Microsoft SCOM STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-07-01 17:42:32,626 [INFO] Found: Sunset - Microsoft Windows 10 STIG - Ver 2, Rel 9 (V2 R9) - 02 May 2024
+2025-07-01 17:42:32,626 [INFO] Found: Sunset - Microsoft Windows 2012 Server Domain Name System STIG - Ver 2, Rel 7 (V2 R7) - 17 Jul 2024
+2025-07-01 17:42:32,627 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG - Ver 2, Rel 10 (V2 R10) - 23 Jan 2025
+2025-07-01 17:42:32,627 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG Benchmark - Ver 2, Rel 8 (V2 R8) - 23 Jan 2025
+2025-07-01 17:42:32,627 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG for Chef - Ver 1, Rel 3 (V1 R3) - 23 Jan 2025
+2025-07-01 17:42:32,628 [INFO] Found: Sunset - MongoDB 3.x STIG - Ver 2, Rel 2 (V2 R2) - 25 Jan 2024
+2025-07-01 17:42:32,628 [INFO] Found: Sunset - MongoDB 3.x STIG - Ver 2, Rel 3 (V2 R3) - 17 Jul 2024
+2025-07-01 17:42:32,629 [INFO] Found: Sunset - MongoDB 4.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:32,629 [INFO] Found: Sunset - MongoDB 4.x STIG - Ver 1, Rel 4 (V1 R4) - 17 Jul 2024
+2025-07-01 17:42:32,630 [INFO] Found: Sunset - MS SQL Server 2014 STIG (VY24 RM07) - 13 Aug 2024
+2025-07-01 17:42:32,630 [INFO] Found: Sunset - Multifunction Device and Network Printers STIG - Ver 2, Rel 15 (V2 R15) - 28 Jan 2025
+2025-07-01 17:42:32,631 [INFO] Found: Sunset - Nutanix AOS 5.20.x STIG (VY24 RM07) - 13 Aug 2024
+2025-07-01 17:42:32,631 [INFO] Found: Sunset - Oracle Database 11.2g STIG - Ver 2, Rel 5 (V2 R5) - 17 Jul 2024
+2025-07-01 17:42:32,632 [INFO] Found: Sunset - Oracle HTTP Server 12.1.3 STIG - Ver 2, Rel 3 (V2 R3) - 07 Feb 2025
+2025-07-01 17:42:32,632 [INFO] Found: Sunset - Oracle Linux 8 STIG Benchmark - Ver 1, Rel 8 (V1 R8) - 22 Jan 2024
+2025-07-01 17:42:32,633 [INFO] Found: Sunset - Oracle WebLogic Server 12c STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:32,633 [INFO] Found: Sunset - PostgreSQL 9.x STIG - Ver 2, Rel 5 (V2 R5) - 17 Jul 2024
+2025-07-01 17:42:32,634 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG - Ver 3, Rel 15 (V3 R15) - 17 Jul 2024
+2025-07-01 17:42:32,634 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG Benchmark - Ver 3, Rel 15 (V3 R15) - 17 Jul 2024
+2025-07-01 17:42:32,635 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG for Ansible - Ver 3, Rel 14 (V3 R14) - 22 Jan 2024
+2025-07-01 17:42:32,635 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG for Chef - Ver 3, Rel 8 (V3 R8) - 27 Jul 2022
+2025-07-01 17:42:32,636 [INFO] Found: Sunset - Red Hat Enterprise Linux 8 STIG Benchmark - Ver 1, Rel 12 (V1 R12) - 22 Jan 2024
+2025-07-01 17:42:32,636 [INFO] Found: Sunset - Red Hat Enterprise Linux 9 Benchmark - Ver 1, Rel 1 (V1 R1) - 21 Feb 2024
+2025-07-01 17:42:32,637 [INFO] Found: Sunset - Riverbed Steelhead CX v8 STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:32,637 [INFO] Found: Sunset - Solaris 11 SPARC STIG Benchmark - Ver 2, Rel 4 (V2 R4) - 24 Apr 2023
+2025-07-01 17:42:32,637 [INFO] Found: Sunset - Storage Area Network STIG - Ver 2, Rel 5 (V2 R5) - 28 Jan 2025
+2025-07-01 17:42:32,638 [INFO] Found: Sunset - SUSE Linux Enterprise Server 15 STIG Benchmark - Ver 1, Rel 6 (V1 R6) - 22 Jan 2024
+2025-07-01 17:42:32,638 [INFO] Found: Sunset - Tanium 7.0 STIG - Ver 2, Rel 1 (V2 R1) - 07 Apr 2025
+2025-07-01 17:42:32,639 [INFO] Found: Sunset - Tanium 7.3 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:32,639 [INFO] Found: Sunset - TOSS 4 STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:32,640 [INFO] Found: Sunset - Trend Micro Deep Security 9.x STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2024
+2025-07-01 17:42:32,640 [INFO] Found: Sunset - VMware Horizon 7.13 STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:32,641 [INFO] Found: Sunset - VMware vRealize Automation 7.x STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:32,641 [INFO] Found: Sunset - VMware vRealize Operations Manager Cassandra STIG - Ver 1, Rel 2 (V1 R2) - 23 Oct 2023
+2025-07-01 17:42:32,642 [INFO] Found: Sunset - VMware vRealize Ops 6.x STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:32,642 [INFO] Found: Sunset - VMware Workspace ONE UEM STIG - Ver 2, Rel 2 (V2 R2) - 17 Jul 2024
+2025-07-01 17:42:32,643 [INFO] Found: SUSE Linux Enterprise Micro 5 STIG - Ver 1, Rel 1 (V1 R1) - 20 Jun 2024
+2025-07-01 17:42:32,643 [INFO] Found: SUSE Linux Enterprise Server 12 STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:32,643 [INFO] Found: SUSE Linux Enterprise Server 12 STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:32,644 [INFO] Found: SUSE Linux Enterprise Server 15 for Ansible - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:32,644 [INFO] Found: SUSE Linux Enterprise Server 15 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:32,645 [INFO] Found: SUSE Linux Enterprise Server 15 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:32,645 [INFO] Found: Symantec ProxySG STIG (VY20 RM04) - 23 Apr 2020
+2025-07-01 17:42:32,646 [INFO] Found: Tanium 7.x STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-07-01 17:42:32,646 [INFO] Found: Tanium 7.x TanOS STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,647 [INFO] Found: Traditional Security STIG Checklist - Ver 2, Rel 6 (V2 R6) - 23 Oct 2024
+2025-07-01 17:42:32,647 [INFO] Found: Trellix Application Control 8.x STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:32,648 [INFO] Found: Trend MicroTippingPoint STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,648 [INFO] Found: Tri-Lab Operating System Stack (TOSS) 4 STIG Benchmark - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:32,649 [INFO] Found: Unified Endpoint Management Server SRG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,649 [INFO] Found: Virtual Machine Manager SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:32,649 [INFO] Found: Virtual Private Network (VPN) SRG - Ver 3, Rel 3 (V3 R3) - 28 Jan 2025
+2025-07-01 17:42:32,650 [INFO] Found: VMware NSX 4.x STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:32,650 [INFO] Found: VMware NSX Distributed Logical Router STIG, Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,651 [INFO] Found: VMware NSX Manager STIG, Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,651 [INFO] Found: VMware NSX STIG Overview, Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:32,652 [INFO] Found: VMware NSX-T Data Center STIG (VY23 RM07) - 20 Jul 2023
+2025-07-01 17:42:32,652 [INFO] Found: VMware vSphere 7.0 STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,652 [INFO] Found: VMware vSphere 8.0 STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,653 [INFO] Found: Web Server SRG - Ver 4, Rel 3 (V4 R3) - 07 Apr 2025
+2025-07-01 17:42:32,653 [INFO] Found: Windows Server 2022 STIG with Ansible - Ver 1, Rel 1 (V1 R1) - 08 Feb 2023
+2025-07-01 17:42:32,654 [INFO] Found: Xylok Security Suite 20.x STIG - Ver 1, Rel 1 (V1 R1) - 23 Jan 2025
+2025-07-01 17:42:32,654 [INFO] Found: z/OS ACF2 Products (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,655 [INFO] Found: z/OS RACF Products (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,655 [INFO] Found: z/OS SRR Scripts (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,656 [INFO] Found: z/OS TSS Products STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:32,656 [INFO] Found: Zebra Android 11 COBO STIG - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-07-01 17:42:32,657 [INFO] Found: Zebra Android 13 STIG (VY24 RM12) - 23 Dec 2024
+2025-07-01 17:42:32,658 [INFO] Successfully scraped 438 STIG items
+2025-07-01 17:42:35,264 [INFO] Starting STIG scraping from https://public.cyber.mil/stigs/downloads/
+2025-07-01 17:42:42,611 [INFO] Fetched page: https://public.cyber.mil/stigs/downloads/
+2025-07-01 17:42:42,875 [INFO] Found: DoD Consent Banner with FAQ (VUnknown RUnknown) - Unknown
+2025-07-01 17:42:42,875 [INFO] Found: Active Directory Domain STIG - Ver 3, Rel 5 (V3 R5) - 13 Sep 2024
+2025-07-01 17:42:42,876 [INFO] Found: Active Directory Forest STIG - Ver 3, Rel 1 (V3 R1) - 13 Sep 2024
+2025-07-01 17:42:42,876 [INFO] Found: Adobe Acrobat Professional DC Continuous Track STIG - Ver 2, Rel 1 (V2 R1) - 26 Jul 2021
+2025-07-01 17:42:42,877 [INFO] Found: Adobe Acrobat Reader DC Continuous Track STIG - Ver 2, Rel 1 (V2 R1) - 26 Jul 2021
+2025-07-01 17:42:42,877 [INFO] Found: Adobe Acrobat Reader DC Continuous Track STIG Benchmark - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-07-01 17:42:42,878 [INFO] Found: Akamai KSD Service IL2 ALG STIG Version 1​​​ (V1 R1) - 23 Oct 2017
+2025-07-01 17:42:42,878 [INFO] Found: Akamai KSD Service IL2 NDM STIG Version 1​​​​ (V1 R1) - 23 Oct 2017
+2025-07-01 17:42:42,879 [INFO] Found: Akamai KSD Service IL2 STIG Overview​​ (V1 R1) - 23 Oct 2017
+2025-07-01 17:42:42,879 [INFO] Found: Anduril NixOS STIG - Ver 1, Rel 1 (V1 R1) - 19 Nov 2024
+2025-07-01 17:42:42,880 [INFO] Found: Apache Server 2.4 Unix STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:42,880 [INFO] Found: Apache Server 2.4 Windows STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:42,881 [INFO] Found: Apache Tomcat Application Server 9 STIG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-07-01 17:42:42,881 [INFO] Found: Apple iOS-iPadOS 18 STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-07-01 17:42:42,882 [INFO] Found: Apple iOS/iPadOS 16 BYOAD STIG - Ver 1, Rel 1 (VY23 RM08) - 08 Sep 2023
+2025-07-01 17:42:42,882 [INFO] Found: Apple iOS/iPadOS 16 STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:42,883 [INFO] Found: Apple iOS/iPadOS 17 BYOAD STIG (VY24 RM02) - 02 Feb 2024
+2025-07-01 17:42:42,883 [INFO] Found: Apple iOS/iPadOS 17 STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:42,884 [INFO] Found: Apple macOS 14 (Sonoma) STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-07-01 17:42:42,884 [INFO] Found: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-07-01 17:42:42,885 [INFO] Found: Application Layer Gateway SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:42,885 [INFO] Found: Application Programming Interface Draft SRG - Ver 1, Rel 0.1 (V1 R0) - 09 May 2025
+2025-07-01 17:42:42,886 [INFO] Found: Application Security and Development STIG - Ver 6, Rel 3 (V6 R3) - 07 Apr 2025
+2025-07-01 17:42:42,886 [INFO] Found: Application Server SRG - Ver 4, Rel 3 (V4 R3) - 07 Apr 2025
+2025-07-01 17:42:42,887 [INFO] Found: Arista MLS EOS 4.X STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:42,887 [INFO] Found: Authentication, Authorization, and Accounting Services (AAA) SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:42,887 [INFO] Found: AvePoint Compliance Guardian STIG - Ver 1, Rel 1 (V1 R1) - 07 Mar 2023
+2025-07-01 17:42:42,888 [INFO] Found: AvePoint DocAve 6 STIG - Ver 1, Rel 2 (V1 R2) - 24 Aug 2022
+2025-07-01 17:42:42,888 [INFO] Found: BIND 9.x Draft STIG - Ver 3, Rel 0.1 (V3 R0) - 11 Mar 2025
+2025-07-01 17:42:42,889 [INFO] Found: BIND 9.x STIG - Ver 2, Rel 3 (V2 R3) - 02 May 2024
+2025-07-01 17:42:42,889 [INFO] Found: BlackBerry CylancePROTECT Mobile for UEM STIG - Ver 1, Rel 2 (V1 R2) - 22 Jan 2024
+2025-07-01 17:42:42,890 [INFO] Found: BlackBerry Enterprise Mobility Server (BEMS) 2.x STIG - Ver 1, Rel 3 (V1 R3) - 28 Jul 2020
+2025-07-01 17:42:42,890 [INFO] Found: BlackBerry Enterprise Mobility Server (BEMS) 3.x STIG - Ver 1, Rel 2 (V1 R2) - 20 Jul 2023
+2025-07-01 17:42:42,891 [INFO] Found: Blackberry UEM STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2021
+2025-07-01 17:42:42,891 [INFO] Found: CA IDMS STIG - Ver 2, Rel 1 (V2 R1) - 23 Oct 2024
+2025-07-01 17:42:42,892 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-07-01 17:42:42,892 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG for Ansible - Ver 1, Rel 11 (V1 R11) - 22 Jan 2024
+2025-07-01 17:42:42,892 [INFO] Found: Canonical Ubuntu 20.04 LTS STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-07-01 17:42:42,893 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:42,893 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG for Ansible - Ver 2, Rel 4 (V2 R4) - 09 May 2025
+2025-07-01 17:42:42,894 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG for Chef - Ver 2, Rel 4 (V2 R4) - 09 May 2025
+2025-07-01 17:42:42,894 [INFO] Found: Canonical Ubuntu 22.04 LTS STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R2) - 09 Apr 2025
+2025-07-01 17:42:42,895 [INFO] Found: Canonical Ubuntu 24.04 LTS STIG - Ver 1, Rel 1 (V1 R1) - 21 Feb 2025
+2025-07-01 17:42:42,895 [INFO] Found: CCI List (VUnknown RUnknown) - 27 Jan 2025
+2025-07-01 17:42:42,896 [INFO] Found: CCI Specification (V2 R0) - 01 May 2014
+2025-07-01 17:42:42,896 [INFO] Found: Central Log Server SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:42,897 [INFO] Found: Cisco ACI Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 12 Feb 2025
+2025-07-01 17:42:42,897 [INFO] Found: Cisco ASA STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:42,898 [INFO] Found: Cisco IOS Router STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:42,898 [INFO] Found: Cisco IOS Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:42,899 [INFO] Found: Cisco IOS XE Router NDM RTR STIG for Ansible - Ver 2, Rel 3 (V2 R3) - 22 Oct 2021
+2025-07-01 17:42:42,899 [INFO] Found: Cisco IOS XE Router NDM STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:42,900 [INFO] Found: Cisco IOS XE Router RTR STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:42,900 [INFO] Found: Cisco IOS XE Router STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:42,901 [INFO] Found: Cisco IOS XE Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:42,901 [INFO] Found: Cisco IOS XR Router STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:42,901 [INFO] Found: Cisco ISE STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:42,902 [INFO] Found: Cisco NX OS Switch STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:42,902 [INFO] Found: Citrix Virtual Apps and Desktops (VAD) 7.x STIG (VY22 RM01) - 24 Jan 2022
+2025-07-01 17:42:42,903 [INFO] Found: Citrix XenDesktop 7.x STIG (VY20 RM04) - 23 Apr 2020
+2025-07-01 17:42:42,903 [INFO] Found: Cloud Computing SRG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,904 [INFO] Found: CloudLinux AlmaLinux OS 9 STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-07-01 17:42:42,904 [INFO] Found: Compilation - SRG-STIG Library (VUnknown RUnknown) - 09 Apr 2025
+2025-07-01 17:42:42,905 [INFO] Found: Container Platform SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:42,905 [INFO] Found: Crunchy Data Postgres 16 STIG - Ver 1, Rel 1 (V1 R1) - 20 Jun 2024
+2025-07-01 17:42:42,906 [INFO] Found: Crunchy Data PostgreSQL STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:42,906 [INFO] Found: Database SRG - Ver 4, Rel 3 (V4 R3) - 28 Jan 2025
+2025-07-01 17:42:42,907 [INFO] Found: Dell OS10 Switch STIG (VY24 RM12) - 18 Dec 2024
+2025-07-01 17:42:42,907 [INFO] Found: Domain Name System (DNS) SRG - Ver 4, Rel 1 (V4 R1) - 17 Jul 2024
+2025-07-01 17:42:42,907 [INFO] Found: Dragos Platform 2.x STIG - Ver 1, Rel 2 (V1 R2) - 28 Jan 2025
+2025-07-01 17:42:42,908 [INFO] Found: Enterprise Voice, Video, and Messaging SRG (VY25 RM01) - 06 Feb 2025
+2025-07-01 17:42:42,908 [INFO] Found: EnterpriseDB Postgres Advanced Server (EPAS) STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:42,909 [INFO] Found: F5 BIG-IP TMOS STIG (VY24 RM09) - 30 Sep 2024
+2025-07-01 17:42:42,909 [INFO] Found: Firewall SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:42,910 [INFO] Found: Forescout STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,910 [INFO] Found: Fortinet FortiGate Firewall STIG (VY23 RM07) - 20 Jul 2023
+2025-07-01 17:42:42,911 [INFO] Found: General Purpose Operating System SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:42,911 [INFO] Found: Google Android 13 BYOAD STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:42,912 [INFO] Found: Google Android 13 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,912 [INFO] Found: Google Android 14 BYOAD STIG (VY24 RM03) - 11 Mar 2024
+2025-07-01 17:42:42,912 [INFO] Found: Google Android 14 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,913 [INFO] Found: Google Android 15 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,913 [INFO] Found: Google Chrome STIG - Ver 2, Rel 10 (V2 R10) - 23 Oct 2024
+2025-07-01 17:42:42,914 [INFO] Found: Google Chrome STIG Benchmark - Ver 2, Rel 10 (V2 R10) - 23 Oct 2024
+2025-07-01 17:42:42,914 [INFO] Found: Group Policy Objects (GPOs) - April 2025 (VUnknown RUnknown) - 29 Apr 2025
+2025-07-01 17:42:42,915 [INFO] Found: Honeywell Android 13 STIG (VY25 RM04) - 09 May 2025
+2025-07-01 17:42:42,915 [INFO] Found: HP FlexFabric Switch STIG (VY20 RM07) - 28 Jul 2020
+2025-07-01 17:42:42,916 [INFO] Found: HPE 3PAR StoreServ 3.2.x STIG - Ver 2, Rel 1 (V2 R1) - 25 Jan 2022
+2025-07-01 17:42:42,916 [INFO] Found: HPE 3PAR StoreServ OS STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:42,917 [INFO] Found: HPE Aruba Networking AOS STIG (VY24 RM10) - 07 Nov 2024
+2025-07-01 17:42:42,917 [INFO] Found: HPE Nimble Storage Array STIG (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:42,918 [INFO] Found: HYCU Protégé STIG - Ver 1, Rel 1 (V1 R1) - 01 Nov 2024
+2025-07-01 17:42:42,918 [INFO] Found: IBM AIX 7.x STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-07-01 17:42:42,919 [INFO] Found: IBM DataPower NDM STIG - Ver 1, Rel 2​ (V1 R2) - 01 Dec 2018
+2025-07-01 17:42:42,919 [INFO] Found: IBM DataPower STIG ALG STIG Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:42,920 [INFO] Found: IBM DataPower STIG Overview, Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:42,920 [INFO] Found: IBM DB2 V10.5 STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-07-01 17:42:42,921 [INFO] Found: IBM Hardware Management Console (HMC) STIG - Ver 2, Rel 1 (V2 R1) - 23 Oct 2024
+2025-07-01 17:42:42,921 [INFO] Found: IBM MaaS360 with Watson v10-x MDM STIG - Ver1, Rel 2 (V1 R2) - 15 Aug 2019
+2025-07-01 17:42:42,922 [INFO] Found: IBM WebSphere Liberty Server STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-07-01 17:42:42,922 [INFO] Found: IBM WebSphere Traditional V9.x STIG Version 1 (V1 R1) - 26 Jun 2019
+2025-07-01 17:42:42,923 [INFO] Found: IBM z/OS STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:42,923 [INFO] Found: IBM zSecure Suite STIG - Ver 1, Rel 3 (V1 R3) - 07 Apr 2025
+2025-07-01 17:42:42,923 [INFO] Found: IBM zVM Using CA VMSecure STIG - Ver 2, Rel 2 (V2 R2) - 21 Oct 2022
+2025-07-01 17:42:42,924 [INFO] Found: Infoblox 7.x DNS STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2021
+2025-07-01 17:42:42,928 [INFO] Found: Infoblox 8.x DNS STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-07-01 17:42:42,929 [INFO] Found: Intrusion Detection and Prevention System Technology SRG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:42,930 [INFO] Found: Intune Policy - April 2025 (VUnknown RUnknown) - 29 Apr 2025
+2025-07-01 17:42:42,930 [INFO] Found: ISEC7 Sphere STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-07-01 17:42:42,930 [INFO] Found: Ivanti Connect Secure STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:42,931 [INFO] Found: Ivanti EPMM Server STIG - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-07-01 17:42:42,932 [INFO] Found: Ivanti Sentry 9.x STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:42,932 [INFO] Found: Jamf Pro v10.x EMM STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:42,933 [INFO] Found: JBoss Enterprise Application Platform 6.3 STIG - Ver 2, Rel 6 (V2 R6) - 07 Apr 2025
+2025-07-01 17:42:42,933 [INFO] Found: Juniper EX Series Switches STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:42,934 [INFO] Found: Juniper Router STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,934 [INFO] Found: Juniper SRX Services Gateway STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,935 [INFO] Found: Juniper SRX SG STIG for Ansible - Ver 1, Rel 1 (V1 R1) - 19 Nov 2020
+2025-07-01 17:42:42,935 [INFO] Found: Kubernetes STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:42,936 [INFO] Found: Kubernetes STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-07-01 17:42:42,936 [INFO] Found: Layer 2 Switch SRG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-07-01 17:42:42,937 [INFO] Found: Mainframe Product SRG - Ver 3, Rel 3 (V3 R3) - 28 Jan 2025
+2025-07-01 17:42:42,937 [INFO] Found: MariaDB Enterprise 10.x STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-07-01 17:42:42,937 [INFO] Found: MarkLogic Server v9 STIG - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:42,938 [INFO] Found: Microsoft Access 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:42,938 [INFO] Found: Microsoft Azure SQL Database STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:42,939 [INFO] Found: Microsoft Defender Antivirus STIG - Ver 2, Rel 4 (V2 R4) - 25 May 2022
+2025-07-01 17:42:42,939 [INFO] Found: Microsoft Defender Antivirus STIG Benchmark - Ver 2, Rel 5 (V2 R5) - 22 Jan 2024
+2025-07-01 17:42:42,940 [INFO] Found: Microsoft Defender for Endpoint Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 26 Mar 2025
+2025-07-01 17:42:42,940 [INFO] Found: Microsoft DotNet Framework 4.0 STIG - Ver 2, Rel 6 (V2 R6) - 07 Apr 2025
+2025-07-01 17:42:42,941 [INFO] Found: Microsoft DotNet Framework 4.0 STIG SCAP Benchmark - Ver 2, Rel 6 (V2 R6) - 08 Apr 2025
+2025-07-01 17:42:42,941 [INFO] Found: Microsoft Edge STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:42,942 [INFO] Found: Microsoft Edge STIG Benchmark - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:42,942 [INFO] Found: Microsoft Entra ID STIG - Ver 1, Rel 1 (V1 R1) - 02 Apr 2025
+2025-07-01 17:42:42,943 [INFO] Found: Microsoft Excel 2016 STIG - Ver 2, Rel 1​ (V2 R1) - 22 Apr 2024
+2025-07-01 17:42:42,943 [INFO] Found: Microsoft Exchange 2016 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,944 [INFO] Found: Microsoft Exchange 2019 STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:42,944 [INFO] Found: Microsoft IIS 10.0 STIG (VY25 RM04) - 10 Apr 2025
+2025-07-01 17:42:42,945 [INFO] Found: Microsoft Internet Explorer 11 STIG - Ver 2, Rel 5 (V2 R5) - 22 Jan 2024
+2025-07-01 17:42:42,945 [INFO] Found: Microsoft Internet Explorer 11 STIG Benchmark - Ver 2, Rel 6 (V2 R6) - 22 Jan 2024
+2025-07-01 17:42:42,946 [INFO] Found: Microsoft Intune (Desktop & Mobile) STIG (VY25 RM04) - 09 May 2025
+2025-07-01 17:42:42,946 [INFO] Found: Microsoft Office 365 ProPlus STIG - Ver 3, Rel 3 (V3 R3) - 07 Apr 2025
+2025-07-01 17:42:42,946 [INFO] Found: Microsoft Office 365 ProPlus STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-07-01 17:42:42,947 [INFO] Found: Microsoft Office System 2016 STIG - Ver 2, Rel 4 (V2 R4) - 28 Jan 2025
+2025-07-01 17:42:42,947 [INFO] Found: Microsoft OneDrive STIG - Ver 2, Rel 3 (V2 R3) - 20 Jul 2023
+2025-07-01 17:42:42,948 [INFO] Found: Microsoft OneNote 2016 STIG - Ver 1, Rel 2 (V1 R2) - 01 Dec 2018
+2025-07-01 17:42:42,948 [INFO] Found: Microsoft Outlook 2016 STIG - Ver 2, Rel 3 (V2 R3) - 19 Apr 2022
+2025-07-01 17:42:42,949 [INFO] Found: Microsoft PowerPoint 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:42,949 [INFO] Found: Microsoft Project 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:42,950 [INFO] Found: Microsoft Publisher 2016 STIG - Ver 1, Rel 3 (V1 R3) - 01 Dec 2018
+2025-07-01 17:42:42,950 [INFO] Found: Microsoft Skype for Business 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:42,951 [INFO] Found: Microsoft SQL Server 2016 STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:42,951 [INFO] Found: Microsoft SQL Server 2022 Draft STIG - Ver 1, Rel 0.1 (V1 R0) - 23 Jan 2025
+2025-07-01 17:42:42,952 [INFO] Found: Microsoft Visio 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:42,952 [INFO] Found: Microsoft Windows 10 STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-07-01 17:42:42,952 [INFO] Found: Microsoft Windows 10 STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-07-01 17:42:42,953 [INFO] Found: Microsoft Windows 11 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:42,953 [INFO] Found: Microsoft Windows 11 STIG for Chef - Ver 1, Rel 3 (V1 R3) - 17 Aug 2023
+2025-07-01 17:42:42,954 [INFO] Found: Microsoft Windows 11 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:42,954 [INFO] Found: Microsoft Windows Defender Firewall with Advanced Security STIG - Ver 2, Rel 2 (V2 R2) - 30 Oct 2023
+2025-07-01 17:42:42,955 [INFO] Found: Microsoft Windows Defender Firewall with Advanced Security STIG Benchmark - Ver 2, Rel 3 (V2 R3) - 30 Oct 2023
+2025-07-01 17:42:42,955 [INFO] Found: Microsoft Windows PAW STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:42,956 [INFO] Found: Microsoft Windows Server 2016 STIG for PowerShell DSC - Ver 1, Rel 3 (V1 R3) - 22 Jun 2020
+2025-07-01 17:42:42,956 [INFO] Found: Microsoft Windows Server 2019 STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-07-01 17:42:42,957 [INFO] Found: Microsoft Windows Server 2019 STIG for Chef - Ver 1, Rel 2 (V1 R2) - 22 Jun 2020
+2025-07-01 17:42:42,957 [INFO] Found: Microsoft Windows Server 2019 STIG SCAP Benchmark - Ver 3, Rel 4 (V3 R4) - 08 Apr 2025
+2025-07-01 17:42:42,958 [INFO] Found: Microsoft Windows Server 2022 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:42,958 [INFO] Found: Microsoft Windows Server 2022 STIG for Chef - Ver 1, Rel 1 (V1 R1) - 03 Feb 2023
+2025-07-01 17:42:42,959 [INFO] Found: Microsoft Windows Server 2022 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:42,959 [INFO] Found: Microsoft Windows Server DNS STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:42,959 [INFO] Found: Microsoft Word 2016 STIG - Ver 1, Rel 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:42,960 [INFO] Found: Mirantis Kubernetes Engine STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:42,960 [INFO] Found: MobileIron Core v10.x MDM STIG Ver 1 Rel 1 (V1 R1) - 06 Jun 2019
+2025-07-01 17:42:42,961 [INFO] Found: MongoDB 7.x STIG - Ver 1, Rel 1 (V1 R1) - 01 Oct 2024
+2025-07-01 17:42:42,962 [INFO] Found: Motorola Solutions Android 13 STIG (VY25 RM03) - 07 Apr 2025
+2025-07-01 17:42:42,962 [INFO] Found: Mozilla Firefox for Linux STIG SCAP Benchmark - Ver 6, Rel 5 (V6 R5) - 08 Apr 2025
+2025-07-01 17:42:42,963 [INFO] Found: Mozilla Firefox for Windows STIG SCAP Benchmark - Ver 6, Rel 6 (V6 R6) - 08 Apr 2025
+2025-07-01 17:42:42,963 [INFO] Found: Mozilla Firefox STIG - Ver 6, Rel 5 (V6 R5) - 20 Jul 2023
+2025-07-01 17:42:42,964 [INFO] Found: Mozilla Firefox STIG - Ver 6, Rel 6 (V6 R6) - 07 Apr 2025
+2025-07-01 17:42:42,964 [INFO] Found: NetApp ONTAP DSC 9.x STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:42,965 [INFO] Found: Network Device Management SRG - Ver 5, Rel 3 (V5 R3) - 07 Apr 2025
+2025-07-01 17:42:42,966 [INFO] Found: Network Infrastructure Policy STIG - Ver 10, Rel 7 (V10 R7) - 23 Oct 2024
+2025-07-01 17:42:42,967 [INFO] Found: Network WLAN STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:42,968 [INFO] Found: Okta IDaaS STIG - Ver 1, Rel 1 (V1 R1) - 07 May 2025
+2025-07-01 17:42:42,969 [INFO] Found: Oracle Database 12c STIG - Ver 3, Rel 4 (V3 R4) - 07 Apr 2025
+2025-07-01 17:42:42,969 [INFO] Found: Oracle Database 19c STIG - Ver 1, Rel 1 (V1 R1) - 21 Feb 2025
+2025-07-01 17:42:42,970 [INFO] Found: Oracle Linux 7 STIG - Ver 3, Rel 2 (V3 R2) - 07 Apr 2025
+2025-07-01 17:42:42,970 [INFO] Found: Oracle Linux 7 STIG Benchmark - Ver 3, Rel 1 (V3 R1) - 23 Oct 2024
+2025-07-01 17:42:42,971 [INFO] Found: Oracle Linux 8 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:42,971 [INFO] Found: Oracle Linux 8 STIG for Ansible - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:42,972 [INFO] Found: Oracle Linux 8 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:42,972 [INFO] Found: Oracle Linux 9 STIG - Ver 1, Rel 1 (V1 R1) - 24 Apr 2025
+2025-07-01 17:42:42,973 [INFO] Found: Oracle MySQL 8.0 STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:42,973 [INFO] Found: Palo Alto Networks Prisma Cloud Compute STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:42,974 [INFO] Found: Palo Alto Networks STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:42,974 [INFO] Found: Palo Alto Networks STIG for Ansible - Ver 1, Rel 4 (V1 R4) - 04 Jan 2022
+2025-07-01 17:42:42,974 [INFO] Found: Rancher Government Solutions Multi-Cluster Manager STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:42,975 [INFO] Found: Rancher Government Solutions RKE2 STIG - Ver 2, Rel 3 (V2 R3) - 28 Jan 2025
+2025-07-01 17:42:42,975 [INFO] Found: Red Hat Ansible Automation Controller STIG (VY24 RM10) - 23 Oct 2024
+2025-07-01 17:42:42,976 [INFO] Found: Red Hat Enterprise Linux 8 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:42,976 [INFO] Found: Red Hat Enterprise Linux 8 STIG for Ansible - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:42,977 [INFO] Found: Red Hat Enterprise Linux 8 STIG for Chef - Ver 1, Rel 13 (V1 R13) - 22 Jan 2024
+2025-07-01 17:42:42,977 [INFO] Found: Red Hat Enterprise Linux 8 STIG SCAP Benchmark - Ver 2, Rel 3 (V2 R3) - 08 Apr 2025
+2025-07-01 17:42:42,978 [INFO] Found: Red Hat Enterprise Linux 9 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:42,978 [INFO] Found: Red Hat Enterprise Linux 9 STIG for Ansible- Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:42,979 [INFO] Found: Red Hat Enterprise Linux 9 STIG for Chef- Ver 1, Rel 2 (V1 R2) - 11 Mar 2024
+2025-07-01 17:42:42,979 [INFO] Found: Red Hat Enterprise Linux 9 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:42,979 [INFO] Found: Red Hat OpenShift Container Platform 4.12 STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:42,980 [INFO] Found: Redis Enterprise 6.x STIG - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:42,980 [INFO] Found: Rev. 4 Sunset - Apache Server 2.4 Unix STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:42,981 [INFO] Found: Rev. 4 Sunset - Apache Server 2.4 Windows STIG (VY23 RM01) - 13 Jan 2023
+2025-07-01 17:42:42,981 [INFO] Found: Rev. 4 Sunset - Apache Tomcat Application Server 9 STIG - Ver 2, Rel 7 (V2 R7) - 22 Jan 2024
+2025-07-01 17:42:42,982 [INFO] Found: Rev. 4 Sunset - Apple iOS/iPadOS 16 STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:42,982 [INFO] Found: Rev. 4 Sunset - Apple iOS/iPadOS 17 STIG - Ver 1, Rel 1 (V1 R1) - 16 Oct 2023
+2025-07-01 17:42:42,983 [INFO] Found: Rev. 4 Sunset - Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 2 (V1 R2) - 22 Apr 2024
+2025-07-01 17:42:42,984 [INFO] Found: Rev. 4 Sunset - Application Layer Gateway (ALG) SRG - Ver 1, Rel 2 (V1 R2) - 01 Dec 2018
+2025-07-01 17:42:42,984 [INFO] Found: Rev. 4 Sunset - Application Security and Development STIG - Ver 5, Rel 3 (V5 R3) - 20 Jul 2023
+2025-07-01 17:42:42,985 [INFO] Found: Rev. 4 Sunset - Application Server SRG - Ver 3, Rel 4 (V3 R4) - 20 Jul 2023
+2025-07-01 17:42:42,985 [INFO] Found: Rev. 4 Sunset - Arista MLS EOS 4.2x STIG (VY23 RM02) - 14 Feb 2023
+2025-07-01 17:42:42,986 [INFO] Found: Rev. 4 Sunset - Authentication, Authorization, and Accounting Services (AAA) SRG - Ver 1, Rel 2 (V1 R2) - 16 Jan 2020
+2025-07-01 17:42:42,986 [INFO] Found: Rev. 4 Sunset - Canonical Ubuntu 22.04 LTS STIG - Ver 1, Rel 1 (V1 R1) - 03 Apr 2024
+2025-07-01 17:42:42,987 [INFO] Found: Rev. 4 Sunset - Central Log Server SRG - Ver 2, Rel 2 (V2 R2) - 21 Oct 2022
+2025-07-01 17:42:42,987 [INFO] Found: Rev. 4 Sunset - Cisco ASA STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:42,988 [INFO] Found: Rev. 4 Sunset - Cisco IOS Router STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:42,988 [INFO] Found: Rev. 4 Sunset - Cisco IOS Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:42,989 [INFO] Found: Rev. 4 Sunset - Cisco IOS XE Router STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:42,989 [INFO] Found: Rev. 4 Sunset - Cisco IOS XE Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:42,989 [INFO] Found: Rev. 4 Sunset - Cisco IOS XR Router STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:42,990 [INFO] Found: Rev. 4 Sunset - Cisco ISE STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:42,990 [INFO] Found: Rev. 4 Sunset - Cisco NX OS Switch STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:42,991 [INFO] Found: Rev. 4 Sunset - Container Platform SRG - Ver 1, Rel 5 (V1 R5) - 22 Jan 2024
+2025-07-01 17:42:42,991 [INFO] Found: Rev. 4 Sunset - Crunchy Data PostgreSQL STIG - Ver 2, Rel 2 (V2 R2) - 22 Jan 2024
+2025-07-01 17:42:42,992 [INFO] Found: Rev. 4 Sunset - Database SRG - Ver 3, Rel 4 (V3 R4) - 22 Jan 2024
+2025-07-01 17:42:42,992 [INFO] Found: Rev. 4 Sunset - Domain Name System SRG - Ver 3, Rel 2 (V3 R2) - 21 Mar 2025
+2025-07-01 17:42:42,993 [INFO] Found: Rev. 4 Sunset - EnterpriseDB Postgres Advanced Server (EPAS) STIG - Ver 1, Rel 1 (V1 R1) - 11 Jan 2024
+2025-07-01 17:42:42,993 [INFO] Found: Rev. 4 Sunset - Firewall SRG - Ver 2, Rel 3 (V2 R3) - 21 Oct 2022
+2025-07-01 17:42:42,993 [INFO] Found: Rev. 4 Sunset - Forescout STIG (VY23 RM07) - 20 Jul 2023
+2025-07-01 17:42:42,994 [INFO] Found: Rev. 4 Sunset - General Purpose Operating System SRG - Ver 2, Rel 7 (V2 R7) - 22 Jan 2024
+2025-07-01 17:42:42,994 [INFO] Found: Rev. 4 Sunset - Google Android 13 STIG - Ver 1, Rel 1 (V1 R1) - 01 Nov 2022
+2025-07-01 17:42:42,995 [INFO] Found: Rev. 4 Sunset - Google Android 14 STIG (VY23 RM10) - 12 Oct 2023
+2025-07-01 17:42:42,995 [INFO] Found: Rev. 4 Sunset - HPE 3PAR StoreServ OS STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:42,997 [INFO] Found: Rev. 4 Sunset - HPE Nimble Storage Array STIG - Ver 1, Rel 2 (V1 R2) - 22 Jan 2024
+2025-07-01 17:42:42,999 [INFO] Found: Rev. 4 Sunset - IBM Hardware Management Console (HMC) STIG (VY23 RM04) - 24 Apr 2023
+2025-07-01 17:42:42,999 [INFO] Found: Rev. 4 Sunset - IBM z/OS STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:43,001 [INFO] Found: Rev. 4 Sunset - Intrusion Detection and Prevention System SRG - Ver 2, Rel 6 (V2 R6) - 28 Jul 2020
+2025-07-01 17:42:43,002 [INFO] Found: Rev. 4 Sunset - Ivanti Connect Secure STIG (VY23 RM11) - 16 Nov 2023
+2025-07-01 17:42:43,003 [INFO] Found: Rev. 4 Sunset - Ivanti MobileIron Core MDM Server STIG - Ver 1, Rel 1 (V1 R1) - 06 Dec 2021
+2025-07-01 17:42:43,003 [INFO] Found: Rev. 4 Sunset - Ivanti MobileIron Sentry 9.x STIG - Ver 1, Rel 1 (VUnknown RUnknown) - 26 Oct 2021
+2025-07-01 17:42:43,004 [INFO] Found: Rev. 4 Sunset - Jamf Pro v10.x EMM STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-07-01 17:42:43,005 [INFO] Found: Rev. 4 Sunset - Juniper EX Series Switches STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:43,006 [INFO] Found: Rev. 4 Sunset - Juniper Router STIG (VY23 RM06) - 17 May 2023
+2025-07-01 17:42:43,006 [INFO] Found: Rev. 4 Sunset - Juniper SRX Services Gateway STIG (VY22 RM10) - 21 Oct 2022
+2025-07-01 17:42:43,007 [INFO] Found: Rev. 4 Sunset - Kubernetes STIG - Ver 1, Rel 11 (V1 R11) - 23 Oct 2023
+2025-07-01 17:42:43,007 [INFO] Found: Rev. 4 Sunset - Layer 2 Switch SRG - Ver 2, Rel 1 (V2 R1) - 21 May 2021
+2025-07-01 17:42:43,008 [INFO] Found: Rev. 4 Sunset - Mainframe Product SRG - Ver 2, Rel 1 (V2 R1) - 21 Oct 2022
+2025-07-01 17:42:43,008 [INFO] Found: Rev. 4 Sunset - MariaDB Enterprise 10.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:43,008 [INFO] Found: Rev. 4 Sunset - MarkLogic Server v9 STIG - Ver 2, Rel 2 (V2 R2) - 25 Jan 2024
+2025-07-01 17:42:43,009 [INFO] Found: Rev. 4 Sunset - Microsoft Azure SQL Database STIG - Ver 1, Rel 2 (V1 R2) - 20 Jul 2023
+2025-07-01 17:42:43,009 [INFO] Found: Rev. 4 Sunset - Microsoft Edge STIG - Ver 1, Rel 8 (V1 R8) - 22 Apr 2024
+2025-07-01 17:42:43,010 [INFO] Found: Rev. 4 Sunset - Microsoft Exchange 2019 STIG (VY24 RM01) - 18 Jan 2024
+2025-07-01 17:42:43,010 [INFO] Found: Rev. 4 Sunset - Microsoft IIS 10.0 Server STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:43,011 [INFO] Found: Rev. 4 Sunset - Microsoft Office 365 ProPlus STIG - Ver 2, Rel 12 (V2 R12) - 22 Apr 2024
+2025-07-01 17:42:43,011 [INFO] Found: Rev. 4 Sunset - Microsoft SQL Server 2016 STIG (VY24 RM04) - 30 Apr 2024
+2025-07-01 17:42:43,012 [INFO] Found: Rev. 4 Sunset - Microsoft Windows 11 STIG - Ver 1, Rel 6 (V1 R6) - 02 May 2024
+2025-07-01 17:42:43,012 [INFO] Found: Rev. 4 Sunset - Microsoft Windows PAW STIG - Ver 2, Rel 3 (V2 R3) - 30 Oct 2023
+2025-07-01 17:42:43,013 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server 2019 STIG - Ver 2, Rel 9 (V2 R9) - 02 May 2024
+2025-07-01 17:42:43,013 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server 2022 STIG - Ver 1, Rel 5 (V1 R5) - 02 May 2024
+2025-07-01 17:42:43,014 [INFO] Found: Rev. 4 Sunset - Microsoft Windows Server Domain Name System STIG - Ver 1, Rel 1 (V1 R1) - 25 Jan 2024
+2025-07-01 17:42:43,014 [INFO] Found: Rev. 4 Sunset - Mirantis Kubernetes Engine STIG - Ver 1, Rel 1 (V1 R1) - 15 Apr 2024
+2025-07-01 17:42:43,015 [INFO] Found: Rev. 4 Sunset - NetApp ONTAP DSC 9.x STIG - Ver 1, Rel 4 (V1 R4) - 22 Apr 2024
+2025-07-01 17:42:43,015 [INFO] Found: Rev. 4 Sunset - Network Device Management SRG - Ver 4, Rel 3 (V4 R3) - 17 May 2023
+2025-07-01 17:42:43,015 [INFO] Found: Rev. 4 Sunset - Oracle Database 12c STIG - Ver 2, Rel 9 (V2 R9) - 22 Jan 2024
+2025-07-01 17:42:43,016 [INFO] Found: Rev. 4 Sunset - Oracle Linux 8 STIG - Ver 1, Rel 10 (V1 R10) - 22 Apr 2024
+2025-07-01 17:42:43,016 [INFO] Found: Rev. 4 Sunset - Oracle MySQL 8.0 STIG - Ver 1, Rel 5 (V1 R5) - 25 Jan 2024
+2025-07-01 17:42:43,017 [INFO] Found: Rev. 4 Sunset - Palo Alto Networks Prisma Cloud Compute STIG - Ver 1, Rel 3 (V1 R3) - 20 Jul 2023
+2025-07-01 17:42:43,017 [INFO] Found: Rev. 4 Sunset - Palo Alto Networks STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:43,018 [INFO] Found: Rev. 4 Sunset - Rancher Government Solutions Multi-Cluster Manager STIG - Ver 1, Rel 3 (V1 R3) - 20 Jul 2023
+2025-07-01 17:42:43,018 [INFO] Found: Rev. 4 Sunset - Rancher Government Solutions RKE2 STIG - Ver 1, Rel 5 (V1 R5) - 22 Apr 2024
+2025-07-01 17:42:43,019 [INFO] Found: Rev. 4 Sunset - Red Hat Ansible Automation Controller STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:43,019 [INFO] Found: Rev. 4 Sunset - Red Hat Enterprise Linux 9 STIG - Ver 1, Rel 3 (V1 R3) - 22 Apr 2024
+2025-07-01 17:42:43,020 [INFO] Found: Rev. 4 Sunset - Red Hat OpenShift Container Platform 4.12 STIG - Ver 1, Rel 1 (V1 R1) - 08 Sep 2023
+2025-07-01 17:42:43,020 [INFO] Found: Rev. 4 Sunset - Redis Enterprise 6.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:43,021 [INFO] Found: Rev. 4 Sunset - Riverbed NetProfiler STIG - Ver 1, Rel 1 (V1 R1) - 14 Feb 2023
+2025-07-01 17:42:43,021 [INFO] Found: Rev. 4 Sunset - Router SRG - Ver 4, Rel 3 (V4 R3) - 22 Apr 2024
+2025-07-01 17:42:43,022 [INFO] Found: Rev. 4 Sunset - Samsung Android OS 13 with Knox 3.x STIG (VY23 RM01) - 30 Jan 2023
+2025-07-01 17:42:43,022 [INFO] Found: Rev. 4 Sunset - Samsung Android OS 14 with Knox 3.x STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:43,023 [INFO] Found: Rev. 4 Sunset - SDN Controller SRG - Ver 1, Rel 2 (V1 R2) - 23 Apr 2020
+2025-07-01 17:42:43,023 [INFO] Found: Rev. 4 Sunset - Solaris 11 SPARC STIG - Ver 2, Rel 10 (V2 R10) - 22 Apr 2024
+2025-07-01 17:42:43,024 [INFO] Found: Rev. 4 Sunset - Solaris 11 x86 STIG - Ver 2, Rel 10 (V2 R10) - 22 Apr 2024
+2025-07-01 17:42:43,024 [INFO] Found: Rev. 4 Sunset - Splunk Enterprise 7.x for Windows STIG - Ver 2, Rel 4 (V2 R4) - 20 Jul 2023
+2025-07-01 17:42:43,025 [INFO] Found: Rev. 4 Sunset - Splunk Enterprise 8.x for Linux STIG - Ver 1, Rel 5 (V1 R5) - 23 Oct 2023
+2025-07-01 17:42:43,025 [INFO] Found: Rev. 4 Sunset - SUSE Linux Enterprise Server 15 STIG - Ver 1, Rel 13 (V1 R13) - 22 Apr 2024
+2025-07-01 17:42:43,025 [INFO] Found: Rev. 4 Sunset - Tanium 7.x STIG - Ver 1, Rel 2 (V1 R2) - 25 Aug 2022
+2025-07-01 17:42:43,026 [INFO] Found: Rev. 4 Sunset - Tanium 7.x TanOS STIG - Ver 1, Rel 1 (V1 R1) - 29 Nov 2022
+2025-07-01 17:42:43,027 [INFO] Found: Rev. 4 Sunset - Trellix Application Control 8.x STIG - Ver 2, Rel 2 (V2 R2) - 22 Jan 2024
+2025-07-01 17:42:43,027 [INFO] Found: Rev. 4 Sunset - Trend Micro TippingPoint STIG (VY22 RM07) - 27 Jul 2022
+2025-07-01 17:42:43,028 [INFO] Found: Rev. 4 Sunset - Tri-Lab Operating System Stack (TOSS) 4 STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:43,028 [INFO] Found: Rev. 4 Sunset - Unified Endpoint Management Server SRG (VY23 RM04) - 24 Apr 2023
+2025-07-01 17:42:43,029 [INFO] Found: Rev. 4 Sunset - Virtual Machine Manager SRG - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-07-01 17:42:43,029 [INFO] Found: Rev. 4 Sunset - Virtual Private Network (VPN) SRG - Ver 2, Rel 6 (V2 R6) - 11 Apr 2024
+2025-07-01 17:42:43,030 [INFO] Found: Rev. 4 Sunset - Web Server SRG - Ver 3, Rel 3 (V3 R3) - 11 Apr 2024
+2025-07-01 17:42:43,030 [INFO] Found: Riverbed NetProfiler STIG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:43,031 [INFO] Found: Router SRG - Ver 5, Rel 1 (V5 R1) - 17 Jul 2024
+2025-07-01 17:42:43,031 [INFO] Found: Samsung Android 14 BYOAD STIG (VY24 RM03) - 13 Mar 2024
+2025-07-01 17:42:43,031 [INFO] Found: Samsung Android 15 BYOAD STIG (VY25 RM04) - 09 May 2025
+2025-07-01 17:42:43,032 [INFO] Found: Samsung Android OS 13 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:43,032 [INFO] Found: Samsung Android OS 14 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:43,033 [INFO] Found: Samsung Android OS 15 with Knox 3.x STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:43,033 [INFO] Found: Samsung SDS EMM STIG - Ver 1, Rel 3 (V1 R3) - 27 Jul 2022
+2025-07-01 17:42:43,034 [INFO] Found: SCC 5.10.2 RHEL 7/Oracle Linux 7/SLES12/SLES 15 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,034 [INFO] Found: SCC 5.10.2 RHEL 8/Oracle Linux 8 Aarch64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,034 [INFO] Found: SCC 5.10.2 RHEL 8/Oracle Linux 8 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,035 [INFO] Found: SCC 5.10.2 RHEL 9/Oracle Linux 9 x86 64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,035 [INFO] Found: SCC 5.10.2 RPM GPG key (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,036 [INFO] Found: SCC 5.10.2 Solaris 11 i386 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,036 [INFO] Found: SCC 5.10.2 Solaris 11 SPARC (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,037 [INFO] Found: SCC 5.10.2 Ubuntu 18/20 AMD64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,037 [INFO] Found: SCC 5.10.2 Ubuntu 20/Raspios-bulleye Aarch64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,038 [INFO] Found: SCC 5.10.2 Ubuntu 22 AMD64 (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,038 [INFO] Found: SCC 5.10.2 UNIX Remote Scanning Plugin (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,039 [INFO] Found: SCC 5.10.2 Windows (VUnknown RUnknown) - 28 Mar 2025
+2025-07-01 17:42:43,039 [INFO] Found: SDN Controller SRG - Ver 2, Rel 1 (V2 R1) - 17 Jul 2024
+2025-07-01 17:42:43,040 [INFO] Found: SEL-2740S STIG Ver 1 Rel 1 (V1 R1) - 1 SEL-2740
+2025-07-01 17:42:43,040 [INFO] Found: SLES V11 for System z STIG - Ver 1, Rel 12 (V1 R12) - 09 Mar 2019
+2025-07-01 17:42:43,041 [INFO] Found: Software-Defined Networking (SDN) Using Network Virtualization (NV) STIG Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:43,041 [INFO] Found: Solaris 11 SPARC STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:43,041 [INFO] Found: Solaris 11 SPARC STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:43,042 [INFO] Found: Solaris 11 x86 STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:43,042 [INFO] Found: Solaris 11 x86 STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 23 Oct 2024
+2025-07-01 17:42:43,043 [INFO] Found: SPEC Innovations Innoslate 4.x STIG - Ver 1, Rel 1 (V1 R1) - 28 Sep 2022
+2025-07-01 17:42:43,043 [INFO] Found: Splunk Enterprise 7.x for Windows STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:43,044 [INFO] Found: Splunk Enterprise 8.x for Linux STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-07-01 17:42:43,044 [INFO] Found: STIG Viewer 2.18 (VUnknown RUnknown) - 12 Aug 2024
+2025-07-01 17:42:43,044 [INFO] Found: STIG Viewer 2.18-Linux (VUnknown RUnknown) - 12 Aug 2024
+2025-07-01 17:42:43,045 [INFO] Found: STIG Viewer 2.18-Win64 (VUnknown RUnknown) - 12 Aug 2024
+2025-07-01 17:42:43,045 [INFO] Found: STIG Viewer 2.18-Win64 msi (VUnknown RUnknown) - 12 Aug 2024
+2025-07-01 17:42:43,046 [INFO] Found: Stig Viewer 3 CKLB JSON Schema (VUnknown RUnknown) - 10 Jan 2024
+2025-07-01 17:42:43,046 [INFO] Found: STIG Viewer 3.5.1-Linux (VUnknown RUnknown) - 27 Mar 2025
+2025-07-01 17:42:43,047 [INFO] Found: STIG Viewer 3.5.1-Win64 (VUnknown RUnknown) - 27 Mar 2025
+2025-07-01 17:42:43,047 [INFO] Found: STIG Viewer 3.5.1-Win64 msi (VUnknown RUnknown) - 27 Mar 2025
+2025-07-01 17:42:43,048 [INFO] Found: Sunset - A10 Networks ADC STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:43,048 [INFO] Found: Sunset - Apache 2.2 STIG UNIX - Ver 1, Rel 11 (V1 R11) - 13 May 2019
+2025-07-01 17:42:43,049 [INFO] Found: Sunset - Apache 2.2 STIG Windows - Ver 1, Rel 13​ (V1 R13) - 13 May 2019
+2025-07-01 17:42:43,049 [INFO] Found: Sunset - Apple iOS/iPadOS 15 - Ver 1, Rel 4 (V1 R4) - 22 Apr 2024
+2025-07-01 17:42:43,050 [INFO] Found: Sunset - Apple macOS 12 STIG - Ver 1, Rel 9 (V1 R9) - 17 Jul 2024
+2025-07-01 17:42:43,050 [INFO] Found: Sunset - Apple macOS 13 (Ventura) STIG - Ver 1, Rel 5 (V1 R5) - 28 Jan 2025
+2025-07-01 17:42:43,050 [INFO] Found: Sunset - Arista MultiLayer Switch DCS 7000 Series STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:43,051 [INFO] Found: Sunset - CA API Gateway STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:43,052 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG - Ver 2, Rel 15 (V2 R15) - 17 Jul 2024
+2025-07-01 17:42:43,052 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG Benchmark - Ver 2, Rel 11 (V2 R11) - 22 Jan 2024
+2025-07-01 17:42:43,052 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG Benchmark - Ver 2, Rel 12 (V2 R12) - 17 Jul 2024
+2025-07-01 17:42:43,053 [INFO] Found: Sunset - Canonical Ubuntu 18.04 LTS STIG for Ansible - Ver 2, Rel 13 (V2 R13) - 22 Jan 2024
+2025-07-01 17:42:43,053 [INFO] Found: Sunset - Canonical Ubuntu 20.04 LTS STIG Benchmark - Ver 1, Rel 9 (V1 R9) - 22 Jan 2024
+2025-07-01 17:42:43,054 [INFO] Found: Sunset - Cisco IOS-XE Router NDM STIG Benchmark - Ver 1, Rel 7 (V1 R7) - 24 Apr 2023
+2025-07-01 17:42:43,054 [INFO] Found: Sunset - Cisco IOS-XE Router RTR STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 24 Apr 2023
+2025-07-01 17:42:43,055 [INFO] Found: Sunset - DBN 6300 STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:43,055 [INFO] Found: Sunset - Docker Enterprise 2.x Linux/Unix STIG - Ver 2, Rel 2 (V2 R2) - 17 Jul 2024
+2025-07-01 17:42:43,056 [INFO] Found: Sunset - Docker Enterprise 2.x Linux/Unix STIG for Ansible - Ver 1, Rel 1 (V1 R1) - 22 Jun 2020
+2025-07-01 17:42:43,056 [INFO] Found: Sunset - EDB Postgres Advanced Server v11 on Windows STIG - Ver 2, Rel 4 (V2 R4) - 17 Jul 2024
+2025-07-01 17:42:43,057 [INFO] Found: Sunset - EDB Postgres Advanced Server v9.6 STIG - Ver 2, Rel 3 (V2 R3) - 22 Jan 2024
+2025-07-01 17:42:43,057 [INFO] Found: Sunset - Esri ArcGIS for Server 10.3 STIG - Ver 2, Rel 1 (V2 R1) - 20 Jul 2023
+2025-07-01 17:42:43,058 [INFO] Found: Sunset - F5 BIG-IP STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:43,058 [INFO] Found: Sunset - ForeScout CounterACT ALG STIG - Ver 1, Rel 3 (V1 R3) - 13 Aug 2024
+2025-07-01 17:42:43,058 [INFO] Found: Sunset - ForeScout CounterACT NDM STIG - Ver 1, Rel 2 (V1 R2) - 13 Aug 2024
+2025-07-01 17:42:43,059 [INFO] Found: Sunset - Honeywell Android 9.x STIG (VY24 RM01) - 22 Jan 2024
+2025-07-01 17:42:43,059 [INFO] Found: Sunset - IBM Aspera Platform 4.2 STIG - Ver 1, Rel 3 (V1 R3) - 28 Jan 2025
+2025-07-01 17:42:43,060 [INFO] Found: Sunset - IBM MQ Appliance V9-0 STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:43,060 [INFO] Found: Sunset - Kubernetes STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-07-01 17:42:43,061 [INFO] Found: Sunset - McAfee Application Control 7.x STIG - Ver 1, Rel 4 (V1 R4) - 28 Jan 2025
+2025-07-01 17:42:43,061 [INFO] Found: Sunset - Microsoft SCOM STIG - Ver 1, Rel 2 (V1 R2) - 07 Apr 2025
+2025-07-01 17:42:43,062 [INFO] Found: Sunset - Microsoft Windows 10 STIG - Ver 2, Rel 9 (V2 R9) - 02 May 2024
+2025-07-01 17:42:43,062 [INFO] Found: Sunset - Microsoft Windows 2012 Server Domain Name System STIG - Ver 2, Rel 7 (V2 R7) - 17 Jul 2024
+2025-07-01 17:42:43,063 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG - Ver 2, Rel 10 (V2 R10) - 23 Jan 2025
+2025-07-01 17:42:43,063 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG Benchmark - Ver 2, Rel 8 (V2 R8) - 23 Jan 2025
+2025-07-01 17:42:43,063 [INFO] Found: Sunset - Microsoft Windows Server 2016 STIG for Chef - Ver 1, Rel 3 (V1 R3) - 23 Jan 2025
+2025-07-01 17:42:43,064 [INFO] Found: Sunset - MongoDB 3.x STIG - Ver 2, Rel 2 (V2 R2) - 25 Jan 2024
+2025-07-01 17:42:43,064 [INFO] Found: Sunset - MongoDB 3.x STIG - Ver 2, Rel 3 (V2 R3) - 17 Jul 2024
+2025-07-01 17:42:43,065 [INFO] Found: Sunset - MongoDB 4.x STIG - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:43,065 [INFO] Found: Sunset - MongoDB 4.x STIG - Ver 1, Rel 4 (V1 R4) - 17 Jul 2024
+2025-07-01 17:42:43,066 [INFO] Found: Sunset - MS SQL Server 2014 STIG (VY24 RM07) - 13 Aug 2024
+2025-07-01 17:42:43,066 [INFO] Found: Sunset - Multifunction Device and Network Printers STIG - Ver 2, Rel 15 (V2 R15) - 28 Jan 2025
+2025-07-01 17:42:43,067 [INFO] Found: Sunset - Nutanix AOS 5.20.x STIG (VY24 RM07) - 13 Aug 2024
+2025-07-01 17:42:43,067 [INFO] Found: Sunset - Oracle Database 11.2g STIG - Ver 2, Rel 5 (V2 R5) - 17 Jul 2024
+2025-07-01 17:42:43,069 [INFO] Found: Sunset - Oracle HTTP Server 12.1.3 STIG - Ver 2, Rel 3 (V2 R3) - 07 Feb 2025
+2025-07-01 17:42:43,070 [INFO] Found: Sunset - Oracle Linux 8 STIG Benchmark - Ver 1, Rel 8 (V1 R8) - 22 Jan 2024
+2025-07-01 17:42:43,072 [INFO] Found: Sunset - Oracle WebLogic Server 12c STIG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:43,073 [INFO] Found: Sunset - PostgreSQL 9.x STIG - Ver 2, Rel 5 (V2 R5) - 17 Jul 2024
+2025-07-01 17:42:43,074 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG - Ver 3, Rel 15 (V3 R15) - 17 Jul 2024
+2025-07-01 17:42:43,075 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG Benchmark - Ver 3, Rel 15 (V3 R15) - 17 Jul 2024
+2025-07-01 17:42:43,076 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG for Ansible - Ver 3, Rel 14 (V3 R14) - 22 Jan 2024
+2025-07-01 17:42:43,077 [INFO] Found: Sunset - Red Hat Enterprise Linux 7 STIG for Chef - Ver 3, Rel 8 (V3 R8) - 27 Jul 2022
+2025-07-01 17:42:43,077 [INFO] Found: Sunset - Red Hat Enterprise Linux 8 STIG Benchmark - Ver 1, Rel 12 (V1 R12) - 22 Jan 2024
+2025-07-01 17:42:43,078 [INFO] Found: Sunset - Red Hat Enterprise Linux 9 Benchmark - Ver 1, Rel 1 (V1 R1) - 21 Feb 2024
+2025-07-01 17:42:43,079 [INFO] Found: Sunset - Riverbed Steelhead CX v8 STIG (VY24 RM07) - 17 Jul 2024
+2025-07-01 17:42:43,080 [INFO] Found: Sunset - Solaris 11 SPARC STIG Benchmark - Ver 2, Rel 4 (V2 R4) - 24 Apr 2023
+2025-07-01 17:42:43,080 [INFO] Found: Sunset - Storage Area Network STIG - Ver 2, Rel 5 (V2 R5) - 28 Jan 2025
+2025-07-01 17:42:43,081 [INFO] Found: Sunset - SUSE Linux Enterprise Server 15 STIG Benchmark - Ver 1, Rel 6 (V1 R6) - 22 Jan 2024
+2025-07-01 17:42:43,082 [INFO] Found: Sunset - Tanium 7.0 STIG - Ver 2, Rel 1 (V2 R1) - 07 Apr 2025
+2025-07-01 17:42:43,083 [INFO] Found: Sunset - Tanium 7.3 STIG - Ver 2, Rel 3 (V2 R3) - 07 Apr 2025
+2025-07-01 17:42:43,083 [INFO] Found: Sunset - TOSS 4 STIG Benchmark - Ver 1, Rel 3 (V1 R3) - 22 Jan 2024
+2025-07-01 17:42:43,084 [INFO] Found: Sunset - Trend Micro Deep Security 9.x STIG - Ver 2, Rel 1 (V2 R1) - 22 Jan 2024
+2025-07-01 17:42:43,085 [INFO] Found: Sunset - VMware Horizon 7.13 STIG (VY24 RM04) - 22 Apr 2024
+2025-07-01 17:42:43,085 [INFO] Found: Sunset - VMware vRealize Automation 7.x STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:43,086 [INFO] Found: Sunset - VMware vRealize Operations Manager Cassandra STIG - Ver 1, Rel 2 (V1 R2) - 23 Oct 2023
+2025-07-01 17:42:43,087 [INFO] Found: Sunset - VMware vRealize Ops 6.x STIG (VY23 RM10) - 23 Oct 2023
+2025-07-01 17:42:43,088 [INFO] Found: Sunset - VMware Workspace ONE UEM STIG - Ver 2, Rel 2 (V2 R2) - 17 Jul 2024
+2025-07-01 17:42:43,088 [INFO] Found: SUSE Linux Enterprise Micro 5 STIG - Ver 1, Rel 1 (V1 R1) - 20 Jun 2024
+2025-07-01 17:42:43,089 [INFO] Found: SUSE Linux Enterprise Server 12 STIG - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:43,089 [INFO] Found: SUSE Linux Enterprise Server 12 STIG Benchmark - Ver 3, Rel 2 (V3 R2) - 28 Jan 2025
+2025-07-01 17:42:43,090 [INFO] Found: SUSE Linux Enterprise Server 15 for Ansible - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:43,091 [INFO] Found: SUSE Linux Enterprise Server 15 STIG - Ver 2, Rel 4 (V2 R4) - 07 Apr 2025
+2025-07-01 17:42:43,093 [INFO] Found: SUSE Linux Enterprise Server 15 STIG SCAP Benchmark - Ver 2, Rel 4 (V2 R4) - 08 Apr 2025
+2025-07-01 17:42:43,094 [INFO] Found: Symantec ProxySG STIG (VY20 RM04) - 23 Apr 2020
+2025-07-01 17:42:43,094 [INFO] Found: Tanium 7.x STIG - Ver 2, Rel 2 (V2 R2) - 07 Apr 2025
+2025-07-01 17:42:43,095 [INFO] Found: Tanium 7.x TanOS STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:43,096 [INFO] Found: Traditional Security STIG Checklist - Ver 2, Rel 6 (V2 R6) - 23 Oct 2024
+2025-07-01 17:42:43,096 [INFO] Found: Trellix Application Control 8.x STIG - Ver 3, Rel 1 (V3 R1) - 17 Jul 2024
+2025-07-01 17:42:43,097 [INFO] Found: Trend MicroTippingPoint STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:43,098 [INFO] Found: Tri-Lab Operating System Stack (TOSS) 4 STIG Benchmark - Ver 2, Rel 2 (V2 R2) - 23 Oct 2024
+2025-07-01 17:42:43,099 [INFO] Found: Unified Endpoint Management Server SRG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:43,099 [INFO] Found: Virtual Machine Manager SRG - Ver 2, Rel 2 (V2 R2) - 28 Jan 2025
+2025-07-01 17:42:43,100 [INFO] Found: Virtual Private Network (VPN) SRG - Ver 3, Rel 3 (V3 R3) - 28 Jan 2025
+2025-07-01 17:42:43,100 [INFO] Found: VMware NSX 4.x STIG (VY25 RM01) - 28 Jan 2025
+2025-07-01 17:42:43,101 [INFO] Found: VMware NSX Distributed Logical Router STIG, Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:43,101 [INFO] Found: VMware NSX Manager STIG, Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:43,102 [INFO] Found: VMware NSX STIG Overview, Ver 1 (V1 R1) - 01 Dec 2018
+2025-07-01 17:42:43,103 [INFO] Found: VMware NSX-T Data Center STIG (VY23 RM07) - 20 Jul 2023
+2025-07-01 17:42:43,104 [INFO] Found: VMware vSphere 7.0 STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:43,104 [INFO] Found: VMware vSphere 8.0 STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:43,105 [INFO] Found: Web Server SRG - Ver 4, Rel 3 (V4 R3) - 07 Apr 2025
+2025-07-01 17:42:43,106 [INFO] Found: Windows Server 2022 STIG with Ansible - Ver 1, Rel 1 (V1 R1) - 08 Feb 2023
+2025-07-01 17:42:43,106 [INFO] Found: Xylok Security Suite 20.x STIG - Ver 1, Rel 1 (V1 R1) - 23 Jan 2025
+2025-07-01 17:42:43,107 [INFO] Found: z/OS ACF2 Products (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:43,108 [INFO] Found: z/OS RACF Products (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:43,109 [INFO] Found: z/OS SRR Scripts (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:43,109 [INFO] Found: z/OS TSS Products STIG (VY25 RM04) - 07 Apr 2025
+2025-07-01 17:42:43,110 [INFO] Found: Zebra Android 11 COBO STIG - Ver 1, Rel 3 (V1 R3) - 23 Oct 2023
+2025-07-01 17:42:43,111 [INFO] Found: Zebra Android 13 STIG (VY24 RM12) - 23 Dec 2024
+2025-07-01 17:42:43,111 [INFO] Successfully scraped 438 STIG items
+2025-07-01 17:42:52,667 [INFO] Downloading Apache Server 2.4 Unix STIG from https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apache_Server_2-4_Unix_Y25M04_STIG.zip (attempt 1)...
+2025-07-01 17:42:52,834 [INFO] Saved to cklb_proc/xccdf_lib/U_Apache_Server_2-4_Unix_Y25M04_STIG.zip
+2025-07-01 17:42:52,834 [INFO] Downloading Apache Server 2.4 Windows STIG from https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apache_Server_2-4_Windows_Y25M04_STIG.zip (attempt 1)...
+2025-07-01 17:42:52,879 [INFO] Saved to cklb_proc/xccdf_lib/U_Apache_Server_2-4_Windows_Y25M04_STIG.zip
+2025-07-01 17:42:52,883 [INFO] Extracting U_Apache_Server_2-4_Unix_Server_V3R2_Manual_STIG/U_Apache_Server_2-4_UNIX_Server_STIG_V3R2_Manual-xccdf.xml from U_Apache_Server_2-4_Unix_Y25M04_STIG.zip
+2025-07-01 17:42:52,888 [INFO] Extracting U_Apache_Server_2-4_Unix_Site_V2R6_Manual_STIG/U_Apache_Server_2-4_UNIX_Site_STIG_V2R6_Manual-xccdf.xml from U_Apache_Server_2-4_Unix_Y25M04_STIG.zip
+2025-07-01 17:42:52,892 [INFO] Deleted original ZIP: U_Apache_Server_2-4_Unix_Y25M04_STIG.zip
+2025-07-01 17:42:52,914 [INFO] Extracting U_Apache_Server_2-4_Windows_Server_V3R3_Manual_STIG/U_Apache_Server_2-4_Windows_Server_STIG_V3R3_Manual-xccdf.xml from U_Apache_Server_2-4_Windows_Y25M04_STIG.zip
+2025-07-01 17:42:52,915 [INFO] Extracting U_Apache_Server_2-4_Windows_Site_V2R2_Manual_STIG/U_Apache_Server_2-4_Windows_Site_STIG_V2R2_Manual-xccdf.xml from U_Apache_Server_2-4_Windows_Y25M04_STIG.zip
+2025-07-01 17:42:52,916 [INFO] Deleted original ZIP: U_Apache_Server_2-4_Windows_Y25M04_STIG.zip

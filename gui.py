@@ -805,15 +805,32 @@ def show_disa_fetch_dialog():
     def fetch_stigs():
         try:
             from scraper import scrape_stigs
+            
+            # Check if popup still exists before accessing widgets
+            if not popup.winfo_exists():
+                return
+                
             status_label = header_frame.nametowidget("status_label")
             status_label.config(text="Fetching available STIGs from DISA...")
+            
             items = scrape_stigs()
+            
+            # Check again before updating UI
+            if not popup.winfo_exists():
+                return
+                
             if not items:
-                status_label.config(text="No STIGs found.")
+                if popup.winfo_exists():
+                    status_label.config(text="No STIGs found.")
                 return
                 
             nonlocal all_items
             all_items = items
+            
+            # Check if listbox still exists before clearing
+            if not popup.winfo_exists():
+                return
+                
             stig_listbox.delete(0, tk.END)
             
             # Add header row
@@ -827,6 +844,10 @@ def show_disa_fetch_dialog():
             stig_listbox.itemconfig(1, {'fg': COLORS['text_secondary']})
             
             for item in items:
+                # Check if popup still exists during the loop
+                if not popup.winfo_exists():
+                    return
+                    
                 title = item.get('Product', 'Unknown')
                 version = item.get('Version', 'Unknown')
                 release = item.get('Release', 'Unknown')
@@ -841,11 +862,19 @@ def show_disa_fetch_dialog():
                 display = f"{title_disp} | {version_disp} | {release_disp} | {update_disp}"
                 stig_listbox.insert(tk.END, display)
                 
-            status_label.config(text=f"Found {len(items)} STIGs. Select one or more to download and process.")
+            if popup.winfo_exists():
+                status_label.config(text=f"Found {len(items)} STIGs. Select one or more to download and process.")
+                
         except Exception as e:
-            status_label = header_frame.nametowidget("status_label")
-            status_label.config(text=f"Error fetching STIGs: {e}")
+            # Handle any errors gracefully
+            if popup.winfo_exists():
+                try:
+                    status_label = header_frame.nametowidget("status_label")
+                    status_label.config(text=f"Error fetching STIGs: {e}")
+                except:
+                    pass
             log_job_status(f"[ERROR] Failed to fetch STIGs: {e}")
+    
     all_items = []
     threading.Thread(target=fetch_stigs, daemon=True).start()
 
