@@ -746,35 +746,38 @@ def show_disa_fetch_dialog():
     import threading
     popup = tk.Toplevel(root)
     popup.title("Fetch from DISA")
-    popup.configure(bg=COLORS['bg_primary'])
+    popup.configure(bg="#ffffff")  # White background for better contrast
     popup.transient(root)
     popup.grab_set()
     
     # Center the popup on the main window
     center_window_on_parent(popup, root, 600, 500)
 
-    # Header
+    # Header with white background
     header_frame = ttk.Frame(popup)
+    header_frame.configure(style="Card.TFrame")
     header_frame.pack(fill="x", padx=20, pady=20)
     ttk.Label(header_frame, text="Select STIGs to Download", font=FONTS['heading']).pack()
     ttk.Label(header_frame, text="Fetching available STIGs from DISA...", 
               font=FONTS['default'], foreground=COLORS['text_secondary'], name="status_label").pack(pady=(5, 0))
 
-    # List frame for STIGs
-    list_frame = ttk.Frame(popup, style="Card.TFrame")
+    # List frame for STIGs with black border and white background
+    list_frame = ttk.Frame(popup)
+    list_frame.configure(relief="solid", borderwidth=2, style="Card.TFrame")
     list_frame.pack(fill="both", expand=True, padx=20, pady=(0, 10))
     
     stig_scrollbar = ttk.Scrollbar(list_frame)
     stig_scrollbar.pack(side="right", fill="y")
     
     stig_listbox = tk.Listbox(list_frame, selectmode=tk.MULTIPLE, font=FONTS['default'],
-        bg=COLORS['input_bg'], fg=COLORS['text_primary'], selectbackground=COLORS['accent'],
-        yscrollcommand=stig_scrollbar.set, width=80, height=15)
-    stig_listbox.pack(side="left", fill="both", expand=True)
+        bg="#ffffff", fg="#000000", selectbackground=COLORS['accent'],
+        yscrollcommand=stig_scrollbar.set, width=80, height=15, relief="flat", borderwidth=0)
+    stig_listbox.pack(side="left", fill="both", expand=True, padx=2, pady=2)
     stig_scrollbar.config(command=stig_listbox.yview)
 
-    # Buttons
+    # Buttons with white background
     btn_frame = ttk.Frame(popup)
+    btn_frame.configure(style="Card.TFrame")
     btn_frame.pack(fill="x", padx=20, pady=20)
     
     def start_fetch():
@@ -875,29 +878,55 @@ def show_download_choice_dialog(selected_items):
     options_frame = ttk.Frame(main_frame)
     options_frame.pack(fill="x", pady=(0, 20))
     
-    # ZIP Download option
-    zip_frame = ttk.Frame(options_frame, style="Card.TFrame", relief="raised", borderwidth=1)
+    # ZIP Download option with black border and better interactivity
+    zip_frame = ttk.Frame(options_frame)
+    zip_frame.configure(relief="solid", borderwidth=2)
     zip_frame.pack(fill="x", pady=(0, 10))
+    
+    # Make the frame clickable
+    def on_zip_click(event=None):
+        choose_zip()
+    
+    zip_frame.bind("<Button-1>", on_zip_click)
     
     zip_content = ttk.Frame(zip_frame)
     zip_content.pack(fill="x", padx=15, pady=15)
+    zip_content.bind("<Button-1>", on_zip_click)
     
-    ttk.Label(zip_content, text=f"{ICONS['download']} Download ZIP Files Only", 
-              font=FONTS['heading']).pack(anchor="w")
-    ttk.Label(zip_content, text="Download the raw STIG ZIP files without processing", 
-              font=FONTS['default'], foreground=COLORS['text_secondary']).pack(anchor="w", pady=(5, 0))
+    zip_label1 = ttk.Label(zip_content, text=f"{ICONS['download']} Download ZIP Files Only", 
+              font=FONTS['heading'])
+    zip_label1.pack(anchor="w")
+    zip_label1.bind("<Button-1>", on_zip_click)
     
-    # CKLB option
-    cklb_frame = ttk.Frame(options_frame, style="Card.TFrame", relief="raised", borderwidth=1)
+    zip_label2 = ttk.Label(zip_content, text="Download the raw STIG ZIP files without processing", 
+              font=FONTS['default'], foreground=COLORS['text_secondary'])
+    zip_label2.pack(anchor="w", pady=(5, 0))
+    zip_label2.bind("<Button-1>", on_zip_click)
+    
+    # CKLB option with black border and better interactivity
+    cklb_frame = ttk.Frame(options_frame)
+    cklb_frame.configure(relief="solid", borderwidth=2)
     cklb_frame.pack(fill="x")
+    
+    # Make the frame clickable
+    def on_cklb_click(event=None):
+        choose_cklb()
+    
+    cklb_frame.bind("<Button-1>", on_cklb_click)
     
     cklb_content = ttk.Frame(cklb_frame)
     cklb_content.pack(fill="x", padx=15, pady=15)
+    cklb_content.bind("<Button-1>", on_cklb_click)
     
-    ttk.Label(cklb_content, text=f"{ICONS['check']} Create CKLB Files", 
-              font=FONTS['heading']).pack(anchor="w")
-    ttk.Label(cklb_content, text="Download ZIPs, extract XCCDF files, and generate CKLB checklists", 
-              font=FONTS['default'], foreground=COLORS['text_secondary']).pack(anchor="w", pady=(5, 0))
+    cklb_label1 = ttk.Label(cklb_content, text=f"{ICONS['check']} Create CKLB Files", 
+              font=FONTS['heading'])
+    cklb_label1.pack(anchor="w")
+    cklb_label1.bind("<Button-1>", on_cklb_click)
+    
+    cklb_label2 = ttk.Label(cklb_content, text="Download ZIPs, extract XCCDF files, and generate CKLB checklists", 
+              font=FONTS['default'], foreground=COLORS['text_secondary'])
+    cklb_label2.pack(anchor="w", pady=(5, 0))
+    cklb_label2.bind("<Button-1>", on_cklb_click)
     
     # Buttons frame
     btn_frame = ttk.Frame(main_frame)
