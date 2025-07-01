@@ -1371,7 +1371,7 @@ content_frame.columnconfigure(1, weight=1)
 left_panel = ttk.LabelFrame(content_frame, text="User CKLB Library (cklb_proc/user_cklb_library)", style="TLabelframe")
 left_panel.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
 
-# Import button for left panel
+# Button frame for left panel
 import_frame = ttk.Frame(left_panel)
 import_frame.pack(fill="x", padx=10, pady=(10, 5))
 ttk.Button(import_frame, text=f"{ICONS['import']} Import CKLB(s)", 
@@ -1405,7 +1405,7 @@ for f in usr_files:
 right_panel = ttk.LabelFrame(content_frame, text="CKLB Library (cklb_proc/cklb_lib)", style="TLabelframe")
 right_panel.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
 
-# Browse button for right panel
+# Button frame for right panel  
 browse_frame = ttk.Frame(right_panel)
 browse_frame.pack(fill="x", padx=10, pady=(10, 5))
 
@@ -1433,7 +1433,7 @@ def browse_cklb_directory():
         log_job_status(f"[INFO] Selected {len(selected_files)} CKLB files from browse")
 
 ttk.Button(browse_frame, text=f"{ICONS['folder']} Browse...", 
-           style="Secondary.TButton", command=browse_cklb_directory).pack(side="left")
+           style="Accent.TButton", command=browse_cklb_directory).pack(side="left")
 ttk.Button(browse_frame, text=f"{ICONS['reset']} Refresh Library", 
            style="Secondary.TButton", command=refresh_cklb_combobox).pack(side="left", padx=(10, 0))
 
