@@ -1415,10 +1415,478 @@ for f in cklb_files:
 button_frame = ttk.Frame(checklist_frame)
 button_frame.pack(pady=(20, 10))
 
-ttk.Button(button_frame, text=f"{ICONS['update']} Update Now", 
-           style="Accent.TButton", command=update_now_handler).pack(side="left", padx=10)
-ttk.Button(button_frame, text=f"{ICONS['folder']} Open CKLB Directory", 
-           style="Secondary.TButton", command=download_cklb_popup).pack(side="left", padx=10)
+def check_for_updates_advanced():
+    """Advanced Check for Updates that compares with DISA website"""
+    try:
+        # Get selected files from user library
+        user_selections = file_listbox.curselection()
+        
+        if not user_selections:
+            messagebox.showwarning("Selection Required", 
+                                 "Please select at least one checklist from the User CKLB Library to check for updates.")
+            return
+        
+        log_job_status("[INFO] Starting advanced update check against DISA website...")
+        
+        # Show progress popup
+        progress_popup = ProgressPopup(
+            root, 
+            "Checking for Updates", 
+            "Comparing selected checklists with DISA website..."
+        )
+        
+        def process_updates():
+            try:
+                # Get selected user files and extract their STIG metadata
+                selected_files = []
+                for idx in user_selections:
+                    filename = file_listbox.get(idx)
+                    file_path = os.path.join(usr_dir, filename)
+                    
+                    try:
+                        with open(file_path, 'r', encoding='utf-8') as f:
+                            cklb_data = json.load(f)
+                        
+                        # Extract STIG metadata from the checklist
+                        stig_info = extract_stig_metadata(cklb_data, filename)
+                        if stig_info:
+                            selected_files.append({
+                                'filename': filename,
+                                'path': file_path,
+                                'stig_id': stig_info['stig_id'],
+                                'version': stig_info['version'],
+                                'release': stig_info['release'],
+                                'product': stig_info['product']
+                            })
+                            log_job_status(f"[INFO] Found STIG: {stig_info['stig_id']} v{stig_info['version']}r{stig_info['release']}")
+                    except Exception as e:
+                        log_job_status(f"[ERROR] Failed to parse {filename}: {e}")
+                
+                if not selected_files:
+                    progress_popup.close()
+                    messagebox.showerror("Error", "No valid STIG metadata found in selected files.")
+                    return
+                
+                progress_popup.update_status("Fetching latest STIGs from DISA...")
+                
+                # Fetch current STIGs from DISA website
+                from scraper import scrape_stigs
+                available_stigs = scrape_stigs()
+                
+                if not available_stigs:
+                    progress_popup.close()
+                    messagebox.showerror("Error", "Failed to fetch STIGs from DISA website.")
+                    return
+                
+                progress_popup.update_status("Comparing versions...")
+                
+                # Compare versions and find upgradable STIGs
+                upgradable_stigs = []
+                no_updates_stigs = []
+                
+                for file_info in selected_files:
+                    user_stig_id = file_info['stig_id']
+                    user_version = file_info['version']
+                    user_release = file_info['release']
+                    
+                    # Find matching STIG on DISA website
+                    matching_stig = find_matching_stig(file_info, available_stigs)
+                    
+                    if matching_stig:
+                        disa_version = matching_stig.get('Version', '')
+                        disa_release = matching_stig.get('Release', '')
+                        
+                        # Compare versions (simple string comparison for now)
+                        if is_newer_version(disa_version, disa_release, user_version, user_release):
+                            upgradable_stigs.append({
+                                'file_info': file_info,
+                                'disa_stig': matching_stig,
+                                'current': f"v{user_version}r{user_release}",
+                                'available': f"v{disa_version}r{disa_release}"
+                            })
+                        else:
+                            no_updates_stigs.append(file_info)
+                    else:
+                        log_job_status(f"[WARNING] No matching STIG found for {user_stig_id}")
+                        no_updates_stigs.append(file_info)
+                
+                progress_popup.close()
+                
+                # Show results to user
+                show_update_results(upgradable_stigs, no_updates_stigs)
+                
+            except Exception as e:
+                progress_popup.close()
+                log_job_status(f"[ERROR] Update check failed: {e}")
+                messagebox.showerror("Error", f"Update check failed: {e}")
+        
+        # Run in separate thread
+        threading.Thread(target=process_updates, daemon=True).start()
+        
+    except Exception as e:
+        log_job_status(f"[ERROR] Failed to start update check: {e}")
+        messagebox.showerror("Error", f"Failed to start update check: {e}")
+
+def extract_stig_metadata(cklb_data, filename):
+    """Extract STIG ID, version, and release from CKLB data"""
+    try:
+        stigs = cklb_data.get('stigs', [])
+        if stigs and len(stigs) > 0:
+            stig = stigs[0]
+            stig_id = stig.get('stig_id', '')
+            version = stig.get('version', '')
+            release = stig.get('release', '')
+            product = stig.get('title', filename)
+            
+            # Clean up version and release strings
+            version = version.replace('Version ', '').replace('V', '').strip()
+            release = release.replace('Release ', '').replace('R', '').strip()
+            
+            return {
+                'stig_id': stig_id,
+                'version': version,
+                'release': release,
+                'product': product
+            }
+    except Exception as e:
+        log_job_status(f"[ERROR] Failed to extract metadata from {filename}: {e}")
+    return None
+
+def find_matching_stig(file_info, available_stigs):
+    """Find matching STIG from DISA website based on STIG ID or product name"""
+    stig_id = file_info['stig_id'].upper()
+    product = file_info['product'].upper()
+    
+    # Try exact STIG ID match first
+    for stig in available_stigs:
+        if stig.get('Product', '').upper().find(stig_id) != -1:
+            return stig
+    
+    # Try product name matching
+    for stig in available_stigs:
+        stig_product = stig.get('Product', '').upper()
+        if any(keyword in stig_product for keyword in product.split() if len(keyword) > 3):
+            return stig
+    
+    return None
+
+def is_newer_version(disa_version, disa_release, user_version, user_release):
+    """Compare version strings to determine if DISA version is newer"""
+    try:
+        # Extract numeric parts for comparison
+        def extract_numbers(version_str, release_str):
+            v_num = ''.join(filter(str.isdigit, version_str)) or '0'
+            r_num = ''.join(filter(str.isdigit, release_str)) or '0'
+            return int(v_num), int(r_num)
+        
+        disa_v, disa_r = extract_numbers(disa_version, disa_release)
+        user_v, user_r = extract_numbers(user_version, user_release)
+        
+        # Compare version first, then release
+        if disa_v > user_v:
+            return True
+        elif disa_v == user_v and disa_r > user_r:
+            return True
+        
+        return False
+    except:
+        # Fallback to string comparison
+        return f"{disa_version}{disa_release}" > f"{user_version}{user_release}"
+
+def show_update_results(upgradable_stigs, no_updates_stigs):
+    """Show update results and ask user to proceed"""
+    results_popup = tk.Toplevel(root)
+    results_popup.title("Update Check Results")
+    center_window_on_parent(results_popup, root, 700, 500)
+    results_popup.configure(bg=COLORS['bg_primary'])
+    results_popup.grab_set()
+    
+    main_frame = ttk.Frame(results_popup, style="Card.TFrame")
+    main_frame.pack(fill="both", expand=True, padx=20, pady=20)
+    
+    # Header
+    header_frame = ttk.Frame(main_frame)
+    header_frame.pack(fill="x", pady=(0, 15))
+    
+    ttk.Label(header_frame, text="Update Check Results", font=FONTS['heading']).pack()
+    
+    # Results display
+    results_frame = ttk.Frame(main_frame)
+    results_frame.pack(fill="both", expand=True, pady=(0, 15))
+    
+    # Upgradable STIGs
+    if upgradable_stigs:
+        ttk.Label(results_frame, text=f"✓ {len(upgradable_stigs)} STIG(s) have updates available:", 
+                 font=FONTS['default'], foreground=COLORS['success']).pack(anchor="w")
+        
+        upgrade_text = scrolledtext.ScrolledText(results_frame, height=8, font=FONTS['small'])
+        upgrade_text.pack(fill="both", expand=True, pady=(5, 10))
+        
+        for item in upgradable_stigs:
+            file_info = item['file_info']
+            upgrade_text.insert(tk.END, f"• {file_info['filename']}\n")
+            upgrade_text.insert(tk.END, f"  Current: {item['current']} → Available: {item['available']}\n\n")
+        
+        upgrade_text.configure(state="disabled")
+    
+    # No updates STIGs
+    if no_updates_stigs:
+        ttk.Label(results_frame, text=f"ℹ {len(no_updates_stigs)} STIG(s) are up to date:", 
+                 font=FONTS['default'], foreground=COLORS['text_secondary']).pack(anchor="w", pady=(10, 0))
+        
+        current_text = scrolledtext.ScrolledText(results_frame, height=4, font=FONTS['small'])
+        current_text.pack(fill="both", expand=True, pady=(5, 0))
+        
+        for file_info in no_updates_stigs:
+            current_text.insert(tk.END, f"• {file_info['filename']} (v{file_info['version']}r{file_info['release']})\n")
+        
+        current_text.configure(state="disabled")
+    
+    # Buttons
+    btn_frame = ttk.Frame(main_frame)
+    btn_frame.pack(fill="x", pady=(15, 0))
+    
+    def proceed_with_updates():
+        if upgradable_stigs:
+            results_popup.destroy()
+            download_and_upgrade_stigs(upgradable_stigs)
+        else:
+            results_popup.destroy()
+    
+    def cancel_updates():
+        results_popup.destroy()
+        log_job_status("[INFO] Update check completed - user cancelled.")
+    
+    ttk.Button(btn_frame, text="Cancel", style="Secondary.TButton", 
+               command=cancel_updates).pack(side="left")
+    
+    if upgradable_stigs:
+        ttk.Button(btn_frame, text=f"Continue - Upgrade {len(upgradable_stigs)} STIG(s)", 
+                   style="Accent.TButton", command=proceed_with_updates).pack(side="right")
+    else:
+        ttk.Label(btn_frame, text="All STIGs are up to date!", 
+                 font=FONTS['default'], foreground=COLORS['success']).pack(side="right")
+
+def download_and_upgrade_stigs(upgradable_stigs):
+    """Download and upgrade the selected STIGs"""
+    log_job_status("[INFO] Starting STIG download and upgrade process...")
+    
+    progress_popup = ProgressPopup(
+        root, 
+        "Upgrading STIGs", 
+        "Downloading and upgrading selected STIGs..."
+    )
+    
+    def upgrade_process():
+        try:
+            # Download updated STIGs
+            stigs_to_download = [item['disa_stig'] for item in upgradable_stigs]
+            
+            progress_popup.update_status("Downloading updated STIGs...")
+            from downloader import download_updates
+            download_updates(stigs_to_download, target_dir="cklb_proc/xccdf_lib")
+            
+            progress_popup.update_status("Extracting and generating updated checklists...")
+            from xccdf_extractor import extract_xccdf_from_zip
+            from cklb_generator import generate_cklb_json
+            from datetime import datetime
+            
+            upgraded_count = 0
+            for item in upgradable_stigs:
+                disa_stig = item['disa_stig']
+                file_info = item['file_info']
+                
+                zip_filename = os.path.basename(disa_stig['URL'])
+                zip_path = os.path.join("cklb_proc/xccdf_lib", zip_filename)
+                
+                if os.path.exists(zip_path):
+                    xccdf_files = extract_xccdf_from_zip(zip_path, "cklb_proc/xccdf_extracted")
+                    if xccdf_files:
+                        if not isinstance(xccdf_files, list):
+                            xccdf_files = [xccdf_files]
+                        
+                        for xccdf_file in xccdf_files:
+                            try:
+                                # Generate new CKLB
+                                basename = os.path.basename(xccdf_file).replace('-xccdf.xml', '').replace('Manual', '').strip('_- ')
+                                date_str = datetime.now().strftime("%Y%m%d")
+                                new_cklb_filename = f"{basename}_{date_str}.cklb"
+                                new_cklb_path = os.path.join(cklb_dir, new_cklb_filename)
+                                
+                                cklb_json = generate_cklb_json(xccdf_file)
+                                with open(new_cklb_path, 'w') as f:
+                                    json.dump(cklb_json, f, indent=2)
+                                
+                                # Now merge with old checklist
+                                from selected_merger import run_merger
+                                success = run_merger([file_info['path']], [new_cklb_path])
+                                
+                                if success:
+                                    upgraded_count += 1
+                                    log_job_status(f"[SUCCESS] Upgraded {file_info['filename']}")
+                                else:
+                                    log_job_status(f"[ERROR] Failed to merge {file_info['filename']}")
+                                
+                            except Exception as e:
+                                log_job_status(f"[ERROR] Failed to process {xccdf_file}: {e}")
+            
+            progress_popup.close()
+            
+            # Show summary
+            summary_msg = f"STIG Upgrade Summary:\n\n"
+            summary_msg += f"✓ Successfully upgraded: {upgraded_count} checklist(s)\n"
+            summary_msg += f"• Total processed: {len(upgradable_stigs)} STIG(s)\n\n"
+            summary_msg += "Upgraded checklists are available in the user library."
+            
+            messagebox.showinfo("Upgrade Complete", summary_msg)
+            log_job_status(f"[INFO] STIG upgrade completed - {upgraded_count}/{len(upgradable_stigs)} successful")
+            
+            # Refresh the listboxes
+            refresh_usr_listbox()
+            refresh_cklb_combobox()
+            
+        except Exception as e:
+            progress_popup.close()
+            log_job_status(f"[ERROR] STIG upgrade failed: {e}")
+            messagebox.showerror("Upgrade Failed", f"STIG upgrade failed: {e}")
+    
+    threading.Thread(target=upgrade_process, daemon=True).start()
+
+def select_local_file_advanced():
+    """Advanced Select Local File with continue/cancel options"""
+    try:
+        log_job_status("[INFO] Starting local file selection...")
+        
+        # Create selection dialog
+        selection_popup = tk.Toplevel(root)
+        selection_popup.title("Select Local Files")
+        center_window_on_parent(selection_popup, root, 600, 500)
+        selection_popup.configure(bg=COLORS['bg_primary'])
+        selection_popup.grab_set()
+        
+        main_frame = ttk.Frame(selection_popup, style="Card.TFrame")
+        main_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        
+        # Header
+        header_frame = ttk.Frame(main_frame)
+        header_frame.pack(fill="x", pady=(0, 15))
+        
+        ttk.Label(header_frame, text="Select New CKLB Versions", font=FONTS['heading']).pack()
+        ttk.Label(header_frame, text="Choose from available files or browse to another directory", 
+                 font=FONTS['default'], foreground=COLORS['text_secondary']).pack()
+        
+        # File selection frame
+        selection_frame = ttk.LabelFrame(main_frame, text="Available CKLB Files", style="TLabelframe")
+        selection_frame.pack(fill="both", expand=True, pady=(0, 15))
+        
+        # Listbox for file selection
+        listbox_frame = ttk.Frame(selection_frame)
+        listbox_frame.pack(fill="both", expand=True, padx=15, pady=15)
+        
+        selection_scrollbar = ttk.Scrollbar(listbox_frame)
+        selection_scrollbar.pack(side="right", fill="y")
+        
+        selection_listbox = tk.Listbox(listbox_frame, 
+                                     selectmode=tk.MULTIPLE,
+                                     font=FONTS['default'],
+                                     bg=COLORS['input_bg'],
+                                     fg=COLORS['text_primary'],
+                                     selectbackground=COLORS['accent'],
+                                     yscrollcommand=selection_scrollbar.set)
+        selection_listbox.pack(side="left", fill="both", expand=True)
+        selection_scrollbar.config(command=selection_listbox.yview)
+        
+        # Populate with available CKLB files
+        selected_files = []
+        for f in cklb_files:
+            if f.lower().endswith('.cklb'):
+                selection_listbox.insert(tk.END, f)
+        
+        # Browse button
+        browse_btn_frame = ttk.Frame(selection_frame)
+        browse_btn_frame.pack(fill="x", padx=15, pady=(0, 15))
+        
+        def browse_for_files():
+            file_paths = filedialog.askopenfilenames(
+                title="Select Additional CKLB Files",
+                filetypes=[("CKLB files", "*.cklb"), ("All files", "*.*")],
+                multiple=True
+            )
+            
+            if file_paths:
+                for file_path in file_paths:
+                    filename = os.path.basename(file_path)
+                    if filename.lower().endswith('.cklb'):
+                        selection_listbox.insert(tk.END, f"📁 {filename}")
+                        selected_files.append(file_path)
+                log_job_status(f"[INFO] Added {len(file_paths)} files from browse")
+        
+        ttk.Button(browse_btn_frame, text=f"{ICONS['folder']} Browse for More Files...", 
+                   style="Secondary.TButton", command=browse_for_files).pack()
+        
+        # Status label
+        status_label = ttk.Label(main_frame, text="Select files and click Continue", 
+                               font=FONTS['small'], foreground=COLORS['text_secondary'])
+        status_label.pack(pady=(0, 15))
+        
+        # Buttons
+        btn_frame = ttk.Frame(main_frame)
+        btn_frame.pack(fill="x")
+        
+        def cancel_selection():
+            selection_popup.destroy()
+            log_job_status("[INFO] Local file selection cancelled")
+        
+        def continue_selection():
+            # Get selected files
+            selections = selection_listbox.curselection()
+            selected_file_paths = []
+            
+            for idx in selections:
+                item = selection_listbox.get(idx)
+                if item.startswith("📁 "):
+                    # Browsed file
+                    filename = item[2:]  # Remove folder icon
+                    # Find the full path in selected_files
+                    for file_path in selected_files:
+                        if os.path.basename(file_path) == filename:
+                            selected_file_paths.append(file_path)
+                            break
+                else:
+                    # Library file
+                    selected_file_paths.append(os.path.join(cklb_dir, item))
+            
+            if not selected_file_paths:
+                messagebox.showwarning("No Selection", "Please select at least one file to continue.")
+                return
+            
+            selection_popup.destroy()
+            
+            # Show confirmation and proceed
+            file_list = "\n".join([os.path.basename(f) for f in selected_file_paths])
+            message = f"Selected {len(selected_file_paths)} file(s):\n\n{file_list}\n\nThese files will be available for checklist merging."
+            
+            messagebox.showinfo("Files Selected", message)
+            log_job_status(f"[INFO] Local file selection completed - {len(selected_file_paths)} files selected")
+            
+            # Store selected files for use in merging
+            if not hasattr(cklb_listbox, 'selected_local_files'):
+                cklb_listbox.selected_local_files = []
+            cklb_listbox.selected_local_files.extend(selected_file_paths)
+        
+        ttk.Button(btn_frame, text="Cancel", style="Secondary.TButton", 
+                   command=cancel_selection).pack(side="left")
+        ttk.Button(btn_frame, text="Continue", style="Accent.TButton", 
+                   command=continue_selection).pack(side="right")
+        
+    except Exception as e:
+        log_job_status(f"[ERROR] Local file selection failed: {e}")
+        messagebox.showerror("Error", f"Local file selection failed: {e}")
+
+ttk.Button(button_frame, text=f"{ICONS['update']} Check for Updates", 
+           style="Accent.TButton", command=check_for_updates_advanced).pack(side="left", padx=10)
+ttk.Button(button_frame, text=f"{ICONS['folder']} Select Local File", 
+           style="Secondary.TButton", command=select_local_file_advanced).pack(side="left", padx=10)
 
 # === Tab 3: Logs & Status ===
 tab3 = ttk.Frame(notebook)
