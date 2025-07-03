@@ -32,6 +32,12 @@ touch /tmp/websockify.log
 nohup websockify --web=/usr/share/novnc/ --wrap-mode=ignore 6080 localhost:5900 > /tmp/websockify.log 2>&1 &
 sleep 3
 
+# Make port 6080 public for external access (GitHub Codespaces)
+if command -v gh >/dev/null 2>&1; then
+    echo "Making port 6080 public for external access..."
+    gh codespace ports visibility 6080:public --codespace "$CODESPACE_NAME" >/dev/null 2>&1 || echo "Note: Could not set port visibility automatically"
+fi
+
 # Get Codespace URL - GitHub Codespaces format
 if [ -n "$CODESPACE_NAME" ]; then
     CODESPACE_URL="https://$CODESPACE_NAME-6080.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"

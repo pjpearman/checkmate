@@ -130,11 +130,12 @@ style.configure("TLabelframe",
     background=COLORS['bg_secondary'], 
     foreground=COLORS['text_primary'],
     borderwidth=1,
-    relief="flat")
+    relief="groove")
 style.configure("TLabelframe.Label", 
     font=FONTS['heading'], 
     background=COLORS['bg_secondary'],
-    foreground=COLORS['text_primary'])
+    foreground=COLORS['text_primary'],
+    padding=[5, 2])
 
 # Button styles
 style.configure("Accent.TButton",
@@ -143,7 +144,7 @@ style.configure("Accent.TButton",
     background=COLORS['accent'],
     borderwidth=0,
     focuscolor='none',
-    padding=[10, 6])
+    padding=[12, 8])
 style.map("Accent.TButton",
     background=[('active', COLORS['accent_hover']), ('pressed', COLORS['accent_hover'])])
 
@@ -154,7 +155,7 @@ style.configure("Secondary.TButton",
     borderwidth=1,
     relief="solid",
     focuscolor='none',
-    padding=[10, 6])
+    padding=[12, 8])
 
 # Entry and Combobox styles
 style.configure("Modern.TEntry",
@@ -1366,24 +1367,32 @@ content_frame = ttk.Frame(checklist_frame)
 content_frame.pack(fill="both", expand=True, padx=20, pady=10)
 content_frame.columnconfigure(0, weight=1)
 content_frame.columnconfigure(1, weight=1)
+content_frame.rowconfigure(0, weight=1)
 
 # Left panel: User CKLBs
 left_panel = ttk.LabelFrame(content_frame, text="User CKLB Library (cklb_proc/user_cklb_library)", style="TLabelframe")
-left_panel.grid(row=0, column=0, sticky="nsew", padx=(0, 10))
+left_panel.grid(row=0, column=0, sticky="nsew", padx=(0, 10), pady=0)
+left_panel.columnconfigure(0, weight=1)
+left_panel.rowconfigure(1, weight=1)
 
-# Button frame for left panel
+# Button frame for left panel - using grid for consistent layout
 import_frame = ttk.Frame(left_panel)
-import_frame.pack(fill="x", padx=10, pady=(10, 5))
+import_frame.grid(row=0, column=0, sticky="ew", padx=15, pady=(15, 10))
+import_frame.columnconfigure(0, weight=1)
+import_frame.columnconfigure(1, weight=1)
+
 ttk.Button(import_frame, text=f"{ICONS['import']} Import CKLB(s)", 
-           style="Accent.TButton", command=import_cklb_files).pack(side="left")
+           style="Accent.TButton", command=import_cklb_files).grid(row=0, column=0, sticky="ew", padx=(0, 5))
 ttk.Button(import_frame, text=f"{ICONS['reset']} Refresh", 
-           style="Secondary.TButton", command=refresh_usr_listbox).pack(side="left", padx=(10, 0))
+           style="Secondary.TButton", command=refresh_usr_listbox).grid(row=0, column=1, sticky="ew", padx=(5, 0))
 
 file_listbox_frame = ttk.Frame(left_panel)
-file_listbox_frame.pack(fill="both", expand=True, padx=10, pady=(5, 10))
+file_listbox_frame.grid(row=1, column=0, sticky="nsew", padx=15, pady=(0, 15))
+file_listbox_frame.columnconfigure(0, weight=1)
+file_listbox_frame.rowconfigure(0, weight=1)
 
 file_scrollbar = ttk.Scrollbar(file_listbox_frame)
-file_scrollbar.pack(side="right", fill="y")
+file_scrollbar.grid(row=0, column=1, sticky="ns")
 
 file_listbox = tk.Listbox(file_listbox_frame, 
                          selectmode=tk.MULTIPLE,
@@ -1393,7 +1402,7 @@ file_listbox = tk.Listbox(file_listbox_frame,
                          selectbackground=COLORS['accent'],
                          selectforeground="#ffffff",
                          yscrollcommand=file_scrollbar.set)
-file_listbox.pack(side="left", fill="both", expand=True)
+file_listbox.grid(row=0, column=0, sticky="nsew")
 file_scrollbar.config(command=file_listbox.yview)
 
 # Populate listbox with only CKLB files
@@ -1403,11 +1412,15 @@ for f in usr_files:
 
 # Right panel: CKLB Library
 right_panel = ttk.LabelFrame(content_frame, text="CKLB Library (cklb_proc/cklb_lib)", style="TLabelframe")
-right_panel.grid(row=0, column=1, sticky="nsew", padx=(10, 0))
+right_panel.grid(row=0, column=1, sticky="nsew", padx=(10, 0), pady=0)
+right_panel.columnconfigure(0, weight=1)
+right_panel.rowconfigure(1, weight=1)
 
-# Button frame for right panel  
+# Button frame for right panel - using grid for consistent layout
 browse_frame = ttk.Frame(right_panel)
-browse_frame.pack(fill="x", padx=10, pady=(10, 5))
+browse_frame.grid(row=0, column=0, sticky="ew", padx=15, pady=(15, 10))
+browse_frame.columnconfigure(0, weight=1)
+browse_frame.columnconfigure(1, weight=1)
 
 def browse_cklb_directory():
     """Browse to select CKLB files from a different directory"""
@@ -1433,15 +1446,17 @@ def browse_cklb_directory():
         log_job_status(f"[INFO] Selected {len(selected_files)} CKLB files from browse")
 
 ttk.Button(browse_frame, text=f"{ICONS['folder']} Browse...", 
-           style="Accent.TButton", command=browse_cklb_directory).pack(side="left")
+           style="Accent.TButton", command=browse_cklb_directory).grid(row=0, column=0, sticky="ew", padx=(0, 5))
 ttk.Button(browse_frame, text=f"{ICONS['reset']} Refresh Library", 
-           style="Secondary.TButton", command=refresh_cklb_combobox).pack(side="left", padx=(10, 0))
+           style="Secondary.TButton", command=refresh_cklb_combobox).grid(row=0, column=1, sticky="ew", padx=(5, 0))
 
 cklb_listbox_frame = ttk.Frame(right_panel)
-cklb_listbox_frame.pack(fill="both", expand=True, padx=10, pady=(5, 10))
+cklb_listbox_frame.grid(row=1, column=0, sticky="nsew", padx=15, pady=(0, 15))
+cklb_listbox_frame.columnconfigure(0, weight=1)
+cklb_listbox_frame.rowconfigure(0, weight=1)
 
 cklb_scrollbar = ttk.Scrollbar(cklb_listbox_frame)
-cklb_scrollbar.pack(side="right", fill="y")
+cklb_scrollbar.grid(row=0, column=1, sticky="ns")
 
 cklb_listbox = tk.Listbox(cklb_listbox_frame, 
                          selectmode=tk.MULTIPLE,
@@ -1451,7 +1466,7 @@ cklb_listbox = tk.Listbox(cklb_listbox_frame,
                          selectbackground=COLORS['accent'],
                          selectforeground="#ffffff",
                          yscrollcommand=cklb_scrollbar.set)
-cklb_listbox.pack(side="left", fill="both", expand=True)
+cklb_listbox.grid(row=0, column=0, sticky="nsew")
 cklb_scrollbar.config(command=cklb_listbox.yview)
 
 # Initialize browsed_files attribute
@@ -1462,14 +1477,14 @@ for f in cklb_files:
     if f.lower().endswith('.cklb'):
         cklb_listbox.insert(tk.END, f)
 
-# Buttons
+# Action buttons frame - centered below both panels
 button_frame = ttk.Frame(checklist_frame)
-button_frame.pack(pady=20)
+button_frame.pack(pady=(20, 10))
 
 ttk.Button(button_frame, text=f"{ICONS['update']} Update Now", 
-           style="Accent.TButton", command=update_now_handler).pack(side="left", padx=5)
+           style="Accent.TButton", command=update_now_handler).pack(side="left", padx=10)
 ttk.Button(button_frame, text=f"{ICONS['folder']} Open CKLB Directory", 
-           style="Secondary.TButton", command=download_cklb_popup).pack(side="left", padx=5)
+           style="Secondary.TButton", command=download_cklb_popup).pack(side="left", padx=10)
 
 # === Tab 3: Logs & Status ===
 tab3 = ttk.Frame(notebook)
