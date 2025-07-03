@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, filedialog, scrolledtext
+from tkinter import ttk, filedialog, scrolledtext, messagebox
 import logging
 import os
 import yaml
@@ -1481,10 +1481,10 @@ for f in cklb_files:
 button_frame = ttk.Frame(checklist_frame)
 button_frame.pack(pady=(20, 10))
 
-ttk.Button(button_frame, text=f"{ICONS['update']} Update Now", 
-           style="Accent.TButton", command=update_now_handler).pack(side="left", padx=10)
-ttk.Button(button_frame, text=f"{ICONS['folder']} Open CKLB Directory", 
-           style="Secondary.TButton", command=download_cklb_popup).pack(side="left", padx=10)
+ttk.Button(button_frame, text=f"{ICONS['update']} Check for Updates", 
+           style="Accent.TButton", command=check_for_updates_handler).pack(side="left", padx=10)
+ttk.Button(button_frame, text=f"{ICONS['folder']} Select Local File", 
+           style="Secondary.TButton", command=select_local_file_handler).pack(side="left", padx=10)
 
 # === Tab 3: Logs & Status ===
 tab3 = ttk.Frame(notebook)
