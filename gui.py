@@ -571,202 +571,116 @@ def show_multi_rule_input(new_rules, checklist_files, on_submit, on_cancel):
                command=lambda: (frame_mr.destroy(), on_cancel())).pack(side="left", padx=5)
 
 def update_now_handler():
-    selected_old_files = [file_listbox.get(i) for i in file_listbox.curselection()]
-    selected_new_indices = cklb_listbox.curselection()
-    
-    if not selected_old_files:
-        log_job_status("[ERROR] Please select at least one CKLB to upgrade from the left panel.")
-        return
-    if not selected_new_indices:
-        log_job_status("[ERROR] Please select at least one new CKLB version from the right panel.")
-        return
-    
-    # Get the selected new CKLB files
-    selected_new_files = []
-    for i in selected_new_indices:
-        item_text = cklb_listbox.get(i)
-        if item_text.startswith("📁 "):  # Browsed file
-            # Use the full path from browsed_files
-            if hasattr(cklb_listbox, 'browsed_files') and i < len(cklb_listbox.browsed_files):
-                selected_new_files.append(cklb_listbox.browsed_files[i])
-        else:  # File from cklb_lib directory
-            selected_new_files.append(os.path.join(cklb_dir, item_text))
-    
-    if not selected_new_files:
-        log_job_status("[ERROR] Could not determine selected new CKLB files.")
-        return
-    
-    # For now, use the first selected new file (maintain existing logic)
-    new_file_path = selected_new_files[0]
-    new_name = os.path.basename(new_file_path)
-    
-    # Check STIG ID mismatch
-    old_path = os.path.join(usr_dir, selected_old_files[0])
-    
+    """Handler for Update Now button"""
     try:
-        old_data = load_cklb(old_path)
-        new_data = load_cklb(new_file_path)
-        is_match, old_stig_id, new_stig_id, new_rules = check_stig_id_match(old_data, new_data)
+        # Get selected files from both listboxes
+        user_selections = file_listbox.curselection()
+        cklb_selections = cklb_listbox.curselection()
         
-        if not is_match:
-            msg = (f"STIG ID mismatch detected:\n"
-                   f"Old: {old_stig_id}\nNew: {new_stig_id}\n"
-                   f"New rules: {len(new_rules)}\n\nProceed?")
-            
-            confirm_frame = ttk.Frame(checklist_frame)
-            confirm_frame.pack(fill="x", pady=10)
-            ttk.Label(confirm_frame, text=msg, foreground=COLORS['danger']).pack(side="left", padx=10)
-            
-            def proceed_merge(force_merge):
-                confirm_frame.destroy()
-                log_job_status("[INFO] Job started: Merging checklists...")
-                
-                merged_results = run_merge_task(
-                    selected_old_files=selected_old_files,
-                    new_name=new_name,
-                    usr_dir=usr_dir,
-                    cklb_dir=os.path.dirname(new_file_path),  # Use directory of selected file
-                    on_status_update=status_text.set,
-                    force=force_merge,
-                    prefix=None
-                )
-                
-                for result in merged_results:
-                    if result["new_rules"]:
-                        log_job_status(f"[INFO] {len(result['new_rules'])} new rules detected.")
-                        show_multi_rule_input(
-                            result["new_rules"], 
-                            [result["merged_name"]], 
-                            lambda user_input: handle_rule_updates(result, user_input),
-                            lambda: log_job_status("[INFO] Rule input cancelled.")
-                        )
-                    else:
-                        log_job_status("[INFO] Merge complete.")
-            
-            ttk.Button(confirm_frame, text="Proceed", style="Accent.TButton",
-                      command=lambda: proceed_merge(True)).pack(side="left", padx=5)
-            ttk.Button(confirm_frame, text="Cancel", style="Secondary.TButton",
-                      command=lambda: (confirm_frame.destroy(), 
-                                     log_job_status("[ERROR] Merge cancelled."))).pack(side="left", padx=5)
+        if not user_selections or not cklb_selections:
+            messagebox.showwarning("Selection Required", 
+                                 "Please select at least one file from each panel.")
             return
+        
+        # Get file paths
+        user_files = []
+        for idx in user_selections:
+            filename = file_listbox.get(idx)
+            user_files.append(os.path.join(user_cklb_dir, filename))
+        
+        cklb_files_selected = []
+        for idx in cklb_selections:
+            filename = cklb_listbox.get(idx)
+            # Check if it's a browsed file (has folder icon)
+            if filename.startswith("📁 "):
+                # Use the browsed file path
+                clean_filename = filename[2:]  # Remove "📁 " prefix
+                if hasattr(cklb_listbox, 'browsed_files'):
+                    for file_path in cklb_listbox.browsed_files:
+                        if os.path.basename(file_path) == clean_filename:
+                            cklb_files_selected.append(file_path)
+                            break
+            else:
+                # Use library file
+                cklb_files_selected.append(os.path.join(cklb_dir, filename))
+        
+        log_job_status(f"[INFO] Starting upgrade for {len(user_files)} user files with {len(cklb_files_selected)} baseline files")
+        
+        # Import and run the merger
+        from selected_merger import run_merger
+        success = run_merger(user_files, cklb_files_selected)
+        
+        if success:
+            log_job_status("[SUCCESS] Checklist upgrade completed successfully!")
+            messagebox.showinfo("Success", "Checklist upgrade completed successfully!")
+            # Refresh the user listbox to show any new files
+            refresh_usr_listbox()
         else:
-            force_merge = False
+            log_job_status("[ERROR] Checklist upgrade failed")
+            messagebox.showerror("Error", "Checklist upgrade failed. Check logs for details.")
+            
     except Exception as e:
-        log_job_status(f"[ERROR] Failed to check STIG IDs: {e}")
-        return
-    
-    # Check for missing host_name
-    needs_prefix = False
-    for old_name in selected_old_files:
-        old_path = os.path.join(usr_dir, old_name)
-        try:
-            with open(old_path, "r", encoding="utf-8") as f:
-                old_json = json.load(f)
-            if not old_json.get("target_data", {}).get("host_name"):
-                needs_prefix = True
-                break
-        except Exception:
-            needs_prefix = True
-            break
-    
-    if needs_prefix:
-        prefix_frame = ttk.Frame(checklist_frame)
-        prefix_frame.pack(fill="x", pady=10)
-        
-        ttk.Label(prefix_frame, text="Enter host-name prefix:", 
-                  foreground=COLORS['danger']).pack(side="left", padx=10)
-        prefix_var = tk.StringVar()
-        ttk.Entry(prefix_frame, textvariable=prefix_var, width=30, 
-                  style="Modern.TEntry").pack(side="left", padx=10)
-        
-        def do_set_prefix():
-            prefix = prefix_var.get().strip()
-            if not prefix:
-                log_job_status("[ERROR] Prefix cannot be blank.")
-                return
-            prefix_frame.destroy()
-            run_merge_with_prefix(prefix, force_merge, new_file_path, new_name)
-        
-        ttk.Button(prefix_frame, text="OK", style="Accent.TButton",
-                  command=do_set_prefix).pack(side="left", padx=5)
-        ttk.Button(prefix_frame, text="Cancel", style="Secondary.TButton",
-                  command=lambda: (prefix_frame.destroy(),
-                                 log_job_status("[INFO] Cancelled."))).pack(side="left", padx=5)
-    else:
-        run_merge_with_prefix(None, force_merge, new_file_path, new_name)
+        error_msg = f"Update failed: {str(e)}"
+        log_job_status(f"[ERROR] {error_msg}")
+        messagebox.showerror("Error", error_msg)
 
-def run_merge_with_prefix(prefix, force_merge, new_file_path, new_name):
-    log_job_status("[INFO] Job started: Merging checklists...")
-    
-    # Show progress popup
-    progress_popup = ProgressPopup(
-        root, 
-        "Merging Checklists", 
-        "Updating checklists with new STIG versions..."
-    )
-    
-    def on_merge_complete():
-        progress_popup.close()
-    
-    def run_merge():
-        try:
-            merged_results = run_merge_task(
-                selected_old_files=[file_listbox.get(i) for i in file_listbox.curselection()],
-                new_name=new_name,
-                usr_dir=usr_dir,
-                cklb_dir=os.path.dirname(new_file_path),  # Use directory of selected file
-                on_status_update=lambda status: (status_text.set(status), progress_popup.update_status(status)),
-                force=force_merge,
-                prefix=prefix
-            )
+def check_for_updates_handler():
+    """Handler for Check for Updates button"""
+    try:
+        log_job_status("[INFO] Checking for available updates...")
+        
+        # Get selected files from both listboxes
+        user_selections = file_listbox.curselection()
+        cklb_selections = cklb_listbox.curselection()
+        
+        if not user_selections or not cklb_selections:
+            messagebox.showwarning("Selection Required", 
+                                 "Please select at least one file from each panel to check for updates.")
+            return
+        
+        # Simple check - compare file modification times or versions if available
+        updates_available = []
+        
+        for idx in user_selections:
+            user_filename = file_listbox.get(idx)
+            user_path = os.path.join(user_cklb_dir, user_filename)
             
-            # Close progress popup before showing rule input
-            progress_popup.close()
+            if os.path.exists(user_path):
+                user_mtime = os.path.getmtime(user_path)
+                
+                # Check against selected baseline files
+                for idx2 in cklb_selections:
+                    cklb_filename = cklb_listbox.get(idx2)
+                    if cklb_filename.startswith("📁 "):
+                        # Browsed file
+                        clean_filename = cklb_filename[2:]
+                        if hasattr(cklb_listbox, 'browsed_files'):
+                            for file_path in cklb_listbox.browsed_files:
+                                if os.path.basename(file_path) == clean_filename:
+                                    cklb_path = file_path
+                                    break
+                    else:
+                        cklb_path = os.path.join(cklb_dir, cklb_filename)
+                    
+                    if os.path.exists(cklb_path):
+                        cklb_mtime = os.path.getmtime(cklb_path)
+                        if cklb_mtime > user_mtime:
+                            updates_available.append((user_filename, cklb_filename))
+        
+        if updates_available:
+            update_list = "\n".join([f"• {user} ← {baseline}" for user, baseline in updates_available])
+            message = f"Updates available for {len(updates_available)} file(s):\n\n{update_list}\n\nWould you like to update now?"
             
-            for result in merged_results:
-                if result["new_rules"]:
-                    show_multi_rule_input(
-                        result["new_rules"], 
-                        [result["merged_name"]], 
-                        lambda user_input: handle_rule_updates(result, user_input),
-                        lambda: log_job_status("[INFO] Rule input cancelled.")
-                    )
-                else:
-                    log_job_status("[INFO] Merge complete.")
-        except Exception as e:
-            progress_popup.close()
-            log_job_status(f"[ERROR] Merge failed: {e}")
-    
-    threading.Thread(target=run_merge).start()
-
-def handle_rule_updates(result, user_input):
-    merged_cklb = load_cklb(result["merged_path"])
-    for rule_entry in user_input["rules"]:
-        for stig in merged_cklb.get("stigs", []):
-            for rule in stig.get("rules", []):
-                if rule.get("group_id_src") == rule_entry["group_id_src"]:
-                    rule["status"] = rule_entry["status"]
-                    rule["comments"] = rule_entry["comments"]
-    save_cklb(result["merged_path"], merged_cklb)
-    log_job_status(f"[INFO] Updated {len(user_input['rules'])} rules in {result['merged_name']}")
-
-def refresh_usr_listbox():
-    global usr_files
-    usr_files = sorted(os.listdir(usr_dir)) if os.path.isdir(usr_dir) else []
-    file_listbox.delete(0, tk.END)
-    for f in usr_files:
-        if f.lower().endswith('.cklb'):  # Only show CKLB files
-            file_listbox.insert(tk.END, f)
-
-def refresh_cklb_combobox():
-    global cklb_files
-    cklb_files = sorted([f for f in os.listdir(cklb_dir) if f.lower().endswith('.cklb')]) if os.path.isdir(cklb_dir) else []
-    cklb_listbox.delete(0, tk.END)
-    for f in cklb_files:
-        cklb_listbox.insert(tk.END, f)
-    if cklb_files and hasattr(root, 'cklb_combobox'):
-        root.cklb_combobox['values'] = cklb_files
-        cklb_sel_var.set(cklb_files[0] if cklb_files else "")
+            if messagebox.askyesno("Updates Available", message):
+                update_now_handler()
+        else:
+            log_job_status("[INFO] No updates available for selected files")
+            messagebox.showinfo("No Updates", "All selected files are up to date.")
+            
+    except Exception as e:
+        error_msg = f"Update check failed: {str(e)}"
+        log_job_status(f"[ERROR] {error_msg}")
+        messagebox.showerror("Error", error_msg)
 
 # === DISA Fetch Dialog ===
 def show_disa_fetch_dialog():
@@ -1160,6 +1074,26 @@ def import_cklb_files():
     # Refresh the user files listbox
     refresh_usr_listbox()
 
+def refresh_cklb_combobox():
+    global cklb_files
+    cklb_files = sorted([f for f in os.listdir(cklb_dir) if f.lower().endswith('.cklb')]) if os.path.isdir(cklb_dir) else []
+    cklb_listbox.delete(0, tk.END)
+    for f in cklb_files:
+        cklb_listbox.insert(tk.END, f)
+    if cklb_files and hasattr(root, 'cklb_combobox'):
+        root.cklb_combobox['values'] = cklb_files
+        cklb_sel_var.set(cklb_files[0] if cklb_files else "")
+
+def refresh_usr_listbox():
+    """Refresh the user CKLB listbox with current files"""
+    global usr_files
+    usr_files = sorted([f for f in os.listdir(usr_dir) if f.lower().endswith('.cklb')]) if os.path.isdir(usr_dir) else []
+    file_listbox.delete(0, tk.END)
+    for f in usr_files:
+        file_listbox.insert(tk.END, f)
+    log_job_status(f"[INFO] Refreshed user library: {len(usr_files)} files found")
+
+# === Checklist Management Handlers ===
 # === Create Notebook (Tabbed Interface) ===
 notebook = ttk.Notebook(root)
 notebook.pack(fill="both", expand=True, padx=0, pady=0)
@@ -1481,10 +1415,10 @@ for f in cklb_files:
 button_frame = ttk.Frame(checklist_frame)
 button_frame.pack(pady=(20, 10))
 
-ttk.Button(button_frame, text=f"{ICONS['update']} Check for Updates", 
-           style="Accent.TButton", command=check_for_updates_handler).pack(side="left", padx=10)
-ttk.Button(button_frame, text=f"{ICONS['folder']} Select Local File", 
-           style="Secondary.TButton", command=select_local_file_handler).pack(side="left", padx=10)
+ttk.Button(button_frame, text=f"{ICONS['update']} Update Now", 
+           style="Accent.TButton", command=update_now_handler).pack(side="left", padx=10)
+ttk.Button(button_frame, text=f"{ICONS['folder']} Open CKLB Directory", 
+           style="Secondary.TButton", command=download_cklb_popup).pack(side="left", padx=10)
 
 # === Tab 3: Logs & Status ===
 tab3 = ttk.Frame(notebook)
