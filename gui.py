@@ -627,61 +627,60 @@ def update_now_handler():
 def check_for_updates_handler():
     """Handler for Check for Updates button"""
     try:
-        log_job_status("[INFO] Checking for updates...")
-        # Simulate fetching updates from DISA website
-        updates_available = [
-            {"stig_id": "RHEL8", "version": "v2r3", "release": "2025-06-01"},
-            {"stig_id": "WIN10", "version": "v1r5", "release": "2025-05-15"}
-        ]
-
+        log_job_status("[INFO] Checking for available updates...")
+        
+        # Get selected files from both listboxes
+        user_selections = file_listbox.curselection()
+        cklb_selections = cklb_listbox.curselection()
+        
+        if not user_selections or not cklb_selections:
+            messagebox.showwarning("Selection Required", 
+                                 "Please select at least one file from each panel to check for updates.")
+            return
+        
+        # Simple check - compare file modification times or versions if available
+        updates_available = []
+        
+        for idx in user_selections:
+            user_filename = file_listbox.get(idx)
+            user_path = os.path.join(user_cklb_dir, user_filename)
+            
+            if os.path.exists(user_path):
+                user_mtime = os.path.getmtime(user_path)
+                
+                # Check against selected baseline files
+                for idx2 in cklb_selections:
+                    cklb_filename = cklb_listbox.get(idx2)
+                    if cklb_filename.startswith("📁 "):
+                        # Browsed file
+                        clean_filename = cklb_filename[2:]
+                        if hasattr(cklb_listbox, 'browsed_files'):
+                            for file_path in cklb_listbox.browsed_files:
+                                if os.path.basename(file_path) == clean_filename:
+                                    cklb_path = file_path
+                                    break
+                    else:
+                        cklb_path = os.path.join(cklb_dir, cklb_filename)
+                    
+                    if os.path.exists(cklb_path):
+                        cklb_mtime = os.path.getmtime(cklb_path)
+                        if cklb_mtime > user_mtime:
+                            updates_available.append((user_filename, cklb_filename))
+        
         if updates_available:
-            update_list = "\n".join([f"• {u['stig_id']} {u['version']} ({u['release']})" for u in updates_available])
-            message = f"Updates available:\n\n{update_list}\n\nWould you like to update now?"
-
+            update_list = "\n".join([f"• {user} ← {baseline}" for user, baseline in updates_available])
+            message = f"Updates available for {len(updates_available)} file(s):\n\n{update_list}\n\nWould you like to update now?"
+            
             if messagebox.askyesno("Updates Available", message):
-                log_job_status("[INFO] Upgrading checklists...")
-                # Simulate upgrade process
-                for update in updates_available:
-                    log_job_status(f"[INFO] Upgraded {update['stig_id']} to {update['version']}")
-                messagebox.showinfo("Success", "All checklists upgraded successfully.")
-            else:
-                log_job_status("[INFO] Update canceled by user.")
+                update_now_handler()
         else:
-            messagebox.showinfo("No Updates", "All checklists are up to date.")
+            log_job_status("[INFO] No updates available for selected files")
+            messagebox.showinfo("No Updates", "All selected files are up to date.")
+            
     except Exception as e:
-        log_job_status(f"[ERROR] Failed to check for updates: {e}")
-        messagebox.showerror("Error", f"Failed to check for updates: {e}")
-
-# Add "Select Local File" button
-def select_local_file_handler():
-    """Handler for Select Local File button"""
-    try:
-        file_paths = filedialog.askopenfilenames(
-            title="Select Local Files",
-            filetypes=[("CKLB Files", "*.cklb")]
-        )
-        if file_paths:
-            selected_files = "\n".join(file_paths)
-            if messagebox.askyesno("Files Selected", f"Selected files:\n{selected_files}\n\nContinue?"):
-                log_job_status("[INFO] Files selected and confirmed.")
-            else:
-                log_job_status("[INFO] File selection canceled by user.")
-        else:
-            messagebox.showwarning("No Selection", "No files were selected.")
-    except Exception as e:
-        log_job_status(f"[ERROR] Failed to select files: {e}")
-        messagebox.showerror("Error", f"Failed to select files: {e}")
-
-# Add buttons to the GUI
-check_updates_button = ttk.Button(
-    root, text="Check for Updates", command=check_for_updates_handler
-)
-check_updates_button.pack(pady=10)
-
-select_file_button = ttk.Button(
-    root, text="Select Local File", command=select_local_file_handler
-)
-select_file_button.pack(pady=10)
+        error_msg = f"Update check failed: {str(e)}"
+        log_job_status(f"[ERROR] {error_msg}")
+        messagebox.showerror("Error", error_msg)
 
 # === DISA Fetch Dialog ===
 def show_disa_fetch_dialog():
