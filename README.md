@@ -1,3 +1,18 @@
+# ⚠️ Deprecated
+This project is no longer maintained. checkate-lite, a terminal-based checklist lightweight upgrade tool is publicly available. (https://github.com/pjpearman/checkmate-lite.git)
+
+# Checkmate-Workspace will replace Checkmate and is nearing completion as of 09.2025.
+## Checkmate-Workspace Features
+
+- **STIG Checklist Management**: Import, view, edit, and export DISA STIG checklists (.cklb files)
+- **Version Migration**: Automatically upgrade checklists to new STIG versions while preserving user data
+- **Advanced Comparison**: Side-by-side comparison of checklists and STIG versions
+- **Library Organization**: Hierarchical file organization system for large checklist collections
+- **Security & Compliance**: Role-based access control, audit logging, and DISA security compliance
+- **Version Caching**: Intelligent caching system for fast STIG upgrade detection
+- **Bulk Operations**: Mass import, export, and update operations for enterprise environments
+
+# ⚠️ Deprecated
 # CheckMate: DISA STIG Collection Manager
 
 ## Overview
